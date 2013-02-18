@@ -3,6 +3,7 @@ package org.agric.oxm.utils;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
+import java.rmi.UnexpectedException;
 import java.util.Enumeration;
 import java.util.Vector;
 
@@ -12,7 +13,6 @@ import liquibase.FileOpener;
 import liquibase.Liquibase;
 import liquibase.exception.LiquibaseException;
 
-import org.agric.oxm.model.exception.UnexpectedException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.ResourceLoaderAware;

@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN" "http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
+<tiles-definitions>
+	<definition name="layout" template="/WEB-INF/views/layout.jsp">
+		<put-attribute name="title" type="string" value="OXFAM GB : E-System" />
+		<put-attribute name="header" type="template" value="/WEB-INF/views/tiles/header.jsp" />
+		<put-attribute name="sidebarleft" type="template" value="/WEB-INF/views/tiles/menu.jsp" />
+		<put-attribute name="body" type="template" value="/WEB-INF/views/tiles/body.jsp" />
+		<put-attribute name="footer" type="template" value="/WEB-INF/views/tiles/footer.jsp" />
+	</definition>
+	
+	<!-- USERS -->
+	<definition name="users" extends="layout">
+		<put-attribute name="scripts" type="template" value="/WEB-INF/views/tiles/controlpanel/users/scripts.jsp"/>
+		<put-attribute name="pageTitle" type="string" value="Users"/>
+		<put-attribute name="sidebarleft" type="template" value="/WEB-INF/views/tiles/menu.jsp" />
+		<put-attribute name="body" type="template" value="/WEB-INF/views/tiles/controlpanel/users/users.jsp"/>
+	</definition>
+	
+	<definition name="addUser" extends="layout">
+		<put-attribute name="scripts" type="template" value="/WEB-INF/views/tiles/controlpanel/users/scripts.jsp"/>
+		<put-attribute name="pageTitle" type="string" value="New User"/>
+		<put-attribute name="sidebarleft" type="template" value="/WEB-INF/views/tiles/menu.jsp" />
+		<put-attribute name="body" type="template" value="/WEB-INF/views/tiles/controlpanel/users/userform.jsp"/>
+	</definition>
+	
+	<definition name="editUser" extends="layout">
+		<put-attribute name="scripts" type="template" value="/WEB-INF/views/tiles/controlpanel/users/scripts.jsp"/>
+		<put-attribute name="pageTitle" type="string" value="Edit User"/>
+		<put-attribute name="sidebarleft" type="template" value="/WEB-INF/views/tiles/menu.jsp" />
+		<put-attribute name="body" type="template" value="/WEB-INF/views/tiles/controlpanel/users/userform.jsp"/>
+	</definition>
+	
+	<definition name="roleView" extends="layout">
+		<put-attribute name="scripts" type="template" value="/WEB-INF/views/tiles/controlpanel/users/scripts.jsp"/>
+		<put-attribute name="pageTitle" type="string" value="Roles"/>
+		<put-attribute name="sidebarleft" type="template" value="/WEB-INF/views/tiles/menu.jsp" />
+		<put-attribute name="body" type="template" value="/WEB-INF/views/tiles/controlpanel/users/roles.jsp"/>
+	</definition>
+	
+	<definition name="addRole" extends="layout">
+		<put-attribute name="scripts" type="template" value="/WEB-INF/views/tiles/controlpanel/users/scripts.jsp"/>
+		<put-attribute name="pageTitle" type="string" value="New Role"/>
+		<put-attribute name="sidebarleft" type="template" value="/WEB-INF/views/tiles/menu.jsp" />
+		<put-attribute name="body" type="template" value="/WEB-INF/views/tiles/controlpanel/users/roleform.jsp"/>
+	</definition>
+	
+	<definition name="editRole" extends="layout">
+		<put-attribute name="scripts" type="template" value="/WEB-INF/views/tiles/controlpanel/users/scripts.jsp"/>
+		<put-attribute name="pageTitle" type="string" value="Edit Role"/>
+		<put-attribute name="sidebarleft" type="template" value="/WEB-INF/views/tiles/menu.jsp" />
+		<put-attribute name="body" type="template" value="/WEB-INF/views/tiles/controlpanel/users/roleform.jsp"/>
+	</definition>
+	
+	<definition name="conceptView" extends="layout">
+		<put-attribute name="scripts" type="template" value="/WEB-INF/views/tiles/controlpanel/concepts/scripts.jsp"/>
+		<put-attribute name="pageTitle" type="string" value="Concepts"/>
+		<put-attribute name="sidebarleft" type="template" value="/WEB-INF/views/tiles/menu.jsp" />
+		<put-attribute name="body" type="template" value="/WEB-INF/views/tiles/controlpanel/concepts/concepts.jsp"/>
+	</definition>
+	
+	<definition name="addConcept" extends="layout">
+		<put-attribute name="scripts" type="template" value="/WEB-INF/views/tiles/controlpanel/concepts/scripts.jsp"/>
+		<put-attribute name="pageTitle" type="string" value="New Concept"/>
+		<put-attribute name="sidebarleft" type="template" value="/WEB-INF/views/tiles/menu.jsp" />
+		<put-attribute name="body" type="template" value="/WEB-INF/views/tiles/controlpanel/concepts/conceptform.jsp"/>
+	</definition>
+	
+	<definition name="editConcept" extends="layout">
+		<put-attribute name="scripts" type="template" value="/WEB-INF/views/tiles/controlpanel/concepts/scripts.jsp"/>
+		<put-attribute name="pageTitle" type="string" value="Edit Concept"/>
+		<put-attribute name="sidebarleft" type="template" value="/WEB-INF/views/tiles/menu.jsp" />
+		<put-attribute name="body" type="template" value="/WEB-INF/views/tiles/controlpanel/concepts/conceptform.jsp"/>
+	</definition>
+	
+	<definition name="conceptcategoryView" extends="layout">
+		<put-attribute name="scripts" type="template" value="/WEB-INF/views/tiles/controlpanel/concepts/scripts.jsp"/>
+		<put-attribute name="pageTitle" type="string" value="Concept Categories"/>
+		<put-attribute name="sidebarleft" type="template" value="/WEB-INF/views/tiles/menu.jsp" />
+		<put-attribute name="body" type="template" value="/WEB-INF/views/tiles/controlpanel/concepts/conceptcategory.jsp"/>
+	</definition>
+	
+	<definition name="addConceptCategory" extends="layout">
+		<put-attribute name="scripts" type="template" value="/WEB-INF/views/tiles/controlpanel/concepts/scripts.jsp"/>
+		<put-attribute name="pageTitle" type="string" value="New Concept Category"/>
+		<put-attribute name="sidebarleft" type="template" value="/WEB-INF/views/tiles/menu.jsp" />
+		<put-attribute name="body" type="template" value="/WEB-INF/views/tiles/controlpanel/concepts/conceptcategoryform.jsp"/>
+	</definition>
+	
+	<definition name="editConceptCategory" extends="layout">
+		<put-attribute name="scripts" type="template" value="/WEB-INF/views/tiles/controlpanel/concepts/scripts.jsp"/>
+		<put-attribute name="pageTitle" type="string" value="Edit Concept Category"/>
+		<put-attribute name="sidebarleft" type="template" value="/WEB-INF/views/tiles/menu.jsp" />
+		<put-attribute name="body" type="template" value="/WEB-INF/views/tiles/controlpanel/concepts/conceptcategoryform.jsp"/>
+	</definition>
+	
+	<definition name="districtView" extends="layout">
+		<put-attribute name="scripts" type="template" value="/WEB-INF/views/tiles/controlpanel/country/scripts.jsp"/>
+		<put-attribute name="pageTitle" type="string" value="Districts"/>
+		<put-attribute name="sidebarleft" type="template" value="/WEB-INF/views/tiles/menu.jsp" />
+		<put-attribute name="body" type="template" value="/WEB-INF/views/tiles/controlpanel/country/district.jsp"/>
+	</definition>
+	
+	<definition name="addDistrict" extends="layout">
+		<put-attribute name="scripts" type="template" value="/WEB-INF/views/tiles/controlpanel/country/scripts.jsp"/>
+		<put-attribute name="pageTitle" type="string" value="New District"/>
+		<put-attribute name="sidebarleft" type="template" value="/WEB-INF/views/tiles/menu.jsp" />
+		<put-attribute name="body" type="template" value="/WEB-INF/views/tiles/controlpanel/country/districtform.jsp"/>
+	</definition>
+	
+	<definition name="editDistrict" extends="layout">
+		<put-attribute name="scripts" type="template" value="/WEB-INF/views/tiles/controlpanel/country/scripts.jsp"/>
+		<put-attribute name="pageTitle" type="string" value="Edit District"/>
+		<put-attribute name="sidebarleft" type="template" value="/WEB-INF/views/tiles/menu.jsp" />
+		<put-attribute name="body" type="template" value="/WEB-INF/views/tiles/controlpanel/country/districtform.jsp"/>
+	</definition>
+	
+	<definition name="publicationList" extends="layout">
+		<put-attribute name="scripts" type="template" value="/WEB-INF/views/tiles/publications/scripts.jsp"/>
+		<put-attribute name="pageTitle" type="string" value="Publications"/>
+		<put-attribute name="sidebarleft" type="template" value="/WEB-INF/views/tiles/menu.jsp" />
+		<put-attribute name="body" type="template" value="/WEB-INF/views/tiles/publications/publicationlist.jsp"/>
+	</definition>
+	
+	<definition name="countyView" extends="layout">
+		<put-attribute name="scripts" type="template" value="/WEB-INF/views/tiles/controlpanel/country/scripts.jsp"/>
+		<put-attribute name="pageTitle" type="string" value="Counties"/>
+		<put-attribute name="sidebarleft" type="template" value="/WEB-INF/views/tiles/menu.jsp" />
+		<put-attribute name="body" type="template" value="/WEB-INF/views/tiles/controlpanel/country/county.jsp"/>
+	</definition>
+	
+	<definition name="addCounty" extends="layout">
+		<put-attribute name="scripts" type="template" value="/WEB-INF/views/tiles/controlpanel/country/scripts.jsp"/>
+		<put-attribute name="pageTitle" type="string" value="New County"/>
+		<put-attribute name="sidebarleft" type="template" value="/WEB-INF/views/tiles/menu.jsp" />
+		<put-attribute name="body" type="template" value="/WEB-INF/views/tiles/controlpanel/country/countyform.jsp"/>
+	</definition>
+	
+	<definition name="editCounty" extends="layout">
+		<put-attribute name="scripts" type="template" value="/WEB-INF/views/tiles/controlpanel/country/scripts.jsp"/>
+		<put-attribute name="pageTitle" type="string" value="Edit County"/>
+		<put-attribute name="sidebarleft" type="template" value="/WEB-INF/views/tiles/menu.jsp" />
+		<put-attribute name="body" type="template" value="/WEB-INF/views/tiles/controlpanel/country/countyform.jsp"/>
+	</definition>
+	
+	<definition name="subCountyView" extends="layout">
+		<put-attribute name="scripts" type="template" value="/WEB-INF/views/tiles/controlpanel/country/scripts.jsp"/>
+		<put-attribute name="pageTitle" type="string" value="Sub-Counties"/>
+		<put-attribute name="sidebarleft" type="template" value="/WEB-INF/views/tiles/menu.jsp" />
+		<put-attribute name="body" type="template" value="/WEB-INF/views/tiles/controlpanel/country/subcounty.jsp"/>
+	</definition>
+	
+	<definition name="addSubCounty" extends="layout">
+		<put-attribute name="scripts" type="template" value="/WEB-INF/views/tiles/controlpanel/country/scripts.jsp"/>
+		<put-attribute name="pageTitle" type="string" value="New Sub County"/>
+		<put-attribute name="sidebarleft" type="template" value="/WEB-INF/views/tiles/menu.jsp" />
+		<put-attribute name="body" type="template" value="/WEB-INF/views/tiles/controlpanel/country/subcountyform.jsp"/>
+	</definition>
+	
+	<definition name="editSubCounty" extends="layout">
+		<put-attribute name="scripts" type="template" value="/WEB-INF/views/tiles/controlpanel/country/scripts.jsp"/>
+		<put-attribute name="pageTitle" type="string" value="Edit Sub County"/>
+		<put-attribute name="sidebarleft" type="template" value="/WEB-INF/views/tiles/menu.jsp" />
+		<put-attribute name="body" type="template" value="/WEB-INF/views/tiles/controlpanel/country/subcountyform.jsp"/>
+	</definition>
+	
+	<definition name="parishView" extends="layout">
+		<put-attribute name="scripts" type="template" value="/WEB-INF/views/tiles/controlpanel/country/scripts.jsp"/>
+		<put-attribute name="pageTitle" type="string" value="Parishes"/>
+		<put-attribute name="sidebarleft" type="template" value="/WEB-INF/views/tiles/menu.jsp" />
+		<put-attribute name="body" type="template" value="/WEB-INF/views/tiles/controlpanel/country/parish.jsp"/>
+	</definition>
+	
+	<definition name="addParish" extends="layout">
+		<put-attribute name="scripts" type="template" value="/WEB-INF/views/tiles/controlpanel/country/scripts.jsp"/>
+		<put-attribute name="pageTitle" type="string" value="New Parish"/>
+		<put-attribute name="sidebarleft" type="template" value="/WEB-INF/views/tiles/menu.jsp" />
+		<put-attribute name="body" type="template" value="/WEB-INF/views/tiles/controlpanel/country/parishform.jsp"/>
+	</definition>
+	
+	<definition name="editParish" extends="layout">
+		<put-attribute name="scripts" type="template" value="/WEB-INF/views/tiles/controlpanel/country/scripts.jsp"/>
+		<put-attribute name="pageTitle" type="string" value="Edit Parish"/>
+		<put-attribute name="sidebarleft" type="template" value="/WEB-INF/views/tiles/menu.jsp" />
+		<put-attribute name="body" type="template" value="/WEB-INF/views/tiles/controlpanel/country/parishform.jsp"/>
+	</definition>
+	
+	<definition name="villageView" extends="layout">
+		<put-attribute name="scripts" type="template" value="/WEB-INF/views/tiles/controlpanel/country/scripts.jsp"/>
+		<put-attribute name="pageTitle" type="string" value="Villages"/>
+		<put-attribute name="sidebarleft" type="template" value="/WEB-INF/views/tiles/menu.jsp" />
+		<put-attribute name="body" type="template" value="/WEB-INF/views/tiles/controlpanel/country/village.jsp"/>
+	</definition>
+	
+	<definition name="addVillage" extends="layout">
+		<put-attribute name="scripts" type="template" value="/WEB-INF/views/tiles/controlpanel/country/scripts.jsp"/>
+		<put-attribute name="pageTitle" type="string" value="New Village"/>
+		<put-attribute name="sidebarleft" type="template" value="/WEB-INF/views/tiles/menu.jsp" />
+		<put-attribute name="body" type="template" value="/WEB-INF/views/tiles/controlpanel/country/villageform.jsp"/>
+	</definition>
+	
+	<definition name="editVillage" extends="layout">
+		<put-attribute name="scripts" type="template" value="/WEB-INF/views/tiles/controlpanel/country/scripts.jsp"/>
+		<put-attribute name="pageTitle" type="string" value="Edit Village"/>
+		<put-attribute name="sidebarleft" type="template" value="/WEB-INF/views/tiles/menu.jsp" />
+		<put-attribute name="body" type="template" value="/WEB-INF/views/tiles/controlpanel/country/villageform.jsp"/>
+	</definition>
+
+	<definition name="publicationForm" extends="layout">
+		<put-attribute name="scripts" type="template" value="/WEB-INF/views/tiles/publications/scripts.jsp"/>
+		<put-attribute name="pageTitle" type="string" value="Publications"/>
+		<put-attribute name="sidebarleft" type="template" value="/WEB-INF/views/tiles/menu.jsp" />
+		<put-attribute name="body" type="template" value="/WEB-INF/views/tiles/publications/publicationform.jsp"/>
+	</definition>
+	
+	<definition name="editPublication" extends="layout">
+		<put-attribute name="scripts" type="template" value="/WEB-INF/views/tiles/publications/scripts.jsp"/>
+		<put-attribute name="pageTitle" type="string" value="Publications"/>
+		<put-attribute name="sidebarleft" type="template" value="/WEB-INF/views/tiles/menu.jsp" />
+		<put-attribute name="body" type="template" value="/WEB-INF/views/tiles/publications/publicationform.jsp"/>
+	</definition>
+	
+	<definition name="errorPage" extends="layout">
+		<put-attribute name="pageTitle" type="string" value=""/>
+		<put-attribute name="sidebarleft" type="template" value="/WEB-INF/views/tiles/menu.jsp" />
+		<put-attribute name="body" type="template" value="/WEB-INF/views/tiles/error/error.jsp"/>
+	</definition>
+	
+</tiles-definitions>
