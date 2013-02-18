@@ -1,6 +1,5 @@
 package org.agric.oxm.server;
 
-
-public class TestClass {
+public class Sample {
 
 }

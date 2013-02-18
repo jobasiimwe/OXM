@@ -2,15 +2,15 @@ package org.agric.oxm.model;
 
 public enum UserStatus {
 
-	DISABLED("Disabled"), ENABLED("Enabled");
+    DISABLED("Disabled"), ENABLED("Enabled");
 
-	UserStatus(String name) {
-		this.name = name;
-	}
+    UserStatus(String name) {
+	this.name = name;
+    }
 
-	private String name;
+    private String name;
 
-	public String getName() {
-		return name;
-	}
+    public String getName() {
+	return name;
+    }
 }
