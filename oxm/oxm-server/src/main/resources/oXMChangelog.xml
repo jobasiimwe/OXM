@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog/1.9" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog/1.9 http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-1.9.xsd">
+   
+    <changeSet author="Jonathan (generated)" id="1341250032256-2">
+        <createIndex indexName="key1" tableName="concept_category_link">
+            <column name="concept_id"/>
+            <column name="concept_category_id"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="Jonathan (generated)" id="1341250032256-3">
+        <createIndex indexName="UKD9E7C01092D27F03" tableName="student_courseUnits">
+            <column name="semesterCourseUnit_id"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="Jonathan (generated)" id="1341250032256-4">
+        <createIndex indexName="UK93857BF492D27F03" tableName="student_selected_courseUnits">
+            <column name="semesterCourseUnit_id"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="Jonathan (generated)" id="1341250032256-5">
+        <createIndex indexName="key1" tableName="student_selected_courseUnits">
+            <column name="student_id"/>
+            <column name="semesterCourseUnit_id"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="Jonathan (generated)" id="1341250032256-6">
+        <dropIndex indexName="key1" tableName="concept_category_link"/>
+    </changeSet>
+    <changeSet author="Jonathan (generated)" id="1341250032256-7">
+        <dropIndex indexName="FKAF42E01B25663A03" tableName="course"/>
+    </changeSet>
+    <changeSet author="Jonathan (generated)" id="1341250032256-8">
+        <dropIndex indexName="FKEAD9D23BA1E11AF1" tableName="role_permissions"/>
+    </changeSet>
+    <changeSet author="Jonathan (generated)" id="1341250032256-9">
+        <dropIndex indexName="FK6CF7C0FFA1E11AF1" tableName="role_users"/>
+    </changeSet>
+    <changeSet author="Jonathan (generated)" id="1341250032256-10">
+        <dropIndex indexName="FK8FFE823B25663A03" tableName="student"/>
+    </changeSet>
+    <changeSet author="Jonathan (generated)" id="1341250032256-11">
+        <dropIndex indexName="FKD9E7C01038BA7751" tableName="student_courseunits"/>
+    </changeSet>
+    <changeSet author="Jonathan (generated)" id="1341250032256-12">
+        <dropIndex indexName="FK93857BF438BA7751" tableName="student_selected_courseunits"/>
+    </changeSet>
+    <changeSet author="Jonathan (generated)" id="1341250032256-13">
+        <dropIndex indexName="FK93857BF4A6DCC783" tableName="student_selected_courseunits"/>
+    </changeSet>
+    <changeSet author="Jonathan (generated)" id="1341250032256-14">
+        <dropIndex indexName="FK7F1462D9A6DCC783" tableName="studentcourseunits"/>
+    </changeSet>
+    <changeSet author="Jonathan (generated)" id="1341250032256-15">
+        <addForeignKeyConstraint baseColumnNames="concept_category_id" baseTableName="concept_category_link" constraintName="FKD1B211042F79E6D4" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="concept_categories"/>
+    </changeSet>
+    <changeSet author="Jonathan (generated)" id="1341250032256-16">
+        <addForeignKeyConstraint baseColumnNames="concept_id" baseTableName="concept_category_link" constraintName="FKD1B2110419AE3C63" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="concepts"/>
+    </changeSet>
+    <changeSet author="Jonathan (generated)" id="1341250032256-17">
+        <addForeignKeyConstraint baseColumnNames="college_id" baseTableName="course" constraintName="FKAF42E01B25663A03" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="college"/>
+    </changeSet>
+    <changeSet author="Jonathan (generated)" id="1341250032256-18">
+        <addForeignKeyConstraint baseColumnNames="course_id" baseTableName="intake" constraintName="FKB971272CE4DFBF20" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="course"/>
+    </changeSet>
+    <changeSet author="Jonathan (generated)" id="1341250032256-19">
+        <addForeignKeyConstraint baseColumnNames="permission_id" baseTableName="role_permissions" constraintName="FKEAD9D23BE2F79B11" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="permissions"/>
+    </changeSet>
+    <changeSet author="Jonathan (generated)" id="1341250032256-20">
+        <addForeignKeyConstraint baseColumnNames="role_id" baseTableName="role_permissions" constraintName="FKEAD9D23BA1E11AF1" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="roles"/>
+    </changeSet>
+    <changeSet author="Jonathan (generated)" id="1341250032256-21">
+        <addForeignKeyConstraint baseColumnNames="role_id" baseTableName="role_users" constraintName="FK6CF7C0FFA1E11AF1" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="roles"/>
+    </changeSet>
+    <changeSet author="Jonathan (generated)" id="1341250032256-22">
+        <addForeignKeyConstraint baseColumnNames="user_id" baseTableName="role_users" constraintName="FK6CF7C0FF470BDED1" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="users"/>
+    </changeSet>
+    <changeSet author="Jonathan (generated)" id="1341250032256-23">
+        <addForeignKeyConstraint baseColumnNames="intake_id" baseTableName="semester" constraintName="FK48C21138A15CB571" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="intake"/>
+    </changeSet>
+    <changeSet author="Jonathan (generated)" id="1341250032256-24">
+        <addForeignKeyConstraint baseColumnNames="semester_id" baseTableName="semesterCourseUnit" constraintName="FK8B716F977125F831" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="semester"/>
+    </changeSet>
+    <changeSet author="Jonathan (generated)" id="1341250032256-25">
+        <addForeignKeyConstraint baseColumnNames="college_id" baseTableName="student" constraintName="FK8FFE823B25663A03" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="college"/>
+    </changeSet>
+    <changeSet author="Jonathan (generated)" id="1341250032256-26">
+        <addForeignKeyConstraint baseColumnNames="id" baseTableName="student" constraintName="FK8FFE823B4FD0FDDD" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="users"/>
+    </changeSet>
+    <changeSet author="Jonathan (generated)" id="1341250032256-27">
+        <addForeignKeyConstraint baseColumnNames="semesterCourseUnit_id" baseTableName="student_courseUnits" constraintName="FKD9E7C01038BA7751" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="semesterCourseUnit"/>
+    </changeSet>
+    <changeSet author="Jonathan (generated)" id="1341250032256-28">
+        <addForeignKeyConstraint baseColumnNames="studentCourseUnit_id" baseTableName="student_courseUnits" constraintName="FKD9E7C0101239F670" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="studentCourseUnits"/>
+    </changeSet>
+    <changeSet author="Jonathan (generated)" id="1341250032256-29">
+        <addForeignKeyConstraint baseColumnNames="semesterCourseUnit_id" baseTableName="student_selected_courseUnits" constraintName="FK93857BF438BA7751" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="semesterCourseUnit"/>
+    </changeSet>
+    <changeSet author="Jonathan (generated)" id="1341250032256-30">
+        <addForeignKeyConstraint baseColumnNames="student_id" baseTableName="student_selected_courseUnits" constraintName="FK93857BF4A6DCC783" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="student"/>
+    </changeSet>
+    <changeSet author="Jonathan (generated)" id="1341250032256-31">
+        <addForeignKeyConstraint baseColumnNames="student_id" baseTableName="studentCourseUnits" constraintName="FK7F1462D9A6DCC783" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="student"/>
+    </changeSet>
+    <changeSet author="Jonathan (generated)" id="1341250032256-32">
+        <dropForeignKeyConstraint baseTableName="concept_category_link" constraintName="FKD1B211042F79E6D4"/>
+    </changeSet>
+    <changeSet author="Jonathan (generated)" id="1341250032256-33">
+        <dropForeignKeyConstraint baseTableName="concept_category_link" constraintName="FKD1B2110419AE3C63"/>
+    </changeSet>
+    <changeSet author="Jonathan (generated)" id="1341250032256-34">
+        <dropForeignKeyConstraint baseTableName="intake" constraintName="FKB971272CE4DFBF20"/>
+    </changeSet>
+    <changeSet author="Jonathan (generated)" id="1341250032256-35">
+        <dropForeignKeyConstraint baseTableName="role_permissions" constraintName="FKEAD9D23BE2F79B11"/>
+    </changeSet>
+    <changeSet author="Jonathan (generated)" id="1341250032256-36">
+        <dropForeignKeyConstraint baseTableName="role_users" constraintName="FK6CF7C0FFA1E11AF1"/>
+    </changeSet>
+    <changeSet author="Jonathan (generated)" id="1341250032256-37">
+        <dropForeignKeyConstraint baseTableName="semester" constraintName="FK48C21138A15CB571"/>
+    </changeSet>
+    <changeSet author="Jonathan (generated)" id="1341250032256-38">
+        <dropForeignKeyConstraint baseTableName="semestercourseunit" constraintName="FK8B716F977125F831"/>
+    </changeSet>
+    <changeSet author="Jonathan (generated)" id="1341250032256-39">
+        <dropForeignKeyConstraint baseTableName="student" constraintName="FK8FFE823B25663A03"/>
+    </changeSet>
+    <changeSet author="Jonathan (generated)" id="1341250032256-40">
+        <dropForeignKeyConstraint baseTableName="student" constraintName="FK8FFE823B4FD0FDDD"/>
+    </changeSet>
+    <changeSet author="Jonathan (generated)" id="1341250032256-41">
+        <dropForeignKeyConstraint baseTableName="student_courseunits" constraintName="FKD9E7C0101239F670"/>
+    </changeSet>
+    <changeSet author="Jonathan (generated)" id="1341250032256-42">
+        <dropForeignKeyConstraint baseTableName="student_selected_courseunits" constraintName="FK93857BF438BA7751"/>
+    </changeSet>
+    <changeSet author="Jonathan (generated)" id="1341250032256-43">
+        <dropForeignKeyConstraint baseTableName="studentcourseunits" constraintName="FK7F1462D9A6DCC783"/>
+    </changeSet>
+</databaseChangeLog>

@@ -51,7 +51,7 @@
         <property name="accessDeniedHandler" ref="accessDeniedHandler" />
     </bean>
 
-    <bean id="authenticationEntryPoint"	class="org.ranch.web.security.authentication.AjaxAwareAuthenticationEntryPoint">
+    <bean id="authenticationEntryPoint"	class="org.agric.oxm.web.security.authentication.AjaxAwareAuthenticationEntryPoint">
         <property name="loginFormUrl" value="/ServiceLogin" />
     </bean>
 

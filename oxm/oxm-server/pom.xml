@@ -227,4 +227,40 @@
 		</dependency>
 
 	</dependencies>
+	
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-antrun-plugin</artifactId>
+				<version>1.6</version>
+				<executions>
+					<execution>
+						<id>compile</id>
+						<goals>
+							<goal>run</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<target>
+						<taskdef resource="liquibasetasks.properties">
+							<classpath refid="maven.compile.classpath" />
+						</taskdef>
+						<diffDatabaseToChangeLog driver="com.mysql.jdbc.Driver"
+							url="jdbc:mysql://localhost:3306/oxm" username="test"
+							password="test" baseUrl="hibernate:hibernate.cfg.xml"
+							outputFile="${basedir}/src/main/resources/oXMChangelog.xml"
+							classpathref="maven.compile.classpath">
+						</diffDatabaseToChangeLog>
+					</target>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+				<version>2.2</version>
+			</plugin>
+		</plugins>
+	</build>
 </project>

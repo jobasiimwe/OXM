@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog/1.9"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog/1.9 http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-1.9.xsd">
+    
+    <!--=========== Used to add some default data into the database ==========-->
+    
+    <!-- <changeSet author="jmpango" id="1" runAlways="true">
+        <customChange class="org.studentsys.api.database.ConceptCategoryLiquibaseChange" />
+    </changeSet>
+
+    <changeSet author="jmpango" id="2" runAlways="true">
+        <customChange class="org.studentsys.api.database.PermissionLiquibaseChange" />
+    </changeSet>
+
+    <changeSet author="jmpango" id="3" runAlways="true">
+        <customChange class="org.studentsys.api.database.ConceptLiquibaseChange" />
+    </changeSet>
+
+    <changeSet author="jmpango" id="107BEED4-A04A-4DD2-B0AD-E315B795978E"
+		failOnError="true">
+        <preConditions onFail="MARK_RAN" onError="HALT">
+            <tableExists tableName="users" />
+            <and>
+                <sqlCheck expectedResult="0">
+					<![CDATA[
+					SELECT count(*) FROM users where id='107BEED4-A04A-4DD2-B0AD-E315B795978E';
+					]]>
+                </sqlCheck>
+            </and>
+        </preConditions>
+        <insert tableName="users">
+            <column name="id" value="107BEED4-A04A-4DD2-B0AD-E315B795978E" />
+            <column name="username" value="administrator" />
+            <column name="password" value="7357bec928a1af86415f7b8c11245296ec1779d" />
+            <column name="salt" value="e2597cf74095403889c6b07b46d8af5d94b8e6" />
+            <column name="user_status" valueNumeric="1" />
+            <column name="secret_question" value="Who created me?" />
+            <column name="secret_answer" value="JM" />
+            <column name="record_status" valueNumeric="0" />
+        </insert>
+    </changeSet>
+
+    <changeSet author="jmpango" id="1379EDD1-C123-424A-BD75-DF08714580B5">
+        <preConditions onFail="MARK_RAN" onError="HALT">
+            <tableExists tableName="roles" />
+            <and>
+                <sqlCheck expectedResult="0">
+	    			<![CDATA[
+					SELECT count(*) FROM roles where id='1379EDD1-C123-424A-BD75-DF08714580B5';
+					]]>
+                </sqlCheck>
+            </and>
+        </preConditions>
+        <insert tableName="roles">
+            <column name="id" value="1379EDD1-C123-424A-BD75-DF08714580B5" />
+            <column name="role_name" value="ROLE_ADMINISTRATOR" />
+            <column name="description" value="Default Administrator Role"></column>
+            <column name="record_status" valueNumeric="0" />
+        </insert>
+    </changeSet>
+
+    <changeSet author="jmpango" id="1669C1A8-A00D-45D1-9429-BCFBF1AC9464">
+        <preConditions onFail="HALT">
+            <tableExists tableName="users" />
+            <and>
+                <tableExists tableName="roles" />
+                <and>
+                    <tableExists tableName="role_users" />
+                </and>
+                <and>
+                    <sqlCheck expectedResult="1">
+		    			<![CDATA[
+						SELECT count(*) FROM roles where id='1379EDD1-C123-424A-BD75-DF08714580B5';
+						]]>
+                    </sqlCheck>
+                    <and>
+                        <sqlCheck expectedResult="1">
+		    			<![CDATA[
+						SELECT count(*) FROM users where id='107BEED4-A04A-4DD2-B0AD-E315B795978E';
+						]]>
+                        </sqlCheck>
+                    </and>
+                </and>
+            </and>
+        </preConditions>
+        <insert tableName="role_users">
+            <column name="role_id" value="1379EDD1-C123-424A-BD75-DF08714580B5" />
+            <column name="user_id" value="107BEED4-A04A-4DD2-B0AD-E315B795978E" />
+        </insert>
+    </changeSet> -->
+</databaseChangeLog>

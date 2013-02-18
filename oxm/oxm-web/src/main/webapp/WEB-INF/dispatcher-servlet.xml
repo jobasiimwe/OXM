@@ -12,9 +12,10 @@
 		http://www.springframework.org/schema/mvc
 		http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd">
 
-	<!-- <aop:aspectj-autoproxy /> <context:annotation-config /> <context:component-scan 
-		base-package="org.mak.cis.mohr.web.propertyeditors" /> <context:component-scan 
-		base-package="org.mak.cis.mohr.web.controllers" /> -->
+	<aop:aspectj-autoproxy />
+	<context:annotation-config />
+	<!-- <context:component-scan base-package="org.mak.cis.mohr.web.propertyeditors" /> -->
+	<context:component-scan base-package="org.agric.oxm.web.controllers" />
 
 	<!-- <bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter"> 
 		<property name="cacheSeconds" value="0" /> <property name="webBindingInitializer"> 

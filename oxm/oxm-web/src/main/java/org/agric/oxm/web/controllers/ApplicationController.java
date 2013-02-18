@@ -1,6 +1,5 @@
 package org.agric.oxm.web.controllers;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -9,9 +8,6 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class ApplicationController {
 
-    @Autowired
-    private SystemController systemController;
-
     /**
      * handles the index page url
      * 
@@ -19,7 +15,7 @@ public class ApplicationController {
      */
     @RequestMapping(value = { "/", "index.jsp" })
     public ModelAndView welcomeHandler() {
-	return systemController.viewStudentHandler(null, new ModelMap());
+	return null;
     }
 
     @RequestMapping("/ServiceLogin")
