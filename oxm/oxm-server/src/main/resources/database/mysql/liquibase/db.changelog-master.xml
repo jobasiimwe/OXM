@@ -3,7 +3,7 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog/1.9 http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-1.9.xsd">
 
-	<changeSet author="mpiksjonathan@gmail.com" id="92a5192e-bdb3-11e0-b20f-002655bc695f">
+	<changeSet author="jompango@gmail.com" id="92a5192e-bdb3-11e0-b20f-002655bc695f">
 		<comment>Renamed liquibase path for changelog files.</comment>
 		<update tableName="DATABASECHANGELOG">
 			<column name="FILENAME" value="database/mysql/liquibase/db.changelog-1.0.xml"></column>
@@ -11,7 +11,7 @@
 		</update>
 	</changeSet>
 
-	<changeSet author="mpiksjonathan@gmail.com" id="375e8d9c-bdb4-11e0-ae9b-002655bc695f">
+	<changeSet author="jompango@gmail.com" id="375e8d9c-bdb4-11e0-ae9b-002655bc695f">
 		<comment>Renamed liquibase path for changelog files.</comment>
 		<update tableName="DATABASECHANGELOG">
 			<column name="FILENAME" value="database/mysql/liquibase/db.changelog.data-1.0.xml"></column>
@@ -19,6 +19,6 @@
 		</update>
 	</changeSet>
 	
-	<include file="database/mysql/liquibase/db.changelog-1.0.xml" />
+	<include file="database/mysql/liquibase/18-02-2013-changelog-1.0.xml" />
 	<include file="database/mysql/liquibase/db.changelog.data-1.0.xml" />
 </databaseChangeLog>

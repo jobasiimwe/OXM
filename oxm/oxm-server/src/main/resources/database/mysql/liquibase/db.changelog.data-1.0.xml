@@ -5,19 +5,19 @@
     
     <!--=========== Used to add some default data into the database ==========-->
     
-    <!-- <changeSet author="jmpango" id="1" runAlways="true">
-        <customChange class="org.studentsys.api.database.ConceptCategoryLiquibaseChange" />
+    <changeSet author="jompango@gmail.com" id="1" runAlways="true">
+        <customChange class="org.agric.oxm.server.database.ConceptCategoryLiquibaseChange" />
     </changeSet>
 
-    <changeSet author="jmpango" id="2" runAlways="true">
-        <customChange class="org.studentsys.api.database.PermissionLiquibaseChange" />
+    <changeSet author="jompango@gmail.com" id="2" runAlways="true">
+        <customChange class="org.agric.oxm.server.database.PermissionLiquibaseChange" />
     </changeSet>
 
-    <changeSet author="jmpango" id="3" runAlways="true">
-        <customChange class="org.studentsys.api.database.ConceptLiquibaseChange" />
+    <changeSet author="jompango@gmail.com" id="3" runAlways="true">
+        <customChange class="org.agric.oxm.server.database.ConceptLiquibaseChange" />
     </changeSet>
-
-    <changeSet author="jmpango" id="107BEED4-A04A-4DD2-B0AD-E315B795978E"
+    
+    <changeSet author="jompango@gmail.com" id="107BEED4-A04A-4DD2-B0AD-E315B795978E"
 		failOnError="true">
         <preConditions onFail="MARK_RAN" onError="HALT">
             <tableExists tableName="users" />
@@ -35,13 +35,14 @@
             <column name="password" value="7357bec928a1af86415f7b8c11245296ec1779d" />
             <column name="salt" value="e2597cf74095403889c6b07b46d8af5d94b8e6" />
             <column name="user_status" valueNumeric="1" />
-            <column name="secret_question" value="Who created me?" />
-            <column name="secret_answer" value="JM" />
             <column name="record_status" valueNumeric="0" />
+            <column name="first_name" value="administrator" />
+            <column name="last_name" value="oxfarm" />
+            <column name="phone1" value="+256 XXXXXXX" />
         </insert>
     </changeSet>
 
-    <changeSet author="jmpango" id="1379EDD1-C123-424A-BD75-DF08714580B5">
+    <changeSet author="jompango@gmail.com" id="1379EDD1-C123-424A-BD75-DF08714580B5">
         <preConditions onFail="MARK_RAN" onError="HALT">
             <tableExists tableName="roles" />
             <and>
@@ -60,7 +61,7 @@
         </insert>
     </changeSet>
 
-    <changeSet author="jmpango" id="1669C1A8-A00D-45D1-9429-BCFBF1AC9464">
+    <changeSet author="jompango@gmail.com" id="1669C1A8-A00D-45D1-9429-BCFBF1AC9464">
         <preConditions onFail="HALT">
             <tableExists tableName="users" />
             <and>
@@ -88,5 +89,5 @@
             <column name="role_id" value="1379EDD1-C123-424A-BD75-DF08714580B5" />
             <column name="user_id" value="107BEED4-A04A-4DD2-B0AD-E315B795978E" />
         </insert>
-    </changeSet> -->
+    </changeSet> 
 </databaseChangeLog>

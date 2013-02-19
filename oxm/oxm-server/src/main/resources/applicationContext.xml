@@ -17,13 +17,13 @@
 			http://www.springframework.org/schema/security 
           	http://www.springframework.org/schema/security/spring-security-3.0.3.xsd">
 
-        <!-- PROPERTY PLACEHOLDER CONFIGURER -->
-	<!-- <bean name="settings"
-		class="org.studentsys.api.utils.RanchPropertyPlaceHolderConfigurer">
-		<property name="environmentVariable" value="RANCH_SETTINGS" />
-		<property name="classPathPropertiesFilename" value="RANCH_SETTINGS.properties" />
-	</bean> -->
-	
+	<!-- PROPERTY PLACEHOLDER CONFIGURER -->
+	<bean name="settings"
+		class="org.agric.oxm.utils.PropertyPlaceHolderConfigurer">
+		<property name="environmentVariable" value="OXM_SETTINGS" />
+		<property name="classPathPropertiesFilename" value="OXM_SETTINGS.properties" />
+	</bean>
+
 	<import resource="classpath:applicationContext-security.xml" />
 	<import resource="classpath:applicationContext-Server.xml" />
 

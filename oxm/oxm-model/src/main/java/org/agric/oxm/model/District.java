@@ -47,7 +47,7 @@ public class District extends BaseData implements Comparable<District> {
 	return subCounties;
     }
 
-    public void setCounties(List<SubCounty> subCounties) {
+    public void setSubCounties(List<SubCounty> subCounties) {
 	this.subCounties = subCounties;
     }
     
@@ -57,7 +57,7 @@ public class District extends BaseData implements Comparable<District> {
 	}
 
 	if (this.getSubCounties() == null) {
-	    this.setCounties(new ArrayList<SubCounty>());
+	    this.setSubCounties(new ArrayList<SubCounty>());
 	}
 
 	this.getSubCounties().add(subCounty);

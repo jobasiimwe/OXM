@@ -16,21 +16,4 @@ import org.agric.oxm.model.Concept;
  * 
  */
 public interface ConceptDAO extends BaseDAO<Concept> {
-
-	/**
-	 * checks whether a concept with a given name exists.
-	 * 
-	 * @param name
-	 * @return
-	 */
-	boolean exists(String name);
-
-	/**
-	 * gets the identifier of the concept with the given name.
-	 * 
-	 * @param name
-	 * @return
-	 */
-	String getConceptIdByName(String name);
-
 }

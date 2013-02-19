@@ -3,9 +3,10 @@ package org.agric.oxm.model;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -35,8 +36,10 @@ public class ProductionOrganisation extends BaseData {
     }
 
     @SuppressWarnings("deprecation")
-    @OneToMany(mappedBy = "production_organisations", cascade = { CascadeType.ALL })
-    @Cascade({ org.hibernate.annotations.CascadeType.SAVE_UPDATE,
+     @OneToMany
+    @JoinTable(name = "producer", joinColumns = @JoinColumn(
+	    name = "production_organisation_id"), inverseJoinColumns = @JoinColumn(name = "producer_id"))
+   @Cascade({ org.hibernate.annotations.CascadeType.SAVE_UPDATE,
 	    org.hibernate.annotations.CascadeType.DELETE,
 	    org.hibernate.annotations.CascadeType.MERGE,
 	    org.hibernate.annotations.CascadeType.PERSIST,
@@ -50,7 +53,9 @@ public class ProductionOrganisation extends BaseData {
     }
 
     @SuppressWarnings("deprecation")
-    @OneToMany(mappedBy = "production_organisations", cascade = { CascadeType.ALL })
+    @OneToMany
+    @JoinTable(name = "position_holder", joinColumns = @JoinColumn(
+	    name = "production_organisation_id"), inverseJoinColumns = @JoinColumn(name = "position_holder_id"))
     @Cascade({ org.hibernate.annotations.CascadeType.SAVE_UPDATE,
 	    org.hibernate.annotations.CascadeType.DELETE,
 	    org.hibernate.annotations.CascadeType.MERGE,

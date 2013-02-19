@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
@@ -12,6 +13,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+
+import org.hibernate.annotations.Cascade;
 
 @Entity
 @Table(name = "post")
@@ -48,7 +51,7 @@ public class Post extends BaseData {
         return datePosted;
     }
 
-    public void setDate(Date datePosted) {
+    public void setDatePosted(Date datePosted) {
         this.datePosted = datePosted;
     }
 
@@ -71,7 +74,13 @@ public class Post extends BaseData {
         this.otherItem = otherItem;
     }
 
-    @OneToMany(mappedBy = "comment")
+    @SuppressWarnings("deprecation")
+    @OneToMany(mappedBy = "post", cascade = { CascadeType.ALL })
+    @Cascade({ org.hibernate.annotations.CascadeType.SAVE_UPDATE,
+	    org.hibernate.annotations.CascadeType.DELETE,
+	    org.hibernate.annotations.CascadeType.MERGE,
+	    org.hibernate.annotations.CascadeType.PERSIST,
+	    org.hibernate.annotations.CascadeType.DELETE_ORPHAN })
     public List<Comment> getComments() {
         return comments;
     }
@@ -80,7 +89,7 @@ public class Post extends BaseData {
         this.comments = comments;
     }
     
-    @Column(name = "text", nullable = false, length = 1000)
+    @Column(name = "text", nullable = false, length = 1000, insertable=false, updatable=false)
     public String getText() {
         return text;
     }
