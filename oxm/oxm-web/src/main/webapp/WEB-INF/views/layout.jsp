@@ -16,7 +16,7 @@
 </title>
 <link type="text/css" rel="stylesheet" href="static/css/custom-theme/jquery-ui-1.8.15.custom.css" />
 <link type="text/css" rel="stylesheet" href="static/css/system.css" />
-
+<link rel="icon" type="image/png" href="static/images/xx.png" />
 <script type="text/javascript" src="static/js/jquery-1.6.2.min.js"></script>
 <script type="text/javascript" src="static/js/jquery-ui-1.8.15.custom.min.js"></script>
 <script type="text/javascript" src="static/js/jquery.getUrlParam.js"></script>

@@ -14,13 +14,16 @@
 
 	<aop:aspectj-autoproxy />
 	<context:annotation-config />
-	<!-- <context:component-scan base-package="org.mak.cis.mohr.web.propertyeditors" /> -->
+	<context:component-scan base-package="org.agric.oxm.web.propertyeditors" />
 	<context:component-scan base-package="org.agric.oxm.web.controllers" />
 
-	<!-- <bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter"> 
-		<property name="cacheSeconds" value="0" /> <property name="webBindingInitializer"> 
-		<bean class="org.mak.cis.mohr.web.MohrBindingInitializer" /> </property> 
-		</bean> -->
+	<bean
+		class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter">
+		<property name="cacheSeconds" value="0" />
+		<property name="webBindingInitializer">
+			<bean class="org.agric.oxm.web.OXMBindingInitializer" />
+		</property>
+	</bean>
 
 
 	<bean id="viewResolver"

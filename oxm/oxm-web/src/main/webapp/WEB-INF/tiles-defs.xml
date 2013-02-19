@@ -8,6 +8,8 @@
 		<put-attribute name="body" type="template" value="/WEB-INF/views/tiles/body.jsp" />
 		<put-attribute name="footer" type="template" value="/WEB-INF/views/tiles/footer.jsp" />
 	</definition>
+
+	<definition name="index" extends="layout" />
 	
 	<!-- USERS -->
 	<definition name="users" extends="layout">
