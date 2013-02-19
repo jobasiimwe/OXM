@@ -12,8 +12,8 @@ import javax.persistence.Table;
 import org.hibernate.annotations.Cascade;
 
 @Entity
-@Table(name = "production_organisations")
-public class ProductionOrganisations extends BaseData {
+@Table(name = "production_organisation")
+public class ProductionOrganisation extends BaseData {
 
     private String name;
 
@@ -21,7 +21,7 @@ public class ProductionOrganisations extends BaseData {
 
     private List<PositionHolder> positionHolders;
 
-    public ProductionOrganisations() {
+    public ProductionOrganisation() {
 	super();
     }
 

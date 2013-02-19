@@ -7,8 +7,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "land")
-public class Land extends BaseData {
+@Table(name = "land_use")
+public class LandUse extends BaseData {
 
     private Producer producer;
 
@@ -16,7 +16,7 @@ public class Land extends BaseData {
 
     private int size;
 
-    public Land() {
+    public LandUse() {
 	super();
     }
 
