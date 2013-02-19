@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
  * @author Job
  * 
  */
-@Repository("sellingPlaceDAO")
+@Repository("SellingPlaceDAO")
 public class HibernateSellingPlaceDAOImpl extends BaseDAOImpl<SellingPlace>
 		implements SellingPlaceDAO {
 
