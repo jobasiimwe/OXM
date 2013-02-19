@@ -13,7 +13,7 @@ import org.springframework.stereotype.Repository;
  * 
  * @author Job
  */
-@Repository("UserDAO")
+@Repository("userDAO")
 public class HibernateUserDAOImpl extends BaseDAOImpl<User> implements UserDAO {
 
 }

@@ -8,7 +8,7 @@ import org.agric.oxm.model.Gender;
 import org.agric.oxm.model.Role;
 
 /**
- * @author MARKPHILIP
+ * @author Job
  * 
  */
 public class UserSearchParameters {

@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
  * @author Job
  * 
  */
-@Repository("PriceDAO")
+@Repository("priceDAO")
 public class HibernatePriceDAOImpl extends BaseDAOImpl<Price> implements
 		PriceDAO {
 

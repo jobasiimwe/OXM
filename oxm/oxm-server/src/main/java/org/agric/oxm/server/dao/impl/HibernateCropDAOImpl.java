@@ -11,7 +11,7 @@ import org.springframework.stereotype.Repository;
  * @author Job
  *
  */
-@Repository("CropDAO")
+@Repository("cropDAO")
 public class HibernateCropDAOImpl extends BaseDAOImpl<Crop> implements CropDAO {
 
 }

@@ -15,7 +15,7 @@ import org.springframework.stereotype.Repository;
  * @author Job
  * 
  */
-@Repository("VillageDAO")
+@Repository("villageDAO")
 public class HibernateVillageDAOImpl extends BaseDAOImpl<Village> implements
 		VillageDAO {
 

@@ -11,7 +11,7 @@ import org.springframework.stereotype.Repository;
  * @author Job
  * 
  */
-@Repository("CommentDAO")
+@Repository("commentDAO")
 public class HibernateCommentDAOImpl extends BaseDAOImpl<Comment> implements
 		CommentDAO {
 

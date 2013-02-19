@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
  * @author Job
  * 
  */
-@Repository("GisCordinateDAO")
+@Repository("gisCordinateDAO")
 public class HibernateGisCordinateDAOImpl extends BaseDAOImpl<GisCordinate>
 		implements GisCordinateDAO {
 

@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
  * @author Job
  * 
  */
-@Repository("MessageDAO")
+@Repository("messageDAO")
 public class HibernateMessageDAOImpl extends BaseDAOImpl<Message> implements
 		MessageDAO {
 

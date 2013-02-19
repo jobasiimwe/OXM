@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
  * @author Job
  * 
  */
-@Repository("SeasonDAO")
+@Repository("seasonDAO")
 public class HibernateSeasonDAOImpl extends BaseDAOImpl<Season> implements
 		SeasonDAO {
 

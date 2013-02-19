@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
  * @author Job
  * 
  */
-@Repository("ProducerDAO")
+@Repository("producerDAO")
 public class HibernateProducerDAOImpl extends BaseDAOImpl<Producer> implements
 		ProducerDAO {
 

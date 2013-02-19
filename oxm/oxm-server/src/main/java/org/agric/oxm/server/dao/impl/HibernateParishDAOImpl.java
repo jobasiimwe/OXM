@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
  * @author Job
  * 
  */
-@Repository("ParishDAO")
+@Repository("parishDAO")
 public class HibernateParishDAOImpl extends BaseDAOImpl<Parish> implements
 		ParishDAO {
 

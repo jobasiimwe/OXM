@@ -15,100 +15,86 @@ import javax.persistence.UniqueConstraint;
 @Table(name = "concepts")
 public class Concept extends BaseData implements Comparable<Concept> {
 
-    private String name;
-    
-    private List<ConceptCategory> categories;
+	private String name;
 
-    private String description;
+	private List<ConceptCategory> categories;
 
-    private String code;
+	private String description;
 
-    public Concept() {
-	super();
-    }
-
-    public Concept(String conceptName, String conceptCode,
-	    List<ConceptCategory> conceptCategories, String conceptDescription) {
-	super();
-	this.name = conceptName;
-	this.code = conceptCode;
-	this.categories = conceptCategories;
-	this.description = conceptDescription;
-    }
-
-    @Column(name = "concept_name", nullable = false)
-    public String getName() {
-	return name;
-    }
-
-    public void setName(String name) {
-	this.name = name;
-    }
-
-    @ManyToMany
-    @JoinTable(uniqueConstraints = @UniqueConstraint(columnNames = { "concept_id",
-	    "concept_category_id" }), name = "concept_category_link", joinColumns = @JoinColumn(
-	    name = "concept_id", unique = false), inverseJoinColumns = @JoinColumn(
-	    name = "concept_category_id", unique = false))
-    public List<ConceptCategory> getCategories() {
-	return categories;
-    }
-
-    public void setCategories(List<ConceptCategory> categories) {
-	this.categories = categories;
-    }
-
-    public void addCategory(ConceptCategory category) {
-	if (category == null) {
-	    return;
+	public Concept() {
+		super();
 	}
 
-	if (getCategories() == null) {
-	    setCategories(new ArrayList<ConceptCategory>());
+	public Concept(String conceptName, List<ConceptCategory> conceptCategories,
+			String conceptDescription) {
+		super();
+		this.name = conceptName;
+		this.categories = conceptCategories;
+		this.description = conceptDescription;
 	}
 
-	getCategories().add(category);
-    }
-
-    public void removeCategory(ConceptCategory category) {
-	if (category == null || getCategories() == null) {
-	    return;
+	@Column(name = "concept_name", nullable = false, unique = true)
+	public String getName() {
+		return name;
 	}
 
-	getCategories().remove(category);
-    }
-
-    @Column(name = "concept_description", nullable = false)
-    public String getDescription() {
-	return description;
-    }
-
-    public void setDescription(String description) {
-	this.description = description;
-    }
-
-    @Column(name = "concept_code", unique = true, nullable = true)
-    public String getCode() {
-	return code;
-    }
-
-    public void setCode(String code) {
-	this.code = code;
-    }
-
-    @Override
-    public int compareTo(Concept o) {
-	return this.getName().compareToIgnoreCase(o.getName());
-    }
-
-    public boolean belongsTo(ConceptCategory conceptCategory) {
-	if (this.getCategories() != null) {
-	    for (ConceptCategory category : getCategories()) {
-		if (category.getId().equalsIgnoreCase(conceptCategory.getId()))
-		    return true;
-	    }
+	public void setName(String name) {
+		this.name = name;
 	}
-	return false;
-    }
+
+	@ManyToMany
+	@JoinTable(uniqueConstraints = @UniqueConstraint(columnNames = {
+			"concept_id", "concept_category_id" }), name = "concept_category_link", joinColumns = @JoinColumn(name = "concept_id", unique = false), inverseJoinColumns = @JoinColumn(name = "concept_category_id", unique = false))
+	public List<ConceptCategory> getCategories() {
+		return categories;
+	}
+
+	public void setCategories(List<ConceptCategory> categories) {
+		this.categories = categories;
+	}
+
+	public void addCategory(ConceptCategory category) {
+		if (category == null) {
+			return;
+		}
+
+		if (getCategories() == null) {
+			setCategories(new ArrayList<ConceptCategory>());
+		}
+
+		getCategories().add(category);
+	}
+
+	public void removeCategory(ConceptCategory category) {
+		if (category == null || getCategories() == null) {
+			return;
+		}
+
+		getCategories().remove(category);
+	}
+
+	@Column(name = "concept_description", nullable = false)
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	@Override
+	public int compareTo(Concept o) {
+		return this.getName().compareToIgnoreCase(o.getName());
+	}
+
+	public boolean belongsTo(ConceptCategory conceptCategory) {
+		if (this.getCategories() != null) {
+			for (ConceptCategory category : getCategories()) {
+				if (category.getId().equalsIgnoreCase(conceptCategory.getId()))
+					return true;
+			}
+		}
+		return false;
+	}
 
 }

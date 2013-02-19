@@ -11,7 +11,7 @@ import org.springframework.stereotype.Repository;
  * @author Job
  * 
  */
-@Repository("ConceptDAO")
+@Repository("conceptDAO")
 public class HibernateConceptDAOImpl extends BaseDAOImpl<Concept> implements
 		ConceptDAO {
 

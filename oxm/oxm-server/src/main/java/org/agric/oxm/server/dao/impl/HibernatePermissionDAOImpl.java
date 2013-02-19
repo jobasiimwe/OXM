@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
  * @author Job
  *
  */
-@Repository("PermissionDAO")
+@Repository("permissionDAO")
 public class HibernatePermissionDAOImpl extends BaseDAOImpl<Permission>
 		implements PermissionDAO {
 

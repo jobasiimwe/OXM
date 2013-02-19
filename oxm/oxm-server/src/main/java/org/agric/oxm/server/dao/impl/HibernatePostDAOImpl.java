@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
  * @author Job
  * 
  */
-@Repository("PostDAO")
+@Repository("postDAO")
 public class HibernatePostDAOImpl extends BaseDAOImpl<Post> implements PostDAO {
 
 }
