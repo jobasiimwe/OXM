@@ -25,47 +25,34 @@ public final class DefaultConceptCategories {
 	}
 
 	/**
-	 * The complaint type concept category
+	 * The Units of measure concept category
 	 */
-	@ConceptCategoryAnnotation(id = "CE2485B8-EA69-4eb2-9BAC-25115B5B0FF3", description = "The type of complaint submited by the student")
-	public static final String COMPLAINT_TYPE = "Complaint type";
+	@ConceptCategoryAnnotation(id = "CE2485B8-EA69-4eb2-9BAC-25115B5B0FF3", description = "Units of measure")
+	public static final String UNITS_OF_MEASURE = "Units of measure";
 
 	/**
-	 * The complaint status concept category
+	 * The User type concept category
 	 */
-	@ConceptCategoryAnnotation(id = "B8C98E8F-4154-475a-BA18-B153CD9B10B4", description = "The status of the complaint submited by the student")
-	public static final String COMPLAINT_STATUS = "Complain status";
+	@ConceptCategoryAnnotation(id = "B8C98E8F-4154-475a-BA18-B153CD9B10B4", description = "User types")
+	public static final String USER_TYPE = "User type";
 
 	/**
-	 * The courseType concept category
+	 * The Selling Type Concept category
 	 */
-	@ConceptCategoryAnnotation(id = "E6389C2A-171F-48b2-B60E-CE7AD8FB9C46", description = "The Course Type of a course in the system")
-	public static final String COURSE_TYPE = "Course type";
+	@ConceptCategoryAnnotation(id = "E6389C2A-171F-48b2-B60E-CE7AD8FB9C46", description = "Selling type i.e retail or whole-sale")
+	public static final String SELLING_TYPE = "Selling type";
 
 	/**
-	 * The timeOfStuday concept category
+	 * The Forum post type Concept category
 	 */
-	@ConceptCategoryAnnotation(id = "F7538E54-C9E4-4c36-BDF2-151FD3869DFC", description = "Time of Study of a student in the system (mainly applies to short course students)")
-	public static final String TIME_OF_STUDY = "Time of Study";
-
-	/**
-	 * The timeUnit concept category
-	 */
-	@ConceptCategoryAnnotation(id = "51A8CDF1-733A-4f35-A175-DDF2A98FE356", description = "Time Unit e.g. Year(s), Month(s), Week(s), used for course duration")
-	public static final String TIME_UNIT = "Time unit";
-
-	/**
-	 * The timeUnit concept category
-	 */
-	@ConceptCategoryAnnotation(id = "B8CB5F8F-11EE-496c-BCCA-1D6836F5DD1A", description = "Complaint event type e.g. Comment, Status_change, Forward")
-	public static final String COMPLAINT_EVENT_TYPE = "Complaint Event Type";
+	@ConceptCategoryAnnotation(id = "92753888-C9D6-44e6-8261-B33A12B10279", description = "Buy and Sell Forum post type")
+	public static final String FORUM_POST_TYPE = "Forum post type";
 
 	/**
 	 * array of the default concept categories
 	 */
 	public static final String[] DEFAULT_CONCEPT_CATEGORIES = new String[] {
-			COMPLAINT_TYPE, COMPLAINT_STATUS, COURSE_TYPE, TIME_OF_STUDY,
-			TIME_UNIT, COMPLAINT_EVENT_TYPE };
+			UNITS_OF_MEASURE, USER_TYPE, SELLING_TYPE, FORUM_POST_TYPE };
 
 	/**
 	 * gets the id of the field in this class representing the given concept
