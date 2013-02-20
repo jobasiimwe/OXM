@@ -270,27 +270,51 @@ public final class PermissionConstants {
 	public static final String DELETE_MESSAGE = "delete_message";
 
 	/**
-	 * permission to add a committee and members
+	 * permission to add a committee, members and positions
 	 */
-	@PermissionAnnotation(id = "B024A53E-F1EC-498d-8853-7B51AE72EABA", description = "Ability to add a committee and members")
-	public static final String ADD_COMMITTEE_AND_MEMBERS = "add_committee_and_members";
+	@PermissionAnnotation(id = "B024A53E-F1EC-498d-8853-7B51AE72EABA", description = "Ability to add a committee, members and positions")
+	public static final String ADD_COMMITTEE_DETAILS = "add_committee_details";
 
 	/**
-	 * permission to view a committee and members
+	 * permission to view a committee, members and positions
 	 */
-	@PermissionAnnotation(id = "A9D6DFC9-BEE5-4c1d-960C-B3BC447BF7A3", description = "Ability to view a committee and members")
-	public static final String VIEW_COMMITTEE_AND_MEMBERS = "view_committee_and_members";
+	@PermissionAnnotation(id = "A9D6DFC9-BEE5-4c1d-960C-B3BC447BF7A3", description = "Ability to view a committee, members and positions")
+	public static final String VIEW_COMMITTEE__DETAILS = "view_committee_details";
 
 	/**
-	 * permission to edit committee and members
+	 * permission to edit committee, members and positions
 	 */
-	@PermissionAnnotation(id = "DB0A0DFC-D8EA-4a9e-82AD-F677A969D3E8", description = "Ability to edit a committee and members")
-	public static final String EDIT_COMMITTEE_AND_MEMBERS = "edit_committee_and_members";
+	@PermissionAnnotation(id = "DB0A0DFC-D8EA-4a9e-82AD-F677A969D3E8", description = "Ability to edit a committee, members and positions")
+	public static final String EDIT_COMMITTEE__DETAILS = "edit_committee_details";
 
 	/**
-	 * permission to delete a committee and members
+	 * permission to delete a committee, members and positions
 	 */
-	@PermissionAnnotation(id = "030FA7B1-6560-46c1-805A-86C929A2154A", description = "Ability to delete a committee and members")
-	public static final String DELETE_COMMITTEE_AND_MEMBERS = "delete_committee_and_members";
+	@PermissionAnnotation(id = "030FA7B1-6560-46c1-805A-86C929A2154A", description = "Ability to delete a committee, members and positions")
+	public static final String DELETE_COMMITTEE__DETAILS = "delete_committee_details";
+
+	/**
+	 * permission to add a post
+	 */
+	@PermissionAnnotation(id = "74701519-3D5A-42aa-89FF-15D12AAD1B6E", description = "Ability to add a post")
+	public static final String ADD_POST = "add_post";
+
+	/**
+	 * permission to view a post
+	 */
+	@PermissionAnnotation(id = "FEEE4B8E-6CC8-4bdd-A8D3-D11B1E5167EF", description = "Ability to view a post")
+	public static final String VIEW_POST = "view_post";
+
+	/**
+	 * permission to edit posts
+	 */
+	@PermissionAnnotation(id = "9C97A4FE-A253-4ede-828D-18F050CDF340", description = "Ability to edit a post")
+	public static final String EDIT_POST = "edit_post";
+
+	/**
+	 * permission to delete a post
+	 */
+	@PermissionAnnotation(id = "29642CA9-5BCB-4713-AB3D-45919CB8AD20", description = "Ability to delete a post")
+	public static final String DELETE_POST = "delete_post";
 
 }

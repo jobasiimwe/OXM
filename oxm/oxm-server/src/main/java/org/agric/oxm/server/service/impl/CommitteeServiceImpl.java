@@ -32,15 +32,15 @@ public class CommitteeServiceImpl implements CommitteeService {
 	@Autowired
 	private CommitteeMemberDAO committeeMemberDAO;
 
-	@Secured({ PermissionConstants.ADD_COMMITTEE_AND_MEMBERS,
-			PermissionConstants.EDIT_COMMITTEE_AND_MEMBERS })
+	@Secured({ PermissionConstants.ADD_COMMITTEE_DETAILS,
+			PermissionConstants.EDIT_COMMITTEE__DETAILS })
 	@Transactional(propagation = Propagation.REQUIRED)
 	@Override
 	public void save(Committee committee) {
 		committeeDAO.save(committee);
 	}
 
-	@Secured({ PermissionConstants.VIEW_COMMITTEE_AND_MEMBERS })
+	@Secured({ PermissionConstants.VIEW_COMMITTEE__DETAILS })
 	@Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
 	@Override
 	public void validate(Committee committee) throws ValidationException {
@@ -57,28 +57,28 @@ public class CommitteeServiceImpl implements CommitteeService {
 		}
 	}
 
-	@Secured({ PermissionConstants.VIEW_COMMITTEE_AND_MEMBERS })
+	@Secured({ PermissionConstants.VIEW_COMMITTEE__DETAILS })
 	@Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
 	@Override
 	public List<Committee> getCommittees() {
 		return committeeDAO.searchByRecordStatus(RecordStatus.ACTIVE);
 	}
 
-	@Secured({ PermissionConstants.VIEW_COMMITTEE_AND_MEMBERS })
+	@Secured({ PermissionConstants.VIEW_COMMITTEE__DETAILS })
 	@Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
 	@Override
 	public Committee getCommitteeById(String id) {
 		return committeeDAO.searchUniqueByPropertyEqual("id", id);
 	}
 
-	@Secured({ PermissionConstants.VIEW_COMMITTEE_AND_MEMBERS })
+	@Secured({ PermissionConstants.VIEW_COMMITTEE__DETAILS })
 	@Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
 	@Override
 	public Committee getCommitteeByName(String name) {
 		return committeeDAO.searchUniqueByPropertyEqual("name", name);
 	}
 
-	@Secured({ PermissionConstants.DELETE_COMMITTEE_AND_MEMBERS })
+	@Secured({ PermissionConstants.DELETE_COMMITTEE__DETAILS })
 	@Transactional(propagation = Propagation.REQUIRED)
 	@Override
 	public void deleteCommitteesByIds(String[] ids) {
@@ -86,7 +86,7 @@ public class CommitteeServiceImpl implements CommitteeService {
 	}
 
 	@Override
-	@Secured({ PermissionConstants.VIEW_COMMITTEE_AND_MEMBERS })
+	@Secured({ PermissionConstants.VIEW_COMMITTEE__DETAILS })
 	@Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
 	public CommitteeMember getCommitteeMemberById(String id) {
 		return committeeMemberDAO.searchUniqueByPropertyEqual("id", id);
