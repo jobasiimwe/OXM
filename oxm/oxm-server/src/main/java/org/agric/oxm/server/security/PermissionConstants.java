@@ -197,4 +197,28 @@ public final class PermissionConstants {
 	@PermissionAnnotation(id = "17807728-E32A-477e-8372-E082C99AB375", description = "Ability to delete a financial institution")
 	public static final String DELETE_FINANCIAL_INSTITUTION = "delete_financial_institution";
 
+	/**
+	 * permission to add a land use
+	 */
+	@PermissionAnnotation(id = "", description = "Ability to add a land use")
+	public static final String ADD_LAND_USE = "add_land_use";
+
+	/**
+	 * permission to view a land use
+	 */
+	@PermissionAnnotation(id = "", description = "Ability to view a land use")
+	public static final String VIEW_LAND_USE = "view_land_use";
+
+	/**
+	 * permission to edit land uses
+	 */
+	@PermissionAnnotation(id = "", description = "Ability to edit a land_use")
+	public static final String EDIT_LAND_USE = "edit_land_use";
+
+	/**
+	 * permission to delete a land use
+	 */
+	@PermissionAnnotation(id = "", description = "Ability to delete a land use")
+	public static final String DELETE_LAND_USE = "delete_land_use";
+
 }
