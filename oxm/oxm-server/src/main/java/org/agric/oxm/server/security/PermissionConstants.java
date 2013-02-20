@@ -244,4 +244,28 @@ public final class PermissionConstants {
 	 */
 	@PermissionAnnotation(id = "00B29FB9-C7E6-4a29-B98C-FF263B49077D", description = "Ability to delete a producer")
 	public static final String DELETE_PRODUCER = "delete_producer";
+	
+	/**
+	 * permission to add a message
+	 */
+	@PermissionAnnotation(id = "36C9BB9E-88B7-48ed-8BE2-9675A6FBB7ED", description = "Ability to add a message")
+	public static final String ADD_MESSAGE = "add_message";
+
+	/**
+	 * permission to view a message
+	 */
+	@PermissionAnnotation(id = "7EEBF022-37B6-4bfa-A825-E8314A4CCD4A", description = "Ability to view a message")
+	public static final String VIEW_MESSAGE = "view_message";
+
+	/**
+	 * permission to edit messages
+	 */
+	@PermissionAnnotation(id = "78BA4961-E2DF-4791-8CE0-57D6BAC6E6BA", description = "Ability to edit a message")
+	public static final String EDIT_MESSAGE = "edit_message";
+
+	/**
+	 * permission to delete a message
+	 */
+	@PermissionAnnotation(id = "3BDE7750-24CD-4b4f-B5F8-8E1B48527350", description = "Ability to delete a message")
+	public static final String DELETE_MESSAGE = "delete_message";
 }

@@ -16,91 +16,91 @@ import org.hibernate.annotations.Type;
 @Table(name = "message")
 public class Message extends BaseData {
 
-    private User sender;
+	private User from;
 
-    private User to;
+	private User to;
 
-    private String message;
+	private String message;
 
-    private Date datePosted;
+	private Date datePosted;
 
-    private boolean senderCleared = false;
+	private boolean fromCleared = false;
 
-    private boolean toCleared = false;
+	private boolean toCleared = false;
 
-    private boolean isSeen = false;
+	private boolean isSeen = false;
 
-    public Message() {
-	super();
-    }
+	public Message() {
+		super();
+	}
 
-    @ManyToOne
-    @JoinColumn(name = "sender", nullable = true)
-    public User getSender() {
-	return sender;
-    }
+	@ManyToOne
+	@JoinColumn(name = "from", nullable = false)
+	public User getFrom() {
+		return from;
+	}
 
-    public void setSender(User sender) {
-	this.sender = sender;
-    }
+	public void setFrom(User from) {
+		this.from = from;
+	}
 
-    @ManyToOne
-    @JoinColumn(name = "to", nullable = true)
-    public User getTo() {
-	return to;
-    }
+	@ManyToOne
+	@JoinColumn(name = "to", nullable = false)
+	public User getTo() {
+		return to;
+	}
 
-    public void setTo(User to) {
-	this.to = to;
-    }
+	public void setTo(User to) {
+		this.to = to;
+	}
 
-    @Column(name = "message", nullable = false, length = 1000)
-    public String getMessage() {
-	return message;
-    }
+	@Column(name = "message", nullable = false, length = 1000)
+	public String getMessage() {
+		return message;
+	}
 
-    public void setMessage(String message) {
-	this.message = message;
-    }
+	public void setMessage(String message) {
+		this.message = message;
+	}
 
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "date_posted", nullable = false)
-    public Date getDatePosted() {
-	return datePosted;
-    }
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "date_posted", nullable = false)
+	public Date getDatePosted() {
+		return datePosted;
+	}
 
-    public void setDatePosted(Date datePosted) {
-	this.datePosted = datePosted;
-    }
+	public void setDatePosted(Date datePosted) {
+		this.datePosted = datePosted;
+	}
 
-    @Type(type = "true_false")
-    @Column(name = "is_sender_cleared", nullable = true)
-    public boolean isSenderCleared() {
-	return senderCleared;
-    }
+	@Type(type = "true_false")
+	@Column(name = "is_sender_cleared", nullable = true)
+	public boolean isFromCleared() {
+		return fromCleared;
+	}
 
-    public void setSenderCleared(boolean senderCleared) {
-	this.senderCleared = senderCleared;
-    }
+	public void setFromCleared(boolean senderCleared) {
+		this.fromCleared = senderCleared;
+	}
 
-    @Type(type = "true_false")
-    @Column(name = "is_to_cleared", nullable = true)
-    public boolean isToCleared() {
-	return toCleared;
-    }
+	@Type(type = "true_false")
+	@Column(name = "is_to_cleared", nullable = true)
+	public boolean isToCleared() {
+		return toCleared;
+	}
 
-    public void setToCleared(boolean toCleared) {
-	this.toCleared = toCleared;
-    }
+	public void setToCleared(boolean toCleared) {
+		this.toCleared = toCleared;
+	}
 
-    @Type(type = "true_false")
-    @Column(name = "is_seen", nullable = true)
-    public boolean isSeen() {
-	return isSeen;
-    }
+	@Type(type = "true_false")
+	@Column(name = "is_seen", nullable = true)
+	public boolean isSeen() {
+		return isSeen;
+	}
 
-    public void setSeen(boolean isSeen) {
-	this.isSeen = isSeen;
-    }
+	public void setSeen(boolean isSeen) {
+		this.isSeen = isSeen;
+	}
 
 }

@@ -8,14 +8,11 @@
   <property name="connection.pool_size">1</property>
   <!--SQL dialect -->
   <property name="dialect">org.hibernate.dialect.MySQLDialect</property>
-
-  
+  <mapping class="org.agric.oxm.model.Comment"/>
+  <mapping class="org.agric.oxm.model.Committee"/>
+  <mapping class="org.agric.oxm.model.CommitteeMember"/>
   <mapping class="org.agric.oxm.model.Concept"/>
   <mapping class="org.agric.oxm.model.ConceptCategory"/>
-  <mapping class="org.agric.oxm.model.Permission"/>
-  <mapping class="org.agric.oxm.model.Role"/>
-  <mapping class="org.agric.oxm.model.User"/>
-  <mapping class="org.agric.oxm.model.Comment"/>
   <mapping class="org.agric.oxm.model.Crop"/>
   <mapping class="org.agric.oxm.model.District"/>
   <mapping class="org.agric.oxm.model.Document"/>
@@ -25,17 +22,18 @@
   <mapping class="org.agric.oxm.model.LandUse"/>
   <mapping class="org.agric.oxm.model.Message"/>
   <mapping class="org.agric.oxm.model.Parish"/>
+  <mapping class="org.agric.oxm.model.Permission"/>
   <mapping class="org.agric.oxm.model.Position"/>
-  <mapping class="org.agric.oxm.model.PositionHolder"/>
   <mapping class="org.agric.oxm.model.Post"/>
   <mapping class="org.agric.oxm.model.Price"/>
   <mapping class="org.agric.oxm.model.Producer"/>
   <mapping class="org.agric.oxm.model.ProductionOrganisation"/>
   <mapping class="org.agric.oxm.model.Publication"/>
+  <mapping class="org.agric.oxm.model.Role"/>
   <mapping class="org.agric.oxm.model.Season"/>
   <mapping class="org.agric.oxm.model.SellingPlace"/>
   <mapping class="org.agric.oxm.model.SubCounty"/>
-  <mapping class="org.agric.oxm.model.Village"/>  
-  
+  <mapping class="org.agric.oxm.model.User"/>
+  <mapping class="org.agric.oxm.model.Village"/>
  </session-factory>
 </hibernate-configuration>
