@@ -244,7 +244,7 @@ public final class PermissionConstants {
 	 */
 	@PermissionAnnotation(id = "00B29FB9-C7E6-4a29-B98C-FF263B49077D", description = "Ability to delete a producer")
 	public static final String DELETE_PRODUCER = "delete_producer";
-	
+
 	/**
 	 * permission to add a message
 	 */
@@ -268,4 +268,29 @@ public final class PermissionConstants {
 	 */
 	@PermissionAnnotation(id = "3BDE7750-24CD-4b4f-B5F8-8E1B48527350", description = "Ability to delete a message")
 	public static final String DELETE_MESSAGE = "delete_message";
+
+	/**
+	 * permission to add a committee and members
+	 */
+	@PermissionAnnotation(id = "B024A53E-F1EC-498d-8853-7B51AE72EABA", description = "Ability to add a committee and members")
+	public static final String ADD_COMMITTEE_AND_MEMBERS = "add_committee_and_members";
+
+	/**
+	 * permission to view a committee and members
+	 */
+	@PermissionAnnotation(id = "A9D6DFC9-BEE5-4c1d-960C-B3BC447BF7A3", description = "Ability to view a committee and members")
+	public static final String VIEW_COMMITTEE_AND_MEMBERS = "view_committee_and_members";
+
+	/**
+	 * permission to edit committee and members
+	 */
+	@PermissionAnnotation(id = "DB0A0DFC-D8EA-4a9e-82AD-F677A969D3E8", description = "Ability to edit a committee and members")
+	public static final String EDIT_COMMITTEE_AND_MEMBERS = "edit_committee_and_members";
+
+	/**
+	 * permission to delete a committee and members
+	 */
+	@PermissionAnnotation(id = "030FA7B1-6560-46c1-805A-86C929A2154A", description = "Ability to delete a committee and members")
+	public static final String DELETE_COMMITTEE_AND_MEMBERS = "delete_committee_and_members";
+
 }
