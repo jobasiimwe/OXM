@@ -22,6 +22,6 @@ public interface SellingPlaceService {
 
 	SellingPlace getSellingPlaceById(String id);
 
-	void deleteSellingPlaceByIds(String[] ids);
+	void deleteSellingPlacesByIds(String[] ids);
 
 }

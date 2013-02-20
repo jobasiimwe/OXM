@@ -48,30 +48,16 @@ public class UserServiceImpl implements UserService {
 	@Autowired
 	private RoleDAO roleDAO;
 
-	// private Logger log = LoggerFactory.getLogger(this.getClass());
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * org.mak.cis.mohr.api.service.UserService#findUserByUsername(java.lang
-	 * .String)
-	 */
 	@Override
-	// @Secured(PermissionConstants.PERM_VIEW_USER)
+	@Secured(PermissionConstants.VIEW_USER)
 	@Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
 	public User getUserByUserName(String username) {
 		User user = userDAO.searchUniqueByPropertyEqual("username", username);
 		return user;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.mak.cis.mohr.api.service.UserService#getUsers(int)
-	 */
 	@Override
-	// @Secured(PermissionConstants.PERM_VIEW_USER)
+	@Secured(PermissionConstants.VIEW_USER)
 	@Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
 	public List<User> getUsers(Integer pageNo) {
 		Search search = new Search();
@@ -92,26 +78,19 @@ public class UserServiceImpl implements UserService {
 		return users;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * org.mak.cis.mohr.api.service.UserService#saveUser(org.mak.cis.mohr.model
-	 * .User)
-	 */
 	@Override
-	// @Secured(PermissionConstants.PERM_SAVE_USER)
+	@Secured({ PermissionConstants.ADD_USER, PermissionConstants.EDIT_USER })
 	@Transactional(propagation = Propagation.REQUIRED)
 	public void saveUser(User user) {
-
 		// check for clear text password and
 		// assign the hashedpassword and the salt from the old object
 		OXMSecurityUtil.prepUserCredentials(user);
-
 		userDAO.save(user);
 	}
 
 	@Override
+	@Secured(PermissionConstants.VIEW_USER)
+	@Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
 	public void validate(User user) throws ValidationException {
 
 		User existingUserWithSimilarUsername = getUserByUserName(user
@@ -132,28 +111,16 @@ public class UserServiceImpl implements UserService {
 		}
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.mak.cis.mohr.api.service.UserService#getUsers()
-	 */
 	@Override
-	// @Secured(PermissionConstants.PERM_VIEW_USER)
+	@Secured(PermissionConstants.VIEW_USER)
 	@Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
 	public List<User> getUsers() {
 		List<User> users = userDAO.searchByRecordStatus(RecordStatus.ACTIVE);
 		return users;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * org.mak.cis.mohr.api.service.UserService#deleteUser(org.mak.cis.mohr.
-	 * model.User)
-	 */
 	@Override
-	@Secured(PermissionConstants.PERM_DELETE_USER)
+	@Secured(PermissionConstants.DELETE_USER)
 	@Transactional(propagation = Propagation.REQUIRED)
 	public void deleteUser(User user) throws OperationFailedException {
 		if (StringUtils.equalsIgnoreCase(user.getUsername(), "administrator")) {
@@ -164,13 +131,7 @@ public class UserServiceImpl implements UserService {
 		userDAO.delete(user);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * org.mak.cis.rms.api.service.UserService#deleteUserById(java.lang.String)
-	 */
-	@Secured(PermissionConstants.PERM_DELETE_USER)
+	@Secured(PermissionConstants.DELETE_USER)
 	@Transactional(propagation = Propagation.REQUIRED)
 	@Override
 	public void deleteUserById(String id) throws OperationFailedException {
@@ -184,15 +145,8 @@ public class UserServiceImpl implements UserService {
 		userDAO.delete(user);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * org.mak.cis.mohr.api.service.UserService#saveRole(org.mak.cis.mohr.model
-	 * .Role)
-	 */
 	@Override
-	// @Secured(PermissionConstants.PERM_SAVE_ROLE)
+	@Secured({ PermissionConstants.ADD_ROLE, PermissionConstants.EDIT_ROLE })
 	@Transactional(propagation = Propagation.REQUIRED)
 	public void saveRole(Role role) {
 		roleDAO.save(role);
@@ -228,13 +182,8 @@ public class UserServiceImpl implements UserService {
 
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.mak.cis.mohr.api.service.UserService#getRoles()
-	 */
 	@Override
-	// @Secured(PermissionConstants.PERM_VIEW_ROLE)
+	@Secured(PermissionConstants.VIEW_ROLE)
 	@Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
 	public List<Role> getRoles() {
 		List<Role> roles = roleDAO.searchByRecordStatus(RecordStatus.ACTIVE);
@@ -242,15 +191,8 @@ public class UserServiceImpl implements UserService {
 		return roles;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * org.mak.cis.mohr.api.service.UserService#getRolesByPage(java.lang.Integer
-	 * )
-	 */
 	@Override
-	// @Secured(PermissionConstants.PERM_VIEW_ROLE)
+	@Secured(PermissionConstants.VIEW_ROLE)
 	@Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
 	public List<Role> getRolesByPage(Integer pageNo) {
 		Search search = new Search();
@@ -272,15 +214,8 @@ public class UserServiceImpl implements UserService {
 		return roles;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * org.mak.cis.mohr.api.service.UserService#deleteRole(org.mak.cis.mohr.
-	 * model.Role)
-	 */
 	@Override
-	// @Secured(PermissionConstants.PERM_DELETE_ROLE)
+	@Secured(PermissionConstants.DELETE_ROLE)
 	@Transactional(propagation = Propagation.REQUIRED)
 	public void deleteRole(Role role) throws OperationFailedException {
 		if (StringUtils.equalsIgnoreCase(role.getName(),
@@ -292,11 +227,6 @@ public class UserServiceImpl implements UserService {
 		roleDAO.remove(role);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.mak.cis.mohr.api.service.UserService#getPermissions()
-	 */
 	@Override
 	public List<Permission> getPermissions() {
 		List<Permission> permissions = permissionDAO
@@ -305,27 +235,15 @@ public class UserServiceImpl implements UserService {
 		return permissions;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * org.mak.cis.mohr.api.service.UserService#getUserById(java.lang.String)
-	 */
 	@Override
-	// @Secured(PermissionConstants.PERM_VIEW_USER)
+	@Secured(PermissionConstants.VIEW_USER)
 	@Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
 	public User getUserById(String userId) {
 		return userDAO.searchUniqueByPropertyEqual("id", userId);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * org.mak.cis.mohr.api.service.UserService#getRoleById(java.lang.String)
-	 */
 	@Override
-	// @Secured(PermissionConstants.PERM_VIEW_ROLE)
+	@Secured(PermissionConstants.VIEW_ROLE)
 	@Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
 	public Role getRoleById(String id) {
 		Role role = roleDAO.searchUniqueByPropertyEqual("id", id);
@@ -334,15 +252,8 @@ public class UserServiceImpl implements UserService {
 		return role;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * org.mak.cis.mohr.api.service.UserService#findRolesByName(java.lang.String
-	 * )
-	 */
 	@Override
-	// @Secured(PermissionConstants.PERM_VIEW_ROLE)
+	@Secured(PermissionConstants.VIEW_ROLE)
 	@Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
 	public List<Role> findRolesByName(String searchString) {
 		Search search = new Search();
@@ -353,25 +264,11 @@ public class UserServiceImpl implements UserService {
 		return roles;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * org.mak.cis.mohr.api.service.UserService#getPermissionById(java.lang.
-	 * String)
-	 */
 	@Override
 	public Permission getPermissionById(String id) {
 		return permissionDAO.searchUniqueByPropertyEqual("id", id);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * org.mak.cis.mohr.api.service.UserService#savePermision(org.mak.cis.mohr
-	 * .model.Permission)
-	 */
 	@Override
 	public void savePermision(Permission permission) throws ValidationException {
 		if (StringUtils.isBlank(permission.getName())
@@ -492,6 +389,7 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
+	@Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
 	public List<User> searchWithParams(UserSearchParameters params,
 			Integer pageNo) {
 
@@ -510,6 +408,8 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
+	@Secured({ PermissionConstants.VIEW_USER })
+	@Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
 	public long numberOfUsersWithSearchParams(UserSearchParameters params) {
 		Search search = prepareSearchUserWithParams(params);
 		return userDAO.count(search);

@@ -13,10 +13,13 @@ import org.agric.oxm.server.ConceptCategoryAnnotation;
 import org.agric.oxm.server.OXMConstants;
 import org.agric.oxm.server.dao.ConceptCategoryDAO;
 import org.agric.oxm.server.dao.ConceptDAO;
+import org.agric.oxm.server.security.PermissionConstants;
 import org.agric.oxm.server.service.ConceptService;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.googlecode.genericdao.search.Filter;
@@ -39,10 +42,16 @@ public class ConceptServiceImpl implements ConceptService {
 	private ConceptCategoryDAO conceptCategoryDAO;
 
 	@Override
+	@Secured({ PermissionConstants.ADD_CONCEPT_DETAILS,
+			PermissionConstants.EDIT_CONCEPT_DETAILS })
+	@Transactional(propagation = Propagation.REQUIRED)
 	public void save(Concept concept) {
 		conceptDAO.save(concept);
 	}
 
+	@Secured({ PermissionConstants.ADD_CONCEPT_DETAILS,
+			PermissionConstants.EDIT_CONCEPT_DETAILS })
+	@Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
 	@Override
 	public void validate(Concept concept) throws ValidationException {
 		ConceptSearchParameters params = new ConceptSearchParameters(
@@ -62,22 +71,30 @@ public class ConceptServiceImpl implements ConceptService {
 		}
 	}
 
+	@Secured({ PermissionConstants.DELETE_CONCEPT_DETAILS })
+	@Transactional(propagation = Propagation.REQUIRED)
 	@Override
 	public void deleteConceptsByIds(String[] ids) {
 		conceptDAO.removeByIds(ids);
 	}
 
+	@Secured({ PermissionConstants.VIEW_CONCEPT_DETAILS })
+	@Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
 	@Override
 	public Concept getConceptById(String id) {
 		return conceptDAO.searchUniqueByPropertyEqual("id", id);
 	}
 
 	@Override
+	@Secured({ PermissionConstants.VIEW_CONCEPT_DETAILS })
+	@Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
 	public List<Concept> getConcepts() {
 		return conceptDAO.searchByRecordStatus(RecordStatus.ACTIVE);
 	}
 
 	@Override
+	@Secured({ PermissionConstants.VIEW_CONCEPT_DETAILS })
+	@Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
 	public List<Concept> getConceptsByCategory(ConceptCategory conceptCategory) {
 		Search search = new Search();
 		search.addFilterEqual("recordStatus", RecordStatus.ACTIVE);
@@ -89,6 +106,8 @@ public class ConceptServiceImpl implements ConceptService {
 	}
 
 	@Override
+	@Secured({ PermissionConstants.VIEW_CONCEPT_DETAILS })
+	@Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
 	public List<Concept> getConceptsByCategoryAnnotation(
 			ConceptCategoryAnnotation conceptCategoryAnnotation)
 			throws SecurityException, NoSuchFieldException {
@@ -99,6 +118,8 @@ public class ConceptServiceImpl implements ConceptService {
 	}
 
 	@Override
+	@Secured({ PermissionConstants.VIEW_CONCEPT_DETAILS })
+	@Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
 	public List<Concept> getConceptsWithParams(ConceptSearchParameters params,
 			int pageNo) {
 		Search search = prepareConceptSearch(params);
@@ -145,6 +166,9 @@ public class ConceptServiceImpl implements ConceptService {
 	}
 
 	@Override
+	@Secured({ PermissionConstants.ADD_CONCEPT_DETAILS,
+			PermissionConstants.EDIT_CONCEPT_DETAILS })
+	@Transactional(propagation = Propagation.REQUIRED)
 	public void save(ConceptCategory conceptCategory) {
 		conceptCategoryDAO.save(conceptCategory);
 	}
@@ -174,16 +198,22 @@ public class ConceptServiceImpl implements ConceptService {
 	}
 
 	@Override
+	@Secured({ PermissionConstants.VIEW_CONCEPT_DETAILS })
+	@Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
 	public ConceptCategory getConceptCategoryById(String id) {
 		return conceptCategoryDAO.searchUniqueByPropertyEqual("id", id);
 	}
 
 	@Override
+	@Secured({ PermissionConstants.VIEW_CONCEPT_DETAILS })
+	@Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
 	public List<ConceptCategory> getConceptCategories() {
 		return conceptCategoryDAO.searchByRecordStatus(RecordStatus.ACTIVE);
 	}
 
 	@Override
+	@Secured({ PermissionConstants.VIEW_CONCEPT_DETAILS })
+	@Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
 	public List<ConceptCategory> getConceptCategoriesWithParams(
 			ConceptCategorySearchParameters params, int pageNo) {
 		Search search = prepareConceptCategorySearch(params);
@@ -222,6 +252,8 @@ public class ConceptServiceImpl implements ConceptService {
 	}
 
 	@Override
+	@Secured({ PermissionConstants.VIEW_CONCEPT_DETAILS })
+	@Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
 	public int getNumberOfConceptsCategoriesInSearch(
 			ConceptCategorySearchParameters params) {
 		Search search = prepareConceptCategorySearch(params);
