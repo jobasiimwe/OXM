@@ -167,7 +167,7 @@ public class User extends BaseData implements Comparable<User> {
 	}
 
 	@Enumerated(EnumType.ORDINAL)
-	@Column(name = "gender", nullable = false)
+	@Column(name = "gender", nullable = true)
 	public Gender getGender() {
 		return gender;
 	}
@@ -177,7 +177,7 @@ public class User extends BaseData implements Comparable<User> {
 	}
 
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "date_of_birth", nullable = false)
+	@Column(name = "date_of_birth", nullable = true)
 	public Date getDateOfBirth() {
 		return dateOfBirth;
 	}
@@ -186,7 +186,7 @@ public class User extends BaseData implements Comparable<User> {
 		this.dateOfBirth = dateOfBirth;
 	}
 
-	@Column(name = "phone1", nullable = false)
+	@Column(name = "phone1", nullable = true)
 	public String getPhone1() {
 		return phone1;
 	}
