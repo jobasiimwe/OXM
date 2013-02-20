@@ -20,7 +20,7 @@
 
 	<!--======== ENABLING AUTO SCANNING OF CLASSPATH =======-->
 	<aop:aspectj-autoproxy />
-	<!-- <context:component-scan base-package="org.agric.oxm.server.service.impl" /> -->
+	<context:component-scan base-package="org.agric.oxm.server.service.impl" />
 	<context:component-scan base-package="org.agric.oxm.server.dao.impl" />
 
 	<!--====== DATA ACCESS CONFIGURATION =========-->

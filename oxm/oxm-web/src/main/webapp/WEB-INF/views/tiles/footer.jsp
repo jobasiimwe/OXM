@@ -1,1 +1,3 @@
-<div class="copyright">© 2012 SRS</div>
+<div class="login-footer">
+	<div class="oxm-item">© 2013 All Rights Reserved</div>
+</div>

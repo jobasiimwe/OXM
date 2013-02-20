@@ -1,31 +1,34 @@
+
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-  <modelVersion>4.0.0</modelVersion>
-  
-    <parent>
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
 		<groupId>org.agric.oxm</groupId>
 		<artifactId>oxm-parent</artifactId>
 		<version>1.0-SNAPSHOT</version>
 	</parent>
-	
-  <artifactId>oxm-web</artifactId>
-  <packaging>jar</packaging>
-  <name>oxm-web</name>
-  
-  <dependencies>
-    <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <version>3.8.1</version>
-      <scope>test</scope>
-    </dependency>
-	
-	<dependency>
-      <groupId>org.agric.oxm</groupId>
-      <artifactId>oxm-server</artifactId>
-	  <version>${project.version}</version>
-    </dependency>
-    <!-- ======= Spring =========== -->
+
+
+	<groupId>org.agric.oxm</groupId>
+	<artifactId>oxm-web</artifactId>
+	<packaging>war</packaging>
+	<name>Oxfarm GB Web Application</name>
+
+	<dependencies>
+		<!--===== Model and server ===== -->
+		<dependency>
+			<groupId>org.agric.oxm</groupId>
+			<artifactId>oxm-model</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.agric.oxm</groupId>
+			<artifactId>oxm-server</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+
+		<!-- ======= Spring =========== -->
 		<dependency>
 			<groupId> org.springframework </groupId>
 			<artifactId> spring-webmvc </artifactId>
@@ -89,9 +92,9 @@
 			<artifactId>jackson-mapper-asl</artifactId>
 			<version>1.8.5</version>
 		</dependency>
-  </dependencies>
-  
-  <build>
+	</dependencies>
+
+	<build>
 		<!-- ======== Plugins ======= -->
 		<plugins>
 			<plugin>
@@ -101,12 +104,6 @@
 				<configuration>
 					<webDefaultXml>src/main/resources/webdefault.xml</webDefaultXml>
 					<contextPath>/</contextPath>
-					<connectors>
-                    <connector implementation="org.mortbay.jetty.nio.SelectChannelConnector">
-                        <port>9090</port>
-                        <maxIdleTime>60000</maxIdleTime>
-                    </connector>
-                </connectors>
 				</configuration>
 			</plugin>
 			<plugin>

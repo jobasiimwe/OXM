@@ -10,19 +10,32 @@
 		</layout>
 	</appender>
     
+    <!-- <appender name="LOGFILE" class="org.apache.log4j.RollingFileAppender">
+        <param name="maxFileSize" value="100KB" />
+        <param name="maxBackupIndex" value="5" />
+        <param name="File" value="mohr.log" />
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern"
+                value="%d [%t] %-5p %c - %m%n" />
+        </layout>
+    </appender> -->
+    
     <logger name="org.springframework">
     	<level value="ERROR"/>
     	<appender-ref ref="CONSOLE" />
+        <!-- <appender-ref ref="LOGFILE" /> -->
     </logger>
     
     <logger name="org.mortbay.log">
     	<level value="ERROR"/>
     	<appender-ref ref="CONSOLE" />
+        <!-- <appender-ref ref="LOGFILE" /> -->
     </logger>
     	
 	<root>
 		<level value="ERROR" />
 		<appender-ref ref="CONSOLE" />
+        <!-- <appender-ref ref="LOGFILE" /> -->
 	</root>
 
 </log4j:configuration>

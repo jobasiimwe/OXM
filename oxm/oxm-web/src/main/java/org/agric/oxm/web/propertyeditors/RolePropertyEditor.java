@@ -1,18 +1,16 @@
 package org.agric.oxm.web.propertyeditors;
 
+import org.agric.oxm.server.service.UserService;
+import org.apache.commons.lang.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component("rolePropertyEditor")
 public class RolePropertyEditor extends BasePropertyEditor {
 
-    /*@Autowired
+   @Autowired
     private UserService userService;
     
-    
-     * (non-Javadoc)
-     * 
-     * @see java.beans.PropertyEditorSupport#setAsText(java.lang.String)
-     
     @Override
     public void setAsText(String text) throws IllegalArgumentException {
 	if (StringUtils.isNotBlank(text) && StringUtils.isNotEmpty(text)) {
@@ -24,5 +22,5 @@ public class RolePropertyEditor extends BasePropertyEditor {
 	} else {
 	    super.setAsText(text);
 	}
-    }*/
+    }
 }

@@ -1,11 +1,19 @@
 package org.agric.oxm.web.propertyeditors;
 
+import org.agric.oxm.server.service.UserService;
+import org.apache.commons.lang.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+/**
+ * property editor that supports permission data binding in controllers
+ * 
+ * 
+ */
 @Component("permissionPropertyEditor")
 public class PermissionPropertyEditor extends BasePropertyEditor {
 
-    /*@Autowired
+    @Autowired
     private UserService userService;
 
     @Override
@@ -19,5 +27,5 @@ public class PermissionPropertyEditor extends BasePropertyEditor {
 	} else {
 	    super.setAsText(text);
 	}
-    }*/
+    }
 }

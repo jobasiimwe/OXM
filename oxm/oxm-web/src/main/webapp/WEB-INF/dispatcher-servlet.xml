@@ -41,9 +41,9 @@
 	<bean id="tilesConfigurer"
 		class="org.springframework.web.servlet.view.tiles2.TilesConfigurer"
 		p:definitions="/WEB-INF/tiles-defs.xml" />
-
-
-	<!-- FILE UPLOAD WITH SPRING -->
+		
+				
+	<!--======= FILE UPLOAD WITH SPRING =========-->
 	<bean id="multipartResolver"
 		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
 	</bean>

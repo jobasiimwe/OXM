@@ -1,10 +1,13 @@
 package org.agric.oxm.web.propertyeditors;
 
+import org.agric.oxm.server.service.ConceptService;
+import org.apache.commons.lang.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component("conceptCategoryPropertyEditor")
 public class ConceptCategoryPropertyEditor extends BasePropertyEditor {
-    /*@Autowired
+    @Autowired
     private ConceptService conceptService;
 
     @Override
@@ -18,5 +21,5 @@ public class ConceptCategoryPropertyEditor extends BasePropertyEditor {
 	} else {
 	    super.setAsText(text);
 	}
-    }*/
+    }
 }
