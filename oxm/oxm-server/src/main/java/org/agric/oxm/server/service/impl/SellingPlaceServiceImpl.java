@@ -11,11 +11,15 @@ import org.agric.oxm.model.exception.ValidationException;
 import org.agric.oxm.server.dao.SellingPlaceDAO;
 import org.agric.oxm.server.service.SellingPlaceService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * @author Job
  * 
  */
+@Service("sellingPlaceService")
+@Transactional
 public class SellingPlaceServiceImpl implements SellingPlaceService {
 
 	@Autowired

@@ -16,10 +16,20 @@ import org.agric.oxm.server.dao.ConceptDAO;
 import org.agric.oxm.server.service.ConceptService;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.googlecode.genericdao.search.Filter;
 import com.googlecode.genericdao.search.Search;
 
+/**
+ * implementation of {@link ConceptService}
+ * 
+ * @author Job
+ * 
+ */
+@Service("conceptService")
+@Transactional
 public class ConceptServiceImpl implements ConceptService {
 
 	@Autowired

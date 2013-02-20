@@ -35,7 +35,7 @@ import com.googlecode.genericdao.search.Search;
  * @author Job
  * 
  */
-@Service("UserService")
+@Service("userService")
 @Transactional
 public class UserServiceImpl implements UserService {
 
