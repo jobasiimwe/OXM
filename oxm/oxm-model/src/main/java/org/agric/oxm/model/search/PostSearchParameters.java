@@ -13,8 +13,8 @@ public class PostSearchParameters {
 	private User owner;
 	private List<Crop> crops;
 	private Concept postType;
-	private Date fromDate;
-	private Date toDate;
+	private Date after;
+	private Date before;
 
 	public PostSearchParameters() {
 
@@ -52,20 +52,20 @@ public class PostSearchParameters {
 		this.postType = postType;
 	}
 
-	public Date getFromDate() {
-		return fromDate;
+	public Date getAfter() {
+		return after;
 	}
 
-	public void setFromDate(Date fromDate) {
-		this.fromDate = fromDate;
+	public void setAfter(Date after) {
+		this.after = after;
 	}
 
-	public Date getToDate() {
-		return toDate;
+	public Date getBefore() {
+		return before;
 	}
 
-	public void setToDate(Date toDate) {
-		this.toDate = toDate;
+	public void setBefore(Date before) {
+		this.before = before;
 	}
 
 }

@@ -9,11 +9,15 @@ import org.agric.oxm.model.search.PostSearchParameters;
 import org.agric.oxm.server.dao.PostDAO;
 import org.agric.oxm.server.security.PermissionConstants;
 import org.agric.oxm.server.service.PostService;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+
+import com.googlecode.genericdao.search.Filter;
+import com.googlecode.genericdao.search.Search;
 
 /**
  * 
@@ -51,10 +55,41 @@ public class PostServiceImpl implements PostService {
 	@Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
 	@Override
 	public List<Post> getPostsWithParams(PostSearchParameters params) {
-		// Search search = new Search();
-		// search.addFilterEqual("owner", user);
-		// return postDAO.search(search);
-		return null;
+		Search search = new Search();
+		if (params.getPostType() != null) {
+			search.addFilterEqual("type", params.getPostType());
+		}
+
+		if (StringUtils.isNotEmpty(params.getOwnerName())) {
+			Filter userNameFilter = new Filter("username", "%"
+					+ params.getOwnerName() + "%", Filter.OP_ILIKE);
+
+			Filter firstNameFilter = new Filter("firstName", "%"
+					+ params.getOwnerName() + "%", Filter.OP_ILIKE);
+
+			Filter lastNameFilter = new Filter("lastName", "%"
+					+ params.getOwnerName() + "%", Filter.OP_ILIKE);
+
+			search.addFilterOr(userNameFilter, firstNameFilter, lastNameFilter);
+		}
+
+		if (params.getOwner() != null) {
+			search.addFilterEqual("owner", params.getOwner());
+		}
+
+		if (params.getCrops() != null)
+			if (params.getCrops().size() > 0) {
+				search.addFilterIn("crop", params.getCrops());
+			}
+
+		if (params.getAfter() != null)
+			search.addFilterGreaterOrEqual("datePosted", params.getAfter());
+
+		if (params.getBefore() != null)
+			search.addFilterLessOrEqual("datePosted", params.getBefore());
+
+		search.addSort("datePosted", false, true);
+		return postDAO.search(search);
 	}
 
 	@Secured({ PermissionConstants.VIEW_POST })

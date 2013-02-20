@@ -28,6 +28,8 @@ public class Post extends BaseData {
 
 	private List<Comment> comments;
 
+	private Concept type;
+
 	private String text;
 
 	public Post() {
@@ -55,7 +57,7 @@ public class Post extends BaseData {
 	}
 
 	@ManyToOne
-	@JoinColumn(name = "crop", nullable = true)
+	@JoinColumn(name = "crop_id", nullable = true)
 	public Crop getCrop() {
 		return crop;
 	}
@@ -89,6 +91,16 @@ public class Post extends BaseData {
 
 	public void setText(String text) {
 		this.text = text;
+	}
+
+	@ManyToOne
+	@JoinColumn(name = "type_id", nullable = true)
+	public Concept getType() {
+		return type;
+	}
+
+	public void setType(Concept type) {
+		this.type = type;
 	}
 
 	public void addComment(Comment comment) {
