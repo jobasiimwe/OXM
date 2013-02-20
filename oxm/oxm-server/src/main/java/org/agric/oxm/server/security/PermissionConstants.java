@@ -317,4 +317,28 @@ public final class PermissionConstants {
 	@PermissionAnnotation(id = "29642CA9-5BCB-4713-AB3D-45919CB8AD20", description = "Ability to delete a post")
 	public static final String DELETE_POST = "delete_post";
 
+	/**
+	 * permission to add a price
+	 */
+	@PermissionAnnotation(id = "A31EC2A6-193E-4b9c-9C71-85A85AE6C303", description = "Ability to add a price")
+	public static final String ADD_PRICE = "add_price";
+
+	/**
+	 * permission to view a price
+	 */
+	@PermissionAnnotation(id = "E51044F5-B4B4-4a08-95E7-82D6AEDFEC28", description = "Ability to view a price")
+	public static final String VIEW_PRICE = "view_price";
+
+	/**
+	 * permission to edit prices
+	 */
+	@PermissionAnnotation(id = "AC985F46-CE39-4695-B410-A42865CDFF18", description = "Ability to edit a price")
+	public static final String EDIT_PRICE = "edit_price";
+
+	/**
+	 * permission to delete a price
+	 */
+	@PermissionAnnotation(id = "F929DA00-0552-4c17-A6B2-300DC028218B", description = "Ability to delete a price")
+	public static final String DELETE_PRICE = "delete_price";
+
 }
