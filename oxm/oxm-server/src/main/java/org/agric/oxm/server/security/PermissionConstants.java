@@ -172,4 +172,29 @@ public final class PermissionConstants {
 	 */
 	@PermissionAnnotation(id = "74EB56BD-BC53-438e-9D98-92176AF69E1D", description = "Ability to delete a district details")
 	public static final String DELETE_DISTRICT_DETAILS = "delete_district_details";
+
+	/**
+	 * permission to add a financial institution
+	 */
+	@PermissionAnnotation(id = "9460DB4B-5199-49f1-B5C8-3140A0646B81", description = "Ability to add a financial institution")
+	public static final String ADD_FINANCIAL_INSTITUTION = "add_financial_institution";
+
+	/**
+	 * permission to view a financial institution
+	 */
+	@PermissionAnnotation(id = "14C00675-ED03-4c17-934F-1217E33E6E93", description = "Ability to view a financial institution")
+	public static final String VIEW_FINANCIAL_INSTITUTION = "view_financial_institution";
+
+	/**
+	 * permission to edit financial institutions
+	 */
+	@PermissionAnnotation(id = "8432B737-571C-4fea-91B3-0665EDE90471", description = "Ability to edit a financial_institution")
+	public static final String EDIT_FINANCIAL_INSTITUTION = "edit_financial_institution";
+
+	/**
+	 * permission to delete a financial institution
+	 */
+	@PermissionAnnotation(id = "17807728-E32A-477e-8372-E082C99AB375", description = "Ability to delete a financial institution")
+	public static final String DELETE_FINANCIAL_INSTITUTION = "delete_financial_institution";
+
 }
