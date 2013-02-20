@@ -3,11 +3,14 @@ package org.agric.oxm.server.service.impl;
 import java.util.List;
 
 import org.agric.oxm.model.LandUse;
+import org.agric.oxm.model.Producer;
 import org.agric.oxm.model.RecordStatus;
 import org.agric.oxm.model.exception.ValidationException;
 import org.agric.oxm.server.dao.LandUseDAO;
 import org.agric.oxm.server.security.PermissionConstants;
 import org.agric.oxm.server.service.LandUseService;
+import org.agric.oxm.server.service.ProducerService;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Service;
@@ -26,6 +29,9 @@ public class LandUseServiceImpl implements LandUseService {
 	@Autowired
 	private LandUseDAO landUseDAO;
 
+	@Autowired
+	private ProducerService producerService;
+
 	@Secured({ PermissionConstants.ADD_LAND_USE,
 			PermissionConstants.EDIT_LAND_USE })
 	@Transactional(propagation = Propagation.REQUIRED)
@@ -39,6 +45,35 @@ public class LandUseServiceImpl implements LandUseService {
 	@Override
 	public void validate(LandUse landUse) throws ValidationException {
 
+		if (null == landUse.getCrop())
+			throw new ValidationException("Crop can not be null");
+
+		if (null == landUse.getSize())
+			throw new ValidationException("Size can not be null");
+
+		Producer producer = producerService.getProducerById(landUse
+				.getProducer().getId());
+
+		if (producer.getLandSize() == null)
+			throw new ValidationException("Land size for "
+					+ producer.getFullName() + " is blank");
+
+		Double landUseSum = 0.0;
+		if (producer.getLandUses() != null) {
+			for (LandUse l : producer.getLandUses()) {
+				if (StringUtils.isNotEmpty(landUse.getId())) {
+					if (l.equals(landUse))
+						continue;
+				}
+				landUseSum += l.getSize();
+			}
+		}
+
+		landUseSum += landUse.getSize();
+		if (landUseSum > producer.getLandSize())
+			throw new ValidationException("Total land in use " + landUseSum
+					+ " can not be greater than " + producer.getFullName()
+					+ "'s total land " + producer.getLandSize());
 	}
 
 	@Secured({ PermissionConstants.VIEW_LAND_USE })

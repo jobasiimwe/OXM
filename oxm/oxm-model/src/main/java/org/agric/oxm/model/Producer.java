@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -12,9 +13,10 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "producer")
-public class Producer extends BaseData {
+public class Producer extends User {
 
 	private User user;
+	private Double landSize;
 	private List<LandUse> landUses;
 	private GisCordinate gisCordinates;
 	private ProductionOrganisation productionOrganisation;
@@ -34,6 +36,15 @@ public class Producer extends BaseData {
 
 	public void setUser(User user) {
 		this.user = user;
+	}
+
+	@Column(name = "land_size", nullable = true)
+	public Double getLandSize() {
+		return landSize;
+	}
+
+	public void setLandSize(Double landSize) {
+		this.landSize = landSize;
 	}
 
 	@OneToMany(mappedBy = "producer", cascade = { CascadeType.ALL }, orphanRemoval = true)
@@ -116,4 +127,30 @@ public class Producer extends BaseData {
 
 		this.getLandUses().remove(landUse);
 	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((getId() == null) ? 0 : getId().hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Producer other = (Producer) obj;
+		if (this.getId() == null) {
+			if (other.getId() != null)
+				return false;
+		} else if (!this.getId().equals(other.getId()))
+			return false;
+		return true;
+	}
+
 }

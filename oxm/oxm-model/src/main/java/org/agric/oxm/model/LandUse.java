@@ -10,43 +10,43 @@ import javax.persistence.Table;
 @Table(name = "land_use")
 public class LandUse extends BaseData {
 
-    private Producer producer;
+	private Producer producer;
 
-    private Crop crop;
+	private Crop crop;
 
-    private int size;
+	private Double size;
 
-    public LandUse() {
-	super();
-    }
+	public LandUse() {
+		super();
+	}
 
-    @ManyToOne
-    @JoinColumn(name = "producer_id", nullable = false)
-    public Producer getProducer() {
-	return producer;
-    }
+	@ManyToOne
+	@JoinColumn(name = "producer_id", nullable = false)
+	public Producer getProducer() {
+		return producer;
+	}
 
-    public void setProducer(Producer producer) {
-	this.producer = producer;
-    }
+	public void setProducer(Producer producer) {
+		this.producer = producer;
+	}
 
-    @ManyToOne
-    @JoinColumn(name = "crop_id", nullable = false)
-    public Crop getCrop() {
-	return crop;
-    }
+	@ManyToOne
+	@JoinColumn(name = "crop_id", nullable = false)
+	public Crop getCrop() {
+		return crop;
+	}
 
-    public void setCrop(Crop crop) {
-	this.crop = crop;
-    }
+	public void setCrop(Crop crop) {
+		this.crop = crop;
+	}
 
-    @Column(name = "size", nullable = false)
-    public int getSize() {
-	return size;
-    }
+	@Column(name = "size", nullable = false)
+	public Double getSize() {
+		return size;
+	}
 
-    public void setSize(int size) {
-	this.size = size;
-    }
+	public void setSize(Double size) {
+		this.size = size;
+	}
 
 }

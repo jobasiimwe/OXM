@@ -221,4 +221,27 @@ public final class PermissionConstants {
 	@PermissionAnnotation(id = "", description = "Ability to delete a land use")
 	public static final String DELETE_LAND_USE = "delete_land_use";
 
+	/**
+	 * permission to add a producer
+	 */
+	@PermissionAnnotation(id = "4A9D933E-4D1D-4221-9671-66FD8F2DF497", description = "Ability to add a producer")
+	public static final String ADD_PRODUCER = "add_producer";
+
+	/**
+	 * permission to view a producer
+	 */
+	@PermissionAnnotation(id = "E24C3F4B-F65C-4299-A842-7C1830694FBE", description = "Ability to view a producer")
+	public static final String VIEW_PRODUCER = "view_producer";
+
+	/**
+	 * permission to edit producers
+	 */
+	@PermissionAnnotation(id = "A9ACEB8F-2E90-41f0-94AA-C3538C46EB24", description = "Ability to edit a producer")
+	public static final String EDIT_PRODUCER = "edit_producer";
+
+	/**
+	 * permission to delete a producer
+	 */
+	@PermissionAnnotation(id = "00B29FB9-C7E6-4a29-B98C-FF263B49077D", description = "Ability to delete a producer")
+	public static final String DELETE_PRODUCER = "delete_producer";
 }
