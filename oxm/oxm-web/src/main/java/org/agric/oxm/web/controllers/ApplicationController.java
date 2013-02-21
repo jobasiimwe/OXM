@@ -1,8 +1,8 @@
 package org.agric.oxm.web.controllers;
 
-import org.agric.oxm.model.User;
 import org.agric.oxm.model.exception.SessionExpiredException;
 import org.agric.oxm.server.security.util.OXMSecurityUtil;
+import org.agric.oxm.web.WebConstants;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,20 +12,8 @@ import org.springframework.web.servlet.ModelAndView;
 public class ApplicationController {
 
     @RequestMapping(value = { "/", "index.jsp" })
-    public ModelAndView welcomeHandler(ModelMap model) {
-	User loggedInUser  = null;
-	try {
-	    loggedInUser   = OXMSecurityUtil.getLoggedInUser();
-	} catch (SessionExpiredException e) {
-	    e.printStackTrace();
-	}
-	
-	if(loggedInUser.getProfilePicture() == null){
-	    model.put("profile_Img", "empty");
-	}
-	
-	model.put("user", loggedInUser);
-	
+    public ModelAndView welcomeHandler(ModelMap model) throws SessionExpiredException {
+	WebConstants.loadLoggedInUserProfile(OXMSecurityUtil.getLoggedInUser(), model);
 	return new ModelAndView("dashboard", model);
     }
 

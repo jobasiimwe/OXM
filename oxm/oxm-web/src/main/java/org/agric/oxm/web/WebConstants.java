@@ -1,5 +1,14 @@
 package org.agric.oxm.web;
 
+import java.io.IOException;
+
+import javax.servlet.http.HttpServletResponse;
+
+import org.agric.oxm.model.User;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
+
 public final class WebConstants {
 
     /**
@@ -40,4 +49,50 @@ public final class WebConstants {
      * represents the default image size of the uploaded images.
      */
     public static final long DEFAULT_IMAGE_SIZE_IN_BYTES = 100000;
+
+    /**
+     * checks if its a valid image
+     * 
+     * @param file
+     * @return
+     */
+    public static boolean isFileAnImage(MultipartFile file) {
+	if (file != null && file.getSize() > 0) {
+	    if (!file.getContentType().startsWith("image")) {
+		return false;
+	    }
+	}
+	return true;
+    }
+
+    public static void writePictureOnResponse(String contentType, byte[] pic,
+	    HttpServletResponse response)
+	    throws IOException {
+	try {
+	    response.setContentType(contentType);
+	    response.getOutputStream().write(pic);
+	} catch (IOException e) {
+	} finally {
+	    response.getOutputStream().flush();
+	}
+    }
+
+    public static ModelAndView DEFAULT_PAGE(User logginedUser) {
+	ModelMap model = new ModelMap();
+	if (logginedUser.getProfilePicture() == null) {
+	    model.put("profile_Img", "empty");
+	}
+
+	model.put("user", logginedUser);
+
+	return new ModelAndView("dashboard", model);
+    }
+
+    public static void loadLoggedInUserProfile(User u, ModelMap model) {
+	if (u.getProfilePicture() == null) {
+	    model.put("profile_Img", "empty");
+	}
+
+	model.put("loggedUser", u);
+    }
 }

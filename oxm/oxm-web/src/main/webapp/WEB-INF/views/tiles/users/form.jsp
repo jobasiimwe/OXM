@@ -16,7 +16,7 @@
 		width: 300px;
 	}
 </style>
-<form:form action="${baseUrl}/" commandName="user" id="staffForm" cssClass="tabular" enctype="multipart/form-data">
+<form:form action="${baseUrl}/user/save/${qUserPage}" commandName="user" id="userForm" cssClass="tabular" enctype="multipart/form-data">
 	<div class="box">
 		<form:hidden id="id" path="id"/>
 		<input type="hidden" id="qUserPage" name="user" value="${qUserPage}" />
@@ -49,7 +49,7 @@
 			</p>
 			<p>
 				<label class="uiLabel">Profile Picture:</label>
-				<input type="file" name="file" />
+				<input type="file" name="userPic" />
 			</p>
 			<p>
 				<label class="uiLabel">User Type:</label>

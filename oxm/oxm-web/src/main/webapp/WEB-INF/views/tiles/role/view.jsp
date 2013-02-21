@@ -7,7 +7,7 @@
 <div>
 	<div>
 		<div class="contextual">
-			<a class="uiButton" href="role?action=add&item=role">New Role</a>
+			<a class="uiButton" href="${baseUrl }/role/add/">New Role</a>
 		</div>
 		<div style="clear: both"></div>
 	</div>
@@ -25,8 +25,8 @@
 							<td>${role.name }</td>
 							<td>${role.description }</td>
 							<td>
-								<a id="btnDeleteRole" class="icon icon-delete" title="delete" href="role?action=delete&item=role&id=${role.id }">Delete</a>
-								<a class="icon icon-edit " title="edit" href="role?action=edit&item=role&id=${role.id }">Edit</a>
+								<a id="btnDeleteRole" class="icon icon-delete" title="delete" href="${baseUrl }/role/delete/${role.id }">Delete</a>
+								<a class="icon icon-edit " title="edit" href="${baseUrl }/role/edit/${role.id }">Edit</a>
 							</td>
 						</tr>
 					</c:forEach>

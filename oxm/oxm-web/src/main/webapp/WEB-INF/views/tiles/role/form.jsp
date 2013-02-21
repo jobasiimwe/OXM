@@ -14,7 +14,7 @@ form#role input[type="text"] {
 }
 </style>
 <div>
-	<form:form action="role?action=save&item=role" commandName="role">
+	<form:form action="${baseUrl }/role/save/" commandName="role">
 
 		<form:hidden path="id" />
 		<div class="splitcontentleft">

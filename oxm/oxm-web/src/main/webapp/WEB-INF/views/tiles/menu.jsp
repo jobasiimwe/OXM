@@ -26,25 +26,26 @@
 									width="40%" />
 							</c:when>
 							<c:otherwise>
-								<img alt="Profile picture" src="?item=pic&profileid=${user.id }"
-									id="profilePicture" name="profilePicture" height="80px"
-									width="40%" />
+								<img alt="Profile picture"
+									src="${baseUrl }/user/pic/${loggedUser.id }" id="profilePicture"
+									name="profilePicture" height="80px" width="100%" />
 							</c:otherwise>
 						</c:choose>
 					</div>
 					<div class="profile-content">
 						<label class="uiLabel" style="font-weight: bold; display: inline;">FirstName:
-						</label> <label>${user.firstName }</label> <label class="uiLabel"
-							style="font-weight: bold; display: inline;">LastName: </label> <label>${user.lastName
+						</label> <label>${loggedUser.firstName }</label> <label class="uiLabel"
+							style="font-weight: bold; display: inline;">LastName: </label> <label>${loggedUser.lastName
 							}</label> <label class="uiLabel"
-							style="font-weight: bold; display: inline;">Gender: </label> <label>${user.gender
+							style="font-weight: bold; display: inline;">Gender: </label> <label>${loggedUser.gender
 							} </label> <label class="uiLabel" style="font-weight: bold;">Dob:
-						</label> <label><fmt:formatDate value="${user.dateOfBirth }"
+						</label> <label><fmt:formatDate value="${loggedUser.dateOfBirth }"
 								pattern="dd/yyyy" /> </label>
 					</div>
 				</div>
 				<div style="margin-left: 5px; margin-top: 10px;">
-					<a title="Edit Profile" href="${baseUrl}/user/${user.id}/edit/0" class="uiButton" ><span>Edit</span> </a>
+					<a title="Edit Profile" href="${baseUrl}/user/edit/${loggedUser.id}/0"
+						class="uiButton"><span>Edit</span> </a>
 				</div>
 			</div>
 		</div>
@@ -53,37 +54,42 @@
 			<a href="#">Administration</a>
 		</h3>
 		<div class="accordion-dv">
-			<div style="float: left; clear: both;">
-				<div class="menu">
-					<a id="lnkUsers" title="Users" href="${baseUrl }/"> <span
-						class="user-icon"></span> <span>Users</span> </a>
-				</div>
-				<div style="clear: both;"></div>
-				<div class="menu">
-					<a class="menu-lnk" id="lnkRoles" title="Roles & Permissions"
-						href="${baseUrl }/"> <span class="role-icon"></span> <span>Roles
-							& Permissions</span> </a>
-				</div>
-				<div style="clear: both;"></div>
-				<div class="menu">
-					<a class="menu-lnk" id="lnkConcepts" title="Concepts"
-						href="${baseUrl }/"> <span class="concept-icon"></span> <span>Concepts</span>
+			<div class="menu">
+					<a id="lnkUsers" title="Users" href="${baseUrl }/user/view"> <span
+						class="user-icon"></span> <label
+						style="margin: 10px; font-size: 12px; font-weight: bold;">Users</label>
 					</a>
-				</div>
-				<div style="clear: both;"></div>
-				<div class="menu">
+			</div>
+			<div class="menu">
+					<a class="menu-lnk" id="lnkRoles" title="Roles & Permissions"
+						href="${baseUrl }/role/view"> <span class="role-icon"></span><label
+						style="margin: 10px; font-size: 12px; font-weight: bold;">Roles  & Permissions</label>
+					</a>
+			</div>
+			
+			<div class="menu">
+					<a class="menu-lnk" id="lnkConcepts" title="Concepts"
+						href="${baseUrl }/"> <span class="concept-icon"></span><label
+						style="margin: 10px; font-size: 12px; font-weight: bold;">Concept</label>
+					</a>
+			</div>
+			
+			<div class="menu">
 					<a class="menu-lnk" id="lnkConceptCategories"
 						title="Concept Categories" href="${baseUrl }/"> <span
-						class="conceptCategory-icon"></span> <span>Concept
-							Categories</span> </a>
-				</div>
-				<div style="clear: both;"></div>
-				<div class="menu">
+						class="conceptCategory-icon"></span><label
+						style="margin: 10px; font-size: 12px; font-weight: bold;">Concept Category</label>
+					</a>
+			</div>
+			
+			<div class="menu">
 					<a class="menu-lnk" id="lnkCountries" title="Countries"
 						href="${baseUrl }/"> <span
-						class="country-icon"></span> <span>Districts</span> </a>
-				</div>
+						class="country-icon"></span><label
+						style="margin: 10px; font-size: 12px; font-weight: bold;">District</label>
+					</a>
 			</div>
+			
 		</div>
 		<h3>
 			<a href="#">Price Monitor</a>

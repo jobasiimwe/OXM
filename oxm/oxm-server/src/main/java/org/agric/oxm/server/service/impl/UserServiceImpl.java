@@ -82,8 +82,6 @@ public class UserServiceImpl implements UserService {
 	@Secured({ PermissionConstants.ADD_USER, PermissionConstants.EDIT_USER })
 	@Transactional(propagation = Propagation.REQUIRED)
 	public void saveUser(User user) {
-		// check for clear text password and
-		// assign the hashedpassword and the salt from the old object
 		OXMSecurityUtil.prepUserCredentials(user);
 		userDAO.save(user);
 	}
@@ -265,6 +263,7 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
+	@Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
 	public Permission getPermissionById(String id) {
 		return permissionDAO.searchUniqueByPropertyEqual("id", id);
 	}

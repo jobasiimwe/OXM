@@ -200,25 +200,25 @@ public final class PermissionConstants {
 	/**
 	 * permission to add a land use
 	 */
-	@PermissionAnnotation(id = "", description = "Ability to add a land use")
+	@PermissionAnnotation(id = "0DAE7F97-67F9-47f7-A41C-D9CDBB4E1DAB", description = "Ability to add a land use")
 	public static final String ADD_LAND_USE = "add_land_use";
 
 	/**
 	 * permission to view a land use
 	 */
-	@PermissionAnnotation(id = "", description = "Ability to view a land use")
+	@PermissionAnnotation(id = "0EE81CFB-0966-4096-9C2E-01C17528FE2B", description = "Ability to view a land use")
 	public static final String VIEW_LAND_USE = "view_land_use";
 
 	/**
 	 * permission to edit land uses
 	 */
-	@PermissionAnnotation(id = "", description = "Ability to edit a land_use")
+	@PermissionAnnotation(id = "D0A4CAE4-AB7E-412c-91C7-13EC31403850", description = "Ability to edit a land_use")
 	public static final String EDIT_LAND_USE = "edit_land_use";
 
 	/**
 	 * permission to delete a land use
 	 */
-	@PermissionAnnotation(id = "", description = "Ability to delete a land use")
+	@PermissionAnnotation(id = "17114C97-ABC6-4a18-8F05-BCE684FD2357", description = "Ability to delete a land use")
 	public static final String DELETE_LAND_USE = "delete_land_use";
 
 	/**

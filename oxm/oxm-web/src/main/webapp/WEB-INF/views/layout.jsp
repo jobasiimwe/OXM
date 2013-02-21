@@ -67,8 +67,10 @@
 		</div>
 	</div>
 	<div style="clear: both;"></div>
-	<div id="footer" class="footer-dv">
-		<tiles:insertAttribute name="footer" />
+	<div id="footer" class="login-footer">
+		<div class="oxm-item">
+			<tiles:insertAttribute name="footer" />
+		</div>
 	</div>
 </body>
 </html>
