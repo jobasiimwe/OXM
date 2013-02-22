@@ -14,7 +14,8 @@ form#concept input[type="text"] {
 }
 </style>
 <div>
-	<form:form action="concept?action=save&item=concept" commandName="concept">
+	<div style="margin: 5px; width: 100%;"><label class="uiLabel">Concepts >> </label><a title="Back to Concepts" href="${baseUrl }/concept/view/x">Back</a></div>
+	<form:form action="${baseUrl }/concept/save/" commandName="concept">
 
 		<form:hidden path="id" />
 		<div class="splitcontentleft">

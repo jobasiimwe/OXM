@@ -14,7 +14,7 @@ form#conceptcategory input[type="text"] {
 }
 </style>
 <div>
-	<form:form action="concept?action=save&item=conceptcategory" commandName="conceptcategory">
+	<form:form action="${baseUrl }/category/save/" commandName="conceptcategory">
 		<form:hidden path="id" />
 		<div>
 			<div class="box tabular">

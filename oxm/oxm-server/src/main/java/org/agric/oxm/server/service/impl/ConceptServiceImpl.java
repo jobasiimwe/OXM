@@ -35,229 +35,203 @@ import com.googlecode.genericdao.search.Search;
 @Transactional
 public class ConceptServiceImpl implements ConceptService {
 
-	@Autowired
-	private ConceptDAO conceptDAO;
+    @Autowired
+    private ConceptDAO conceptDAO;
 
-	@Autowired
-	private ConceptCategoryDAO conceptCategoryDAO;
+    @Autowired
+    private ConceptCategoryDAO conceptCategoryDAO;
 
-	@Override
-	@Secured({ PermissionConstants.ADD_CONCEPT_DETAILS,
+    @Override
+    @Secured({ PermissionConstants.ADD_CONCEPT_DETAILS,
 			PermissionConstants.EDIT_CONCEPT_DETAILS })
-	@Transactional(propagation = Propagation.REQUIRED)
-	public void save(Concept concept) {
-		conceptDAO.save(concept);
-	}
+    @Transactional(propagation = Propagation.REQUIRED)
+    public void save(Concept concept) {
+	conceptDAO.save(concept);
+    }
 
-	@Secured({ PermissionConstants.ADD_CONCEPT_DETAILS,
+    @Secured({ PermissionConstants.ADD_CONCEPT_DETAILS,
 			PermissionConstants.EDIT_CONCEPT_DETAILS })
-	@Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
-	@Override
-	public void validate(Concept concept) throws ValidationException {
-		ConceptSearchParameters params = new ConceptSearchParameters(
-				concept.getName());
-		List<Concept> concepts = getConceptsWithParams(params, 0);
-
-		if (null != concepts) {
-			if (StringUtils.isBlank(concept.getId()))
-				throw new ValidationException("Another concept with name "
-						+ concept.getName() + " already exists");
-
-			if (concepts.size() > 1
-					|| (concepts.size() == 1 && !concepts.get(0)
-							.equals(concept)))
-				throw new ValidationException("Another concept with name "
-						+ concept.getName() + " already exists");
-		}
+    @Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
+    @Override
+    public void validate(Concept concept) throws ValidationException {
+	Concept existingConcept = conceptDAO.searchUniqueByPropertyEqual("name", concept.getName());
+	if (null != existingConcept && StringUtils.isEmpty(concept.getId())) {
+	    throw new ValidationException("Another concept with name " + concept.getName()
+		    + " already exists");
 	}
+    }
 
-	@Secured({ PermissionConstants.DELETE_CONCEPT_DETAILS })
-	@Transactional(propagation = Propagation.REQUIRED)
-	@Override
-	public void deleteConceptsByIds(String[] ids) {
-		conceptDAO.removeByIds(ids);
-	}
+    @Secured({ PermissionConstants.DELETE_CONCEPT_DETAILS })
+    @Transactional(propagation = Propagation.REQUIRED)
+    @Override
+    public void deleteConceptsByIds(String[] ids) {
+	conceptDAO.removeByIds(ids);
+    }
 
-	@Secured({ PermissionConstants.VIEW_CONCEPT_DETAILS })
-	@Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
-	@Override
-	public Concept getConceptById(String id) {
-		return conceptDAO.searchUniqueByPropertyEqual("id", id);
-	}
+    @Secured({ PermissionConstants.VIEW_CONCEPT_DETAILS })
+    @Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
+    @Override
+    public Concept getConceptById(String id) {
+	return conceptDAO.searchUniqueByPropertyEqual("id", id);
+    }
 
-	@Override
-	@Secured({ PermissionConstants.VIEW_CONCEPT_DETAILS })
-	@Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
-	public List<Concept> getConcepts() {
-		return conceptDAO.searchByRecordStatus(RecordStatus.ACTIVE);
-	}
+    @Override
+    @Secured({ PermissionConstants.VIEW_CONCEPT_DETAILS })
+    @Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
+    public List<Concept> getConcepts() {
+	return conceptDAO.searchByRecordStatus(RecordStatus.ACTIVE);
+    }
 
-	@Override
-	@Secured({ PermissionConstants.VIEW_CONCEPT_DETAILS })
-	@Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
-	public List<Concept> getConceptsByCategory(ConceptCategory conceptCategory) {
-		Search search = new Search();
-		search.addFilterEqual("recordStatus", RecordStatus.ACTIVE);
-		search.addFilter(Filter.some("categories",
+    @Override
+    @Secured({ PermissionConstants.VIEW_CONCEPT_DETAILS })
+    @Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
+    public List<Concept> getConceptsByCategory(ConceptCategory conceptCategory) {
+	Search search = new Search();
+	search.addFilterEqual("recordStatus", RecordStatus.ACTIVE);
+	search.addFilter(Filter.some("categories",
 				Filter.equal("id", conceptCategory.getId())));
-		List<Concept> concepts = conceptDAO.search(search);
-		Collections.sort(concepts);
-		return concepts;
-	}
+	List<Concept> concepts = conceptDAO.search(search);
+	Collections.sort(concepts);
+	return concepts;
+    }
 
-	@Override
-	@Secured({ PermissionConstants.VIEW_CONCEPT_DETAILS })
-	@Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
-	public List<Concept> getConceptsByCategoryAnnotation(
+    @Override
+    @Secured({ PermissionConstants.VIEW_CONCEPT_DETAILS })
+    @Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
+    public List<Concept> getConceptsByCategoryAnnotation(
 			ConceptCategoryAnnotation conceptCategoryAnnotation)
 			throws SecurityException, NoSuchFieldException {
-		ConceptCategory conceptCategory = getConceptCategoryById(conceptCategoryAnnotation
+	ConceptCategory conceptCategory = getConceptCategoryById(conceptCategoryAnnotation
 				.id());
-		List<Concept> concepts = getConceptsByCategory(conceptCategory);
-		return concepts;
-	}
+	List<Concept> concepts = getConceptsByCategory(conceptCategory);
+	return concepts;
+    }
 
-	@Override
-	@Secured({ PermissionConstants.VIEW_CONCEPT_DETAILS })
-	@Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
-	public List<Concept> getConceptsWithParams(ConceptSearchParameters params,
+    @Override
+    @Secured({ PermissionConstants.VIEW_CONCEPT_DETAILS })
+    @Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
+    public List<Concept> getConceptsWithParams(ConceptSearchParameters params,
 			int pageNo) {
-		Search search = prepareConceptSearch(params);
-		search.setMaxResults(OXMConstants.MAX_NUM_PAGE_RECORD);
+	Search search = prepareConceptSearch(params);
+	search.setMaxResults(OXMConstants.MAX_NUM_PAGE_RECORD);
 
-		/*
-		 * if the page number is less than or equal to zero, no need for paging
-		 */
-		if (pageNo > 0) {
-			search.setPage(pageNo - 1);
-		} else {
-			search.setPage(0);
-		}
+	/*
+	 * if the page number is less than or equal to zero, no need for paging
+	 */
+	if (pageNo > 0) {
+	    search.setPage(pageNo - 1);
+	} else {
+	    search.setPage(0);
+	}
+	List<Concept> concepts = conceptDAO.search(search);
+	return concepts;
+    }
 
-		List<Concept> concepts = conceptDAO.search(search);
-		return concepts;
+    private Search prepareConceptSearch(ConceptSearchParameters params) {
+	Search search = new Search();
+
+	search.addSort("name", false, true);
+	search.addFilterEqual("recordStatus", RecordStatus.ACTIVE);
+	if (!StringUtils.isNotEmpty(params.getName())) {
+	    /*
+	     * Filter nameFilter = new Filter("name", "%" + params.getName() +
+	     * "%", Filter.OP_LIKE); Filter descFilter = new
+	     * Filter("description", "%" + params.getName() + "%",
+	     * Filter.OP_ILIKE); search.addFilterOr(nameFilter, descFilter);
+	     */search.addFilterLike("name", params.getName());
 	}
 
-	private Search prepareConceptSearch(ConceptSearchParameters params) {
-		Search search = new Search();
-
-		search.addSort("name", false, true);
-		search.addFilterEqual("recordStatus", RecordStatus.ACTIVE);
-		if (!StringUtils.isNotEmpty(params.getName())) {
-			Filter nameFilter = new Filter("name",
-					"%" + params.getName() + "%", Filter.OP_ILIKE);
-			Filter descFilter = new Filter("description", "%"
-					+ params.getName() + "%", Filter.OP_ILIKE);
-			search.addFilterOr(nameFilter, descFilter);
-
-		}
-
-		if (null != params.getConceptCategory())
-			search.addFilter(Filter.some("categories",
+	if (null != params.getConceptCategory())
+	    search.addFilter(Filter.some("categories",
 					Filter.equal("id", params.getConceptCategory().getId())));
 
-		return search;
-	}
+	return search;
+    }
 
-	@Override
-	public int getNumberOfConceptsInSearch(ConceptSearchParameters params) {
-		Search search = prepareConceptSearch(params);
-		return conceptDAO.count(search);
-	}
+    @Override
+    public int getNumberOfConceptsInSearch(ConceptSearchParameters params) {
+	Search search = prepareConceptSearch(params);
+	return conceptDAO.count(search);
+    }
 
-	@Override
-	@Secured({ PermissionConstants.ADD_CONCEPT_DETAILS,
+    @Override
+    @Secured({ PermissionConstants.ADD_CONCEPT_DETAILS,
 			PermissionConstants.EDIT_CONCEPT_DETAILS })
-	@Transactional(propagation = Propagation.REQUIRED)
-	public void save(ConceptCategory conceptCategory) {
-		conceptCategoryDAO.save(conceptCategory);
-	}
+    @Transactional(propagation = Propagation.REQUIRED)
+    public void save(ConceptCategory conceptCategory) {
+	conceptCategoryDAO.save(conceptCategory);
+    }
 
-	@Override
-	public void validate(ConceptCategory conceptCategory)
+    @Override
+    public void validate(ConceptCategory conceptCategory)
 			throws ValidationException {
-		ConceptCategorySearchParameters params = new ConceptCategorySearchParameters(
-				conceptCategory.getName());
-		List<ConceptCategory> conceptCategories = getConceptCategoriesWithParams(
-				params, 0);
-
-		if (null != conceptCategories) {
-			if (StringUtils.isBlank(conceptCategory.getId()))
-				throw new ValidationException(
-						"Another concept category with name "
-								+ conceptCategory.getName() + " already exists");
-
-			if (conceptCategories.size() > 1
-					|| (conceptCategories.size() == 1 && !conceptCategories
-							.get(0).equals(conceptCategory)))
-				throw new ValidationException(
-						"Another concept category with name "
-								+ conceptCategory.getName() + " already exists");
-		}
-
+	ConceptCategory existingConceptCategory = conceptCategoryDAO.searchUniqueByPropertyEqual(
+		"name", conceptCategory.getName());
+	if (null != existingConceptCategory && StringUtils.isEmpty(conceptCategory.getId())) {
+	    throw new ValidationException("Another concept category with name "
+		    + existingConceptCategory.getName()
+		    + " already exists");
 	}
+    }
 
-	@Override
-	@Secured({ PermissionConstants.VIEW_CONCEPT_DETAILS })
-	@Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
-	public ConceptCategory getConceptCategoryById(String id) {
-		return conceptCategoryDAO.searchUniqueByPropertyEqual("id", id);
-	}
+    @Override
+    @Secured({ PermissionConstants.VIEW_CONCEPT_DETAILS })
+    @Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
+    public ConceptCategory getConceptCategoryById(String id) {
+	return conceptCategoryDAO.searchUniqueByPropertyEqual("id", id);
+    }
 
-	@Override
-	@Secured({ PermissionConstants.VIEW_CONCEPT_DETAILS })
-	@Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
-	public List<ConceptCategory> getConceptCategories() {
-		return conceptCategoryDAO.searchByRecordStatus(RecordStatus.ACTIVE);
-	}
+    @Override
+    @Secured({ PermissionConstants.VIEW_CONCEPT_DETAILS })
+    @Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
+    public List<ConceptCategory> getConceptCategories() {
+	return conceptCategoryDAO.searchByRecordStatus(RecordStatus.ACTIVE);
+    }
 
-	@Override
-	@Secured({ PermissionConstants.VIEW_CONCEPT_DETAILS })
-	@Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
-	public List<ConceptCategory> getConceptCategoriesWithParams(
+    @Override
+    @Secured({ PermissionConstants.VIEW_CONCEPT_DETAILS })
+    @Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
+    public List<ConceptCategory> getConceptCategoriesWithParams(
 			ConceptCategorySearchParameters params, int pageNo) {
-		Search search = prepareConceptCategorySearch(params);
-		search.setMaxResults(OXMConstants.MAX_NUM_PAGE_RECORD);
+	Search search = prepareConceptCategorySearch(params);
+	search.setMaxResults(OXMConstants.MAX_NUM_PAGE_RECORD);
 
-		/*
-		 * if the page number is less than or equal to zero, no need for paging
-		 */
-		if (pageNo > 0) {
-			search.setPage(pageNo - 1);
-		} else {
-			search.setPage(0);
-		}
+	if (pageNo > 0) {
+	    search.setPage(pageNo - 1);
+	} else {
+	    search.setPage(0);
+	}
 
-		List<ConceptCategory> conceptCategories = conceptCategoryDAO
+	List<ConceptCategory> conceptCategories = conceptCategoryDAO
 				.search(search);
-		return conceptCategories;
-	}
+	return conceptCategories;
+    }
 
-	private Search prepareConceptCategorySearch(
+    private Search prepareConceptCategorySearch(
 			ConceptCategorySearchParameters params) {
-		Search search = new Search();
+	Search search = new Search();
 
-		search.addSort("name", false, true);
-		search.addFilterEqual("recordStatus", RecordStatus.ACTIVE);
-		if (!StringUtils.isNotEmpty(params.getName())) {
-			Filter nameFilter = new Filter("name",
+	search.addSort("name", false, true);
+	search.addFilterEqual("recordStatus", RecordStatus.ACTIVE);
+	if (!StringUtils.isNotEmpty(params.getName())) {
+	    Filter nameFilter = new Filter("name",
 					"%" + params.getName() + "%", Filter.OP_ILIKE);
-			Filter descFilter = new Filter("description", "%"
+	    Filter descFilter = new Filter("description", "%"
 					+ params.getName() + "%", Filter.OP_ILIKE);
-			search.addFilterOr(nameFilter, descFilter);
+	    search.addFilterOr(nameFilter, descFilter);
 
-		}
-
-		return search;
 	}
 
-	@Override
-	@Secured({ PermissionConstants.VIEW_CONCEPT_DETAILS })
-	@Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
-	public int getNumberOfConceptsCategoriesInSearch(
+	return search;
+    }
+
+    @Override
+    @Secured({ PermissionConstants.VIEW_CONCEPT_DETAILS })
+    @Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
+    public int getNumberOfConceptsCategoriesInSearch(
 			ConceptCategorySearchParameters params) {
-		Search search = prepareConceptCategorySearch(params);
-		return conceptCategoryDAO.count(search);
-	}
+	Search search = prepareConceptCategorySearch(params);
+	return conceptCategoryDAO.count(search);
+    }
 
 }

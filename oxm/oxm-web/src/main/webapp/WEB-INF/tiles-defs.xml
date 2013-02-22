@@ -48,186 +48,29 @@
 	</definition>
 
 	<!-- ========= FORM to add a concept ========= -->
-	<definition name="conceptView" extends="layout">
-		<put-attribute name="scripts" type="template"
-			value="/WEB-INF/views/tiles/concept/scripts.jsp" />
-		<put-attribute name="pageTitle" type="string" value="Concepts" />
-		<put-attribute name="body" type="template"
-			value="/WEB-INF/views/tiles/concept/concepts.jsp" />
+	<definition name="viewConcept" extends="layout">
+		<put-attribute name="scripts" type="template" value="/WEB-INF/views/tiles/concept/scripts.jsp" />
+		<put-attribute name="pageTitle" type="string" value="View Concept(s)" />
+		<put-attribute name="body" type="template" value="/WEB-INF/views/tiles/concept/view.jsp" />
 	</definition>
 
-	<definition name="addConcept" extends="layout">
-		<put-attribute name="scripts" type="template"
-			value="/WEB-INF/views/tiles/concept/scripts.jsp" />
-		<put-attribute name="pageTitle" type="string" value="New Concept" />
-		<put-attribute name="body" type="template"
-			value="/WEB-INF/views/tiles/concept/conceptform.jsp" />
-	</definition>
-
-	<definition name="editConcept" extends="layout">
-		<put-attribute name="scripts" type="template"
-			value="/WEB-INF/views/tiles/concept/scripts.jsp" />
-		<put-attribute name="pageTitle" type="string" value="Edit Concept" />
-		<put-attribute name="body" type="template"
-			value="/WEB-INF/views/tiles/concept/conceptform.jsp" />
+	<definition name="addOREditConcept" extends="layout">
+		<put-attribute name="scripts" type="template" value="/WEB-INF/views/tiles/concept/scripts.jsp" />
+		<put-attribute name="pageTitle" type="string" value="Add/Edit Concept" />
+		<put-attribute name="body" type="template" value="/WEB-INF/views/tiles/concept/form.jsp" />
 	</definition>
 
 	<!-- ======= FORM to add conceptCategory ========== -->
-	<definition name="conceptcategoryView" extends="layout">
-		<put-attribute name="scripts" type="template"
-			value="/WEB-INF/views/tiles/concept/scripts.jsp" />
-		<put-attribute name="pageTitle" type="string"
-			value="Concept Categories" />
-		<put-attribute name="body" type="template"
-			value="/WEB-INF/views/tiles/concept/conceptcategory.jsp" />
+	<definition name="viewConceptCategory" extends="layout">
+		<put-attribute name="scripts" type="template" value="/WEB-INF/views/tiles/concept/scripts.jsp" />
+		<put-attribute name="pageTitle" type="string" value="View Concept-Categories" />
+		<put-attribute name="body" type="template" value="/WEB-INF/views/tiles/concept/categoryView.jsp" />
 	</definition>
 
-	<definition name="addConceptCategory" extends="layout">
-		<put-attribute name="scripts" type="template"
-			value="/WEB-INF/views/tiles/concept/scripts.jsp" />
-		<put-attribute name="pageTitle" type="string"
-			value="New Concept Category" />
-		<put-attribute name="body" type="template"
-			value="/WEB-INF/views/tiles/concept/conceptcategoryform.jsp" />
+	<definition name="addOREditConceptCategory" extends="layout">
+		<put-attribute name="scripts" type="template" value="/WEB-INF/views/tiles/concept/scripts.jsp" />
+		<put-attribute name="pageTitle" type="string" value="Add/Edit Concept Category" />
+		<put-attribute name="body" type="template" value="/WEB-INF/views/tiles/concept/categoryform.jsp" />
 	</definition>
 
-	<definition name="editConceptCategory" extends="layout">
-		<put-attribute name="scripts" type="template"
-			value="/WEB-INF/views/tiles/concept/scripts.jsp" />
-		<put-attribute name="pageTitle" type="string"
-			value="Edit Concept Category" />
-		<put-attribute name="body" type="template"
-			value="/WEB-INF/views/tiles/concept/conceptcategoryform.jsp" />
-	</definition>
-
-	<!-- ==== FORM to add kraal ===== -->
-	<definition name="animalView" extends="layout">
-		<put-attribute name="scripts" type="template"
-			value="/WEB-INF/views/tiles/farm/scripts.jsp" />
-		<put-attribute name="pageTitle" type="string" value="Animals" />
-		<put-attribute name="body" type="template"
-			value="/WEB-INF/views/tiles/farm/animalsView.jsp" />
-	</definition>
-
-	<definition name="addAnimal" extends="layout">
-		<put-attribute name="scripts" type="template"
-			value="/WEB-INF/views/tiles/farm/scripts.jsp" />
-		<put-attribute name="pageTitle" type="string" value="Add Animal" />
-		<put-attribute name="body" type="template"
-			value="/WEB-INF/views/tiles/farm/animalform.jsp" />
-	</definition>
-
-	<definition name="singleAnimalView" extends="layout">
-		<put-attribute name="scripts" type="template"
-			value="/WEB-INF/views/tiles/farm/scripts.jsp" />
-		<put-attribute name="pageTitle" type="string" value="Animal" />
-		<put-attribute name="body" type="template"
-			value="/WEB-INF/views/tiles/farm/animalPage.jsp" />
-	</definition>
-	<definition name="reportView" extends="layout">
-		<put-attribute name="scripts" type="template"
-			value="/WEB-INF/views/tiles/farm/scripts.jsp" />
-		<put-attribute name="pageTitle" type="string" value="Animal Report" />
-		<put-attribute name="body" type="template"
-			value="/WEB-INF/views/tiles/farm/reportPage.jsp" />
-	</definition>
-
-	<definition name="errorPage" extends="layout">
-		<put-attribute name="pageTitle" type="string" value="Exception" />
-		<put-attribute name="sidebarleft" type="template"
-			value="/WEB-INF/views/tiles/menu.jsp" />
-		<put-attribute name="body" type="template"
-			value="/WEB-INF/views/tiles/error/error.jsp" />
-	</definition>
-
-
-	<definition name="collegeView" extends="layout">
-		<put-attribute name="scripts" type="template"
-			value="/WEB-INF/views/tiles/college/scripts.jsp" />
-		<put-attribute name="pageTitle" type="string" value="Colleges" />
-		<put-attribute name="body" type="template"
-			value="/WEB-INF/views/tiles/college/collegeView.jsp" />
-	</definition>
-
-	<definition name="collegeForm" extends="layout">
-		<put-attribute name="scripts" type="template"
-			value="/WEB-INF/views/tiles/college/scripts.jsp" />
-		<put-attribute name="pageTitle" type="string" value="Add/Edit College" />
-		<put-attribute name="body" type="template"
-			value="/WEB-INF/views/tiles/college/collegeForm.jsp" />
-	</definition>
-
-	<definition name="courseView" extends="layout">
-		<put-attribute name="scripts" type="template"
-			value="/WEB-INF/views/tiles/college/scripts.jsp" />
-		<put-attribute name="pageTitle" type="string" value="Courses" />
-		<put-attribute name="body" type="template"
-			value="/WEB-INF/views/tiles/college/courseView.jsp" />
-	</definition>
-	<definition name="addCourse" extends="layout">
-		<put-attribute name="scripts" type="template"
-			value="/WEB-INF/views/tiles/college/scripts.jsp" />
-		<put-attribute name="pageTitle" type="string" value="Add/Edit Course" />
-		<put-attribute name="body" type="template"
-			value="/WEB-INF/views/tiles/college/courseForm.jsp" />
-	</definition>
-
-	<definition name="intakeView" extends="layout">
-		<put-attribute name="scripts" type="template"
-			value="/WEB-INF/views/tiles/college/scripts.jsp" />
-		<put-attribute name="pageTitle" type="string" value="Intake(s)" />
-		<put-attribute name="body" type="template"
-			value="/WEB-INF/views/tiles/college/intakeView.jsp" />
-	</definition>
-	<definition name="addIntake" extends="layout">
-		<put-attribute name="scripts" type="template"
-			value="/WEB-INF/views/tiles/college/scripts.jsp" />
-		<put-attribute name="pageTitle" type="string" value="Add/Edit Intake" />
-		<put-attribute name="body" type="template"
-			value="/WEB-INF/views/tiles/college/intakeForm.jsp" />
-	</definition>
-	<definition name="semesterView" extends="layout">
-		<put-attribute name="scripts" type="template"
-			value="/WEB-INF/views/tiles/college/scripts.jsp" />
-		<put-attribute name="pageTitle" type="string" value="Semester(s)" />
-		<put-attribute name="body" type="template"
-			value="/WEB-INF/views/tiles/college/semesterView.jsp" />
-	</definition>
-	<definition name="addSemester" extends="layout">
-		<put-attribute name="scripts" type="template"
-			value="/WEB-INF/views/tiles/college/scripts.jsp" />
-		<put-attribute name="pageTitle" type="string" value="Add/Edit Semester" />
-		<put-attribute name="body" type="template"
-			value="/WEB-INF/views/tiles/college/semesterForm.jsp" />
-	</definition>
-	<definition name="courseUnitView" extends="layout">
-		<put-attribute name="scripts" type="template"
-			value="/WEB-INF/views/tiles/college/scripts.jsp" />
-		<put-attribute name="pageTitle" type="string" value="Course Unit(s)" />
-		<put-attribute name="body" type="template"
-			value="/WEB-INF/views/tiles/college/courseUnitView.jsp" />
-	</definition>
-	<definition name="addCourseUnit" extends="layout">
-		<put-attribute name="scripts" type="template"
-			value="/WEB-INF/views/tiles/college/scripts.jsp" />
-		<put-attribute name="pageTitle" type="string"
-			value="Add/Edit Course Unit" />
-		<put-attribute name="body" type="template"
-			value="/WEB-INF/views/tiles/college/courseUnitForm.jsp" />
-	</definition>
-	<definition name="addStudent" extends="layout">
-		<put-attribute name="scripts" type="template"
-			value="/WEB-INF/views/tiles/student/scripts.jsp" />
-		<put-attribute name="pageTitle" type="string" value="Add/Edit Student" />
-		<put-attribute name="body" type="template"
-			value="/WEB-INF/views/tiles/student/studentForm.jsp" />
-	</definition>
-	<definition name="studentCUnitView" extends="layout">
-		<put-attribute name="scripts" type="template"
-			value="/WEB-INF/views/tiles/student/scripts.jsp" />
-		<put-attribute name="pageTitle" type="string"
-			value="Student Registered Course Units" />
-		<put-attribute name="body" type="template"
-			value="/WEB-INF/views/tiles/student/studentCUnitView.jsp" />
-	</definition>
 </tiles-definitions>

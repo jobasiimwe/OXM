@@ -49,11 +49,11 @@ public interface ConceptService {
 	ConceptCategory getConceptCategoryById(String id);
 
 	List<ConceptCategory> getConceptCategories();
-
+	
 	List<ConceptCategory> getConceptCategoriesWithParams(
 			ConceptCategorySearchParameters params, int pageNo);
 
 	int getNumberOfConceptsCategoriesInSearch(
 			ConceptCategorySearchParameters params);
-
+	
 }

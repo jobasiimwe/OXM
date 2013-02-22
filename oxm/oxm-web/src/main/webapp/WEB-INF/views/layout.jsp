@@ -56,10 +56,14 @@
 				<tiles:insertAttribute name="sidebarleft" ignore="true" />
 			</div>
 			<div class="right-side-dv">
-				<h2 id="content-header">
+			<div class="home-dv"><a title="Home" href="${baseUrl}/"><span></span> </a></div>
+				<div style="width: 100%; clear: both; float: left;"></div>
+				<div style="clear: both;">
+					<h2 id="content-header">
 					<tiles:insertAttribute name="pageTitle" defaultValueType="string"
 						defaultValue="Home" />
 				</h2>
+				</div>
 				<div style="clear: both">
 					<tiles:insertAttribute name="body" />
 				</div>

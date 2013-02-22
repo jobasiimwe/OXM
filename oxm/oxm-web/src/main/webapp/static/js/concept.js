@@ -37,7 +37,7 @@ $(document).ready(function() {
 		if( numberSelected > 0){
 			if(numberSelected == 1){
 				var url = $(this).attr("href");
-				url += "&id="+$(":checked", "table.recordTable tbody tr").attr("value");
+				url += $(":checked", "table.recordTable tbody tr").attr("value");
 				
 				window.location = url;
 			}else{
@@ -57,7 +57,7 @@ $(document).ready(function() {
 		var id = $('#category').val();
 		if(id != null && id != ""){
 			var formUrl = $('#conceptCategoryForm').attr('action');
-			formUrl = formUrl + "&cid="+id;
+			formUrl = formUrl +id;
 			$('#conceptCategoryForm').attr('action', formUrl);
 			
 			return true;

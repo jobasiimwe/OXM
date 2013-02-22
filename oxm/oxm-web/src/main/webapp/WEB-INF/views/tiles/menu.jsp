@@ -69,14 +69,14 @@
 			
 			<div class="menu">
 					<a class="menu-lnk" id="lnkConcepts" title="Concepts"
-						href="${baseUrl }/"> <span class="concept-icon"></span><label
+						href="${baseUrl }/concept/view/x"> <span class="concept-icon"></span><label
 						style="margin: 10px; font-size: 12px; font-weight: bold;">Concept</label>
 					</a>
 			</div>
 			
 			<div class="menu">
 					<a class="menu-lnk" id="lnkConceptCategories"
-						title="Concept Categories" href="${baseUrl }/"> <span
+						title="Concept Categories" href="${baseUrl }/category/view/"> <span
 						class="conceptCategory-icon"></span><label
 						style="margin: 10px; font-size: 12px; font-weight: bold;">Concept Category</label>
 					</a>
