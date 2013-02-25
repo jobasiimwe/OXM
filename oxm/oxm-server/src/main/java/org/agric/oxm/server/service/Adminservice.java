@@ -21,7 +21,7 @@ import org.agric.oxm.model.exception.ValidationException;
  */
 public interface Adminservice {
 
-	void save(District district);
+	void save(District district) throws ValidationException;
 
 	void validate(District district) throws ValidationException;
 
@@ -31,11 +31,12 @@ public interface Adminservice {
 
 	District getDistrictByName(String name);
 
-	void deleteDistrictsByIds(String[] ids);
+	void deleteDistrict(String id);
+	List<District> searchDistrict(String query);
 
 	// ---------------------
 
-	void save(SubCounty subCounty);
+	void save(SubCounty subCounty) throws ValidationException;
 
 	void validate(SubCounty subCounty) throws ValidationException;
 
@@ -43,11 +44,11 @@ public interface Adminservice {
 
 	SubCounty getSubCountyById(String id);
 
-	void deleteSubCountiesByIds(String[] ids);
+	void deleteSubCounty(String id);
 
 	// ------------------------
 
-	void save(Parish parish);
+	void save(Parish parish) throws ValidationException;
 
 	void validate(Parish parish) throws ValidationException;
 
@@ -55,11 +56,11 @@ public interface Adminservice {
 
 	Parish getParishById(String id);
 
-	void deleteParishesByIds(String[] ids);
+	void deleteParish(String id);
 
 	// -------------------
 
-	void save(Village village);
+	void save(Village village) throws ValidationException;
 
 	void validate(Village village) throws ValidationException;
 
@@ -67,5 +68,5 @@ public interface Adminservice {
 
 	Village getVillageById(String id);
 
-	void deleteVillagesByIds(String[] ids);
+	void deleteVillage(String id);
 }

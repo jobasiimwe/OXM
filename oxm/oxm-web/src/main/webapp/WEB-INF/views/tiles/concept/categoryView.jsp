@@ -41,9 +41,9 @@
 							<!-- removed delete from display because user is not allowed to delete Concept Categories -->
 							<td><a class="icon icon-edit" title="edit"
 								href="${baseUrl }/category/edit/${conceptcategory.id }">Edit</a>
-								<a class="icon icon-delete" style="margin-left: 5px;" title="delete"
+								<!--<a class="icon icon-delete" style="margin-left: 5px;" title="delete"
 								href="${baseUrl }/category/delete/${conceptcategory.id }">Delete</a>
-							</td>
+							--></td>
 						</tr>
 					</c:forEach>
 				</c:when>

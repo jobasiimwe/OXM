@@ -72,5 +72,31 @@
 		<put-attribute name="pageTitle" type="string" value="Add/Edit Concept Category" />
 		<put-attribute name="body" type="template" value="/WEB-INF/views/tiles/concept/categoryform.jsp" />
 	</definition>
+	
+	<!-- ======= FORM for district ========== -->
+	<definition name="viewDistrict" extends="layout">
+		<put-attribute name="scripts" type="template" value="/WEB-INF/views/tiles/district/scripts.jsp" />
+		<put-attribute name="pageTitle" type="string" value="View District(s)" />
+		<put-attribute name="body" type="template" value="/WEB-INF/views/tiles/district/districtView.jsp" />
+	</definition>
+
+	<definition name="addOREditDistrict" extends="layout">
+		<put-attribute name="scripts" type="template" value="/WEB-INF/views/tiles/district/scripts.jsp" />
+		<put-attribute name="pageTitle" type="string" value="Add/Edit District" />
+		<put-attribute name="body" type="template" value="/WEB-INF/views/tiles/district/districtform.jsp" />
+	</definition>
+	
+	<!-- ======= FORM for subcounty ========== -->
+	<definition name="viewSubCounty" extends="layout">
+		<put-attribute name="scripts" type="template" value="/WEB-INF/views/tiles/district/scripts.jsp" />
+		<put-attribute name="pageTitle" type="string" value="View SubCounty(s)" />
+		<put-attribute name="body" type="template" value="/WEB-INF/views/tiles/district/subcountyView.jsp" />
+	</definition>
+
+	<definition name="addOREditSubCounty" extends="layout">
+		<put-attribute name="scripts" type="template" value="/WEB-INF/views/tiles/district/scripts.jsp" />
+		<put-attribute name="pageTitle" type="string" value="Add/Edit SubCounty" />
+		<put-attribute name="body" type="template" value="/WEB-INF/views/tiles/district/subcountyform.jsp" />
+	</definition>
 
 </tiles-definitions>

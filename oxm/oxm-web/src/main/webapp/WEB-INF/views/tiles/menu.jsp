@@ -84,7 +84,7 @@
 			
 			<div class="menu">
 					<a class="menu-lnk" id="lnkCountries" title="Countries"
-						href="${baseUrl }/"> <span
+						href="${baseUrl }/district/view/"> <span
 						class="country-icon"></span><label
 						style="margin: 10px; font-size: 12px; font-weight: bold;">District</label>
 					</a>

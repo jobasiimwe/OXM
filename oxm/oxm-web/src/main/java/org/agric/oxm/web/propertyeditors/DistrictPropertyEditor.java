@@ -1,18 +1,17 @@
 package org.agric.oxm.web.propertyeditors;
 
+import org.agric.oxm.model.District;
+import org.agric.oxm.server.service.Adminservice;
+import org.apache.commons.lang.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component("districtPropertyEditor")
 public class DistrictPropertyEditor extends BasePropertyEditor {
 
-    /*@Autowired
-    private SetupService setupService;
+    @Autowired
+    private Adminservice setupService;
 
-    
-     * (non-Javadoc)
-     * 
-     * @see java.beans.PropertyEditorSupport#getAsText()
-     
     @Override
     public String getAsText() {
 	if (super.getValue() != null && super.getValue() instanceof District) {
@@ -22,11 +21,6 @@ public class DistrictPropertyEditor extends BasePropertyEditor {
 	return super.getAsText();
     }
 
-    
-     * (non-Javadoc)
-     * 
-     * @see java.beans.PropertyEditorSupport#setAsText(java.lang.String)
-     
     @Override
     public void setAsText(String text) throws IllegalArgumentException {
 	if (StringUtils.isNotBlank(text) && StringUtils.isNotEmpty(text)) {
@@ -38,5 +32,5 @@ public class DistrictPropertyEditor extends BasePropertyEditor {
 	} else {
 	    super.setAsText(text);
 	}
-    }*/
+    }
 }

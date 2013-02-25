@@ -21,6 +21,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.googlecode.genericdao.search.Search;
+
 /**
  * 
  * @author Job
@@ -46,7 +48,7 @@ public class AdminServiceImpl implements Adminservice {
 			PermissionConstants.EDIT_DISTRICT_DETAILS })
 	@Transactional(propagation = Propagation.REQUIRED)
 	@Override
-	public void save(District district) {
+	public void save(District district) throws ValidationException{
 		districtDAO.save(district);
 	}
 
@@ -91,9 +93,9 @@ public class AdminServiceImpl implements Adminservice {
 
 	@Secured({ PermissionConstants.DELETE_DISTRICT_DETAILS })
 	@Transactional(propagation = Propagation.REQUIRED)
-	@Override
-	public void deleteDistrictsByIds(String[] ids) {
-		districtDAO.removeByIds(ids);
+	public void deleteDistrict(String id) {
+	    	District district = getDistrictById(id);
+		districtDAO.delete(district);
 	}
 
 	// ---------------------------------
@@ -102,7 +104,7 @@ public class AdminServiceImpl implements Adminservice {
 			PermissionConstants.EDIT_DISTRICT_DETAILS })
 	@Transactional(propagation = Propagation.REQUIRED)
 	@Override
-	public void save(SubCounty subCounty) {
+	public void save(SubCounty subCounty) throws ValidationException{
 		subCountyDAO.save(subCounty);
 	}
 
@@ -136,7 +138,7 @@ public class AdminServiceImpl implements Adminservice {
 	}
 
 	@Secured({ PermissionConstants.VIEW_DISTRICT_DETAILS })
-	@Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
+	@Transactional(readOnly = true)
 	@Override
 	public SubCounty getSubCountyById(String id) {
 		return subCountyDAO.searchUniqueByPropertyEqual("id", id);
@@ -145,15 +147,16 @@ public class AdminServiceImpl implements Adminservice {
 	@Secured({ PermissionConstants.DELETE_DISTRICT_DETAILS })
 	@Transactional(propagation = Propagation.REQUIRED)
 	@Override
-	public void deleteSubCountiesByIds(String[] ids) {
-		subCountyDAO.removeByIds(ids);
+	public void deleteSubCounty(String id) {
+	    SubCounty sCounty = getSubCountyById(id);
+		subCountyDAO.delete(sCounty);
 	}
 
 	@Secured({ PermissionConstants.ADD_DISTRICT_DETAILS,
 			PermissionConstants.EDIT_DISTRICT_DETAILS })
 	@Transactional(propagation = Propagation.REQUIRED)
 	@Override
-	public void save(Parish parish) {
+	public void save(Parish parish) throws ValidationException{
 		parishDAO.save(parish);
 	}
 
@@ -195,8 +198,9 @@ public class AdminServiceImpl implements Adminservice {
 	@Secured({ PermissionConstants.DELETE_DISTRICT_DETAILS })
 	@Transactional(propagation = Propagation.REQUIRED)
 	@Override
-	public void deleteParishesByIds(String[] ids) {
-		parishDAO.removeByIds(ids);
+	public void deleteParish(String id) {
+	    Parish parish = getParishById(id);
+		parishDAO.delete(parish);
 	}
 
 	// -----------------------
@@ -205,7 +209,7 @@ public class AdminServiceImpl implements Adminservice {
 			PermissionConstants.EDIT_DISTRICT_DETAILS })
 	@Transactional(propagation = Propagation.REQUIRED)
 	@Override
-	public void save(Village village) {
+	public void save(Village village)throws ValidationException {
 		villageDAO.save(village);
 	}
 
@@ -248,7 +252,15 @@ public class AdminServiceImpl implements Adminservice {
 	@Secured({ PermissionConstants.DELETE_DISTRICT_DETAILS })
 	@Transactional(propagation = Propagation.REQUIRED)
 	@Override
-	public void deleteVillagesByIds(String[] ids) {
-		villageDAO.removeByIds(ids);
+	public void deleteVillage(String id) {
+	    Village v = getVillageById(id);
+		villageDAO.delete(v);
+	}
+
+	@Override
+	public List<District> searchDistrict(String query) {
+	    Search search = new Search();
+	    search.addFilterLike("name", query);
+	    return districtDAO.search(search);
 	}
 }

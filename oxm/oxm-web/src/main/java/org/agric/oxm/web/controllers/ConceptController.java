@@ -237,8 +237,8 @@ public class ConceptController {
 	    @PathVariable("id") String conceptCategoryId, ModelMap model)
 	    throws SessionExpiredException {
 
-	ConceptCategory cCategory = conceptService.getConceptCategoryById(conceptCategoryId);
-	/*if (cCategory != null) {
+	/*ConceptCategory cCategory = conceptService.getConceptCategoryById(conceptCategoryId);
+	if (cCategory != null) {
 	    try {
 		String[] cCategoryIds = new String[1];
 		cCategoryIds[0] = conceptCategoryId;
