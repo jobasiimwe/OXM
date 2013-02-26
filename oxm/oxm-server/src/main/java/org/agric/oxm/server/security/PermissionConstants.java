@@ -341,4 +341,54 @@ public final class PermissionConstants {
 	@PermissionAnnotation(id = "F929DA00-0552-4c17-A6B2-300DC028218B", description = "Ability to delete a price")
 	public static final String DELETE_PRICE = "delete_price";
 
+	/**
+	 * permission to add a prod level
+	 */
+	@PermissionAnnotation(id = "49DA4D58-45A3-49d6-8612-1F262726CDBA", description = "Ability to add a prod level")
+	public static final String ADD_PROD_LEVEL = "add_prod_level";
+
+	/**
+	 * permission to view a prod level
+	 */
+	@PermissionAnnotation(id = "9FEC2B36-1DD5-4dd7-8379-10989E65FD00", description = "Ability to view a prod level")
+	public static final String VIEW_PROD_LEVEL = "view_prod_level";
+
+	/**
+	 * permission to edit prod_levels
+	 */
+	@PermissionAnnotation(id = "90F7885A-60C9-4fcd-AE33-E5A983F2CEF2", description = "Ability to edit a prod level")
+	public static final String EDIT_PROD_LEVEL = "edit_prod_level";
+
+	/**
+	 * permission to delete a prod level
+	 */
+	@PermissionAnnotation(id = "40485885-1D67-45db-AECF-8F6D896B211C", description = "Ability to delete a prod level")
+	public static final String DELETE_PROD_LEVEL = "delete_prod_level";
+
+	// ---------------------------
+
+	/**
+	 * permission to add a prod organization
+	 */
+	@PermissionAnnotation(id = "F25AA7C5-4F4F-460a-B30F-D1685F56A076", description = "Ability to add a prod organisation")
+	public static final String ADD_PROD_ORG = "add_prod_org";
+
+	/**
+	 * permission to view a prod organization
+	 */
+	@PermissionAnnotation(id = "8957BAEA-61B8-4281-94E5-3FDB889772E9", description = "Ability to view a prod organisation")
+	public static final String VIEW_PROD_ORG = "view_prod_org";
+
+	/**
+	 * permission to edit prod organization
+	 */
+	@PermissionAnnotation(id = "91E9CDE7-0017-4efc-8260-D4DECAD48795", description = "Ability to edit a prod organisation")
+	public static final String EDIT_PROD_ORG = "edit_prod_org";
+
+	/**
+	 * permission to delete a prod organization
+	 */
+	@PermissionAnnotation(id = "B4A66B4D-BB9D-4e4a-8797-35DB9C8C9A77", description = "Ability to delete a prod organisation")
+	public static final String DELETE_PROD_ORG = "delete_prod_org";
+
 }

@@ -98,5 +98,18 @@
 		<put-attribute name="pageTitle" type="string" value="Add/Edit SubCounty" />
 		<put-attribute name="body" type="template" value="/WEB-INF/views/tiles/district/subcountyform.jsp" />
 	</definition>
+	
+	<definition name="viewCrop" extends="layout">
+		<put-attribute name="scripts" type="template" value="/WEB-INF/views/tiles/crop/scripts.jsp" />
+		<put-attribute name="pageTitle" type="string" value="View Crop()s)" />
+		<put-attribute name="body" type="template" value="/WEB-INF/views/tiles/crop/view.jsp" />
+	</definition>
 
+	<definition name="addOrEditCrop" extends="layout">
+		<put-attribute name="scripts" type="template" value="/WEB-INF/views/tiles/crop/scripts.jsp" />
+		<put-attribute name="pageTitle" type="string" value="View Crop()s)" />
+		<put-attribute name="body" type="template" value="/WEB-INF/views/tiles/crop/form.jsp" />
+	</definition>
+
+	
 </tiles-definitions>
