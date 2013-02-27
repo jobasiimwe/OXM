@@ -23,8 +23,8 @@
 <link rel="icon" type="image/png" href="/static/images/oxm-footer-lg.png" />
 
 </head>
-<body>
-	<div class="container-header">
+<body style="background: white;">
+	<div class="container-header bg">
 		<div class="logo"></div>
 		<form name="loginForm" action="j_spring_security_check" method="post">
 			<div class="login-box">
@@ -59,16 +59,18 @@
 					</div>
 				</div>
 				<div class="btn-dv">
+				<div>
 					<input name="btnSubmit" id="btnSubmit" type="submit"
-						value="Sign In" class="uiButton" />
+						value="Sign In" class="uiButton" /></div>
+						<div style="margin: 5px 10px; float: left;"><a href="#" title="you dont have an account? sign up">Sign Up</a></div>
 				</div>
 			</div>
 		</form>
 	</div>
 
-	<div class="login-signup-dv">
-		<div class="left-side-dv"></div>
-		<div class="right-side-dv">
+	<div class="login-signup-dv" >
+		<div class="left-side-dv" style="display: none;"></div>
+		<div class="right-side-dv" style="display: none;">
 			<div style="display: block; margin-top: 5px;">
 				<label class="sign-up-txt">Sign up </label>
 			</div>
@@ -100,7 +102,7 @@
 			</div>
 		</div>
 	</div>
-	<div class="login-footer">
+	<div class="login-footer" style="display: none;">
 		<div class="oxm-item"></div>
 		<div class="oxm-copyright">
 			<label>© 2013</label>

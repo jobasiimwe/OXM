@@ -99,4 +99,30 @@
 		<put-attribute name="body" type="template" value="/WEB-INF/views/tiles/district/subcountyform.jsp" />
 	</definition>
 
+	
+	<!-- ======= FORM for parish ========== -->
+	<definition name="viewParish" extends="layout">
+		<put-attribute name="scripts" type="template" value="/WEB-INF/views/tiles/district/scripts.jsp" />
+		<put-attribute name="pageTitle" type="string" value="View Parish(s)" />
+		<put-attribute name="body" type="template" value="/WEB-INF/views/tiles/district/parishView.jsp" />
+	</definition>
+
+	<definition name="addOREditParish" extends="layout">
+		<put-attribute name="scripts" type="template" value="/WEB-INF/views/tiles/district/scripts.jsp" />
+		<put-attribute name="pageTitle" type="string" value="Add/Edit Parish" />
+		<put-attribute name="body" type="template" value="/WEB-INF/views/tiles/district/parishform.jsp" />
+	</definition>
+	
+	<!-- ======= FORM for village ========== -->
+	<definition name="viewVillage" extends="layout">
+		<put-attribute name="scripts" type="template" value="/WEB-INF/views/tiles/district/scripts.jsp" />
+		<put-attribute name="pageTitle" type="string" value="View Village(s)" />
+		<put-attribute name="body" type="template" value="/WEB-INF/views/tiles/district/villageView.jsp" />
+	</definition>
+
+	<definition name="addOREditVillage" extends="layout">
+		<put-attribute name="scripts" type="template" value="/WEB-INF/views/tiles/district/scripts.jsp" />
+		<put-attribute name="pageTitle" type="string" value="Add/Edit Village" />
+		<put-attribute name="body" type="template" value="/WEB-INF/views/tiles/district/villageform.jsp" />
+	</definition>
 </tiles-definitions>

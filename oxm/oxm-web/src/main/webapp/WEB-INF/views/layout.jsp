@@ -41,14 +41,16 @@
 			<div class="logo"></div>
 			<div class="status-msg"><jsp:include
 					page="/WEB-INF/views/tiles/system-message.jsp"></jsp:include></div>
-			<div class="user-credentials">
-				<ul>
+			<div style="display: inline-block;float: right;">
+				<div class="user-credentials"><ul>
 					<li><span
 						style="color: #fff; font-weight: bold; font-size: 100%;">Welcome:
 							${loggedInUser.username } </span>
 					</li>
 					<li><a href="${baseUrl }/ServiceLogout">Logout</a>
 				</ul>
+				</div>
+				<div class="home-dv"><a title="Home" href="${baseUrl}/"><span></span> </a></div>
 			</div>
 		</div>
 		<div class="content-dv">
@@ -56,8 +58,8 @@
 				<tiles:insertAttribute name="sidebarleft" ignore="true" />
 			</div>
 			<div class="right-side-dv">
-			<div class="home-dv"><a title="Home" href="${baseUrl}/"><span></span> </a></div>
-				<div style="width: 100%; clear: both; float: left;"></div>
+			<!--
+				--><div style="width: 100%; clear: both; float: left;"></div>
 				<div style="clear: both;">
 					<h2 id="content-header">
 					<tiles:insertAttribute name="pageTitle" defaultValueType="string"

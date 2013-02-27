@@ -147,8 +147,8 @@
 .ui-state-default,.ui-widget-content .ui-state-default,.ui-widget-header .ui-state-default
 	{
 	border: 1px solid #c5dbec;
-	background: #dfeffc url(images/ui-bg_glass_85_dfeffc_1x400.png) 50% 50%
-		repeat-x;
+	/* background: #dfeffc url(images/ui-bg_glass_85_dfeffc_1x400.png) 50% 50%
+		repeat-x; */
 	font-weight: bold;
 	color: #2e6e9e;
 }
@@ -176,7 +176,7 @@
 .ui-state-active,.ui-widget-content .ui-state-active,.ui-widget-header .ui-state-active
 	{
 	border: 1px solid #79b7e7;
-	background: #f5f8f9 url(images/ui-bg_inset-hard_100_f5f8f9_1x100.png)
+	background: #f5f8f9 url(images/ui-bg_inset-hard_100_f5f8f9_1x100.png) 
 		50% 50% repeat-x;
 	font-weight: bold;
 	color: #e17009;
@@ -208,7 +208,7 @@
 
 .ui-state-error,.ui-widget-content .ui-state-error,.ui-widget-header .ui-state-error
 	{
-	/* border: 1px solid #cd0a0a; */
+	border: 1px solid #cd0a0a; 
 	background: #fef1ec url(images/ui-bg_glass_95_fef1ec_1x400.png) 50% 50%
 		repeat-x;
 	color: #cd0a0a;
