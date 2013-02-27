@@ -99,7 +99,13 @@
 					style="margin: 10px; font-size: 12px; font-weight: bold;">District</label>
 				</a>
 			</div>
-
+			<div class="menu">
+					<a class="menu-lnk" id="lnkCrops" title="Crops"
+						href="${baseUrl }/crop/view/"> <span
+						class="crop-icon"></span><label
+						style="margin: 10px; font-size: 12px; font-weight: bold;">Crops</label>
+					</a>
+			</div>
 		</div>
 		<h3>
 			<a href="#">Price Monitor</a>
