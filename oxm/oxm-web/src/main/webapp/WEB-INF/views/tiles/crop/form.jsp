@@ -8,26 +8,24 @@ form#concept input[type="text"] {
 	width: 70%;
 }
 
-#conceptcategorylist span{
-	display:inline-block;
+#conceptcategorylist span {
+	display: inline-block;
 	width: 50%;
 }
 </style>
 <div>
-	<div style="margin: 5px; width: 100%;"><label class="uiLabel">Concepts >> </label><a title="Back to Concepts" href="${baseUrl }/concept/view/x">Back</a></div>
-	<form:form action="${baseUrl }/concept/save/" commandName="concept">
+	<div style="margin: 5px; width: 100%;">
+		<label class="uiLabel">Crops >> </label><a title="Back to Crops"
+			href="${baseUrl }/crop/view/page/1">Back</a>
+	</div>
+	<form:form action="${baseUrl }/crop/save/" commandName="crop">
 
 		<form:hidden path="id" />
 		<div class="splitcontentleft">
 			<div class="box tabular">
-				<h3>Information</h3>
 				<p>
 					<label>Name <span class="required">*</span> </label>
-					<form:input path="name" cssClass="uiTextbox"/>
-				</p>
-				<p>
-					<label>Description</label>
-					<form:input path="description" cssClass="uiTextbox" />
+					<form:input path="name" cssClass="uiTextbox" />
 				</p>
 			</div>
 		</div>
@@ -35,14 +33,15 @@ form#concept input[type="text"] {
 			<div class="box">
 				<h3>Concept Categories</h3>
 				<p id="conceptcategorylist">
-					<form:checkboxes items="${conceptcategories }" path="categories" itemValue="id"
-						itemLabel="name" />
+					<form:checkboxes items="${inputs }" path="input.concepts"
+						itemValue="id" itemLabel="name" />
 				</p>
 			</div>
 		</div>
 		<div style="clear: both"></div>
 		<div>
-			<input id="btnSaveConcept" type="submit" value="Save" class="uiButton" />
+			<input id="btnSaveConcept" type="submit" value="Save"
+				class="uiButton" />
 		</div>
 	</form:form>
 </div>

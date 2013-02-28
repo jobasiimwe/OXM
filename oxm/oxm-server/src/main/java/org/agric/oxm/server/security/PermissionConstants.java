@@ -18,6 +18,12 @@ public final class PermissionConstants {
 	public static final String PERM_WEB_ACCESS = "perm_web_access";
 
 	/**
+	 * permission to view administration control panel ...
+	 */
+	@PermissionAnnotation(id = "68C2C81F-1492-43c7-9F27-DB4A792540FC", description = "Ability to view the administration control panel ")
+	public static final String PERM_VIEW_ADMINISTRATION = "perm_view_administration";
+
+	/**
 	 * permission to add a user
 	 */
 	@PermissionAnnotation(id = "19A55078-045E-43a6-A40D-8E6159C57963", description = "Ability to add user")

@@ -7,10 +7,11 @@ import java.util.List;
 
 import org.agric.oxm.model.Crop;
 import org.agric.oxm.model.exception.ValidationException;
+import org.agric.oxm.model.search.CropSearchParameters;
 
 /**
  * @author Job
- *
+ * 
  */
 public interface CropService {
 
@@ -23,4 +24,8 @@ public interface CropService {
 	Crop getCropById(String id);
 
 	void deleteCropsByIds(String[] ids);
+
+	List<Crop> searchWithParams(CropSearchParameters params, int pageNo);
+
+	int numberOfCropsWithSearchParams(CropSearchParameters params);
 }

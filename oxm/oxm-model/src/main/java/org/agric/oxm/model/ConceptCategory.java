@@ -1,7 +1,10 @@
 package org.agric.oxm.model;
 
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -12,6 +15,8 @@ public class ConceptCategory extends BaseData implements
 	private String name;
 
 	private String description;
+
+	private List<Concept> concepts;
 
 	public ConceptCategory() {
 		super();
@@ -40,6 +45,15 @@ public class ConceptCategory extends BaseData implements
 
 	public void setDescription(String description) {
 		this.description = description;
+	}
+
+	@ManyToMany(mappedBy = "categories", targetEntity = Concept.class)
+	public List<Concept> getConcepts() {
+		return concepts;
+	}
+
+	public void setConcepts(List<Concept> concepts) {
+		this.concepts = concepts;
 	}
 
 	@Override

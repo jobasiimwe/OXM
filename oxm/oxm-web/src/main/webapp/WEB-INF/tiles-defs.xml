@@ -105,7 +105,7 @@
 		<put-attribute name="body" type="template" value="/WEB-INF/views/tiles/crop/view.jsp" />
 	</definition>
 
-	<definition name="addOrEditCrop" extends="layout">
+	<definition name="cropForm" extends="layout">
 		<put-attribute name="scripts" type="template" value="/WEB-INF/views/tiles/crop/scripts.jsp" />
 		<put-attribute name="pageTitle" type="string" value="View Crop()s)" />
 		<put-attribute name="body" type="template" value="/WEB-INF/views/tiles/crop/form.jsp" />
