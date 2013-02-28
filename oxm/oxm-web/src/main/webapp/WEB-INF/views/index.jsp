@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Welcome to the Ranch Online Management System</title>
+<title>Welcome to Oxfam E Agric System</title>
 </head>
 <body>
 	

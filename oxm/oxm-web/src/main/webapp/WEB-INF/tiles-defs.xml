@@ -99,17 +99,62 @@
 		<put-attribute name="body" type="template" value="/WEB-INF/views/tiles/district/subcountyform.jsp" />
 	</definition>
 	
+	<!-- ======= FORM for parish ========== -->
+	<definition name="viewParish" extends="layout">
+		<put-attribute name="scripts" type="template" value="/WEB-INF/views/tiles/district/scripts.jsp" />
+		<put-attribute name="pageTitle" type="string" value="View Parish(s)" />
+		<put-attribute name="body" type="template" value="/WEB-INF/views/tiles/district/parishView.jsp" />
+	</definition>
+
+	<definition name="addOREditParish" extends="layout">
+		<put-attribute name="scripts" type="template" value="/WEB-INF/views/tiles/district/scripts.jsp" />
+		<put-attribute name="pageTitle" type="string" value="Add/Edit Parish" />
+		<put-attribute name="body" type="template" value="/WEB-INF/views/tiles/district/parishform.jsp" />
+	</definition>
+	
+	<!-- ======= FORM for village ========== -->
+	<definition name="viewVillage" extends="layout">
+		<put-attribute name="scripts" type="template" value="/WEB-INF/views/tiles/district/scripts.jsp" />
+		<put-attribute name="pageTitle" type="string" value="View Village(s)" />
+		<put-attribute name="body" type="template" value="/WEB-INF/views/tiles/district/villageView.jsp" />
+	</definition>
+
+	<definition name="addOREditVillage" extends="layout">
+		<put-attribute name="scripts" type="template" value="/WEB-INF/views/tiles/district/scripts.jsp" />
+		<put-attribute name="pageTitle" type="string" value="Add/Edit Village" />
+		<put-attribute name="body" type="template" value="/WEB-INF/views/tiles/district/villageform.jsp" />
+	</definition>
+	
+	<!-- ======= FORM for CROP ========== -->
 	<definition name="viewCrop" extends="layout">
 		<put-attribute name="scripts" type="template" value="/WEB-INF/views/tiles/crop/scripts.jsp" />
 		<put-attribute name="pageTitle" type="string" value="View Crop()s)" />
 		<put-attribute name="body" type="template" value="/WEB-INF/views/tiles/crop/view.jsp" />
 	</definition>
-
+	
 	<definition name="cropForm" extends="layout">
 		<put-attribute name="scripts" type="template" value="/WEB-INF/views/tiles/crop/scripts.jsp" />
 		<put-attribute name="pageTitle" type="string" value="View Crop()s)" />
 		<put-attribute name="body" type="template" value="/WEB-INF/views/tiles/crop/form.jsp" />
 	</definition>
-
 	
+	<!-- ======= FORM for CPanel ========== -->
+	<definition name="cpanel" extends="layout">
+		<put-attribute name="pageTitle" type="string" value="C panel" />
+		<put-attribute name="body" type="template" value="/WEB-INF/views/tiles/cpanel.jsp" />
+	</definition>
+	
+	<!-- ======= FORM for Selling Place ========== -->
+	<definition name="viewSellingPlace" extends="layout">
+	    <put-attribute name="scripts" type="template" value="/WEB-INF/views/tiles/sellingplace/scripts.jsp" />
+		<put-attribute name="pageTitle" type="string" value="View Selling Place(s)" />
+		<put-attribute name="body" type="template" value="/WEB-INF/views/tiles/sellingplace/view.jsp" />
+	</definition>
+	
+		<!-- ======= FORM for Selling Place ========== -->
+	<definition name="addOREditSellingPlace" extends="layout">
+	    <put-attribute name="scripts" type="template" value="/WEB-INF/views/tiles/sellingplace/scripts.jsp" />
+		<put-attribute name="pageTitle" type="string" value="Add/Edit Selling Place" />
+		<put-attribute name="body" type="template" value="/WEB-INF/views/tiles/sellingplace/form.jsp" />
+	</definition>
 </tiles-definitions>

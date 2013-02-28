@@ -34,7 +34,7 @@
 						<tr>
 							<td>${subcounty.name }</td>
 							<td>${subcounty.district.name }</td>
-							<td><a id="btnDeleteSubcounty class="icon icon-delete"
+							<td><a id="btnDeleteSubcounty" class="icon icon-delete"
 								title="delete" onclick="" href="${baseUrl }/subcounty/delete/${subcounty.id }">Delete</a>
 								<a class="icon icon-edit" title="edit" href="${baseUrl }/subcounty/edit/${subcounty.id }">Edit</a>
 								<a class="icon icon-list" title="edit" href="${baseUrl }/parish/view/${subcounty.id }">View Parishes</a>
