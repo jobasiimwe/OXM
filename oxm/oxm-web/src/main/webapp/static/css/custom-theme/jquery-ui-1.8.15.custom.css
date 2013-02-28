@@ -1142,6 +1142,7 @@
 /* IE/Win - Fix animation bug - #4615 */
 .ui-accordion {
 	width: 100%;
+	margin-top: 10px;
 }
 
 .ui-accordion .ui-accordion-header {

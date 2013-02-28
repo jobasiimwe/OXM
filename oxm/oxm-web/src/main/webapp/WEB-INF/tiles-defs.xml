@@ -136,4 +136,24 @@
 		<put-attribute name="pageTitle" type="string" value="View Crop()s)" />
 		<put-attribute name="body" type="template" value="/WEB-INF/views/tiles/crop/form.jsp" />
 	</definition>
+	
+	<!-- ======= FORM for CPanel ========== -->
+	<definition name="cpanel" extends="layout">
+		<put-attribute name="pageTitle" type="string" value="C panel" />
+		<put-attribute name="body" type="template" value="/WEB-INF/views/tiles/cpanel.jsp" />
+	</definition>
+	
+	<!-- ======= FORM for Selling Place ========== -->
+	<definition name="viewSellingPlace" extends="layout">
+	    <put-attribute name="scripts" type="template" value="/WEB-INF/views/tiles/sellingplace/scripts.jsp" />
+		<put-attribute name="pageTitle" type="string" value="View Selling Place(s)" />
+		<put-attribute name="body" type="template" value="/WEB-INF/views/tiles/sellingplace/view.jsp" />
+	</definition>
+	
+		<!-- ======= FORM for Selling Place ========== -->
+	<definition name="addOREditSellingPlace" extends="layout">
+	    <put-attribute name="scripts" type="template" value="/WEB-INF/views/tiles/sellingplace/scripts.jsp" />
+		<put-attribute name="pageTitle" type="string" value="Add/Edit Selling Place" />
+		<put-attribute name="body" type="template" value="/WEB-INF/views/tiles/sellingplace/form.jsp" />
+	</definition>
 </tiles-definitions>

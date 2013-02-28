@@ -27,4 +27,10 @@ public class ApplicationController {
 	model.put("errorMessage", "username OR password is incorrect");
 	return new ModelAndView("login", model);
     }
+    
+    @RequestMapping("/cpanel")
+    public ModelAndView controlpanelHander(ModelMap model) throws SessionExpiredException {
+	WebConstants.loadLoggedInUserProfile(OXMSecurityUtil.getLoggedInUser(), model);
+	return new ModelAndView("cpanel", model);
+    }
 }

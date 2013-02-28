@@ -14,7 +14,7 @@
 <title><tiles:insertAttribute name="title" ignore="true" />
 </title>
 <link type="text/css" rel="stylesheet" href="${baseUrl }/static/css/custom-theme/jquery-ui-1.8.15.custom.css" />
-<link type="text/css" rel="stylesheet" href="${baseUrl }/static/css/system.css" />
+<link type="text/css" rel="stylesheet" href="${baseUrl }/static/css/oxm.css" />
 <link rel="icon" type="image/png" href="${baseUrl }//static/images/oxm-footer-lg.png" />
 
 <script type="text/javascript" src="${baseUrl }/static/js/jquery-1.6.2.min.js"></script>
@@ -25,7 +25,7 @@
 
 <tiles:insertAttribute name="scripts" ignore="true" />
 </head>
-<body>
+<body style="background: white;">
 	<%
 	    User user = null;
 	    try {
@@ -50,7 +50,14 @@
 					<li><a href="${baseUrl }/ServiceLogout">Logout</a>
 				</ul>
 				</div>
-				<div class="home-dv"><a title="Home" href="${baseUrl}/"><span></span> </a></div>
+				<div style="clear: both;">
+					<div class="home-dv">
+						<a title="Home" href="${baseUrl}/">
+							<span style="margin-top: 5px;">Home</span> 
+						</a>
+					</div>
+					<div class="controlpanel-dv"><a title="Controlpanel" href="${baseUrl}/cpanel"><span>C-panel</span> </a></div>
+				</div>
 			</div>
 		</div>
 		<div class="content-dv">

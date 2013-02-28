@@ -13,7 +13,7 @@
 <link type="text/css" rel="stylesheet"
 	href="static/css/custom-theme/jquery-ui-1.8.15.custom.css" />
 <link type="text/css" rel="stylesheet"
-	href="${baseUrl}/static/css/system.css" />
+	href="${baseUrl}/static/css/oxm.css" />
 
 <script type="text/javascript" src="static/js/jquery-1.6.2.min.js"></script>
 <script type="text/javascript"
