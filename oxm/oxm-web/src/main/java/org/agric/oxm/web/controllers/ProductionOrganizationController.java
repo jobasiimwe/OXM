@@ -1,5 +1,6 @@
 package org.agric.oxm.web.controllers;
 
+import java.io.IOException;
 import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
@@ -64,20 +65,23 @@ public class ProductionOrganizationController {
     public void deleteProdnOrgHandler(@RequestParam("selectedPOrganization") List<String> ids,
 	    HttpServletResponse response) {
 
-	/*
-	 * try { if (ids != null) { String[] sPlaceIds = new String[ids.size()];
-	 * sPlaceIds = ids.toArray(sPlaceIds);
-	 * 
-	 * sellingPlaceService.deleteSellingPlacesByIds(sPlaceIds);
-	 * response.setStatus(HttpServletResponse.SC_OK);
-	 * response.getWriter().write("Selling place(s) deleted successfully");
-	 * } else {
-	 * response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-	 * response.getWriter().write(
-	 * "no selling place(s) supplied for deleting"); } } catch (IOException
-	 * e) {
-	 * response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR); }
-	 */
+	try {
+	    if (ids != null) {
+		String[] sPOrgIds = new String[ids.size()];
+		sPOrgIds = ids.toArray(sPOrgIds);
+
+		prdnOrgService.deleteProductionOrganisationsByIds(sPOrgIds);
+		response.setStatus(HttpServletResponse.SC_OK);
+		response.getWriter().write("Production Organization(s) deleted successfully");
+	    } else {
+		response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+		response.getWriter().write(
+			"no selling place(s) supplied for deleting");
+	    }
+	} catch (IOException e) {
+	    response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+	}
+
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/pOrganization/save/")
@@ -91,10 +95,10 @@ public class ProductionOrganizationController {
 	    existingPOrganization = prdnOrgService.getProductionOrganisationById(pOrganization
 		    .getId());
 	    existingPOrganization.setName(pOrganization.getName());
-	   
-	    	if(pOrganization.getProducers()!= null){
-	    	 existingPOrganization.setProducers(pOrganization.getProducers());
-	    	}
+
+	    if (pOrganization.getProducers() != null) {
+		existingPOrganization.setProducers(pOrganization.getProducers());
+	    }
 	}
 
 	try {
