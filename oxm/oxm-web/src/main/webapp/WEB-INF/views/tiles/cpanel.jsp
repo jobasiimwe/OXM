@@ -1,4 +1,4 @@
-<%@ page language="java" import="org.mak.cis.mohr.api.security.util.*"
+<%@ page language="java" 
 	contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix='fn' uri='http://java.sun.com/jsp/jstl/functions'%>
@@ -49,6 +49,13 @@
 						href="${baseUrl }/sellingplace/view/"> <span
 						class="sellingplace-icon"></span><label
 						style="margin: 10px; font-size: 12px; font-weight: bold;">Selling Place</label>
+					</a>
+			</div>
+			<div class="menu">
+					<a class="menu-lnk" id="lnkProductionOrg" title="Production Organization"
+						href="${baseUrl }/pOrganization/view/"> <span
+						class="porganization-icon"></span><label
+						style="margin: 10px; font-size: 12px; font-weight: bold;">Production Org</label>
 					</a>
 			</div>
 			
