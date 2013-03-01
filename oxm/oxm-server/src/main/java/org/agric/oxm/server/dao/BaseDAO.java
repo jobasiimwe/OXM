@@ -4,7 +4,8 @@ import java.util.List;
 
 import org.agric.oxm.model.RecordStatus;
 
-import com.googlecode.genericdao.dao.hibernate.GenericDAO;
+import com.googlecode.genericdao.dao.jpa.GenericDAO;
+
 
 /**
  * A Base Interface for all Data Access interfaces that enables the Data Access

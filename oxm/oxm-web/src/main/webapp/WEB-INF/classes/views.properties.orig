@@ -83,10 +83,3 @@ viewSellingPlace.url=viewSellingPlace
 
 addOREditSellingPlace.(class)=org.springframework.web.servlet.view.tiles2.TilesView
 addOREditSellingPlace.url=addOREditSellingPlace
-
-#========== production organization page properties =================
-viewProductionOrg.(class)=org.springframework.web.servlet.view.tiles2.TilesView
-viewProductionOrg.url=viewProductionOrg
-
-formProductionOrg.(class)=org.springframework.web.servlet.view.tiles2.TilesView
-formProductionOrg.url=formProductionOrg

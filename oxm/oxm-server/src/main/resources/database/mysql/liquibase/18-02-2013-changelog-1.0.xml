@@ -721,4 +721,43 @@
     <changeSet author="Job (generated)" id="1361401601361-86">
         <addForeignKeyConstraint baseColumnNames="parish_id" baseTableName="villages" constraintName="FK52A3F1478CDA553B" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="parishes"/>
     </changeSet>
+    
+    <!-- ==== changint units of measure in crop into a list ===== -->
+    <changeSet author="Job (generated)" id="1362158327030-1">
+        <createTable tableName="crop_units_of_measure">
+            <column name="crop_id" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="concept_id" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="Job (generated)" id="1362158327030-7">
+        <createIndex indexName="key1" tableName="crop_units_of_measure">
+            <column name="crop_id"/>
+            <column name="concept_id"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="Job (generated)" id="1362158327030-103">
+        <dropForeignKeyConstraint baseTableName="crop" constraintName="FK2EBA90634E8D70"/>
+    </changeSet>
+    <changeSet author="Job (generated)" id="1362158327030-6">
+        <dropNotNullConstraint columnDataType="varchar(255)" columnName="unit_of_measure_id" tableName="crop"/>
+    </changeSet>
+     <changeSet author="Job (generated)" id="1362158327030-121">
+        <dropColumn columnName="unit_of_measure_id" tableName="crop"/>
+    </changeSet>
+    <changeSet author="Job (generated)" id="1362158327030-2">
+        <dropNotNullConstraint columnDataType="varchar(255)" columnName="input_concept_category_id" tableName="crop"/>
+    </changeSet>
+    <changeSet author="Job (generated)" id="1362158327030-3">
+        <dropNotNullConstraint columnDataType="varchar(255)" columnName="inter_cropping_type_concept_category_id" tableName="crop"/>
+    </changeSet>
+    <changeSet author="Job (generated)" id="1362158327030-4">
+        <dropNotNullConstraint columnDataType="varchar(255)" columnName="plouging_method_concept_category_id" tableName="crop"/>
+    </changeSet>
+    <changeSet author="Job (generated)" id="1362158327030-5">
+        <dropNotNullConstraint columnDataType="varchar(255)" columnName="seed_variation_concept_category_id" tableName="crop"/>
+    </changeSet>
 </databaseChangeLog>

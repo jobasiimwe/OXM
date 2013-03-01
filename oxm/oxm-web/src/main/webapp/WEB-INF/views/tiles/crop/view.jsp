@@ -6,9 +6,11 @@
 
 <div id="buttonStrip">
 	<div class="contextual" style="float: left;">
-		<a id="lnkAddCrop" class="uiButton" href="${baseUrl }/crop/add/">Add</a>
-		<a id="lnkEditCrop" class="uiButton" href="${baseUrl }/crop/edit/">Edit</a>
-		<a id="lnkDeleteCrop" class="uiButton" href="${baseUrl }/crop/delete/">Delete</a>
+		<a id="btnAddCrop" class="uiButton" href="${baseUrl }/crop/add/">Add</a>
+		<a id="btnEditCrop" class="uiButton" href="${baseUrl }/crop/edit/">Edit</a>
+		<a id="btnDeleteCrop" class="uiButton" href="${baseUrl }/crop/delete/">Delete</a>
+		&emsp;<a id="btnCropDetails" class="uiButton"
+			href="${baseUrl }/crop/details/view/">Details</a>
 	</div>
 	<div style="float: right;">
 		<%@ include file="/WEB-INF/views/navigation.jsp"%>
@@ -20,13 +22,14 @@
 		<thead>
 			<tr>
 				<th><input type="checkbox" name="cbxSelectAllItems"
-					id="cbxSelectAllItems" /></th>
+					id="cbxSelectAllItems" />
+				</th>
 				<th>Name</th>
 				<th>Inputs</th>
-				<th>seedVariation</th>
-				<th>ploughingMethod</th>
-				<th>interCropingType</th>
-				<th>unitOfMeasure</th>
+				<th>seed Varieties</th>
+				<th>ploughing Methods</th>
+				<th>inter-Croping Types</th>
+				<th>units Of Measure</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -34,14 +37,15 @@
 				<c:when test="${not empty crops  && fn:length(crops) > 0}">
 					<c:forEach var="crop" items="${crops }">
 						<tr id="${crop.id }">
-							<td><input type="checkbox" name="selectedConcepts"
-								value="${crop.id }" /></td>
+							<td><input type="checkbox" name="selectedCrop"
+								value="${crop.id }" />
+							</td>
 							<td>${crop.name }</td>
-							<td>${crop.seedVariation.name }</td>
-							<td>${crop.ploughingMethod.name }</td>
-							<td>${crop.interCropingType.name }</td>
-							<td>${crop.unitOfMeasure.name }</td>
-							<td>${crop.input.name }</td>
+							<td>${fn:length(crop.input.concepts) }</td>
+							<td>${fn:length(crop.seedVariation.concepts) }</td>
+							<td>${fn:length(crop.ploughingMethod.concepts) }</td>
+							<td>${fn:length(crop.interCropingType.concepts) }</td>
+							<td>${fn:length(crop.unitsOfMeasure)}</td>
 						</tr>
 					</c:forEach>
 				</c:when>

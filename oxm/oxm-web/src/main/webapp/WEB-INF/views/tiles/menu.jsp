@@ -10,32 +10,6 @@
 	});
 </script>
 <div>
-	<div class="profile-dv">
-		<div class="profile-img">
-			<c:choose>
-							<c:when test="${profile_Img == 'empty' }">
-								<img alt="Profile picture"
-									src="${baseUrl }/static/images/no_image.jpg"
-									id="profilePicture" name="profilePicture" height="80px"
-									width="80px" />
-							</c:when>
-							<c:otherwise>
-								<img alt="Profile picture"
-									src="${baseUrl }/user/pic/${loggedUser.id }"
-									id="profilePicture" name="profilePicture" height="80px"
-									width="80px" />
-							</c:otherwise>
-						</c:choose>
-		</div>
-		<div class="profile-content">
-			<div style="clear: both; "><span>${loggedUser.fullName }</span></div>
-			<div style="clear: both; margin: 5px;">
-				<a title="Edit Profile"
-						href="${baseUrl}/user/edit/${loggedUser.id}/0" class="uiButton"
-						style="color: black;"><span>Edit Profile</span> </a>
-			</div>
-		</div>
-	</div>
 	<div id="accordion">
 		<h3><a href="#">Price Monitor</a>
 		</h3>

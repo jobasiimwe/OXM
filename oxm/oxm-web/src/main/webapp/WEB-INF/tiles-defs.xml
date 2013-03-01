@@ -128,12 +128,11 @@
 	<!-- ======= FORM for CROP ========== -->
 	<definition name="viewCrop" extends="layout">
 		<put-attribute name="scripts" type="template" value="/WEB-INF/views/tiles/crop/scripts.jsp" />
-		<put-attribute name="pageTitle" type="string" value="View Crop()s)" />
+		<put-attribute name="pageTitle" type="template" value="/WEB-INF/views/tiles/contentheader.jsp" />
 		<put-attribute name="body" type="template" value="/WEB-INF/views/tiles/crop/view.jsp" />
 	</definition>
-	<definition name="addOrEditCrop" extends="layout">
-		<put-attribute name="scripts" type="template" value="/WEB-INF/views/tiles/crop/scripts.jsp" />
-		<put-attribute name="pageTitle" type="string" value="View Crop()s)" />
+	
+	<definition name="cropForm" extends="viewCrop">
 		<put-attribute name="body" type="template" value="/WEB-INF/views/tiles/crop/form.jsp" />
 	</definition>
 	

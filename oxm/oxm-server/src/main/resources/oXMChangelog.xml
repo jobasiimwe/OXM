@@ -1,724 +1,356 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog/1.9" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog/1.9 http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-1.9.xsd">
-    <changeSet author="Job (generated)" id="1361401601361-1">
-        <createTable tableName="committee">
-            <column name="id" type="varchar(255)">
-                <constraints nullable="false" primaryKey="true" primaryKeyName="committeePK"/>
-            </column>
-            <column name="record_status" type="integer">
-                <constraints nullable="false"/>
-            </column>
-            <column name="name" type="varchar(255)">
-                <constraints nullable="false"/>
-            </column>
-            <column name="production_organisation_id" type="varchar(255)">
-                <constraints nullable="false"/>
-            </column>
-        </createTable>
-    </changeSet>
-    <changeSet author="Job (generated)" id="1361401601361-2">
-        <createTable tableName="committee_member">
-            <column name="id" type="varchar(255)">
-                <constraints nullable="false" primaryKey="true" primaryKeyName="committee_memPK"/>
-            </column>
-            <column name="record_status" type="integer">
-                <constraints nullable="false"/>
-            </column>
-            <column name="committee_id" type="varchar(255)">
-                <constraints nullable="false"/>
-            </column>
-            <column name="postion_id" type="varchar(255)">
-                <constraints nullable="false"/>
-            </column>
-            <column name="producer_id" type="varchar(255)">
-                <constraints nullable="false"/>
-            </column>
-        </createTable>
-    </changeSet>
-    <changeSet author="Job (generated)" id="1361401601361-3">
-        <createTable tableName="concept_categories">
-            <column name="id" type="varchar(255)">
-                <constraints nullable="false" primaryKey="true" primaryKeyName="concept_categPK"/>
-            </column>
-            <column name="record_status" type="integer">
-                <constraints nullable="false"/>
-            </column>
-            <column name="category_description" type="varchar(255)">
-                <constraints nullable="false"/>
-            </column>
-            <column name="category_name" type="varchar(255)">
-                <constraints nullable="false"/>
-            </column>
-        </createTable>
-    </changeSet>
-    <changeSet author="Job (generated)" id="1361401601361-4">
-        <createTable tableName="concept_category_link">
-            <column name="concept_id" type="varchar(255)">
-                <constraints nullable="false"/>
-            </column>
-            <column name="concept_category_id" type="varchar(255)">
-                <constraints nullable="false"/>
-            </column>
-        </createTable>
-    </changeSet>
-    <changeSet author="Job (generated)" id="1361401601361-5">
-        <createTable tableName="concepts">
-            <column name="id" type="varchar(255)">
-                <constraints nullable="false" primaryKey="true" primaryKeyName="conceptsPK"/>
-            </column>
-            <column name="record_status" type="integer">
-                <constraints nullable="false"/>
-            </column>
-            <column name="concept_description" type="varchar(255)">
-                <constraints nullable="false"/>
-            </column>
-            <column name="concept_name" type="varchar(255)">
-                <constraints nullable="false"/>
-            </column>
-        </createTable>
-    </changeSet>
-    <changeSet author="Job (generated)" id="1361401601361-6">
-        <createTable tableName="crop">
-            <column name="id" type="varchar(255)">
-                <constraints nullable="false" primaryKey="true" primaryKeyName="cropPK"/>
-            </column>
-            <column name="record_status" type="integer">
-                <constraints nullable="false"/>
-            </column>
-            <column name="name" type="varchar(255)">
-                <constraints nullable="false"/>
-            </column>
-            <column name="input_concept_category_id" type="varchar(255)">
-                <constraints nullable="false"/>
-            </column>
-            <column name="inter_cropping_type_concept_category_id" type="varchar(255)">
-                <constraints nullable="false"/>
-            </column>
-            <column name="plouging_method_concept_category_id" type="varchar(255)">
-                <constraints nullable="false"/>
-            </column>
-            <column name="seed_variation_concept_category_id" type="varchar(255)">
-                <constraints nullable="false"/>
-            </column>
-            <column name="unit_of_measure_id" type="varchar(255)">
-                <constraints nullable="false"/>
-            </column>
-        </createTable>
-    </changeSet>
-    <changeSet author="Job (generated)" id="1361401601361-7">
-        <createTable tableName="districts">
-            <column name="id" type="varchar(255)">
-                <constraints nullable="false" primaryKey="true" primaryKeyName="districtsPK"/>
-            </column>
-            <column name="record_status" type="integer">
-                <constraints nullable="false"/>
-            </column>
-            <column name="district_name" type="varchar(255)">
-                <constraints nullable="false"/>
-            </column>
-        </createTable>
-    </changeSet>
-    <changeSet author="Job (generated)" id="1361401601361-8">
-        <createTable tableName="documents">
-            <column name="id" type="varchar(255)">
-                <constraints nullable="false" primaryKey="true" primaryKeyName="documentsPK"/>
-            </column>
-            <column name="record_status" type="integer">
-                <constraints nullable="false"/>
-            </column>
-            <column name="document_content_type" type="varchar(255)"/>
-            <column name="date_created" type="time"/>
-            <column name="document_extension" type="varchar(255)"/>
-            <column name="document_url" type="varchar(255)">
-                <constraints nullable="false"/>
-            </column>
-            <column name="document_name" type="varchar(255)">
-                <constraints nullable="false"/>
-            </column>
-            <column name="other_infor" type="varchar(255)"/>
-            <column name="created_by" type="varchar(255)"/>
-            <column name="document_type" type="varchar(255)"/>
-            <column name="user_document_owner" type="varchar(255)"/>
-        </createTable>
-    </changeSet>
-    <changeSet author="Job (generated)" id="1361401601361-9">
-        <createTable tableName="financial_institution">
-            <column name="id" type="varchar(255)">
-                <constraints nullable="false" primaryKey="true" primaryKeyName="financial_insPK"/>
-            </column>
-            <column name="record_status" type="integer">
-                <constraints nullable="false"/>
-            </column>
-            <column name="address" type="varchar(255)">
-                <constraints nullable="false"/>
-            </column>
-            <column name="name" type="varchar(255)"/>
-        </createTable>
-    </changeSet>
-    <changeSet author="Job (generated)" id="1361401601361-10">
-        <createTable tableName="financial_service_doc">
-            <column name="id" type="varchar(255)">
-                <constraints nullable="false" primaryKey="true" primaryKeyName="financial_serPK"/>
-            </column>
-            <column name="record_status" type="integer">
-                <constraints nullable="false"/>
-            </column>
-            <column name="date_uploaded" type="datetime">
-                <constraints nullable="false"/>
-            </column>
-            <column name="financial_institutution_id" type="varchar(255)">
-                <constraints nullable="false"/>
-            </column>
-            <column name="publication_id" type="varchar(255)">
-                <constraints nullable="false"/>
-            </column>
-        </createTable>
-    </changeSet>
-    <changeSet author="Job (generated)" id="1361401601361-11">
-        <createTable tableName="gis_cordinate">
-            <column name="id" type="varchar(255)">
-                <constraints nullable="false" primaryKey="true" primaryKeyName="gis_cordinatePK"/>
-            </column>
-            <column name="record_status" type="integer">
-                <constraints nullable="false"/>
-            </column>
-            <column name="x_latitude" type="varchar(255)">
-                <constraints nullable="false"/>
-            </column>
-            <column name="x_longitude" type="varchar(255)">
-                <constraints nullable="false"/>
-            </column>
-            <column name="y_latitude" type="varchar(255)">
-                <constraints nullable="false"/>
-            </column>
-            <column name="y_longitude" type="varchar(255)">
-                <constraints nullable="false"/>
-            </column>
-        </createTable>
-    </changeSet>
-    <changeSet author="Job (generated)" id="1361401601361-12">
-        <createTable tableName="land_use">
-            <column name="id" type="varchar(255)">
-                <constraints nullable="false" primaryKey="true" primaryKeyName="land_usePK"/>
-            </column>
-            <column name="record_status" type="integer">
-                <constraints nullable="false"/>
-            </column>
-            <column name="size" type="float(19)">
-                <constraints nullable="false"/>
-            </column>
-            <column name="crop_id" type="varchar(255)">
-                <constraints nullable="false"/>
-            </column>
-            <column name="producer_id" type="varchar(255)">
-                <constraints nullable="false"/>
-            </column>
-        </createTable>
-    </changeSet>
-    <changeSet author="Job (generated)" id="1361401601361-13">
-        <createTable tableName="message">
-            <column name="id" type="varchar(255)">
-                <constraints nullable="false" primaryKey="true" primaryKeyName="messagePK"/>
-            </column>
-            <column name="record_status" type="integer">
-                <constraints nullable="false"/>
-            </column>
-            <column name="date_posted" type="datetime">
-                <constraints nullable="false"/>
-            </column>
-            <column name="is_sender_cleared" type="char(255)"/>
-            <column name="message" type="varchar(1000)">
-                <constraints nullable="false"/>
-            </column>
-            <column name="is_seen" type="char(255)"/>
-            <column name="is_to_cleared" type="char(255)"/>
-            <column name="from" type="varchar(255)">
-                <constraints nullable="false"/>
-            </column>
-            <column name="to" type="varchar(255)">
-                <constraints nullable="false"/>
-            </column>
-        </createTable>
-    </changeSet>
-    <changeSet author="Job (generated)" id="1361401601361-14">
-        <createTable tableName="parishes">
-            <column name="id" type="varchar(255)">
-                <constraints nullable="false" primaryKey="true" primaryKeyName="parishesPK"/>
-            </column>
-            <column name="record_status" type="integer">
-                <constraints nullable="false"/>
-            </column>
-            <column name="parish_name" type="varchar(255)">
-                <constraints nullable="false"/>
-            </column>
-            <column name="sub_county_id" type="varchar(255)">
-                <constraints nullable="false"/>
-            </column>
-        </createTable>
-    </changeSet>
-    <changeSet author="Job (generated)" id="1361401601361-15">
-        <createTable tableName="permissions">
-            <column name="id" type="varchar(255)">
-                <constraints nullable="false" primaryKey="true" primaryKeyName="permissionsPK"/>
-            </column>
-            <column name="record_status" type="integer">
-                <constraints nullable="false"/>
-            </column>
-            <column name="description" type="varchar(255)"/>
-            <column name="permission_name" type="varchar(255)"/>
-        </createTable>
-    </changeSet>
-    <changeSet author="Job (generated)" id="1361401601361-16">
-        <createTable tableName="position">
-            <column name="id" type="varchar(255)">
-                <constraints nullable="false" primaryKey="true" primaryKeyName="positionPK"/>
-            </column>
-            <column name="record_status" type="integer">
-                <constraints nullable="false"/>
-            </column>
-            <column name="index" type="integer">
-                <constraints nullable="false"/>
-            </column>
-            <column name="name" type="varchar(255)">
-                <constraints nullable="false"/>
-            </column>
-        </createTable>
-    </changeSet>
-    <changeSet author="Job (generated)" id="1361401601361-17">
-        <createTable tableName="post">
-            <column name="id" type="varchar(255)">
-                <constraints nullable="false" primaryKey="true" primaryKeyName="postPK"/>
-            </column>
-            <column name="record_status" type="integer">
-                <constraints nullable="false"/>
-            </column>
-            <column name="date_posted" type="datetime">
-                <constraints nullable="false"/>
-            </column>
-            <column name="text" type="varchar(255)"/>
-            <column name="crop_id" type="varchar(255)"/>
-            <column name="owner" type="varchar(255)"/>
-            <column name="type_id" type="varchar(255)"/>
-        </createTable>
-    </changeSet>
-    <changeSet author="Job (generated)" id="1361401601361-18">
-        <createTable tableName="price">
-            <column name="id" type="varchar(255)">
-                <constraints nullable="false" primaryKey="true" primaryKeyName="pricePK"/>
-            </column>
-            <column name="record_status" type="integer">
-                <constraints nullable="false"/>
-            </column>
-            <column name="price" type="float(19)"/>
-            <column name="crop_id" type="varchar(255)">
-                <constraints nullable="false"/>
-            </column>
-            <column name="selling_type" type="varchar(255)"/>
-            <column name="selling_price_id" type="varchar(255)">
-                <constraints nullable="false"/>
-            </column>
-            <column name="unit_of_measure" type="varchar(255)"/>
-        </createTable>
-    </changeSet>
-    <changeSet author="Job (generated)" id="1361401601361-19">
-        <createTable tableName="producer">
-            <column name="land_size" type="float(19)"/>
-            <column name="id" type="varchar(255)">
-                <constraints nullable="false" primaryKey="true" primaryKeyName="producerPK"/>
-            </column>
-            <column name="gis_cordinates_id" type="varchar(255)">
-                <constraints nullable="false"/>
-            </column>
-            <column name="parish_id" type="varchar(255)">
-                <constraints nullable="false"/>
-            </column>
-            <column name="production_organisation_id" type="varchar(255)">
-                <constraints nullable="false"/>
-            </column>
-            <column name="subcounty_id" type="varchar(255)">
-                <constraints nullable="false"/>
-            </column>
-            <column name="user_id" type="varchar(255)">
-                <constraints nullable="false"/>
-            </column>
-            <column name="village_id" type="varchar(255)">
-                <constraints nullable="false"/>
-            </column>
-        </createTable>
-    </changeSet>
-    <changeSet author="Job (generated)" id="1361401601361-20">
-        <createTable tableName="production_organisation">
-            <column name="id" type="varchar(255)">
-                <constraints nullable="false" primaryKey="true" primaryKeyName="production_orPK"/>
-            </column>
-            <column name="record_status" type="integer">
-                <constraints nullable="false"/>
-            </column>
-            <column name="name" type="varchar(255)">
-                <constraints nullable="false"/>
-            </column>
-        </createTable>
-    </changeSet>
-    <changeSet author="Job (generated)" id="1361401601361-21">
-        <createTable tableName="publication_documents">
-            <column name="publication_id" type="varchar(255)">
-                <constraints nullable="false"/>
-            </column>
-            <column name="document_id" type="varchar(255)">
-                <constraints nullable="false"/>
-            </column>
-        </createTable>
-    </changeSet>
-    <changeSet author="Job (generated)" id="1361401601361-22">
-        <createTable tableName="publications">
-            <column name="id" type="varchar(255)">
-                <constraints nullable="false" primaryKey="true" primaryKeyName="publicationsPK"/>
-            </column>
-            <column name="record_status" type="integer">
-                <constraints nullable="false"/>
-            </column>
-            <column name="other_information" type="varchar(255)"/>
-            <column name="publication_month" type="varchar(255)"/>
-            <column name="publication_year" type="integer">
-                <constraints nullable="false"/>
-            </column>
-            <column name="title" type="varchar(255)">
-                <constraints nullable="false"/>
-            </column>
-            <column name="publication_status" type="varchar(255)">
-                <constraints nullable="false"/>
-            </column>
-            <column name="publication_type" type="varchar(255)">
-                <constraints nullable="false"/>
-            </column>
-        </createTable>
-    </changeSet>
-    <changeSet author="Job (generated)" id="1361401601361-23">
-        <createTable tableName="role_permissions">
-            <column name="role_id" type="varchar(255)">
-                <constraints nullable="false"/>
-            </column>
-            <column name="permission_id" type="varchar(255)">
-                <constraints nullable="false"/>
-            </column>
-        </createTable>
-    </changeSet>
-    <changeSet author="Job (generated)" id="1361401601361-24">
-        <createTable tableName="role_users">
-            <column name="user_id" type="varchar(255)">
-                <constraints nullable="false"/>
-            </column>
-            <column name="role_id" type="varchar(255)">
-                <constraints nullable="false"/>
-            </column>
-        </createTable>
-    </changeSet>
-    <changeSet author="Job (generated)" id="1361401601361-25">
-        <createTable tableName="roles">
-            <column name="id" type="varchar(255)">
-                <constraints nullable="false" primaryKey="true" primaryKeyName="rolesPK"/>
-            </column>
-            <column name="record_status" type="integer">
-                <constraints nullable="false"/>
-            </column>
-            <column name="description" type="varchar(255)">
-                <constraints nullable="false"/>
-            </column>
-            <column name="role_name" type="varchar(255)">
-                <constraints nullable="false"/>
-            </column>
-        </createTable>
-    </changeSet>
-    <changeSet author="Job (generated)" id="1361401601361-26">
-        <createTable tableName="season">
-            <column name="id" type="varchar(255)">
-                <constraints nullable="false" primaryKey="true" primaryKeyName="seasonPK"/>
-            </column>
-            <column name="record_status" type="integer">
-                <constraints nullable="false"/>
-            </column>
-            <column name="date_posted" type="datetime">
-                <constraints nullable="false"/>
-            </column>
-            <column name="text" type="varchar(1000)">
-                <constraints nullable="false"/>
-            </column>
-            <column name="end_date" type="datetime">
-                <constraints nullable="false"/>
-            </column>
-            <column name="start_date" type="datetime">
-                <constraints nullable="false"/>
-            </column>
-            <column name="user_id" type="varchar(255)">
-                <constraints nullable="false"/>
-            </column>
-            <column name="post_id" type="varchar(255)">
-                <constraints nullable="false"/>
-            </column>
-            <column name="name" type="varchar(255)"/>
-        </createTable>
-    </changeSet>
-    <changeSet author="Job (generated)" id="1361401601361-27">
-        <createTable tableName="selling_place">
-            <column name="id" type="varchar(255)">
-                <constraints nullable="false" primaryKey="true" primaryKeyName="selling_placePK"/>
-            </column>
-            <column name="record_status" type="integer">
-                <constraints nullable="false"/>
-            </column>
-            <column name="name" type="varchar(255)">
-                <constraints nullable="false"/>
-            </column>
-            <column name="type_id" type="varchar(255)">
-                <constraints nullable="false"/>
-            </column>
-        </createTable>
-    </changeSet>
-    <changeSet author="Job (generated)" id="1361401601361-28">
-        <createTable tableName="sub_counties">
-            <column name="id" type="varchar(255)">
-                <constraints nullable="false" primaryKey="true" primaryKeyName="sub_countiesPK"/>
-            </column>
-            <column name="record_status" type="integer">
-                <constraints nullable="false"/>
-            </column>
-            <column name="subcounty_name" type="varchar(255)">
-                <constraints nullable="false"/>
-            </column>
-            <column name="district_id" type="varchar(255)">
-                <constraints nullable="false"/>
-            </column>
-        </createTable>
-    </changeSet>
-    <changeSet author="Job (generated)" id="1361401601361-29">
-        <createTable tableName="user_userTypes">
-            <column name="user_id" type="varchar(255)">
-                <constraints nullable="false"/>
-            </column>
-            <column name="userType_id" type="varchar(255)">
-                <constraints nullable="false"/>
-            </column>
-        </createTable>
-    </changeSet>
-    <changeSet author="Job (generated)" id="1361401601361-30">
-        <createTable tableName="users">
-            <column name="id" type="varchar(255)">
-                <constraints nullable="false" primaryKey="true" primaryKeyName="usersPK"/>
-            </column>
-            <column name="record_status" type="integer">
-                <constraints nullable="false"/>
-            </column>
-            <column name="date_of_birth" type="datetime"/>
-            <column name="first_name" type="varchar(255)">
-                <constraints nullable="false"/>
-            </column>
-            <column name="gender" type="integer"/>
-            <column name="last_name" type="varchar(255)">
-                <constraints nullable="false"/>
-            </column>
-            <column name="password" type="varchar(255)">
-                <constraints nullable="false"/>
-            </column>
-            <column name="phone1" type="varchar(255)"/>
-            <column name="phone2" type="varchar(255)"/>
-            <column name="picture" type="blob"/>
-            <column name="salt" type="varchar(255)">
-                <constraints nullable="false"/>
-            </column>
-            <column name="user_status" type="integer">
-                <constraints nullable="false"/>
-            </column>
-            <column name="username" type="varchar(255)">
-                <constraints nullable="false"/>
-            </column>
-        </createTable>
-    </changeSet>
-    <changeSet author="Job (generated)" id="1361401601361-31">
-        <createTable tableName="villages">
-            <column name="id" type="varchar(255)">
-                <constraints nullable="false" primaryKey="true" primaryKeyName="villagesPK"/>
-            </column>
-            <column name="record_status" type="integer">
-                <constraints nullable="false"/>
-            </column>
-            <column name="village_name" type="varchar(255)">
-                <constraints nullable="false"/>
-            </column>
-            <column name="parish_id" type="varchar(255)">
-                <constraints nullable="false"/>
-            </column>
-        </createTable>
-    </changeSet>
-    <changeSet author="Job (generated)" id="1361401601361-32">
-        <addPrimaryKey columnNames="user_id, role_id" tableName="role_users"/>
-    </changeSet>
-    <changeSet author="Job (generated)" id="1361401601361-33">
+    
+     
+    <changeSet author="Job (generated)" id="1362158327030-6">
         <createIndex indexName="key1" tableName="concept_category_link">
             <column name="concept_id"/>
             <column name="concept_category_id"/>
         </createIndex>
     </changeSet>
-    <changeSet author="Job (generated)" id="1361401601361-34">
+   
+    <changeSet author="Job (generated)" id="1362158327030-8">
         <createIndex indexName="UKC1E628651E3346BF" tableName="publication_documents">
             <column name="document_id"/>
         </createIndex>
     </changeSet>
-    <changeSet author="Job (generated)" id="1361401601361-35">
+    <changeSet author="Job (generated)" id="1362158327030-9">
         <createIndex indexName="UK710C07FA57F02A15" tableName="user_userTypes">
             <column name="userType_id"/>
         </createIndex>
     </changeSet>
-    <changeSet author="Job (generated)" id="1361401601361-36">
+    <changeSet author="Job (generated)" id="1362158327030-10">
+        <dropIndex indexName="FKA71EF77D1A4CFDEE" tableName="committee"/>
+    </changeSet>
+    <changeSet author="Job (generated)" id="1362158327030-11">
+        <dropIndex indexName="FK1792999C13C9F4DB" tableName="committee_member"/>
+    </changeSet>
+    <changeSet author="Job (generated)" id="1362158327030-12">
+        <dropIndex indexName="FKD1B211043100D8AA" tableName="concept_category_link"/>
+    </changeSet>
+    <changeSet author="Job (generated)" id="1362158327030-13">
+        <dropIndex indexName="key1" tableName="concept_category_link"/>
+    </changeSet>
+    <changeSet author="Job (generated)" id="1362158327030-14">
+        <dropIndex indexName="FK2EBA904CAAF4B5" tableName="crop"/>
+    </changeSet>
+    <changeSet author="Job (generated)" id="1362158327030-15">
+        <dropIndex indexName="FK2EBA90634E8D70" tableName="crop"/>
+    </changeSet>
+    <changeSet author="Job (generated)" id="1362158327030-16">
+        <dropIndex indexName="FK2EBA906CCFA330" tableName="crop"/>
+    </changeSet>
+    <changeSet author="Job (generated)" id="1362158327030-17">
+        <dropIndex indexName="FK2EBA90B0874F1F" tableName="crop"/>
+    </changeSet>
+    <changeSet author="Job (generated)" id="1362158327030-18">
+        <dropIndex indexName="FK2EBA90DC0DA7CE" tableName="crop"/>
+    </changeSet>
+    <changeSet author="Job (generated)" id="1362158327030-19">
+        <dropIndex indexName="FK383D52B880255C5" tableName="documents"/>
+    </changeSet>
+    <changeSet author="Job (generated)" id="1362158327030-20">
+        <dropIndex indexName="FK383D52B8C61271BA" tableName="documents"/>
+    </changeSet>
+    <changeSet author="Job (generated)" id="1362158327030-21">
+        <dropIndex indexName="FK383D52B8D0B0822F" tableName="documents"/>
+    </changeSet>
+    <changeSet author="Job (generated)" id="1362158327030-22">
+        <dropIndex indexName="FK3C84CDF86B3B4639" tableName="financial_service_doc"/>
+    </changeSet>
+    <changeSet author="Job (generated)" id="1362158327030-23">
+        <dropIndex indexName="FK9F9E993313C9F4DB" tableName="land_use"/>
+    </changeSet>
+    <changeSet author="Job (generated)" id="1362158327030-24">
+        <dropIndex indexName="FK9F9E9933B248849B" tableName="land_use"/>
+    </changeSet>
+    <changeSet author="Job (generated)" id="1362158327030-25">
+        <dropIndex indexName="FK38EB0007746ED727" tableName="message"/>
+    </changeSet>
+    <changeSet author="Job (generated)" id="1362158327030-26">
+        <dropIndex indexName="FK38EB0007749EE056" tableName="message"/>
+    </changeSet>
+    <changeSet author="Job (generated)" id="1362158327030-27">
+        <dropIndex indexName="FK464609ABEE32605A" tableName="parishes"/>
+    </changeSet>
+    <changeSet author="Job (generated)" id="1362158327030-28">
+        <dropIndex indexName="FK3498A076A74627" tableName="post"/>
+    </changeSet>
+    <changeSet author="Job (generated)" id="1362158327030-29">
+        <dropIndex indexName="FK3498A07AC2BB5F" tableName="post"/>
+    </changeSet>
+    <changeSet author="Job (generated)" id="1362158327030-30">
+        <dropIndex indexName="FK3498A0B248849B" tableName="post"/>
+    </changeSet>
+    <changeSet author="Job (generated)" id="1362158327030-31">
+        <dropIndex indexName="FK65FB1491CC91A78" tableName="price"/>
+    </changeSet>
+    <changeSet author="Job (generated)" id="1362158327030-32">
+        <dropIndex indexName="FK65FB14983E010B0" tableName="price"/>
+    </changeSet>
+    <changeSet author="Job (generated)" id="1362158327030-33">
+        <dropIndex indexName="FK65FB149B248849B" tableName="price"/>
+    </changeSet>
+    <changeSet author="Job (generated)" id="1362158327030-34">
+        <dropIndex indexName="FKC42BCF921A4CFDEE" tableName="producer"/>
+    </changeSet>
+    <changeSet author="Job (generated)" id="1362158327030-35">
+        <dropIndex indexName="FKC42BCF926BA9B6BB" tableName="producer"/>
+    </changeSet>
+    <changeSet author="Job (generated)" id="1362158327030-36">
+        <dropIndex indexName="FKC42BCF928CDA553B" tableName="producer"/>
+    </changeSet>
+    <changeSet author="Job (generated)" id="1362158327030-37">
+        <dropIndex indexName="FKC42BCF92A3C8C159" tableName="producer"/>
+    </changeSet>
+    <changeSet author="Job (generated)" id="1362158327030-38">
+        <dropIndex indexName="FKC1E628656B3B4639" tableName="publication_documents"/>
+    </changeSet>
+    <changeSet author="Job (generated)" id="1362158327030-39">
+        <dropIndex indexName="FK37B8A3C748408754" tableName="publications"/>
+    </changeSet>
+    <changeSet author="Job (generated)" id="1362158327030-40">
+        <dropIndex indexName="FK37B8A3C796BC074C" tableName="publications"/>
+    </changeSet>
+    <changeSet author="Job (generated)" id="1362158327030-41">
+        <dropIndex indexName="FKEAD9D23BC67EF2DB" tableName="role_permissions"/>
+    </changeSet>
+    <changeSet author="Job (generated)" id="1362158327030-42">
+        <dropIndex indexName="FK6CF7C0FFC67EF2DB" tableName="role_users"/>
+    </changeSet>
+    <changeSet author="Job (generated)" id="1362158327030-43">
+        <dropIndex indexName="FKC9FA6AE36BA9B6BB" tableName="season"/>
+    </changeSet>
+    <changeSet author="Job (generated)" id="1362158327030-44">
+        <dropIndex indexName="FKC9FA6AE3A9B3E072" tableName="season"/>
+    </changeSet>
+    <changeSet author="Job (generated)" id="1362158327030-45">
+        <dropIndex indexName="FK71572F5876A74627" tableName="selling_place"/>
+    </changeSet>
+    <changeSet author="Job (generated)" id="1362158327030-46">
+        <dropIndex indexName="FK710C07FA6BA9B6BB" tableName="user_usertypes"/>
+    </changeSet>
+    <changeSet author="Job (generated)" id="1362158327030-47">
+        <dropIndex indexName="UK710C07FA57F02A15" tableName="user_usertypes"/>
+    </changeSet>
+    <changeSet author="Job (generated)" id="1362158327030-48">
+        <dropIndex indexName="FK52A3F1478CDA553B" tableName="villages"/>
+    </changeSet>
+    <changeSet author="Job (generated)" id="1362158327030-49">
         <addForeignKeyConstraint baseColumnNames="production_organisation_id" baseTableName="committee" constraintName="FKA71EF77D1A4CFDEE" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="production_organisation"/>
     </changeSet>
-    <changeSet author="Job (generated)" id="1361401601361-37">
+    <changeSet author="Job (generated)" id="1362158327030-50">
         <addForeignKeyConstraint baseColumnNames="committee_id" baseTableName="committee_member" constraintName="FK1792999C3406EC59" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="committee"/>
     </changeSet>
-    <changeSet author="Job (generated)" id="1361401601361-38">
+    <changeSet author="Job (generated)" id="1362158327030-51">
         <addForeignKeyConstraint baseColumnNames="postion_id" baseTableName="committee_member" constraintName="FK1792999C5BA33ADC" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="position"/>
     </changeSet>
-    <changeSet author="Job (generated)" id="1361401601361-39">
+    <changeSet author="Job (generated)" id="1362158327030-52">
         <addForeignKeyConstraint baseColumnNames="producer_id" baseTableName="committee_member" constraintName="FK1792999C13C9F4DB" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="producer"/>
     </changeSet>
-    <changeSet author="Job (generated)" id="1361401601361-40">
+    <changeSet author="Job (generated)" id="1362158327030-53">
         <addForeignKeyConstraint baseColumnNames="concept_category_id" baseTableName="concept_category_link" constraintName="FKD1B211043100D8AA" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="concept_categories"/>
     </changeSet>
-    <changeSet author="Job (generated)" id="1361401601361-41">
+    <changeSet author="Job (generated)" id="1362158327030-54">
         <addForeignKeyConstraint baseColumnNames="concept_id" baseTableName="concept_category_link" constraintName="FKD1B2110436176439" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="concepts"/>
     </changeSet>
-    <changeSet author="Job (generated)" id="1361401601361-42">
+    <changeSet author="Job (generated)" id="1362158327030-55">
         <addForeignKeyConstraint baseColumnNames="input_concept_category_id" baseTableName="crop" constraintName="FK2EBA904CAAF4B5" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="concept_categories"/>
     </changeSet>
-    <changeSet author="Job (generated)" id="1361401601361-43">
+    <changeSet author="Job (generated)" id="1362158327030-56">
         <addForeignKeyConstraint baseColumnNames="inter_cropping_type_concept_category_id" baseTableName="crop" constraintName="FK2EBA90B0874F1F" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="concept_categories"/>
     </changeSet>
-    <changeSet author="Job (generated)" id="1361401601361-44">
+    <changeSet author="Job (generated)" id="1362158327030-57">
         <addForeignKeyConstraint baseColumnNames="plouging_method_concept_category_id" baseTableName="crop" constraintName="FK2EBA90DC0DA7CE" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="concept_categories"/>
     </changeSet>
-    <changeSet author="Job (generated)" id="1361401601361-45">
+    <changeSet author="Job (generated)" id="1362158327030-58">
         <addForeignKeyConstraint baseColumnNames="seed_variation_concept_category_id" baseTableName="crop" constraintName="FK2EBA906CCFA330" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="concept_categories"/>
     </changeSet>
-    <changeSet author="Job (generated)" id="1361401601361-46">
-        <addForeignKeyConstraint baseColumnNames="unit_of_measure_id" baseTableName="crop" constraintName="FK2EBA90634E8D70" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="concepts"/>
+    <changeSet author="Job (generated)" id="1362158327030-59">
+        <addForeignKeyConstraint baseColumnNames="concept_id" baseTableName="crop_units_of_measure" constraintName="FK582FF9536176439" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="concepts"/>
     </changeSet>
-    <changeSet author="Job (generated)" id="1361401601361-47">
+    <changeSet author="Job (generated)" id="1362158327030-60">
+        <addForeignKeyConstraint baseColumnNames="crop_id" baseTableName="crop_units_of_measure" constraintName="FK582FF95B248849B" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="crop"/>
+    </changeSet>
+    <changeSet author="Job (generated)" id="1362158327030-61">
         <addForeignKeyConstraint baseColumnNames="created_by" baseTableName="documents" constraintName="FK383D52B8C61271BA" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="users"/>
     </changeSet>
-    <changeSet author="Job (generated)" id="1361401601361-48">
+    <changeSet author="Job (generated)" id="1362158327030-62">
         <addForeignKeyConstraint baseColumnNames="document_type" baseTableName="documents" constraintName="FK383D52B880255C5" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="concepts"/>
     </changeSet>
-    <changeSet author="Job (generated)" id="1361401601361-49">
+    <changeSet author="Job (generated)" id="1362158327030-63">
         <addForeignKeyConstraint baseColumnNames="user_document_owner" baseTableName="documents" constraintName="FK383D52B8D0B0822F" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="users"/>
     </changeSet>
-    <changeSet author="Job (generated)" id="1361401601361-50">
+    <changeSet author="Job (generated)" id="1362158327030-64">
         <addForeignKeyConstraint baseColumnNames="financial_institutution_id" baseTableName="financial_service_doc" constraintName="FK3C84CDF857444DA7" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="financial_institution"/>
     </changeSet>
-    <changeSet author="Job (generated)" id="1361401601361-51">
+    <changeSet author="Job (generated)" id="1362158327030-65">
         <addForeignKeyConstraint baseColumnNames="publication_id" baseTableName="financial_service_doc" constraintName="FK3C84CDF86B3B4639" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="publications"/>
     </changeSet>
-    <changeSet author="Job (generated)" id="1361401601361-52">
+    <changeSet author="Job (generated)" id="1362158327030-66">
         <addForeignKeyConstraint baseColumnNames="crop_id" baseTableName="land_use" constraintName="FK9F9E9933B248849B" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="crop"/>
     </changeSet>
-    <changeSet author="Job (generated)" id="1361401601361-53">
+    <changeSet author="Job (generated)" id="1362158327030-67">
         <addForeignKeyConstraint baseColumnNames="producer_id" baseTableName="land_use" constraintName="FK9F9E993313C9F4DB" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="producer"/>
     </changeSet>
-    <changeSet author="Job (generated)" id="1361401601361-54">
+    <changeSet author="Job (generated)" id="1362158327030-68">
         <addForeignKeyConstraint baseColumnNames="from" baseTableName="message" constraintName="FK38EB0007749EE056" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="users"/>
     </changeSet>
-    <changeSet author="Job (generated)" id="1361401601361-55">
+    <changeSet author="Job (generated)" id="1362158327030-69">
         <addForeignKeyConstraint baseColumnNames="to" baseTableName="message" constraintName="FK38EB0007746ED727" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="users"/>
     </changeSet>
-    <changeSet author="Job (generated)" id="1361401601361-56">
+    <changeSet author="Job (generated)" id="1362158327030-70">
         <addForeignKeyConstraint baseColumnNames="sub_county_id" baseTableName="parishes" constraintName="FK464609ABEE32605A" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="sub_counties"/>
     </changeSet>
-    <changeSet author="Job (generated)" id="1361401601361-57">
+    <changeSet author="Job (generated)" id="1362158327030-71">
         <addForeignKeyConstraint baseColumnNames="crop_id" baseTableName="post" constraintName="FK3498A0B248849B" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="crop"/>
     </changeSet>
-    <changeSet author="Job (generated)" id="1361401601361-58">
+    <changeSet author="Job (generated)" id="1362158327030-72">
         <addForeignKeyConstraint baseColumnNames="owner" baseTableName="post" constraintName="FK3498A07AC2BB5F" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="users"/>
     </changeSet>
-    <changeSet author="Job (generated)" id="1361401601361-59">
+    <changeSet author="Job (generated)" id="1362158327030-73">
         <addForeignKeyConstraint baseColumnNames="type_id" baseTableName="post" constraintName="FK3498A076A74627" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="concepts"/>
     </changeSet>
-    <changeSet author="Job (generated)" id="1361401601361-60">
+    <changeSet author="Job (generated)" id="1362158327030-74">
         <addForeignKeyConstraint baseColumnNames="crop_id" baseTableName="price" constraintName="FK65FB149B248849B" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="crop"/>
     </changeSet>
-    <changeSet author="Job (generated)" id="1361401601361-61">
+    <changeSet author="Job (generated)" id="1362158327030-75">
         <addForeignKeyConstraint baseColumnNames="selling_price_id" baseTableName="price" constraintName="FK65FB1492225C358" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="selling_place"/>
     </changeSet>
-    <changeSet author="Job (generated)" id="1361401601361-62">
+    <changeSet author="Job (generated)" id="1362158327030-76">
         <addForeignKeyConstraint baseColumnNames="selling_type" baseTableName="price" constraintName="FK65FB14983E010B0" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="concepts"/>
     </changeSet>
-    <changeSet author="Job (generated)" id="1361401601361-63">
+    <changeSet author="Job (generated)" id="1362158327030-77">
         <addForeignKeyConstraint baseColumnNames="unit_of_measure" baseTableName="price" constraintName="FK65FB1491CC91A78" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="concepts"/>
     </changeSet>
-    <changeSet author="Job (generated)" id="1361401601361-64">
+    <changeSet author="Job (generated)" id="1362158327030-78">
         <addForeignKeyConstraint baseColumnNames="gis_cordinates_id" baseTableName="producer" constraintName="FKC42BCF922AC304E7" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="gis_cordinate"/>
     </changeSet>
-    <changeSet author="Job (generated)" id="1361401601361-65">
+    <changeSet author="Job (generated)" id="1362158327030-79">
         <addForeignKeyConstraint baseColumnNames="id" baseTableName="producer" constraintName="FKC42BCF92746ED5C7" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="users"/>
     </changeSet>
-    <changeSet author="Job (generated)" id="1361401601361-66">
+    <changeSet author="Job (generated)" id="1362158327030-80">
         <addForeignKeyConstraint baseColumnNames="parish_id" baseTableName="producer" constraintName="FKC42BCF928CDA553B" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="parishes"/>
     </changeSet>
-    <changeSet author="Job (generated)" id="1361401601361-67">
+    <changeSet author="Job (generated)" id="1362158327030-81">
         <addForeignKeyConstraint baseColumnNames="production_organisation_id" baseTableName="producer" constraintName="FKC42BCF921A4CFDEE" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="production_organisation"/>
     </changeSet>
-    <changeSet author="Job (generated)" id="1361401601361-68">
+    <changeSet author="Job (generated)" id="1362158327030-82">
         <addForeignKeyConstraint baseColumnNames="subcounty_id" baseTableName="producer" constraintName="FKC42BCF92A3C8C159" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="sub_counties"/>
     </changeSet>
-    <changeSet author="Job (generated)" id="1361401601361-69">
+    <changeSet author="Job (generated)" id="1362158327030-83">
         <addForeignKeyConstraint baseColumnNames="user_id" baseTableName="producer" constraintName="FKC42BCF926BA9B6BB" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="users"/>
     </changeSet>
-    <changeSet author="Job (generated)" id="1361401601361-70">
+    <changeSet author="Job (generated)" id="1362158327030-84">
         <addForeignKeyConstraint baseColumnNames="village_id" baseTableName="producer" constraintName="FKC42BCF92C5AE0DB9" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="villages"/>
     </changeSet>
-    <changeSet author="Job (generated)" id="1361401601361-71">
+    <changeSet author="Job (generated)" id="1362158327030-85">
         <addForeignKeyConstraint baseColumnNames="document_id" baseTableName="publication_documents" constraintName="FKC1E62865FADC9C3B" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="documents"/>
     </changeSet>
-    <changeSet author="Job (generated)" id="1361401601361-72">
+    <changeSet author="Job (generated)" id="1362158327030-86">
         <addForeignKeyConstraint baseColumnNames="publication_id" baseTableName="publication_documents" constraintName="FKC1E628656B3B4639" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="publications"/>
     </changeSet>
-    <changeSet author="Job (generated)" id="1361401601361-73">
+    <changeSet author="Job (generated)" id="1362158327030-87">
         <addForeignKeyConstraint baseColumnNames="publication_status" baseTableName="publications" constraintName="FK37B8A3C796BC074C" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="concepts"/>
     </changeSet>
-    <changeSet author="Job (generated)" id="1361401601361-74">
+    <changeSet author="Job (generated)" id="1362158327030-88">
         <addForeignKeyConstraint baseColumnNames="publication_type" baseTableName="publications" constraintName="FK37B8A3C748408754" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="concepts"/>
     </changeSet>
-    <changeSet author="Job (generated)" id="1361401601361-75">
+    <changeSet author="Job (generated)" id="1362158327030-89">
         <addForeignKeyConstraint baseColumnNames="permission_id" baseTableName="role_permissions" constraintName="FKEAD9D23B140A5B7B" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="permissions"/>
     </changeSet>
-    <changeSet author="Job (generated)" id="1361401601361-76">
+    <changeSet author="Job (generated)" id="1362158327030-90">
         <addForeignKeyConstraint baseColumnNames="role_id" baseTableName="role_permissions" constraintName="FKEAD9D23BC67EF2DB" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="roles"/>
     </changeSet>
-    <changeSet author="Job (generated)" id="1361401601361-77">
+    <changeSet author="Job (generated)" id="1362158327030-91">
         <addForeignKeyConstraint baseColumnNames="role_id" baseTableName="role_users" constraintName="FK6CF7C0FFC67EF2DB" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="roles"/>
     </changeSet>
-    <changeSet author="Job (generated)" id="1361401601361-78">
+    <changeSet author="Job (generated)" id="1362158327030-92">
         <addForeignKeyConstraint baseColumnNames="user_id" baseTableName="role_users" constraintName="FK6CF7C0FF6BA9B6BB" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="users"/>
     </changeSet>
-    <changeSet author="Job (generated)" id="1361401601361-79">
+    <changeSet author="Job (generated)" id="1362158327030-93">
         <addForeignKeyConstraint baseColumnNames="name" baseTableName="season" constraintName="FKC9FA6AE3A9B3E072" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="concepts"/>
     </changeSet>
-    <changeSet author="Job (generated)" id="1361401601361-80">
+    <changeSet author="Job (generated)" id="1362158327030-94">
         <addForeignKeyConstraint baseColumnNames="post_id" baseTableName="season" constraintName="FKC9FA6AE35D1B0A9B" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="post"/>
     </changeSet>
-    <changeSet author="Job (generated)" id="1361401601361-81">
+    <changeSet author="Job (generated)" id="1362158327030-95">
         <addForeignKeyConstraint baseColumnNames="user_id" baseTableName="season" constraintName="FKC9FA6AE36BA9B6BB" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="users"/>
     </changeSet>
-    <changeSet author="Job (generated)" id="1361401601361-82">
+    <changeSet author="Job (generated)" id="1362158327030-96">
         <addForeignKeyConstraint baseColumnNames="type_id" baseTableName="selling_place" constraintName="FK71572F5876A74627" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="concepts"/>
     </changeSet>
-    <changeSet author="Job (generated)" id="1361401601361-83">
+    <changeSet author="Job (generated)" id="1362158327030-97">
         <addForeignKeyConstraint baseColumnNames="district_id" baseTableName="sub_counties" constraintName="FKF4A8F287A1DA35B" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="districts"/>
     </changeSet>
-    <changeSet author="Job (generated)" id="1361401601361-84">
+    <changeSet author="Job (generated)" id="1362158327030-98">
         <addForeignKeyConstraint baseColumnNames="user_id" baseTableName="user_userTypes" constraintName="FK710C07FA6BA9B6BB" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="users"/>
     </changeSet>
-    <changeSet author="Job (generated)" id="1361401601361-85">
+    <changeSet author="Job (generated)" id="1362158327030-99">
         <addForeignKeyConstraint baseColumnNames="userType_id" baseTableName="user_userTypes" constraintName="FK710C07FA1708FFC" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="concepts"/>
     </changeSet>
-    <changeSet author="Job (generated)" id="1361401601361-86">
+    <changeSet author="Job (generated)" id="1362158327030-100">
         <addForeignKeyConstraint baseColumnNames="parish_id" baseTableName="villages" constraintName="FK52A3F1478CDA553B" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="parishes"/>
     </changeSet>
+    <changeSet author="Job (generated)" id="1362158327030-101">
+        <dropForeignKeyConstraint baseTableName="committee_member" constraintName="FK1792999C3406EC59"/>
+    </changeSet>
+    <changeSet author="Job (generated)" id="1362158327030-102">
+        <dropForeignKeyConstraint baseTableName="committee_member" constraintName="FK1792999C5BA33ADC"/>
+    </changeSet>
+    <changeSet author="Job (generated)" id="1362158327030-103">
+        <dropForeignKeyConstraint baseTableName="crop" constraintName="FK2EBA90DC0DA7CE"/>
+    </changeSet>
+    <changeSet author="Job (generated)" id="1362158327030-104">
+        <dropForeignKeyConstraint baseTableName="financial_service_doc" constraintName="FK3C84CDF857444DA7"/>
+    </changeSet>
+    <changeSet author="Job (generated)" id="1362158327030-105">
+        <dropForeignKeyConstraint baseTableName="land_use" constraintName="FK9F9E993313C9F4DB"/>
+    </changeSet>
+    <changeSet author="Job (generated)" id="1362158327030-106">
+        <dropForeignKeyConstraint baseTableName="price" constraintName="FK65FB149B248849B"/>
+    </changeSet>
+    <changeSet author="Job (generated)" id="1362158327030-107">
+        <dropForeignKeyConstraint baseTableName="price" constraintName="FK65FB1492225C358"/>
+    </changeSet>
+    <changeSet author="Job (generated)" id="1362158327030-108">
+        <dropForeignKeyConstraint baseTableName="producer" constraintName="FKC42BCF922AC304E7"/>
+    </changeSet>
+    <changeSet author="Job (generated)" id="1362158327030-109">
+        <dropForeignKeyConstraint baseTableName="producer" constraintName="FKC42BCF921A4CFDEE"/>
+    </changeSet>
+    <changeSet author="Job (generated)" id="1362158327030-110">
+        <dropForeignKeyConstraint baseTableName="producer" constraintName="FKC42BCF92A3C8C159"/>
+    </changeSet>
+    <changeSet author="Job (generated)" id="1362158327030-111">
+        <dropForeignKeyConstraint baseTableName="producer" constraintName="FKC42BCF92C5AE0DB9"/>
+    </changeSet>
+    <changeSet author="Job (generated)" id="1362158327030-112">
+        <dropForeignKeyConstraint baseTableName="publication_documents" constraintName="FKC1E62865FADC9C3B"/>
+    </changeSet>
+    <changeSet author="Job (generated)" id="1362158327030-113">
+        <dropForeignKeyConstraint baseTableName="publication_documents" constraintName="FKC1E628656B3B4639"/>
+    </changeSet>
+    <changeSet author="Job (generated)" id="1362158327030-114">
+        <dropForeignKeyConstraint baseTableName="role_permissions" constraintName="FKEAD9D23B140A5B7B"/>
+    </changeSet>
+    <changeSet author="Job (generated)" id="1362158327030-115">
+        <dropForeignKeyConstraint baseTableName="role_users" constraintName="FK6CF7C0FFC67EF2DB"/>
+    </changeSet>
+    <changeSet author="Job (generated)" id="1362158327030-116">
+        <dropForeignKeyConstraint baseTableName="season" constraintName="FKC9FA6AE35D1B0A9B"/>
+    </changeSet>
+    <changeSet author="Job (generated)" id="1362158327030-117">
+        <dropForeignKeyConstraint baseTableName="sub_counties" constraintName="FKF4A8F287A1DA35B"/>
+    </changeSet>
+    <changeSet author="Job (generated)" id="1362158327030-118">
+        <dropForeignKeyConstraint baseTableName="user_usertypes" constraintName="FK710C07FA1708FFC"/>
+    </changeSet>
+    <changeSet author="Job (generated)" id="1362158327030-119">
+        <dropForeignKeyConstraint baseTableName="user_usertypes" constraintName="FK710C07FA6BA9B6BB"/>
+    </changeSet>
+    <changeSet author="Job (generated)" id="1362158327030-120">
+        <dropForeignKeyConstraint baseTableName="villages" constraintName="FK52A3F1478CDA553B"/>
+    </changeSet>
+   
 </databaseChangeLog>
