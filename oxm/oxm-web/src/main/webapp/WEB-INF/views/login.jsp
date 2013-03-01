@@ -18,7 +18,7 @@
 <script type="text/javascript" src="static/js/jquery-1.6.2.min.js"></script>
 <script type="text/javascript"
 	src="static/js/jquery-ui-1.8.15.custom.min.js"></script>
-<script type="text/javascript" src="static/js/system.js"></script>
+<script type="text/javascript" src="static/js/oxm.js"></script>
 
 <link rel="icon" type="image/png" href="/static/images/oxm-footer-lg.png" />
 
