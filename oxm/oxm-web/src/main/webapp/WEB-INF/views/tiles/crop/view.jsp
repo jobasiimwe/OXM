@@ -10,7 +10,7 @@
 		<a id="btnEditCrop" class="uiButton" href="${baseUrl }/crop/edit/">Edit</a>
 		<a id="btnDeleteCrop" class="uiButton" href="${baseUrl }/crop/delete/">Delete</a>
 		&emsp;<a id="btnCropDetails" class="uiButton"
-			href="${baseUrl }/crop/details/view/">Details</a>
+			href="${baseUrl }/crop/details/">Details</a>
 	</div>
 	<div style="float: right;">
 		<%@ include file="/WEB-INF/views/navigation.jsp"%>

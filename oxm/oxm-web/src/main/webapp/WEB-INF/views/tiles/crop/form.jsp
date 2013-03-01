@@ -22,7 +22,7 @@ form#concept input[type="text"] {
 
 		<form:hidden path="id" />
 		<div class="splitcontentleft">
-			<div class="box tabular">
+			<div class="box ">
 				<p>
 					<label>Name <span class="required">*</span> </label>
 					<form:input path="name" cssClass="uiTextbox" />
