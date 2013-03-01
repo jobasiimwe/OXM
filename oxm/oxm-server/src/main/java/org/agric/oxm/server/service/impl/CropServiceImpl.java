@@ -42,7 +42,16 @@ public class CropServiceImpl implements CropService {
 	@Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
 	@Override
 	public void validate(Crop crop) throws ValidationException {
+		if (StringUtils.isBlank(crop.getName()))
+			throw new ValidationException("Crop name can not be blank");
 
+		Crop cropWithSimilarName = getCropByName(crop.getName());
+		if (cropWithSimilarName != null) {
+			if (StringUtils.isBlank(cropWithSimilarName.getId())
+					|| !cropWithSimilarName.equals(cropWithSimilarName))
+				throw new ValidationException("Another crop with name - "
+						+ cropWithSimilarName.getName() + " already exists");
+		}
 	}
 
 	@Secured({ PermissionConstants.VIEW_CROP })
@@ -57,6 +66,13 @@ public class CropServiceImpl implements CropService {
 	@Override
 	public Crop getCropById(String id) {
 		return cropDAO.searchUniqueByPropertyEqual("id", id);
+	}
+
+	@Secured({ PermissionConstants.VIEW_CROP })
+	@Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
+	@Override
+	public Crop getCropByName(String name) {
+		return cropDAO.searchUniqueByPropertyEqual("name", name);
 	}
 
 	@Secured({ PermissionConstants.DELETE_CROP })

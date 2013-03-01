@@ -47,7 +47,7 @@ $(document).ready(function() {
 		return false;
 	});
 
-	$('#btnDeleteUser').click(function() {
+	$('#btnDeleteCrop').click(function() {
 		if ($(":checked", "table.recordTable tbody tr").length > 0) {
 			if (window.confirm("Do you want to delete the selected Crop(s)?")) {
 				var ids = $("input[name=selectedCrop]:checked").map(function() {

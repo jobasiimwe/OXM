@@ -317,19 +317,56 @@ public class CropController {
 
 		try {
 
+			cropService.validate(crop);
+
 			Crop exisitingCrop = crop;
 			if (StringUtils.isNotBlank(crop.getId())
 					|| StringUtils.isNotEmpty(crop.getId())) {
 
 				exisitingCrop = cropService.getCropById(crop.getId());
 
-				exisitingCrop.setName(crop.getName());
-				exisitingCrop.setInput(crop.getInput());
-				exisitingCrop.setPloughingMethod(crop.getPloughingMethod());
-				exisitingCrop.setSeedVariation(crop.getSeedVariation());
-				exisitingCrop.setInterCropingType(crop.getInterCropingType());
-				exisitingCrop.setUnitOfMeasure(crop.getUnitOfMeasure());
+				if (!exisitingCrop.getName().equals(crop.getName())) {
+					exisitingCrop.setName(crop.getName());
+					exisitingCrop.getInput()
+							.setName(crop.getName() + " Imputs");
+					exisitingCrop.getInput().setDescription(
+							"Inputs for " + crop.getName());
+					
+					exisitingCrop.getPloughingMethod().setName(
+							crop.getName() + " Ploughing Methods");
+					exisitingCrop.getInput().setDescription(
+							"Ploughing Methods for " + crop.getName());
+					
+					exisitingCrop.getSeedVariation().setName(
+							crop.getName() + " Seed Varieties");
+					exisitingCrop.getSeedVariation().setDescription(
+							"Seed Varieties for " + crop.getName());
+
+					exisitingCrop.getInterCropingType().setName(
+							crop.getName() + " Inter-croping types");
+					exisitingCrop.getInterCropingType().setDescription(
+							"Inter-croping types for " + crop.getName());
+
+					
+					exisitingCrop.setInterCropingType(new ConceptCategory(crop
+							.getName() + " Inter-croping types",
+							"Inter-croping types for " + crop.getName()));
+				}
+				exisitingCrop.setUnitsOfMeasure(crop.getUnitsOfMeasure());
 				exisitingCrop.setRecordStatus(crop.getRecordStatus());
+			} else {
+				exisitingCrop.setId(null);
+				exisitingCrop.setInput(new ConceptCategory(crop.getName()
+						+ " Imputs", "Inputs for " + crop.getName()));
+				exisitingCrop.setPloughingMethod(new ConceptCategory(crop
+						.getName() + " Ploughing Methods",
+						"Ploughing Methods for " + crop.getName()));
+				exisitingCrop.setSeedVariation(new ConceptCategory(crop
+						.getName() + " Seed Varieties", "Seed Varieties "
+						+ crop.getName()));
+				exisitingCrop.setInterCropingType(new ConceptCategory(crop
+						.getName() + " Inter-croping types",
+						"Inter-croping types for " + crop.getName()));
 			}
 
 			cropService.save(exisitingCrop);

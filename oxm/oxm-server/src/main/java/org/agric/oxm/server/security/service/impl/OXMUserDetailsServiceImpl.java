@@ -9,6 +9,8 @@ import org.agric.oxm.server.dao.PermissionDAO;
 import org.agric.oxm.server.dao.UserDAO;
 import org.agric.oxm.server.security.OXMUserDetails;
 import org.agric.oxm.server.security.service.OXMUserDetailsService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.security.core.GrantedAuthority;
@@ -19,63 +21,68 @@ import org.springframework.transaction.annotation.Transactional;
 
 public class OXMUserDetailsServiceImpl implements OXMUserDetailsService {
 
-    @Autowired
-    private UserDAO userDAO;
-    @Autowired
-    private PermissionDAO permissionDAO;
+	@Autowired
+	private UserDAO userDAO;
+	@Autowired
+	private PermissionDAO permissionDAO;
 
-    @Override
-    public OXMUserDetails getUserDetailsForUser(User user) {
-	OXMUserDetails userDetails = null;
-        if (user != null) {
-            List<GrantedAuthority> authorities = getUserAuthorities(user);
-            if (authorities == null) {
-                authorities = new ArrayList<GrantedAuthority>();
-            }
+	private Logger log = LoggerFactory.getLogger(this.getClass());
 
-            userDetails = new OXMUserDetails(user, true, true, true, true, authorities);
-        }
+	@Override
+	public OXMUserDetails getUserDetailsForUser(User user) {
+		OXMUserDetails userDetails = null;
+		if (user != null) {
+			List<GrantedAuthority> authorities = getUserAuthorities(user);
+			if (authorities == null) {
+				authorities = new ArrayList<GrantedAuthority>();
+			}
 
-        return userDetails;
-    }
+			userDetails = new OXMUserDetails(user, true, true, true, true,
+					authorities);
+		}
 
-    protected List<GrantedAuthority> getUserAuthorities(User user) {
-        List<GrantedAuthority> authorities = null;
-        if (user != null) {
-            authorities = new ArrayList<GrantedAuthority>();
-            List<Permission> permissions = null;
+		return userDetails;
+	}
 
-            if (user.hasAdministrativePrivileges()) {
-                permissions = permissionDAO.findAll();
-            } else {
-                permissions = user.findPermissions();
-            }
+	protected List<GrantedAuthority> getUserAuthorities(User user) {
+		List<GrantedAuthority> authorities = null;
+		if (user != null) {
+			authorities = new ArrayList<GrantedAuthority>();
+			List<Permission> permissions = null;
 
-            if (permissions != null && permissions.size() > 0) {
-                for (Permission perm : permissions) {
-                    GrantedAuthority ga = new GrantedAuthorityImpl(perm.getName());
-                    authorities.add(ga);
-                }
-            }
-        }
+			if (user.hasAdministrativePrivileges()) {
+				permissions = permissionDAO.findAll();
+			} else {
+				permissions = user.findPermissions();
+			}
 
-        return authorities;
-    }
+			if (permissions != null && permissions.size() > 0) {
+				for (Permission perm : permissions) {
+					GrantedAuthority ga = new GrantedAuthorityImpl(
+							perm.getName());
+					authorities.add(ga);
+				}
+			}
+		}
 
-    @Override
-    @Transactional
-    public UserDetails loadUserByUsername(String username)
-            throws UsernameNotFoundException, DataAccessException {
-        try {
-            User user = userDAO.searchUniqueByPropertyEqual("username", username);
-            if (user != null) {
-                return getUserDetailsForUser(user);
-            }
-        } catch (Exception e) {
+		return authorities;
+	}
 
-            throw new UsernameNotFoundException(e.getMessage(), e);
-        }
+	@Override
+	@Transactional
+	public UserDetails loadUserByUsername(String username)
+			throws UsernameNotFoundException, DataAccessException {
+		try {
+			User user = userDAO.searchUniqueByPropertyEqual("username",
+					username);
+			if (user != null) {
+				return getUserDetailsForUser(user);
+			}
+		} catch (Exception e) {
+			log.error("Login error ", e);
+			throw new UsernameNotFoundException(e.getMessage(), e);
+		}
 
-        return null;
-    }
+		return null;
+	}
 }

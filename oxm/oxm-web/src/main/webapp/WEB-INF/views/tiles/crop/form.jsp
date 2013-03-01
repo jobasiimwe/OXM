@@ -27,14 +27,10 @@ form#concept input[type="text"] {
 					<label>Name <span class="required">*</span> </label>
 					<form:input path="name" cssClass="uiTextbox" />
 				</p>
-			</div>
-		</div>
-		<div class="splitcontentright">
-			<div class="box">
-				<h3>Concept Categories</h3>
-				<p id="conceptcategorylist">
-					<form:checkboxes items="${inputs }" path="input.concepts"
-						itemValue="id" itemLabel="name" />
+				<p>
+					<label>Units of Measure <span class="required">*</span> </label>
+					<form:checkboxes id="unitsOfMeasure" items="${unitsOfMeasure }"
+						path="unitsOfMeasure" itemValue="id" itemLabel="name" />
 				</p>
 			</div>
 		</div>

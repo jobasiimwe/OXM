@@ -26,10 +26,10 @@
 				</th>
 				<th>Name</th>
 				<th>Inputs</th>
-				<th>seed Variation</th>
-				<th>ploughing Method</th>
-				<th>inter-Croping Type</th>
-				<th>unit Of Measure</th>
+				<th>seed Varieties</th>
+				<th>ploughing Methods</th>
+				<th>inter-Croping Types</th>
+				<th>units Of Measure</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -41,11 +41,11 @@
 								value="${crop.id }" />
 							</td>
 							<td>${crop.name }</td>
-							<td>${crop.input.name }</td>
-							<td>${crop.seedVariation.name }</td>
-							<td>${crop.ploughingMethod.name }</td>
-							<td>${crop.interCropingType.name }</td>
-							<td>${crop.unitOfMeasure.name }</td>
+							<td>${fn:length(crop.input.concepts) }</td>
+							<td>${fn:length(crop.seedVariation.concepts) }</td>
+							<td>${fn:length(crop.ploughingMethod.concepts) }</td>
+							<td>${fn:length(crop.interCropingType.concepts) }</td>
+							<td>${fn:length(crop.unitsOfMeasure)}</td>
 						</tr>
 					</c:forEach>
 				</c:when>

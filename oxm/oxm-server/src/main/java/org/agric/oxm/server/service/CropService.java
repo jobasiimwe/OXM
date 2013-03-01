@@ -23,6 +23,8 @@ public interface CropService {
 
 	Crop getCropById(String id);
 
+	Crop getCropByName(String name);
+
 	void deleteCropsByIds(String[] ids);
 
 	List<Crop> searchWithParams(CropSearchParameters params, int pageNo);

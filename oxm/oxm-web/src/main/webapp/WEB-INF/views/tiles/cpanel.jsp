@@ -39,7 +39,7 @@
 			</div>
 			<div class="menu">
 					<a class="menu-lnk" id="lnkCrops" title="Crops"
-						href="${baseUrl }/crop/view/"> <span
+						href="${baseUrl }/crop/view/page/1"> <span
 						class="crop-icon"></span><label
 						style="margin: 10px; font-size: 12px; font-weight: bold;">Crops</label>
 					</a>
