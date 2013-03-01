@@ -58,6 +58,14 @@
 						style="margin: 10px; font-size: 12px; font-weight: bold;">Production Org</label>
 					</a>
 			</div>
-			
-			
+</div>
+<div style="clear: both;"></div>
+<div class="cpanel">
+	<div class="menu">
+					<a class="menu-lnk" id="lnkPrice" title="Price"
+						href="${baseUrl }/price/view/1"> <span
+						class="price-icon"></span><label
+						style="margin: 10px; font-size: 12px; font-weight: bold;">Prices</label>
+					</a>
+			</div>
 </div>

@@ -8,11 +8,13 @@ import javax.servlet.http.HttpServletResponse;
 import org.agric.oxm.model.ProductionOrganisation;
 import org.agric.oxm.model.exception.SessionExpiredException;
 import org.agric.oxm.model.exception.ValidationException;
+import org.agric.oxm.server.security.PermissionConstants;
 import org.agric.oxm.server.security.util.OXMSecurityUtil;
 import org.agric.oxm.server.service.ProductionOrganisationService;
 import org.agric.oxm.web.WebConstants;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -28,6 +30,7 @@ public class ProductionOrganizationController {
     @Autowired
     private ProductionOrganisationService prdnOrgService;
 
+    @Secured({ PermissionConstants.PERM_VIEW_ADMINISTRATION })
     @RequestMapping(value = "/pOrganization/view/", method = RequestMethod.GET)
     public ModelAndView viewProdnOrgHandler(ModelMap model) throws SessionExpiredException {
 	WebConstants.loadLoggedInUserProfile(OXMSecurityUtil.getLoggedInUser(), model);
@@ -35,6 +38,7 @@ public class ProductionOrganizationController {
 	return new ModelAndView("viewProductionOrg", model);
     }
 
+    @Secured({ PermissionConstants.PERM_VIEW_ADMINISTRATION })
     @RequestMapping(value = "/pOrganization/add/", method = RequestMethod.GET)
     public ModelAndView addProdnOrgHandler(ModelMap model) throws SessionExpiredException {
 	WebConstants.loadLoggedInUserProfile(OXMSecurityUtil.getLoggedInUser(), model);
@@ -43,6 +47,7 @@ public class ProductionOrganizationController {
 
     }
 
+    @Secured({ PermissionConstants.PERM_VIEW_ADMINISTRATION })
     @RequestMapping(value = "/pOrganization/edit/{id}", method = RequestMethod.GET)
     public ModelAndView editProdnOrgHandler(ModelMap model, @PathVariable("id") String pOrgId)
 	    throws SessionExpiredException {
@@ -61,6 +66,7 @@ public class ProductionOrganizationController {
 
     }
 
+    @Secured({ PermissionConstants.PERM_VIEW_ADMINISTRATION })
     @RequestMapping(method = RequestMethod.POST, value = "/pOrganization/delete/")
     public void deleteProdnOrgHandler(@RequestParam("selectedPOrganization") List<String> ids,
 	    HttpServletResponse response) {
@@ -84,6 +90,7 @@ public class ProductionOrganizationController {
 
     }
 
+    @Secured({ PermissionConstants.PERM_VIEW_ADMINISTRATION })
     @RequestMapping(method = RequestMethod.POST, value = "/pOrganization/save/")
     public ModelAndView saveSellingPlaceHandler(
 	    @ModelAttribute("pOrganization") ProductionOrganisation pOrganization,
@@ -99,6 +106,8 @@ public class ProductionOrganizationController {
 	    if (pOrganization.getProducers() != null) {
 		existingPOrganization.setProducers(pOrganization.getProducers());
 	    }
+	}else{
+	    existingPOrganization.setId(null);
 	}
 
 	try {

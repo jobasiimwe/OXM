@@ -11,6 +11,7 @@ import org.agric.oxm.model.UserStatus;
 import org.agric.oxm.model.exception.OperationFailedException;
 import org.agric.oxm.model.exception.SessionExpiredException;
 import org.agric.oxm.model.exception.ValidationException;
+import org.agric.oxm.server.security.PermissionConstants;
 import org.agric.oxm.server.security.util.OXMSecurityUtil;
 import org.agric.oxm.server.service.UserService;
 import org.agric.oxm.web.OXMUtil;
@@ -18,6 +19,7 @@ import org.agric.oxm.web.WebConstants;
 import org.agric.oxm.web.WebUtils;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -33,7 +35,7 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    // @Secured(PermissionConstants.PERM_EDIT_STAFF_MEMBER)
+    @Secured({ PermissionConstants.PERM_VIEW_ADMINISTRATION })
     @RequestMapping(value = "/user/edit/{userid}/{qpage}", method = RequestMethod.GET)
     public ModelAndView editUserHandler(@PathVariable("userid") String id,
 	    @PathVariable("qpage") String userPage,
@@ -60,6 +62,7 @@ public class UserController {
 	model.put("gender", OXMUtil.getGenderList());
     }
 
+    @Secured({ PermissionConstants.PERM_VIEW_ADMINISTRATION })
     @RequestMapping(value = "/user/save/{qpage}", method = RequestMethod.POST)
     public ModelAndView saveUserHandler(@PathVariable("qpage") String qPage,
 	    @ModelAttribute("user") User user, @RequestParam(value = "userPic",
@@ -84,6 +87,8 @@ public class UserController {
 	if (StringUtils.isNotEmpty(user.getId())) {
 	    existingUser = userService.getUserById(user.getId());
 	    copyUserContents(existingUser, user);
+	}else{
+	    existingUser.setId(null);
 	}
 
 	try {
@@ -140,6 +145,7 @@ public class UserController {
 
     }
 
+    @Secured({ PermissionConstants.PERM_VIEW_ADMINISTRATION })
     @RequestMapping(value = "/user/add/{qpage}", method = RequestMethod.GET)
     public ModelAndView addUserHandler(@PathVariable("qpage") String qPage, ModelMap model) throws SessionExpiredException {
 	WebConstants.loadLoggedInUserProfile(OXMSecurityUtil.getLoggedInUser(), model);
@@ -150,6 +156,7 @@ public class UserController {
 	return new ModelAndView("editORAddUser", model);
     }
 
+    @Secured({ PermissionConstants.PERM_VIEW_ADMINISTRATION })
     @RequestMapping(value = "/user/pic/{id}", method = RequestMethod.GET)
     public void userPicHandler(@PathVariable("id") String userId, HttpServletResponse response)
 	    throws IOException {
@@ -166,6 +173,7 @@ public class UserController {
 	}
     }
 
+    @Secured({ PermissionConstants.PERM_VIEW_ADMINISTRATION })
     @RequestMapping(value = "/user/view", method = RequestMethod.GET)
     public ModelAndView viewUsersHandler(ModelMap model) throws SessionExpiredException {
 	WebConstants.loadLoggedInUserProfile(OXMSecurityUtil.getLoggedInUser(), model);
@@ -174,6 +182,7 @@ public class UserController {
 	return new ModelAndView("viewUser", model);
     }
 
+    @Secured({ PermissionConstants.PERM_VIEW_ADMINISTRATION })
     @RequestMapping(value = "/user/delete/{id}/", method = RequestMethod.GET)
     public ModelAndView deleteUserHandler(@PathVariable("id") String userId, ModelMap model) throws SessionExpiredException {
 	User user = userService.getUserById(userId);

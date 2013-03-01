@@ -163,10 +163,24 @@
 		<put-attribute name="body" type="template" value="/WEB-INF/views/tiles/productionorg/view.jsp" />
 	</definition>
 	
-		<!-- ======= FORM for Selling Place ========== -->
 	<definition name="formProductionOrg" extends="layout">
 	    <put-attribute name="scripts" type="template" value="/WEB-INF/views/tiles/productionorg/scripts.jsp" />
 		<put-attribute name="pageTitle" type="string" value="Add/Edit Production Organization" />
 		<put-attribute name="body" type="template" value="/WEB-INF/views/tiles/productionorg/form.jsp" />
 	</definition>
+	
+	<!-- ======= FORM for Price ========== -->
+	<definition name="viewPrice" extends="layout">
+	    <put-attribute name="scripts" type="template" value="/WEB-INF/views/tiles/price/scripts.jsp" />
+		<put-attribute name="pageTitle" type="string" value="View Prices(s)" />
+		<put-attribute name="body" type="template" value="/WEB-INF/views/tiles/price/view.jsp" />
+	</definition>
+	
+	<definition name="formPrice" extends="layout">
+	    <put-attribute name="scripts" type="template" value="/WEB-INF/views/tiles/price/scripts.jsp" />
+		<put-attribute name="pageTitle" type="string" value="Add/Edit Price" />
+		<put-attribute name="body" type="template" value="/WEB-INF/views/tiles/price/form.jsp" />
+	</definition>
+	
+	
 </tiles-definitions>

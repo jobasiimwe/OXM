@@ -5,6 +5,7 @@ import java.util.Date;
 
 import org.agric.oxm.model.Concept;
 import org.agric.oxm.model.ConceptCategory;
+import org.agric.oxm.model.Crop;
 import org.agric.oxm.model.District;
 import org.agric.oxm.model.Document;
 import org.agric.oxm.model.Parish;
@@ -17,6 +18,7 @@ import org.agric.oxm.model.User;
 import org.agric.oxm.model.Village;
 import org.agric.oxm.web.propertyeditors.ConceptCategoryPropertyEditor;
 import org.agric.oxm.web.propertyeditors.ConceptPropertyEditor;
+import org.agric.oxm.web.propertyeditors.CropPropertyEditor;
 import org.agric.oxm.web.propertyeditors.DatePropertyEditor;
 import org.agric.oxm.web.propertyeditors.DistrictPropertyEditor;
 import org.agric.oxm.web.propertyeditors.DocumentPropertyEditor;
@@ -71,6 +73,9 @@ public class OXMBindingInitializer implements WebBindingInitializer {
     @Autowired
     private SellingPlacePropertyEditor sellingPlacePropertyEditor;
     
+    @Autowired
+    private CropPropertyEditor cropPropertyEditor;
+    
     @Override
     public void initBinder(WebDataBinder binder, WebRequest request) {
 	binder.registerCustomEditor(District.class, districtPropertyEditor);
@@ -87,5 +92,6 @@ public class OXMBindingInitializer implements WebBindingInitializer {
 	binder.registerCustomEditor(Document.class, documentPropertyEditor);
 	binder.registerCustomEditor(User.class, userPropertyEditor);
 	binder.registerCustomEditor(SellingPlace.class, sellingPlacePropertyEditor);
+	binder.registerCustomEditor(Crop.class, cropPropertyEditor);
     }
 }

@@ -28,7 +28,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
-public class SellingPriceController {
+public class SellingPlaceController {
 
     @Autowired
     private SellingPlaceService sellingPlaceService;
@@ -126,6 +126,8 @@ public class SellingPriceController {
 	    existingSellingPlace = sellingPlaceService.getSellingPlaceById(sellingPlace.getId());
 	    existingSellingPlace.setName(sellingPlace.getName());
 	    existingSellingPlace.setType(sellingPlace.getType());
+	}else{
+	    existingSellingPlace.setId(null);
 	}
 
 	try {

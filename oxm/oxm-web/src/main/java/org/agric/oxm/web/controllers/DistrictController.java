@@ -8,11 +8,13 @@ import org.agric.oxm.model.SubCounty;
 import org.agric.oxm.model.Village;
 import org.agric.oxm.model.exception.SessionExpiredException;
 import org.agric.oxm.model.exception.ValidationException;
+import org.agric.oxm.server.security.PermissionConstants;
 import org.agric.oxm.server.security.util.OXMSecurityUtil;
 import org.agric.oxm.server.service.Adminservice;
 import org.agric.oxm.web.WebConstants;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -28,6 +30,7 @@ public class DistrictController {
     @Autowired
     private Adminservice adminService;
 
+    @Secured({ PermissionConstants.PERM_VIEW_ADMINISTRATION })
     @RequestMapping(value = "/district/view/", method = RequestMethod.GET)
     public ModelAndView viewDistrictHandler(ModelMap model) throws SessionExpiredException {
 	WebConstants.loadLoggedInUserProfile(OXMSecurityUtil.getLoggedInUser(), model);
@@ -36,6 +39,7 @@ public class DistrictController {
 	return new ModelAndView("viewDistrict", model);
     }
 
+    @Secured({ PermissionConstants.PERM_VIEW_ADMINISTRATION })
     @RequestMapping(method = RequestMethod.GET, value = "/district/add/")
     public ModelAndView viewAddDistrictHandler(ModelMap model) throws SessionExpiredException {
 	WebConstants.loadLoggedInUserProfile(OXMSecurityUtil.getLoggedInUser(), model);
@@ -43,6 +47,7 @@ public class DistrictController {
 	return new ModelAndView("addOREditDistrict", model);
     }
 
+    @Secured({ PermissionConstants.PERM_VIEW_ADMINISTRATION })
     @RequestMapping(method = RequestMethod.GET, value = "/district/edit/{id}")
     public ModelAndView viewEditDistrictHandler(@PathVariable("id") String districtId,
 	    ModelMap model) throws SessionExpiredException {
@@ -59,6 +64,7 @@ public class DistrictController {
 	}
     }
 
+    @Secured({ PermissionConstants.PERM_VIEW_ADMINISTRATION })
     @RequestMapping(method = RequestMethod.POST, value = "/district/save/")
     public ModelAndView saveDistrictHandler(@ModelAttribute("district") District district,
 	    ModelMap model) throws SessionExpiredException {
@@ -71,6 +77,8 @@ public class DistrictController {
 		if (StringUtils.isNotEmpty(district.getId())) {
 		    existingDistrict = adminService.getDistrictById(district.getId());
 		    existingDistrict.setName(district.getName());
+		}else{
+		    existingDistrict.setId(null);
 		}
 
 		adminService.validate(existingDistrict);
@@ -86,6 +94,7 @@ public class DistrictController {
 	return viewDistrictHandler(model);
     }
 
+    @Secured({ PermissionConstants.PERM_VIEW_ADMINISTRATION })
     @RequestMapping(method = RequestMethod.GET, value = "/district/delete/{id}")
     public ModelAndView deleteDistrictHandler(@PathVariable("id") String districtId,
 	    ModelMap model) throws SessionExpiredException {
@@ -104,6 +113,7 @@ public class DistrictController {
 	return viewDistrictHandler(model);
     }
 
+    @Secured({ PermissionConstants.PERM_VIEW_ADMINISTRATION })
     @RequestMapping(method = RequestMethod.POST, value = "/district/search")
     public ModelAndView searchDistrict(
 	    @RequestParam(value = "pageNo", required = false) Integer pageNo,
@@ -142,6 +152,7 @@ public class DistrictController {
 	return new ModelAndView("viewDistrict", model);
     }
 
+    @Secured({ PermissionConstants.PERM_VIEW_ADMINISTRATION })
     @RequestMapping(method = RequestMethod.GET, value = "/subcounty/add/{did}")
     public ModelAndView viewAddSubCountyHandler(@PathVariable("did") String districtId,
 	    ModelMap model) throws SessionExpiredException {
@@ -158,6 +169,7 @@ public class DistrictController {
 	return null;
     }
 
+    @Secured({ PermissionConstants.PERM_VIEW_ADMINISTRATION })
     @RequestMapping(method = RequestMethod.GET, value = "/subcounty/edit/{sid}")
     public ModelAndView viewEditSubCountyHandler(@PathVariable("sid") String subCountyId,
 	    ModelMap model) throws SessionExpiredException {
@@ -175,6 +187,7 @@ public class DistrictController {
 	}
     }
 
+    @Secured({ PermissionConstants.PERM_VIEW_ADMINISTRATION })
     @RequestMapping(method = RequestMethod.POST, value = "/subcounty/save/{did}")
     public ModelAndView saveSubCountyHandler(@ModelAttribute("subCounty") SubCounty subCounty,
 	    @PathVariable("did") String districtId,
@@ -207,6 +220,7 @@ public class DistrictController {
 	return viewSubCountyHandler(1, existingSubcounty.getDistrict().getId(), model);
     }
 
+    @Secured({ PermissionConstants.PERM_VIEW_ADMINISTRATION })
     @RequestMapping(method = RequestMethod.GET, value = "/subcounty/delete/{id}")
     public ModelAndView deleteSubCountyHandler(@PathVariable("id") String subcountyId,
 	    ModelMap model) throws SessionExpiredException {
@@ -228,6 +242,7 @@ public class DistrictController {
 	return viewSubCountyHandler(null, null, model);
     }
 
+    @Secured({ PermissionConstants.PERM_VIEW_ADMINISTRATION })
     @RequestMapping(method = RequestMethod.GET, value = "/subcounty/view/{did}")
     public ModelAndView viewSubCountyHandler(
 	    @RequestParam(value = "pageNo", required = false) Integer pageNo,
@@ -250,6 +265,7 @@ public class DistrictController {
 
     }
 
+    @Secured({ PermissionConstants.PERM_VIEW_ADMINISTRATION })
     @RequestMapping(method = RequestMethod.GET, value = "/parish/add/{scid}")
     public ModelAndView addParishHandler(@PathVariable("scid") String subCountyId,
 	    ModelMap model) throws SessionExpiredException {
@@ -266,6 +282,7 @@ public class DistrictController {
 	return null;
     }
 
+    @Secured({ PermissionConstants.PERM_VIEW_ADMINISTRATION })
     @RequestMapping(method = RequestMethod.GET, value = "/parish/edit/{pid}")
     public ModelAndView editParishHandler(@PathVariable("pid") String parishID,
 	    ModelMap model) throws SessionExpiredException {
@@ -283,6 +300,7 @@ public class DistrictController {
 	}
     }
 
+    @Secured({ PermissionConstants.PERM_VIEW_ADMINISTRATION })
     @RequestMapping(method = RequestMethod.POST, value = "/parish/save/{scid}")
     public ModelAndView saveParishHandler(@ModelAttribute("parish") Parish parish,
 	    @PathVariable("scid") String subCountyId,
@@ -318,6 +336,7 @@ public class DistrictController {
 	return viewParishHandler(1, existingParish.getSubCounty().getId(), model);
     }
 
+    @Secured({ PermissionConstants.PERM_VIEW_ADMINISTRATION })
     @RequestMapping(method = RequestMethod.GET, value = "/parish/delete/{pid}")
     public ModelAndView deleteParishHandler(@PathVariable("pid") String parishId,
 	    ModelMap model) throws SessionExpiredException {
@@ -339,6 +358,7 @@ public class DistrictController {
 	return viewParishHandler(null, null, model);
     }
 
+    @Secured({ PermissionConstants.PERM_VIEW_ADMINISTRATION })
     @RequestMapping(method = RequestMethod.GET, value = "/parish/view/{scid}")
     public ModelAndView viewParishHandler(
 	    @RequestParam(value = "pageNo", required = false) Integer pageNo,
@@ -362,6 +382,7 @@ public class DistrictController {
 
     }
 
+    @Secured({ PermissionConstants.PERM_VIEW_ADMINISTRATION })
     @RequestMapping(method = RequestMethod.GET, value = "/village/add/{pid}")
     public ModelAndView addVillageHandler(@PathVariable("pid") String parishId,
 	    ModelMap model) throws SessionExpiredException {
@@ -378,6 +399,7 @@ public class DistrictController {
 	return null;
     }
 
+    @Secured({ PermissionConstants.PERM_VIEW_ADMINISTRATION })
     @RequestMapping(method = RequestMethod.GET, value = "/village/edit/{vid}")
     public ModelAndView editVillageHandler(@PathVariable("vid") String VillageID,
 	    ModelMap model) throws SessionExpiredException {
@@ -395,6 +417,7 @@ public class DistrictController {
 	}
     }
 
+    @Secured({ PermissionConstants.PERM_VIEW_ADMINISTRATION })
     @RequestMapping(method = RequestMethod.POST, value = "/village/save/{pid}")
     public ModelAndView saveVillageHandler(@ModelAttribute("village") Village village,
 	    @PathVariable("pid") String parishId,
@@ -430,6 +453,7 @@ public class DistrictController {
 	return viewVillageHandler(1, exisitingVillage.getParish().getId(), model);
     }
 
+    @Secured({ PermissionConstants.PERM_VIEW_ADMINISTRATION })
     @RequestMapping(method = RequestMethod.GET, value = "/village/delete/{vid}")
     public ModelAndView deleteVillagehHandler(@PathVariable("vid") String villageId,
 	    ModelMap model) throws SessionExpiredException {
@@ -451,6 +475,7 @@ public class DistrictController {
 	return viewVillageHandler(null, null, model);
     }
 
+    @Secured({ PermissionConstants.PERM_VIEW_ADMINISTRATION })
     @RequestMapping(method = RequestMethod.GET, value = "/village/view/{pid}")
     public ModelAndView viewVillageHandler(
 	    @RequestParam(value = "pageNo", required = false) Integer pageNo,

@@ -6,11 +6,13 @@ import org.agric.oxm.model.Role;
 import org.agric.oxm.model.exception.OperationFailedException;
 import org.agric.oxm.model.exception.SessionExpiredException;
 import org.agric.oxm.model.exception.ValidationException;
+import org.agric.oxm.server.security.PermissionConstants;
 import org.agric.oxm.server.security.util.OXMSecurityUtil;
 import org.agric.oxm.server.service.UserService;
 import org.agric.oxm.web.WebConstants;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -25,6 +27,7 @@ public class RoleController {
     @Autowired
     private UserService userService;
 
+    @Secured({ PermissionConstants.PERM_VIEW_ADMINISTRATION })
     @RequestMapping(value = "/role/view", method = RequestMethod.GET)
     public ModelAndView viewRoleHandler(
 	    @RequestParam(value = "page", required = false) Integer pageNo,
@@ -39,6 +42,7 @@ public class RoleController {
 	return new ModelAndView("viewRole", model);
     }
 
+    @Secured({ PermissionConstants.PERM_VIEW_ADMINISTRATION })
     @RequestMapping(value = "/role/delete/{id}", method = RequestMethod.GET)
     public ModelAndView deleteHandler(@PathVariable("id") String roleId, ModelMap model)
 	    throws SessionExpiredException {
@@ -55,6 +59,7 @@ public class RoleController {
 	return viewRoleHandler(null, model);
     }
 
+    @Secured({ PermissionConstants.PERM_VIEW_ADMINISTRATION })
     @RequestMapping(value = "/role/add/", method = RequestMethod.GET)
     public ModelAndView addHandler(ModelMap model) throws SessionExpiredException {
 	WebConstants.loadLoggedInUserProfile(OXMSecurityUtil.getLoggedInUser(), model);
@@ -63,6 +68,7 @@ public class RoleController {
 	return new ModelAndView("addOREditRole", model);
     }
 
+    @Secured({ PermissionConstants.PERM_VIEW_ADMINISTRATION })
     @RequestMapping(value = "/role/edit/{id}", method = RequestMethod.GET)
     public ModelAndView editHandler(@PathVariable("id") String roleId, ModelMap model)
 	    throws SessionExpiredException {
@@ -74,6 +80,7 @@ public class RoleController {
 	return new ModelAndView("addOREditRole", model);
     }
 
+    @Secured({ PermissionConstants.PERM_VIEW_ADMINISTRATION })
     @RequestMapping(value = "/role/save/", method = RequestMethod.POST)
     public ModelAndView saveHandler(@ModelAttribute("role") Role role, ModelMap model)
 	    throws SessionExpiredException {
@@ -82,6 +89,8 @@ public class RoleController {
 	if (StringUtils.isNotEmpty(role.getId())) {
 	    existingRole = userService.getRoleById(role.getId());
 	    copyRoleContents(existingRole, role);
+	}else{
+	    existingRole.setId(null);
 	}
 
 	try {

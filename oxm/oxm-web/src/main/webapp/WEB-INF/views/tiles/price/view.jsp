@@ -6,10 +6,10 @@
 
 <div id="buttonStrip">
 	<div class="contextual" style="float: left;">
-		<a id="lnkAddProductionOrg" class="uiButton" href="${baseUrl }/pOrganization/add/">Add</a>
-		<a id="lnkEditProductionOrg" class="uiButton"
-			href="${baseUrl }/pOrganization/edit/">Edit</a> 
-		<a id="lnkDeleteProductionOrg" class="uiButton" href="${baseUrl }/pOrganization/delete/">Delete</a>
+		<a id="lnkAddPrice" class="uiButton" href="${baseUrl }/price/add/">Add</a>
+		<a id="lnkEditPrice" class="uiButton" href="${baseUrl }/price/edit/">Edit</a> 
+		<a id="lnkDeletePrice"
+			class="uiButton" href="${baseUrl }/price/delete/">Delete</a>
 	</div>
 	<div style="float: right;">
 		<%@ include file="/WEB-INF/views/navigation.jsp"%>
@@ -23,23 +23,26 @@
 				<th><input type="checkbox" name="cbxSelectAllItems"
 					id="cbxSelectAllItems" />
 				</th>
-				<th>Name</th>
-				<th></th>
+				<th>Crop</th>
+				<th>Selling Place</th>
+				<th>Type</th>
+				<th>Unit of Measure</th>
+				<th>Price</th>
 			</tr>
 		</thead>
 		<tbody>
 			<c:choose>
-				<c:when test="${not empty pOrganizations  && fn:length(pOrganizations) > 0}">
-					<c:forEach var="pOrg" items="${pOrganizations }">
-						<tr id="${pOrg.id }">
-							<td><input type="checkbox" name="selectedPOrganization"
-								value="${pOrg.id }" />
+				<c:when test="${not empty prices  && fn:length(prices) > 0}">
+					<c:forEach var="price" items="${prices }">
+						<tr id="${price.id }">
+							<td><input type="checkbox" name="selectedPrice"
+								value="${price.id }" />
 							</td>
-							<td>${pOrg.name }</td>
-							<td>
-								<a class="icon icon-list" title="view Productions"
-								href="${baseUrl }/production/view/${pOrg.id }">View Productions</a>
-							</td>
+							<td>${price.crop.name }</td>
+							<td>${price.sellingPlace.name }</td>
+							<td>${price.sellType.name }</td>
+							<td>${price.unitOfMeasure.name }</td>
+							<td>${price.price }</td>
 						</tr>
 					</c:forEach>
 				</c:when>
