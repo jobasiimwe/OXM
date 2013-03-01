@@ -51,6 +51,13 @@
 						style="margin: 10px; font-size: 12px; font-weight: bold;">Selling Place</label>
 					</a>
 			</div>
+			<div class="menu">
+					<a class="menu-lnk" id="lnkProductionOrg" title="Production Organization"
+						href="${baseUrl }/pOrganization/view/"> <span
+						class="porganization-icon"></span><label
+						style="margin: 10px; font-size: 12px; font-weight: bold;">Production Org</label>
+					</a>
+			</div>
 			
 			
 </div>

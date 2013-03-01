@@ -156,4 +156,18 @@
 		<put-attribute name="pageTitle" type="string" value="Add/Edit Selling Place" />
 		<put-attribute name="body" type="template" value="/WEB-INF/views/tiles/sellingplace/form.jsp" />
 	</definition>
+	
+	<!-- ======= FORM for Production Organization ========== -->
+	<definition name="viewProductionOrg" extends="layout">
+	    <put-attribute name="scripts" type="template" value="/WEB-INF/views/tiles/productionorg/scripts.jsp" />
+		<put-attribute name="pageTitle" type="string" value="View Production Organization(s)" />
+		<put-attribute name="body" type="template" value="/WEB-INF/views/tiles/productionorg/view.jsp" />
+	</definition>
+	
+		<!-- ======= FORM for Selling Place ========== -->
+	<definition name="formProductionOrg" extends="layout">
+	    <put-attribute name="scripts" type="template" value="/WEB-INF/views/tiles/productionorg/scripts.jsp" />
+		<put-attribute name="pageTitle" type="string" value="Add/Edit Production Organization" />
+		<put-attribute name="body" type="template" value="/WEB-INF/views/tiles/productionorg/form.jsp" />
+	</definition>
 </tiles-definitions>
