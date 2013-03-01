@@ -136,6 +136,10 @@
 		<put-attribute name="body" type="template" value="/WEB-INF/views/tiles/crop/form.jsp" />
 	</definition>
 	
+	<definition name="cropDetails" extends="viewCrop">
+		<put-attribute name="body" type="template" value="/WEB-INF/views/tiles/crop/details.jsp" />
+	</definition>
+	
 	<!-- ======= FORM for CPanel ========== -->
 	<definition name="cpanel" extends="layout">
 		<put-attribute name="pageTitle" type="string" value="C panel" />

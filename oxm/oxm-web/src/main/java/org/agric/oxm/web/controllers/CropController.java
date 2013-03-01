@@ -157,10 +157,28 @@ public class CropController {
 	@RequestMapping(value = { "/view/page/{pageNo}" }, method = RequestMethod.GET)
 	public ModelAndView viewCropsHandler(
 			@PathVariable(value = "pageNo") Integer pageNo, ModelMap model) {
-		prepareCropSearchModel(new CropSearchParameters(), pageNo, model);
+		prepareCropSearchModel(new CropSearchParameters(), false, false,
+				pageNo, model);
 		model.put(WebConstants.CONTENT_HEADER, "Crops");
 
 		return new ModelAndView("viewCrop", model);
+	}
+
+	@Secured({ PermissionConstants.PERM_VIEW_ADMINISTRATION })
+	@RequestMapping(value = "/search", method = RequestMethod.POST)
+	public ModelAndView courseSearchHandler(
+			@ModelAttribute(COMMAND_NAME) GenericCommand searchCommand,
+			@RequestParam(value = "pageNo", required = false) Integer pageNo,
+			ModelMap model) {
+
+		CropSearchParameters params = extractCropSearchParamsFromCommand(searchCommand);
+		if (pageNo == null || pageNo <= 0) {
+			pageNo = 1;
+		}
+
+		prepareCropSearchModel(params, true, true, pageNo, model);
+
+		return new ModelAndView("viewCourses", model);
 	}
 
 	/**
@@ -171,7 +189,7 @@ public class CropController {
 	 * @param model
 	 */
 	private void prepareCropSearchModel(CropSearchParameters params,
-			Integer pageNo, ModelMap model) {
+			Boolean searching, Boolean newSearch, Integer pageNo, ModelMap model) {
 
 		if (pageNo == null || (pageNo != null && pageNo <= 0)) {
 			pageNo = 1;
@@ -179,10 +197,6 @@ public class CropController {
 
 		List<Crop> crops = cropService.searchWithParams(params, pageNo);
 		model.put("crops", crops);
-		model.put(
-				WebConstants.MODEL_ATTRIBUTE_SYSTEM_MESSAGE,
-				String.format("search completed with: %s result(s)",
-						String.valueOf(crops.size())));
 
 		WebUtils.prepareNavigation("Course",
 				cropService.numberOfCropsWithSearchParams(params),
@@ -191,11 +205,20 @@ public class CropController {
 
 		prepareCropSearchCommand(model, params);
 
-		model.put(WebConstants.CONTENT_HEADER, "Crops - search results ");
+		if (newSearch)
+			model.put(
+					WebConstants.MODEL_ATTRIBUTE_SYSTEM_MESSAGE,
+					String.format("search completed with: %s result(s)",
+							String.valueOf(crops.size())));
+		if (searching) {
+			model.put(WebConstants.CONTENT_HEADER, "Crops - search results ");
 
-		// set a variable searching to true
-		// this variable is used in determining what navigation file to use
-		model.put("searching", true);
+			// set a variable searching to true
+			// this variable is used in determining what navigation file to use
+			model.put("searching", true);
+		} else
+			model.put(WebConstants.CONTENT_HEADER, "List of Crops");
+
 	}
 
 	/**
@@ -258,7 +281,7 @@ public class CropController {
 				new GenericCommandValue(interCropingTypeId));
 
 		prepareCropSearchModel(extractCropSearchParamsFromCommand(command),
-				pageNo, model);
+				true, false, pageNo, model);
 
 		return new ModelAndView("viewCrops", model);
 	}
@@ -296,6 +319,24 @@ public class CropController {
 		return params;
 	}
 
+	@Secured({ PermissionConstants.VIEW_CROP })
+	@RequestMapping(value = "/details/{cropid}", method = RequestMethod.GET)
+	public ModelAndView viewCropDetailsHandler(
+			@PathVariable("cropid") String cropid, ModelMap model) {
+
+		if (!model.containsAttribute("crop")) {
+			Crop crop = cropService.getCropById(cropid);
+			model.put("crop", crop);
+			model.put(WebConstants.CONTENT_HEADER, crop.getName() + " Details");
+		}
+
+		prepareCropModel(model);
+
+		return new ModelAndView("cropDetails", model);
+	}
+
+	@Secured({ PermissionConstants.ADD_CROP })
+	@RequestMapping(value = "/edit/{cropid}", method = RequestMethod.GET)
 	public ModelAndView editCropHandler(@PathVariable("cropid") String cropid,
 			ModelMap model) {
 
@@ -331,12 +372,12 @@ public class CropController {
 							.setName(crop.getName() + " Imputs");
 					exisitingCrop.getInput().setDescription(
 							"Inputs for " + crop.getName());
-					
+
 					exisitingCrop.getPloughingMethod().setName(
 							crop.getName() + " Ploughing Methods");
 					exisitingCrop.getInput().setDescription(
 							"Ploughing Methods for " + crop.getName());
-					
+
 					exisitingCrop.getSeedVariation().setName(
 							crop.getName() + " Seed Varieties");
 					exisitingCrop.getSeedVariation().setDescription(
@@ -347,7 +388,6 @@ public class CropController {
 					exisitingCrop.getInterCropingType().setDescription(
 							"Inter-croping types for " + crop.getName());
 
-					
 					exisitingCrop.setInterCropingType(new ConceptCategory(crop
 							.getName() + " Inter-croping types",
 							"Inter-croping types for " + crop.getName()));
