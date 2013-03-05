@@ -5,7 +5,7 @@ import java.util.List;
 import org.agric.oxm.model.Concept;
 import org.agric.oxm.model.ConceptCategory;
 import org.agric.oxm.model.exception.ValidationException;
-import org.agric.oxm.model.search.ConceptCategorySearchParameters;
+import org.agric.oxm.model.search.SingleStringSearchParameters;
 import org.agric.oxm.model.search.ConceptSearchParameters;
 import org.agric.oxm.server.ConceptCategoryAnnotation;
 
@@ -54,9 +54,9 @@ public interface ConceptService {
 	List<ConceptCategory> getConceptCategories();
 
 	List<ConceptCategory> getConceptCategoriesWithParams(
-			ConceptCategorySearchParameters params, int pageNo);
+			SingleStringSearchParameters params, int pageNo);
 
 	int getNumberOfConceptsCategoriesInSearch(
-			ConceptCategorySearchParameters params);
+			SingleStringSearchParameters params);
 
 }

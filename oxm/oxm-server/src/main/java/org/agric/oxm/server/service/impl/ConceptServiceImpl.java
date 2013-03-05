@@ -8,7 +8,7 @@ import org.agric.oxm.model.Concept;
 import org.agric.oxm.model.ConceptCategory;
 import org.agric.oxm.model.RecordStatus;
 import org.agric.oxm.model.exception.ValidationException;
-import org.agric.oxm.model.search.ConceptCategorySearchParameters;
+import org.agric.oxm.model.search.SingleStringSearchParameters;
 import org.agric.oxm.model.search.ConceptSearchParameters;
 import org.agric.oxm.server.ConceptCategoryAnnotation;
 import org.agric.oxm.server.OXMConstants;
@@ -213,7 +213,7 @@ public class ConceptServiceImpl implements ConceptService {
 	@Secured({ PermissionConstants.VIEW_CONCEPT_DETAILS })
 	@Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
 	public List<ConceptCategory> getConceptCategoriesWithParams(
-			ConceptCategorySearchParameters params, int pageNo) {
+			SingleStringSearchParameters params, int pageNo) {
 		Search search = prepareConceptCategorySearch(params);
 		search.setMaxResults(OXMConstants.MAX_NUM_PAGE_RECORD);
 
@@ -229,7 +229,7 @@ public class ConceptServiceImpl implements ConceptService {
 	}
 
 	private Search prepareConceptCategorySearch(
-			ConceptCategorySearchParameters params) {
+			SingleStringSearchParameters params) {
 		Search search = new Search();
 
 		search.addSort("name", false, true);
@@ -250,7 +250,7 @@ public class ConceptServiceImpl implements ConceptService {
 	@Secured({ PermissionConstants.VIEW_CONCEPT_DETAILS })
 	@Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
 	public int getNumberOfConceptsCategoriesInSearch(
-			ConceptCategorySearchParameters params) {
+			SingleStringSearchParameters params) {
 		Search search = prepareConceptCategorySearch(params);
 		return conceptCategoryDAO.count(search);
 	}

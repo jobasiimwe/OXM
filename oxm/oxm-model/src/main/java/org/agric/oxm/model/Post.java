@@ -33,7 +33,6 @@ public class Post extends BaseData implements Comparable<Post> {
 	private String text;
 
 	public Post() {
-		super();
 	}
 
 	@ManyToOne

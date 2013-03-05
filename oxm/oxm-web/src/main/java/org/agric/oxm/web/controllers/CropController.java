@@ -173,7 +173,7 @@ public class CropController {
 
 		prepareCropSearchModel(params, true, true, pageNo, model);
 
-		return new ModelAndView("viewCourses", model);
+		return new ModelAndView("viewCrop", model);
 	}
 
 	/**
@@ -193,7 +193,7 @@ public class CropController {
 		List<Crop> crops = cropService.searchWithParams(params, pageNo);
 		model.put("crops", crops);
 
-		WebUtils.prepareNavigation("Course",
+		WebUtils.prepareNavigation("Crop",
 				cropService.numberOfCropsWithSearchParams(params),
 				crops.size(), pageNo, buildCropSearchNavigationUrl(params),
 				model);
@@ -361,6 +361,7 @@ public class CropController {
 
 				exisitingCrop = cropService.getCropById(crop.getId());
 
+				exisitingCrop.setName(crop.getName());
 				exisitingCrop.setInputs(crop.getInputs());
 				exisitingCrop.setSeedVarieties(crop.getSeedVarieties());
 				exisitingCrop.setInterCroppingTypes(crop
@@ -430,7 +431,7 @@ public class CropController {
 
 	@Secured({ PermissionConstants.PERM_VIEW_ADMINISTRATION })
 	@RequestMapping(value = "/crop/details/view/{cropId}", method = RequestMethod.GET)
-	public ModelAndView viewCropOptionHandler(
+	public ModelAndView viewCropDetailHandler(
 			@PathVariable("cropId") String cropId, ModelMap model) {
 
 		Crop crop = cropService.getCropById(cropId);
