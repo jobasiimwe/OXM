@@ -12,7 +12,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 @Entity
-@Table(name = "season")
+@Table(name = "comment")
 public class Comment extends BaseData implements Comparable<Comment> {
 
 	private User owner;

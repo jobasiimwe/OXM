@@ -5,6 +5,7 @@ import java.util.List;
 import org.agric.oxm.model.Position;
 import org.agric.oxm.model.RecordStatus;
 import org.agric.oxm.model.exception.ValidationException;
+import org.agric.oxm.model.search.SingleStringSearchParameters;
 import org.agric.oxm.server.dao.PositionDAO;
 import org.agric.oxm.server.security.PermissionConstants;
 import org.agric.oxm.server.service.PositionService;
@@ -14,6 +15,9 @@ import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+
+import com.googlecode.genericdao.search.Filter;
+import com.googlecode.genericdao.search.Search;
 
 /**
  * 
@@ -78,6 +82,44 @@ public class PositionServiceImpl implements PositionService {
 	@Override
 	public void deletePositionsByIds(String[] ids) {
 		positionDAO.removeByIds(ids);
+	}
+
+	@Override
+	@Secured({ PermissionConstants.DELETE_COMMITTEE__DETAILS })
+	@Transactional(propagation = Propagation.REQUIRED)
+	public List<Position> searchWithParams(SingleStringSearchParameters params,
+			Integer pageNo) {
+		Search search = preparePositionSearch(params);
+		/*
+		 * if the page number is less than or equal to zero, no need for paging
+		 */
+		if (pageNo > 0) {
+			search.setPage(pageNo - 1);
+		} else {
+			search.setPage(0);
+		}
+		List<Position> positions = positionDAO.search(search);
+		return positions;
+	}
+
+	private Search preparePositionSearch(SingleStringSearchParameters params) {
+		Search search = new Search();
+
+		if (StringUtils.isNotEmpty(params.getName())) {
+			search.addFilter(new Filter("name", "%" + params.getName() + "%",
+					Filter.OP_ILIKE));
+		}
+
+		search.addSort("index", false, true);
+
+		return search;
+	}
+
+	@Override
+	public int numberOfPositionsWithSearchParams(
+			SingleStringSearchParameters params) {
+		Search search = preparePositionSearch(params);
+		return positionDAO.count(search);
 	}
 
 }

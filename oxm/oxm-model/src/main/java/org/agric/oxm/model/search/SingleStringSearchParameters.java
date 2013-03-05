@@ -1,13 +1,13 @@
 package org.agric.oxm.model.search;
 
-public class ConceptCategorySearchParameters {
+public class SingleStringSearchParameters {
 
 	private String name;
 
-	public ConceptCategorySearchParameters() {
+	public SingleStringSearchParameters() {
 	}
 
-	public ConceptCategorySearchParameters(String name) {
+	public SingleStringSearchParameters(String name) {
 		this.setName(name);
 	}
 
