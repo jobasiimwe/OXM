@@ -66,11 +66,13 @@ public final class DefaultConceptCategories {
 	@ConceptCategoryAnnotation(id = "88F1E58F-B372-4cfa-9764-42DDE9888ACD", description = "Inter-cropping types")
 	public static final String INTER_CROPING_TYPES = "Inter-cropping types";
 
+	@ConceptCategoryAnnotation(id = "88QQQ8F-B372-465-9764-42DDD38ACD", description = "Season names")
+	public static final String SEASON_NAME = "Seasons";
 	/**
 	 * array of the default concept categories
 	 */
 	public static final String[] DEFAULT_CONCEPT_CATEGORIES = new String[] {
-			UNITS_OF_MEASURE, SELLING_TYPE, FORUM_POST_TYPE };
+			UNITS_OF_MEASURE, SELLING_TYPE, FORUM_POST_TYPE, SEASON_NAME };
 
 	/**
 	 * gets the id of the field in this class representing the given concept

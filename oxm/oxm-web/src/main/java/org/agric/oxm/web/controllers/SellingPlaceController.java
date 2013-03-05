@@ -11,13 +11,16 @@ import org.agric.oxm.model.exception.SessionExpiredException;
 import org.agric.oxm.model.exception.ValidationException;
 import org.agric.oxm.server.ConceptCategoryAnnotation;
 import org.agric.oxm.server.DefaultConceptCategories;
+import org.agric.oxm.server.security.PermissionConstants;
 import org.agric.oxm.server.security.util.OXMSecurityUtil;
+import org.agric.oxm.server.service.Adminservice;
 import org.agric.oxm.server.service.ConceptService;
 import org.agric.oxm.server.service.SellingPlaceService;
 import org.agric.oxm.web.OXMUtil;
 import org.agric.oxm.web.WebConstants;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -35,7 +38,11 @@ public class SellingPlaceController {
 
 	@Autowired
 	private ConceptService conceptService;
+	
+	@Autowired
+	private Adminservice adminservice;
 
+	@Secured({ PermissionConstants.VIEW_SELLING_PLACE})
 	@RequestMapping(value = "/sellingplace/view/", method = RequestMethod.GET)
 	public ModelAndView viewSellingPlaceHandler(ModelMap model)
 			throws SessionExpiredException {
@@ -47,7 +54,8 @@ public class SellingPlaceController {
 		return new ModelAndView("viewSellingPlace", model);
 
 	}
-
+	
+	@Secured({ PermissionConstants.ADD_SELLING_PLACE })
 	@RequestMapping(value = "/sellingplace/add/", method = RequestMethod.GET)
 	public ModelAndView addSellingPlaceHandler(ModelMap model)
 			throws SessionExpiredException {
@@ -59,6 +67,7 @@ public class SellingPlaceController {
 
 	}
 
+	@Secured({ PermissionConstants.EDIT_SELLING_PLACE })
 	@RequestMapping(value = "/sellingplace/edit/{id}", method = RequestMethod.GET)
 	public ModelAndView editSellingPlaceHandler(ModelMap model,
 			@PathVariable("id") String sPlaceId) throws SessionExpiredException {
@@ -79,6 +88,7 @@ public class SellingPlaceController {
 
 	}
 
+	@Secured({ PermissionConstants.DELETE_SELLING_PLACE })
 	@RequestMapping(method = RequestMethod.POST, value = "/sellingplace/delete/")
 	public void deleteSellingPlaceHandler(
 			@RequestParam("selectedSellingPlace") List<String> ids,
@@ -104,6 +114,7 @@ public class SellingPlaceController {
 	}
 
 	private void prepareSellingPlaceModel(ModelMap model) {
+	    model.put("districts", adminservice.getDistricts());
 		try {
 			ConceptCategoryAnnotation typeRoleAnnotation = OXMUtil
 					.getConceptCategoryFieldAnnotation(
@@ -124,6 +135,7 @@ public class SellingPlaceController {
 		}
 	}
 
+	@Secured({ PermissionConstants.EDIT_SELLING_PLACE })
 	@RequestMapping(method = RequestMethod.POST, value = "/sellingplace/save/")
 	public ModelAndView saveSellingPlaceHandler(
 			@ModelAttribute("sellingplace") SellingPlace sellingPlace,

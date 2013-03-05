@@ -23,9 +23,6 @@ public class Price extends BaseData implements Comparable<Price> {
 	private Concept unitOfMeasure;
 
 	private Double price;
-	
-	//date .
-	// quanity.
 
 	private Date date;
 

@@ -2,7 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix='fn' uri='http://java.sun.com/jsp/jstl/functions'%>
-
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <div id="buttonStrip">
 	<div class="contextual" style="float: left;">
 		<a id="lnkAddPrice" class="uiButton" href="${baseUrl }/price/add/">Add</a>
@@ -27,6 +27,9 @@
 				<th>Type</th>
 				<th>Unit of Measure</th>
 				<th>Price</th>
+				<th>Date</th>
+				<th>Quantity</th>
+				
 			</tr>
 		</thead>
 		<tbody>
@@ -42,6 +45,8 @@
 							<td>${price.sellType.name }</td>
 							<td>${price.unitOfMeasure.name }</td>
 							<td>${price.price }</td>
+							<td><fmt:formatDate value="${price.date}" pattern="dd/MM/yyyy"/></td>
+							<td>${price.quantity }</td>
 						</tr>
 					</c:forEach>
 				</c:when>

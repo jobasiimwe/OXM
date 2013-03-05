@@ -40,6 +40,14 @@ form#concept input[type="text"] {
 					<label>Price</label>
 					<form:input path="price" cssClass="uiTextbox"/>
 				</p>
+				<p>
+					<label>Date</label>
+					<form:input path="date" cssClass="uiTextbox uiDateTextbox"/>
+				</p>
+				<p>
+					<label>Quantity</label>
+					<form:input path="quantity" cssClass="uiTextbox"/>
+				</p>
 			</div>
 		</div>
 		<div style="clear: both"></div>

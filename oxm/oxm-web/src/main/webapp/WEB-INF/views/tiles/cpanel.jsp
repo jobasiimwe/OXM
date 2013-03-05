@@ -1,5 +1,5 @@
-<%@ page language="java" 
-	contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 
 
 <div class="cpanel">
@@ -16,53 +16,64 @@
 				& Permissions</label> </a>
 	</div>
 	<div class="menu">
-				<a class="menu-lnk" id="lnkConcepts" title="Concepts"
-					href="${baseUrl }/concept/view/x"> <span class="concept-icon"></span><label
-					style="margin: 10px; font-size: 12px; font-weight: bold;">Concept</label>
-				</a>
-			</div>
-			<div class="menu">
-				<a class="menu-lnk" id="lnkConceptCategories"
-					title="Concept Categories" href="${baseUrl }/category/view/"> <span
-					class="conceptCategory-icon"></span><label
-					style="margin: 10px; font-size: 12px; font-weight: bold;">Concept
-						Category</label> </a>
-			</div>
-			<div class="menu">
-				<a class="menu-lnk" id="lnkCountries" title="Countries"
-					href="${baseUrl }/district/view/"> <span class="country-icon"></span><label
-					style="margin: 10px; font-size: 12px; font-weight: bold;">District</label>
-				</a>
-			</div>
-			<div class="menu">
-					<a class="menu-lnk" id="lnkCrops" title="Crops"
-						href="${baseUrl }/crop/view/page/1"> <span
-						class="crop-icon"></span><label
-						style="margin: 10px; font-size: 12px; font-weight: bold;">Crops</label>
-					</a>
-			</div>
-			<div class="menu">
-					<a class="menu-lnk" id="lnkSellingPlace" title="Selling Place"
-						href="${baseUrl }/sellingplace/view/"> <span
-						class="sellingplace-icon"></span><label
-						style="margin: 10px; font-size: 12px; font-weight: bold;">Selling Place</label>
-					</a>
-			</div>
-			<div class="menu">
-					<a class="menu-lnk" id="lnkProductionOrg" title="Production Organization"
-						href="${baseUrl }/pOrganization/view/"> <span
-						class="porganization-icon"></span><label
-						style="margin: 10px; font-size: 12px; font-weight: bold;">Production Org</label>
-					</a>
-			</div>
+		<a class="menu-lnk" id="lnkConcepts" title="Concepts"
+			href="${baseUrl }/concept/view/x"> <span class="concept-icon"></span><label
+			style="margin: 10px; font-size: 12px; font-weight: bold;">Concept</label>
+		</a>
+	</div>
+	<div class="menu">
+		<a class="menu-lnk" id="lnkConceptCategories"
+			title="Concept Categories" href="${baseUrl }/category/view/"> <span
+			class="conceptCategory-icon"></span><label
+			style="margin: 10px; font-size: 12px; font-weight: bold;">Concept
+				Category</label> </a>
+	</div>
+	<div class="menu">
+		<a class="menu-lnk" id="lnkCountries" title="Countries"
+			href="${baseUrl }/district/view/"> <span class="country-icon"></span><label
+			style="margin: 10px; font-size: 12px; font-weight: bold;">District</label>
+		</a>
+	</div>
+	<div class="menu">
+		<a class="menu-lnk" id="lnkCrops" title="Crops"
+			href="${baseUrl }/crop/view/page/1"> <span class="crop-icon"></span><label
+			style="margin: 10px; font-size: 12px; font-weight: bold;">Crops</label>
+		</a>
+	</div>
+	<div class="menu">
+		<a class="menu-lnk" id="lnkSellingPlace" title="Selling Place"
+			href="${baseUrl }/sellingplace/view/"> <span
+			class="sellingplace-icon"></span><label
+			style="margin: 10px; font-size: 12px; font-weight: bold;">Selling
+				Place</label> </a>
+	</div>
+	<div class="menu">
+		<a class="menu-lnk" id="lnkProductionOrg"
+			title="Production Organization"
+			href="${baseUrl }/pOrganization/view/"> <span
+			class="porganization-icon"></span><label
+			style="margin: 10px; font-size: 12px; font-weight: bold;">Production
+				Org</label> </a>
+	</div>
 </div>
 <div style="clear: both;"></div>
 <div class="cpanel">
 	<div class="menu">
-					<a class="menu-lnk" id="lnkPrice" title="Price"
-						href="${baseUrl }/price/view/1"> <span
-						class="price-icon"></span><label
-						style="margin: 10px; font-size: 12px; font-weight: bold;">Prices</label>
-					</a>
-			</div>
+		<a class="menu-lnk" id="lnkPrice" title="Price"
+			href="${baseUrl }/price/view/1"> <span class="price-icon"></span><label
+			style="margin: 10px; font-size: 12px; font-weight: bold;">Prices</label>
+		</a>
+	</div>
+	<div class="menu">
+		<a class="menu-lnk" id="lnkSeason" title="Season"
+			href="${baseUrl }/season/view/"> <span class="season-icon"></span><label
+			style="margin: 10px; font-size: 12px; font-weight: bold;">Season</label>
+		</a>
+	</div>
+	<div class="menu">
+		<a class="menu-lnk" id="lnkfInstition" title="Financial Institution"
+			href="${baseUrl }/fInstitution/view/"> <span class="fInstitution-icon"></span><label
+			style="margin: 10px; font-size: 12px; font-weight: bold;">Financial Institution</label>
+		</a>
+	</div>
 </div>
