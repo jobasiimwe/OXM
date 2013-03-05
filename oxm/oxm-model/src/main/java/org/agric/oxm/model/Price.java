@@ -21,6 +21,9 @@ public class Price extends BaseData {
 	private Concept unitOfMeasure;
 
 	private Double price;
+	
+	//date .
+	// quanity.
 
 	public Price() {
 		super();

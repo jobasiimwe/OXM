@@ -50,9 +50,5 @@
 					<span>Home</span> </a>
 			</div>
 		</div>
-		<h3>
-			<a href="#">Close All</a>
-		</h3>
-		<div></div>
 	</div>
 </div>
