@@ -17,13 +17,12 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.Lob;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
-
-import org.apache.commons.lang.StringUtils;
 
 @Entity
 @Table(name = "users")
@@ -42,19 +41,27 @@ public class User extends BaseData implements Comparable<User> {
 
 	private String salt;
 
-	private String firstName;
-
-	private String lastName;
+	private String name;
 
 	private Gender gender = Gender.UNKNOWN;
 
 	private Date dateOfBirth;
+
+	private String address;
 
 	private String phone1;
 
 	private String phone2;
 
 	private List<Concept> userTypes;
+
+	private SubCounty subCounty;
+	private Parish parish;
+	private Village village;
+	private GisCordinate gisCordinates;
+	private Double landSize;
+	private List<LandUse> landUses;
+	private ProducerOrganisation producerOrganisation;
 
 	private byte[] profilePicture = new byte[1];
 
@@ -148,22 +155,13 @@ public class User extends BaseData implements Comparable<User> {
 		this.salt = salt;
 	}
 
-	@Column(name = "first_name", nullable = false)
-	public String getFirstName() {
-		return firstName;
+	@Column(name = "name", nullable = false)
+	public String getName() {
+		return name;
 	}
 
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
-	}
-
-	@Column(name = "last_name", nullable = false)
-	public String getLastName() {
-		return lastName;
-	}
-
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	@Enumerated(EnumType.ORDINAL)
@@ -184,6 +182,15 @@ public class User extends BaseData implements Comparable<User> {
 
 	public void setDateOfBirth(Date dateOfBirth) {
 		this.dateOfBirth = dateOfBirth;
+	}
+
+	@Column(name = "address", nullable = true)
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
 	}
 
 	@Column(name = "phone1", nullable = true)
@@ -224,6 +231,96 @@ public class User extends BaseData implements Comparable<User> {
 		this.profilePicture = profilePicture;
 	}
 
+	@ManyToOne
+	@JoinColumn(name = "gis_cordinates_id", nullable = true)
+	public GisCordinate getGisCordinates() {
+		return gisCordinates;
+	}
+
+	public void setGisCordinates(GisCordinate gisCordinates) {
+		this.gisCordinates = gisCordinates;
+	}
+
+	@ManyToOne
+	@JoinColumn(name = "subcounty_id", nullable = true)
+	public SubCounty getSubCounty() {
+		return subCounty;
+	}
+
+	public void setSubCounty(SubCounty subCounty) {
+		this.subCounty = subCounty;
+	}
+
+	@ManyToOne
+	@JoinColumn(name = "parish_id", nullable = true)
+	public Parish getParish() {
+		return parish;
+	}
+
+	public void setParish(Parish parish) {
+		this.parish = parish;
+	}
+
+	@ManyToOne
+	@JoinColumn(name = "village_id", nullable = true)
+	public Village getVillage() {
+		return village;
+	}
+
+	public void setVillage(Village village) {
+		this.village = village;
+	}
+
+	@Column(name = "land_size", nullable = true)
+	public Double getLandSize() {
+		return landSize;
+	}
+
+	public void setLandSize(Double landSize) {
+		this.landSize = landSize;
+	}
+
+	public void addLand(LandUse landUse) {
+		if (landUse == null) {
+			return;
+		}
+
+		if (this.getLandUses() == null) {
+			this.setLandUses(new ArrayList<LandUse>());
+		}
+
+		this.getLandUses().add(landUse);
+		landUse.setProducer(this);
+	}
+
+	public void removeLand(LandUse landUse) {
+		if (landUse == null || this.getLandUses() == null) {
+			return;
+		}
+
+		this.getLandUses().remove(landUse);
+	}
+
+	@OneToMany(mappedBy = "producer", cascade = { CascadeType.ALL }, orphanRemoval = true)
+	public List<LandUse> getLandUses() {
+		return landUses;
+	}
+
+	public void setLandUses(List<LandUse> landUses) {
+		this.landUses = landUses;
+	}
+
+	@ManyToOne
+	@JoinColumn(name = "producer_organisation_id", nullable = true)
+	public ProducerOrganisation getProducerOrganisation() {
+		return producerOrganisation;
+	}
+
+	public void setProducerOrganisation(
+			ProducerOrganisation producerOrganisation) {
+		this.producerOrganisation = producerOrganisation;
+	}
+
 	public boolean hasNewPassword() {
 		return (clearTextPassword != null && clearTextPassword.trim().length() > 0);
 	}
@@ -255,28 +352,28 @@ public class User extends BaseData implements Comparable<User> {
 		return false;
 	}
 
-	@Transient
-	public String getFullName() {
-		String name = "";
-		if (!StringUtils.isEmpty(this.getFirstName())
-				&& !StringUtils.isBlank(this.getFirstName()))
-			name = this.getFirstName();
-
-		if (!StringUtils.isEmpty(this.getLastName())
-				&& !StringUtils.isBlank(this.getLastName()))
-			name += StringUtils.isEmpty(name) ? this.getLastName() : " "
-					+ this.getLastName();
-
-		name = name.trim();
-
-		return name;
-	}
-
 	@Override
 	public int compareTo(User o) {
 		if (this.getUsername() == null || o.getUsername() == null)
 			return 0;
 		return this.username.compareToIgnoreCase(o.username);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		User other = (User) obj;
+		if (super.getId() == null) {
+			if (other.getId() != null)
+				return false;
+		} else if (!super.getId().equals(other.getId()))
+			return false;
+		return true;
 	}
 
 }

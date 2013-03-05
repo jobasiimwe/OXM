@@ -4,6 +4,17 @@
 <%@ taglib prefix='fn' uri='http://java.sun.com/jsp/jstl/functions'%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 
+<%@ taglib prefix="oxmBreadcrambs"
+	tagdir="/WEB-INF/tags/breadcramblinks"%>
+	
+
+<div style="margin: 5px; width: 100%;">
+	<label class="uiLabel">You are here >> </label>
+	<oxmBreadcrambs:cpanel />
+	>
+	<oxmBreadcrambs:croplist />
+</div>
+
 <div id="buttonStrip">
 	<div class="contextual" style="float: left;">
 		<a id="btnAddCrop" class="uiButton" href="${baseUrl }/crop/add/">Add</a>
@@ -22,8 +33,7 @@
 		<thead>
 			<tr>
 				<th><input type="checkbox" name="cbxSelectAllItems"
-					id="cbxSelectAllItems" />
-				</th>
+					id="cbxSelectAllItems" /></th>
 				<th>Name</th>
 				<th>Inputs</th>
 				<th>seed Varieties</th>
@@ -38,13 +48,12 @@
 					<c:forEach var="crop" items="${crops }">
 						<tr id="${crop.id }">
 							<td><input type="checkbox" name="selectedCrop"
-								value="${crop.id }" />
-							</td>
+								value="${crop.id }" /></td>
 							<td>${crop.name }</td>
-							<td>${fn:length(crop.input.concepts) }</td>
-							<td>${fn:length(crop.seedVariation.concepts) }</td>
-							<td>${fn:length(crop.ploughingMethod.concepts) }</td>
-							<td>${fn:length(crop.interCropingType.concepts) }</td>
+							<td>${fn:length(crop.inputs) }</td>
+							<td>${fn:length(crop.seedVarieties) }</td>
+							<td>${fn:length(crop.ploughingMethods) }</td>
+							<td>${fn:length(crop.interCroppingTypes) }</td>
 							<td>${fn:length(crop.unitsOfMeasure)}</td>
 						</tr>
 					</c:forEach>

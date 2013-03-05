@@ -4,14 +4,20 @@
 <%@ taglib prefix='fn' uri='http://java.sun.com/jsp/jstl/functions'%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 
+<div style="margin: 5px; width: 100%;">
+	
+	<a title="Reload Crops" href="${baseUrl }/crop/view/page/1">Crops</a>
+</div>
 
 <div>
 	<div style="float: left">
-		<form:form method="post" action="${baseUrl }/concept/view/" commandName="conceptCategory" id="conceptCategoryForm">
+		<form:form method="post" action="${baseUrl }/concept/view/"
+			commandName="conceptCategory" id="conceptCategoryForm">
 			<label class="uiLabel">Concept in Category:</label>
 			<form:select id="category" path="id" cssClass="uiDropdown"
 				itemLabel="name" itemValue="id" items="${conceptcategories }" />
-			<input type="submit" class="uiButton" id="btnLoadConceptCategoryConcepts" value="Load" />
+			<input type="submit" class="uiButton"
+				id="btnLoadConceptCategoryConcepts" value="Load" />
 		</form:form>
 	</div>
 	<div style="float: right">
@@ -41,8 +47,7 @@
 		<thead>
 			<tr>
 				<th><input type="checkbox" name="cbxSelectAllItems"
-					id="cbxSelectAllItems" />
-				</th>
+					id="cbxSelectAllItems" /></th>
 				<th>Name</th>
 				<th>Description</th>
 			</tr>
@@ -53,8 +58,7 @@
 					<c:forEach var="concept" items="${concepts }">
 						<tr id="${concept.id }">
 							<td><input type="checkbox" name="selectedConcepts"
-								value="${concept.id }" />
-							</td>
+								value="${concept.id }" /></td>
 							<td>${concept.name }</td>
 							<td>${concept.description }</td>
 						</tr>

@@ -3,13 +3,13 @@ package org.agric.oxm.server.service.impl;
 import java.util.List;
 
 import org.agric.oxm.model.LandUse;
-import org.agric.oxm.model.Producer;
 import org.agric.oxm.model.RecordStatus;
+import org.agric.oxm.model.User;
 import org.agric.oxm.model.exception.ValidationException;
 import org.agric.oxm.server.dao.LandUseDAO;
 import org.agric.oxm.server.security.PermissionConstants;
 import org.agric.oxm.server.service.LandUseService;
-import org.agric.oxm.server.service.ProducerService;
+import org.agric.oxm.server.service.UserService;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
@@ -30,7 +30,7 @@ public class LandUseServiceImpl implements LandUseService {
 	private LandUseDAO landUseDAO;
 
 	@Autowired
-	private ProducerService producerService;
+	private UserService userService;
 
 	@Secured({ PermissionConstants.ADD_LAND_USE,
 			PermissionConstants.EDIT_LAND_USE })
@@ -51,16 +51,16 @@ public class LandUseServiceImpl implements LandUseService {
 		if (null == landUse.getSize())
 			throw new ValidationException("Size can not be null");
 
-		Producer producer = producerService.getProducerById(landUse
+		User user = userService.getUserById(landUse
 				.getProducer().getId());
 
-		if (producer.getLandSize() == null)
+		if (user.getLandSize() == null)
 			throw new ValidationException("Land size for "
-					+ producer.getFullName() + " is blank");
+					+ user.getName() + " is blank");
 
 		Double landUseSum = 0.0;
-		if (producer.getLandUses() != null) {
-			for (LandUse l : producer.getLandUses()) {
+		if (user.getLandUses() != null) {
+			for (LandUse l : user.getLandUses()) {
 				if (StringUtils.isNotEmpty(landUse.getId())) {
 					if (l.equals(landUse))
 						continue;
@@ -70,10 +70,10 @@ public class LandUseServiceImpl implements LandUseService {
 		}
 
 		landUseSum += landUse.getSize();
-		if (landUseSum > producer.getLandSize())
+		if (landUseSum > user.getLandSize())
 			throw new ValidationException("Total land in use " + landUseSum
-					+ " can not be greater than " + producer.getFullName()
-					+ "'s total land " + producer.getLandSize());
+					+ " can not be greater than " + user.getName()
+					+ "'s total land " + user.getLandSize());
 	}
 
 	@Secured({ PermissionConstants.VIEW_LAND_USE })

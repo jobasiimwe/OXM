@@ -1,10 +1,8 @@
 package org.agric.oxm.web.controllers;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.agric.oxm.model.Concept;
-import org.agric.oxm.model.ConceptCategory;
 import org.agric.oxm.model.Crop;
 import org.agric.oxm.model.search.CropSearchParameters;
 import org.agric.oxm.server.ConceptCategoryAnnotation;
@@ -94,42 +92,39 @@ public class CropController {
 	 */
 	private void prepareCropModel(ModelMap modelMap) {
 
-		List<Crop> crops = cropService.getCrops();
-
-		List<ConceptCategory> inputConceptCategories = new ArrayList<ConceptCategory>();
-		List<ConceptCategory> seedVariationConceptCategories = new ArrayList<ConceptCategory>();
-		List<ConceptCategory> ploughingMethodConceptCategories = new ArrayList<ConceptCategory>();
-		List<ConceptCategory> interCropingTypeConceptCategories = new ArrayList<ConceptCategory>();
-
-		for (Crop crop : crops) {
-			if (crop.getInput() != null)
-				inputConceptCategories.add(crop.getInput());
-
-			if (crop.getSeedVariation() != null)
-				seedVariationConceptCategories.add(crop.getSeedVariation());
-
-			if (crop.getPloughingMethod() != null)
-				ploughingMethodConceptCategories.add(crop.getPloughingMethod());
-
-			if (crop.getInterCropingType() != null)
-				interCropingTypeConceptCategories.add(crop.getInput());
-		}
-
-		List<Concept> inputs = conceptService
-				.getConceptsByCategories(inputConceptCategories);
-		List<Concept> seedVariations = conceptService
-				.getConceptsByCategories(seedVariationConceptCategories);
-		List<Concept> ploughingMethods = conceptService
-				.getConceptsByCategories(ploughingMethodConceptCategories);
-		List<Concept> interCropingTypes = conceptService
-				.getConceptsByCategories(interCropingTypeConceptCategories);
-
-		modelMap.put("inputs", inputs);
-		modelMap.put("seedVariations", seedVariations);
-		modelMap.put("ploughingMethods", ploughingMethods);
-		modelMap.put("interCropingTypes", interCropingTypes);
-
 		try {
+
+			List<Concept> cropInputs = conceptService
+					.getConceptsByCategoryAnnotation(OXMUtil
+							.getConceptCategoryFieldAnnotation(
+									DefaultConceptCategories.class,
+									DefaultConceptCategories.CROP_INPUTS));
+			modelMap.put("cropInputs", cropInputs);
+
+			List<Concept> interCropingTypes = conceptService
+					.getConceptsByCategoryAnnotation(OXMUtil
+							.getConceptCategoryFieldAnnotation(
+									DefaultConceptCategories.class,
+									DefaultConceptCategories.INTER_CROPING_TYPES));
+			modelMap.put("interCropingTypes", interCropingTypes);
+
+			List<Concept> ploughingMethods = conceptService
+					.getConceptsByCategoryAnnotation(OXMUtil
+							.getConceptCategoryFieldAnnotation(
+									DefaultConceptCategories.class,
+									DefaultConceptCategories.PLOUGHING_METHODS));
+			modelMap.put("ploughingMethods", ploughingMethods);
+
+			ConceptCategoryAnnotation seedVarietyCategoryAnnotation = OXMUtil
+					.getConceptCategoryFieldAnnotation(
+							DefaultConceptCategories.class,
+							DefaultConceptCategories.SEED_VARIETIES);
+			if (seedVarietyCategoryAnnotation != null) {
+				List<Concept> seedVarieties = conceptService
+						.getConceptsByCategoryAnnotation(seedVarietyCategoryAnnotation);
+				modelMap.put("seedVarieties", seedVarieties);
+			}
+
 			ConceptCategoryAnnotation unitsOfMeasureCategoryAnnotation = OXMUtil
 					.getConceptCategoryFieldAnnotation(
 							DefaultConceptCategories.class,
@@ -366,47 +361,14 @@ public class CropController {
 
 				exisitingCrop = cropService.getCropById(crop.getId());
 
-				if (!exisitingCrop.getName().equals(crop.getName())) {
-					exisitingCrop.setName(crop.getName());
-					exisitingCrop.getInput()
-							.setName(crop.getName() + " Imputs");
-					exisitingCrop.getInput().setDescription(
-							"Inputs for " + crop.getName());
-
-					exisitingCrop.getPloughingMethod().setName(
-							crop.getName() + " Ploughing Methods");
-					exisitingCrop.getInput().setDescription(
-							"Ploughing Methods for " + crop.getName());
-
-					exisitingCrop.getSeedVariation().setName(
-							crop.getName() + " Seed Varieties");
-					exisitingCrop.getSeedVariation().setDescription(
-							"Seed Varieties for " + crop.getName());
-
-					exisitingCrop.getInterCropingType().setName(
-							crop.getName() + " Inter-croping types");
-					exisitingCrop.getInterCropingType().setDescription(
-							"Inter-croping types for " + crop.getName());
-
-					exisitingCrop.setInterCropingType(new ConceptCategory(crop
-							.getName() + " Inter-croping types",
-							"Inter-croping types for " + crop.getName()));
-				}
+				exisitingCrop.setInputs(crop.getInputs());
+				exisitingCrop.setSeedVarieties(crop.getSeedVarieties());
+				exisitingCrop.setInterCroppingTypes(crop
+						.getInterCroppingTypes());
 				exisitingCrop.setUnitsOfMeasure(crop.getUnitsOfMeasure());
 				exisitingCrop.setRecordStatus(crop.getRecordStatus());
 			} else {
 				exisitingCrop.setId(null);
-				exisitingCrop.setInput(new ConceptCategory(crop.getName()
-						+ " Imputs", "Inputs for " + crop.getName()));
-				exisitingCrop.setPloughingMethod(new ConceptCategory(crop
-						.getName() + " Ploughing Methods",
-						"Ploughing Methods for " + crop.getName()));
-				exisitingCrop.setSeedVariation(new ConceptCategory(crop
-						.getName() + " Seed Varieties", "Seed Varieties "
-						+ crop.getName()));
-				exisitingCrop.setInterCropingType(new ConceptCategory(crop
-						.getName() + " Inter-croping types",
-						"Inter-croping types for " + crop.getName()));
 			}
 
 			cropService.save(exisitingCrop);

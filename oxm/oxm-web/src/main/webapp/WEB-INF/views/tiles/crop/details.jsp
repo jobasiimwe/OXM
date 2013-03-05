@@ -5,51 +5,25 @@
 <%@ taglib prefix='fn' uri='http://java.sun.com/jsp/jstl/functions'%>
 
 <%@ taglib prefix="oxmTags" tagdir="/WEB-INF/tags"%>
+<%@ taglib prefix="oxmBreadcrambs"
+	tagdir="/WEB-INF/tags/breadcramblinks"%>
+	
 <div>
 	<div style="margin: 5px; width: 100%;">
-		<label class="uiLabel">Crops >> </label><a title="Back to Crops"
-			href="${baseUrl }/crop/view/page/1">Back</a>
+		<label class="uiLabel">You are here > </label>
+		<oxmBreadcrambs:cpanel />
+		>
+		<oxmBreadcrambs:croplist />
 	</div>
-	<oxmTags:conceptcategory conceptCategory="${crop.input }" />
-	<oxmTags:conceptcategory conceptCategory="${crop.seedVariation }" />
-	<oxmTags:conceptcategory conceptCategory="${crop.ploughingMethod }" />
-	<oxmTags:conceptcategory conceptCategory="${crop.interCropingType }" />
 
-	<div class="box">
-		<table class="recordTable" width="100%" cellpadding="0"
-			cellspacing="0">
-			<caption>
-				<b>Units of Measure for ${crop.name }</b>
-			</caption>
-			<thead>
-				<tr>
-					<th><input type="checkbox" name="cbxSelectAllItems"
-						id="cbxSelectAllItems" /></th>
-					<th>Name</th>
-					<th>Description</th>
-				</tr>
-			</thead>
-			<tbody>
-				<c:choose>
-					<c:when
-						test="${not empty crop.unitsOfMeasure  && fn:length(crop.unitsOfMeasure) > 0}">
-						<c:forEach var="concept" items="${crop.unitsOfMeasure }">
-							<tr id="${concept.id }">
-								<td><input type="checkbox" name="selectedConcepts"
-									value="${concept.id }" /></td>
-								<td>${concept.name }</td>
-								<td>${concept.description }</td>
-							</tr>
-						</c:forEach>
-					</c:when>
-					<c:otherwise>
-						<tr>
-							<td colspan="3"><span style="color: red;">none found</span>
-							</td>
-						</tr>
-					</c:otherwise>
-				</c:choose>
-			</tbody>
-		</table>
-	</div>
+	<oxmTags:printconcepts listHeader="Inputs" concepts="${crop.inputs }" />
+	<oxmTags:printconcepts listHeader="Seed Varieties"
+		concepts="${crop.seedVarieties }" />
+	<oxmTags:printconcepts listHeader="Ploughing methods"
+		concepts="${crop.ploughingMethods }" />
+	<oxmTags:printconcepts listHeader="Inter Cropping Type"
+		concepts="${crop.interCroppingTypes }" />
+	<oxmTags:printconcepts listHeader="Units of Measure"
+		concepts="${crop.unitsOfMeasure }" />
+
 </div>
