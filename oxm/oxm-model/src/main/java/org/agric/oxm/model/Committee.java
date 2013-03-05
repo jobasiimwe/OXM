@@ -18,13 +18,13 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "committee")
-public class Committee extends BaseData {
+public class Committee extends BaseData implements Comparable<Committee> {
 
 	private String name;
 
 	private List<CommitteeMember> committeeMembers;
 
-	private ProductionOrganisation productionOrganisation;
+	private ProducerOrganisation producerOrganisation;
 
 	public Committee() {
 
@@ -69,13 +69,43 @@ public class Committee extends BaseData {
 	}
 
 	@ManyToOne
-	@JoinColumn(name = "production_organisation_id", nullable = false)
-	public ProductionOrganisation getProductionOrganisation() {
-		return productionOrganisation;
+	@JoinColumn(name = "producer_organisation_id", nullable = false)
+	public ProducerOrganisation getProducerOrganisation() {
+		return producerOrganisation;
 	}
 
-	public void setProductionOrganisation(
-			ProductionOrganisation productionOrganisation) {
-		this.productionOrganisation = productionOrganisation;
+	public void setProducerOrganisation(
+			ProducerOrganisation producerOrganisation) {
+		this.producerOrganisation = producerOrganisation;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((getId() == null) ? 0 : getId().hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Committee other = (Committee) obj;
+		if (super.getId() == null) {
+			if (other.getId() != null)
+				return false;
+		} else if (!super.getId().equals(other.getId()))
+			return false;
+		return true;
+	}
+
+	@Override
+	public int compareTo(Committee o) {
+		return this.getName().compareToIgnoreCase(o.getName());
 	}
 }

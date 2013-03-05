@@ -16,7 +16,7 @@ import javax.persistence.TemporalType;
 
 @Entity
 @Table(name = "post")
-public class Post extends BaseData {
+public class Post extends BaseData implements Comparable<Post> {
 
 	private User owner;
 
@@ -122,6 +122,36 @@ public class Post extends BaseData {
 		}
 
 		this.getComments().remove(comment);
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((getId() == null) ? 0 : getId().hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Post other = (Post) obj;
+		if (super.getId() == null) {
+			if (other.getId() != null)
+				return false;
+		} else if (!super.getId().equals(other.getId()))
+			return false;
+		return true;
+	}
+
+	@Override
+	public int compareTo(Post o) {
+		return this.getDatePosted().compareTo(o.getDatePosted());
 	}
 
 }

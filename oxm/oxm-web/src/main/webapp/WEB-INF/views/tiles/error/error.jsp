@@ -2,6 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix='fn' uri='http://java.sun.com/jsp/jstl/functions'%>
+
 <style>
 table.recordTable tr td {
 	border-top: 1px solid #EEEEEE;
@@ -19,12 +20,7 @@ tr.selectedRow td {
 <script type="text/javascript">
 	$('.uiButton').button();
 </script>
-	<!--<div style="width:450px; height: 60px; float: left; background-color: #C60A11; margin-left: 25%;">
-		<span class="error-icon"></span>
-		<div style="margin: 20px 0px 0px 50px; font-size: 15px; color: #FFF;">
-			<c:if test="${not empty errorMsg }">
-				<c:out value="${errorMsg }"></c:out>
-			</c:if>
-		</div>
-			
-	</div>-->
+
+<div id="navcontainer" style="width: 100px;">
+	<a id="btnHome" class="uiButton" href="${baseUrl }/">Home</a>
+</div>

@@ -1,10 +1,7 @@
 <%@ page language="java" 
 	contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix='fn' uri='http://java.sun.com/jsp/jstl/functions'%>
 
-<c:set var="baseUrl"
-	value="${fn:replace(pageContext.request.requestURL, pageContext.request.requestURI, pageContext.request.contextPath)}" />
+
 <div class="cpanel">
 	<div class="menu">
 		<a id="lnkUsers" title="Users" href="${baseUrl }/user/view"> <span

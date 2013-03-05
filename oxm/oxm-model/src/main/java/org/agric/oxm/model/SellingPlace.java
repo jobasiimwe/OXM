@@ -1,42 +1,104 @@
 package org.agric.oxm.model;
 
-import javax.persistence.CascadeType;
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
+import javax.persistence.UniqueConstraint;
+
+import org.apache.commons.lang.StringUtils;
 
 @Entity
 @Table(name = "selling_place")
-public class SellingPlace extends BaseData {
+public class SellingPlace extends BaseData implements Comparable<SellingPlace> {
 
-    private String name;
+	private String name;
 
-    private Concept type;
+	private District district;
 
-    public SellingPlace() {
-	super();
-    }
+	private List<Concept> sellingTypes;
 
-    @Column(name = "name", nullable = false)
-    public String getName() {
-        return name;
-    }
+	public SellingPlace() {
+		super();
+	}
 
-    public void setName(String name) {
-        this.name = name;
-    }
+	@Column(name = "name", nullable = false)
+	public String getName() {
+		return name;
+	}
 
-    @ManyToOne(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
-    @JoinColumn(name = "type_id", nullable = false)
-    public Concept getType() {
-        return type;
-    }
+	public void setName(String name) {
+		this.name = name;
+	}
 
-    public void setType(Concept type) {
-        this.type = type;
-    }
-    
-    
+	@ManyToOne
+	@JoinColumn(name = "district_id", nullable = true)
+	public District getDistrict() {
+		return district;
+	}
+
+	public void setDistrict(District district) {
+		this.district = district;
+	}
+
+	@ManyToMany
+	@JoinTable(uniqueConstraints = @UniqueConstraint(name = "uk_place_selling_types", columnNames = {
+			"selling_place_id", "concept_id" }), name = "place_selling_types", joinColumns = @JoinColumn(name = "selling_place_id", unique = false), inverseJoinColumns = @JoinColumn(name = "concept_id", unique = false))
+	public List<Concept> getSellingTypes() {
+		return sellingTypes;
+	}
+
+	public void setSellingTypes(List<Concept> types) {
+		this.sellingTypes = types;
+	}
+
+	@Transient
+	public String getSellingTypesString() {
+		String sellingTypesString = "";
+		for (Concept concept : getSellingTypes()) {
+			if (StringUtils.isEmpty(sellingTypesString))
+				sellingTypesString = concept.getName();
+			else
+				sellingTypesString += ", " + concept.getName();
+		}
+
+		return sellingTypesString;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((getId() == null) ? 0 : getId().hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		SellingPlace other = (SellingPlace) obj;
+		if (super.getId() == null) {
+			if (other.getId() != null)
+				return false;
+		} else if (!super.getId().equals(other.getId()))
+			return false;
+		return true;
+	}
+
+	@Override
+	public int compareTo(SellingPlace o) {
+		return this.getName().compareTo(o.getName());
+	}
+
 }

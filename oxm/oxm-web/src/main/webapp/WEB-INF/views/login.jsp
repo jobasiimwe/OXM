@@ -36,7 +36,7 @@
 						<input name="j_username" id="j_username" type="text"
 							class="uiTextbox" />
 					</div>
-					<div>
+					<div style="display: none;">
 						<input name="rememberme" type="checkbox" class="uiCheckbox"
 							value="Remember Me" /> <label class="uiLabel">Keep me
 							logged in</label>

@@ -5,7 +5,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
 
-import org.agric.oxm.model.ProductionOrganisation;
+import org.agric.oxm.model.ProducerOrganisation;
 import org.agric.oxm.model.exception.SessionExpiredException;
 import org.agric.oxm.model.exception.ValidationException;
 import org.agric.oxm.server.security.PermissionConstants;
@@ -42,7 +42,7 @@ public class ProductionOrganizationController {
     @RequestMapping(value = "/pOrganization/add/", method = RequestMethod.GET)
     public ModelAndView addProdnOrgHandler(ModelMap model) throws SessionExpiredException {
 	WebConstants.loadLoggedInUserProfile(OXMSecurityUtil.getLoggedInUser(), model);
-	model.put("pOrganization", new ProductionOrganisation());
+	model.put("pOrganization", new ProducerOrganisation());
 	return new ModelAndView("formProductionOrg", model);
 
     }
@@ -53,7 +53,7 @@ public class ProductionOrganizationController {
 	    throws SessionExpiredException {
 	WebConstants.loadLoggedInUserProfile(OXMSecurityUtil.getLoggedInUser(), model);
 
-	ProductionOrganisation pOrg = prdnOrgService.getProductionOrganisationById(pOrgId);
+	ProducerOrganisation pOrg = prdnOrgService.getProductionOrganisationById(pOrgId);
 
 	if (pOrg != null) {
 	    model.put("pOrganization", pOrg);
@@ -93,10 +93,10 @@ public class ProductionOrganizationController {
     @Secured({ PermissionConstants.PERM_VIEW_ADMINISTRATION })
     @RequestMapping(method = RequestMethod.POST, value = "/pOrganization/save/")
     public ModelAndView saveSellingPlaceHandler(
-	    @ModelAttribute("pOrganization") ProductionOrganisation pOrganization,
+	    @ModelAttribute("pOrganization") ProducerOrganisation pOrganization,
 			ModelMap model) throws SessionExpiredException {
 
-	ProductionOrganisation existingPOrganization = pOrganization;
+	ProducerOrganisation existingPOrganization = pOrganization;
 
 	if (StringUtils.isNotEmpty(pOrganization.getId())) {
 	    existingPOrganization = prdnOrgService.getProductionOrganisationById(pOrganization

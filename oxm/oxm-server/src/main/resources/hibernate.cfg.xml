@@ -26,12 +26,12 @@
   <mapping class="org.agric.oxm.model.Position"/>
   <mapping class="org.agric.oxm.model.Post"/>
   <mapping class="org.agric.oxm.model.Price"/>
-  <mapping class="org.agric.oxm.model.Producer"/>
-  <mapping class="org.agric.oxm.model.ProductionOrganisation"/>
+  <mapping class="org.agric.oxm.model.ProducerOrganisation"/>
   <mapping class="org.agric.oxm.model.Publication"/>
   <mapping class="org.agric.oxm.model.Role"/>
   <mapping class="org.agric.oxm.model.Season"/>
   <mapping class="org.agric.oxm.model.SellingPlace"/>
+  <mapping class="org.agric.oxm.model.StaffMember"/>
   <mapping class="org.agric.oxm.model.SubCounty"/>
   <mapping class="org.agric.oxm.model.User"/>
   <mapping class="org.agric.oxm.model.Village"/>

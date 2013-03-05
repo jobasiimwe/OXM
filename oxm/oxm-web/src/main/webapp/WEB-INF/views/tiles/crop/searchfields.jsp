@@ -44,9 +44,6 @@ border: 1px solid #a4c3ca;*/
 -->
 </style>
 
-<c:set var="baseUrl"
-	value="${fn:replace(pageContext.request.requestURL, pageContext.request.requestURI, pageContext.request.contextPath)}" />
-
 <div class="searchform group">
 	<form:form action="${baseUrl}/settings/courses/search"
 		commandName="coursesearch">

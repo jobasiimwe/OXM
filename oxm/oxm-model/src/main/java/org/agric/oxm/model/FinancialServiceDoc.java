@@ -13,47 +13,78 @@ import javax.persistence.TemporalType;
 
 @Entity
 @Table(name = "financial_service_doc")
-public class FinancialServiceDoc extends BaseData {
-    
-    private FinancialInstitution financialInstitution;
-    
-    private Date dateUploaded;
-    
-    private Publication publication;
+public class FinancialServiceDoc extends BaseData implements
+		Comparable<FinancialServiceDoc> {
 
-    public FinancialServiceDoc() {
-	super();
-    }
+	private FinancialInstitution financialInstitution;
 
-    @ManyToOne
-    @JoinColumn(name = "financial_institutution_id", nullable = false)
-    public FinancialInstitution getFinancialInstitution() {
-        return financialInstitution;
-    }
+	private Date dateUploaded;
 
-    public void setFinancialInstitution(FinancialInstitution financialInstitution) {
-        this.financialInstitution = financialInstitution;
-    }
+	private Publication publication;
 
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "date_uploaded", nullable = false)
-    public Date getDateUploaded() {
-        return dateUploaded;
-    }
+	public FinancialServiceDoc() {
+		super();
+	}
 
-    public void setDateUploaded(Date dateUploaded) {
-        this.dateUploaded = dateUploaded;
-    }
+	@ManyToOne
+	@JoinColumn(name = "financial_institutution_id", nullable = false)
+	public FinancialInstitution getFinancialInstitution() {
+		return financialInstitution;
+	}
 
-    @ManyToOne(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
-    @JoinColumn(name = "publication_id", nullable = false)
-    public Publication getPublication() {
-        return publication;
-    }
+	public void setFinancialInstitution(
+			FinancialInstitution financialInstitution) {
+		this.financialInstitution = financialInstitution;
+	}
 
-    public void setPublication(Publication publication) {
-        this.publication = publication;
-    }
-    
-    
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "date_uploaded", nullable = false)
+	public Date getDateUploaded() {
+		return dateUploaded;
+	}
+
+	public void setDateUploaded(Date dateUploaded) {
+		this.dateUploaded = dateUploaded;
+	}
+
+	@ManyToOne(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
+	@JoinColumn(name = "publication_id", nullable = false)
+	public Publication getPublication() {
+		return publication;
+	}
+
+	public void setPublication(Publication publication) {
+		this.publication = publication;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((getId() == null) ? 0 : getId().hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		FinancialServiceDoc other = (FinancialServiceDoc) obj;
+		if (super.getId() == null) {
+			if (other.getId() != null)
+				return false;
+		} else if (!super.getId().equals(other.getId()))
+			return false;
+		return true;
+	}
+
+	@Override
+	public int compareTo(FinancialServiceDoc o) {
+		return this.getDateUploaded().compareTo(o.getDateUploaded());
+	}
+
 }

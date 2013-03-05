@@ -9,71 +9,88 @@ import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import org.hibernate.annotations.Cascade;
-
 @Entity
-@Table(name = "districts")
+@Table(name = "district")
 public class District extends BaseData implements Comparable<District> {
 
-    private String name;
-    private List<SubCounty> subCounties;
+	private String name;
+	private List<SubCounty> subCounties;
 
-    public District() {
-	super();
-    }
-
-    public District(String name) {
-	super();
-	this.name = name;
-    }
-
-    @Column(name = "district_name", nullable = false)
-    public String getName() {
-	return name;
-    }
-
-    public void setName(String name) {
-	this.name = name;
-    }
-
-    @SuppressWarnings("deprecation")
-    @OneToMany(mappedBy = "district", cascade = { CascadeType.ALL })
-    @Cascade({ org.hibernate.annotations.CascadeType.SAVE_UPDATE,
-	    org.hibernate.annotations.CascadeType.DELETE,
-	    org.hibernate.annotations.CascadeType.MERGE,
-	    org.hibernate.annotations.CascadeType.PERSIST,
-	    org.hibernate.annotations.CascadeType.DELETE_ORPHAN })
-    public List<SubCounty> getSubCounties() {
-	return subCounties;
-    }
-
-    public void setSubCounties(List<SubCounty> subCounties) {
-	this.subCounties = subCounties;
-    }
-    
-    public void addSubCounty(SubCounty subCounty) {
-	if (subCounty == null) {
-	    return;
+	public District() {
+		super();
 	}
 
-	if (this.getSubCounties() == null) {
-	    this.setSubCounties(new ArrayList<SubCounty>());
+	public District(String name) {
+		super();
+		this.name = name;
 	}
 
-	this.getSubCounties().add(subCounty);
-    }
-
-    public void removeSubCounty(SubCounty subCounty) {
-	if (subCounty == null || this.getSubCounties() == null) {
-	    return;
+	@Column(name = "name", nullable = false)
+	public String getName() {
+		return name;
 	}
 
-	this.getSubCounties().remove(subCounty);
-    }
+	public void setName(String name) {
+		this.name = name;
+	}
 
-    @Override
-    public int compareTo(District o) {
-	return this.getName().compareToIgnoreCase(o.getName());
-    }
+	@OneToMany(mappedBy = "district", cascade = { CascadeType.ALL }, orphanRemoval = true)
+	public List<SubCounty> getSubCounties() {
+		return subCounties;
+	}
+
+	public void setSubCounties(List<SubCounty> subCounties) {
+		this.subCounties = subCounties;
+	}
+
+	public void addSubCounty(SubCounty subCounty) {
+		if (subCounty == null) {
+			return;
+		}
+
+		if (this.getSubCounties() == null) {
+			this.setSubCounties(new ArrayList<SubCounty>());
+		}
+
+		this.getSubCounties().add(subCounty);
+	}
+
+	public void removeSubCounty(SubCounty subCounty) {
+		if (subCounty == null || this.getSubCounties() == null) {
+			return;
+		}
+
+		this.getSubCounties().remove(subCounty);
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((getId() == null) ? 0 : getId().hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		District other = (District) obj;
+		if (super.getId() == null) {
+			if (other.getId() != null)
+				return false;
+		} else if (!super.getId().equals(other.getId()))
+			return false;
+		return true;
+	}
+
+	@Override
+	public int compareTo(District o) {
+		return this.getName().compareToIgnoreCase(o.getName());
+	}
 
 }

@@ -103,7 +103,7 @@ public class UserServiceImpl implements UserService {
 			else if (!existingUserWithSimilarUsername.getId().equalsIgnoreCase(
 					user.getId()))
 				throw new ValidationException("A user -"
-						+ existingUserWithSimilarUsername.getFullName()
+						+ existingUserWithSimilarUsername.getName()
 						+ "- with this username - " + user.getUsername()
 						+ " already exists");
 		}

@@ -7,11 +7,12 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "committee_member")
-public class CommitteeMember extends BaseData {
+public class CommitteeMember extends BaseData implements
+		Comparable<CommitteeMember> {
 
 	private Committee committee;
 
-	private Producer producer;
+	private User producer;
 
 	private Position position;
 
@@ -31,11 +32,11 @@ public class CommitteeMember extends BaseData {
 
 	@ManyToOne
 	@JoinColumn(name = "producer_id", nullable = false)
-	public Producer getProducer() {
+	public User getProducer() {
 		return producer;
 	}
 
-	public void setProducer(Producer producer) {
+	public void setProducer(User producer) {
 		this.producer = producer;
 	}
 
@@ -49,4 +50,34 @@ public class CommitteeMember extends BaseData {
 		this.position = position;
 	}
 
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((getId() == null) ? 0 : getId().hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		CommitteeMember other = (CommitteeMember) obj;
+		if (super.getId() == null) {
+			if (other.getId() != null)
+				return false;
+		} else if (!super.getId().equals(other.getId()))
+			return false;
+		return true;
+	}
+
+	@Override
+	public int compareTo(CommitteeMember o) {
+		return this.getProducer().getName()
+				.compareToIgnoreCase(o.getProducer().getName());
+	}
 }

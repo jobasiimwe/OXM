@@ -14,7 +14,7 @@ import org.hibernate.annotations.Type;
 
 @Entity
 @Table(name = "message")
-public class Message extends BaseData {
+public class Message extends BaseData implements Comparable<Message> {
 
 	private User from;
 
@@ -103,4 +103,33 @@ public class Message extends BaseData {
 		this.isSeen = isSeen;
 	}
 
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((getId() == null) ? 0 : getId().hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Message other = (Message) obj;
+		if (super.getId() == null) {
+			if (other.getId() != null)
+				return false;
+		} else if (!super.getId().equals(other.getId()))
+			return false;
+		return true;
+	}
+
+	@Override
+	public int compareTo(Message o) {
+		return this.getDatePosted().compareTo(o.getDatePosted());
+	}
 }

@@ -19,6 +19,6 @@
 		</update>
 	</changeSet>
 	
-	<include file="database/mysql/liquibase/18-02-2013-changelog-1.0.xml" />
+	<include file="database/mysql/liquibase/db.changelog-1.0.xml" />
 	<include file="database/mysql/liquibase/db.changelog.data-1.0.xml" />
 </databaseChangeLog>

@@ -31,12 +31,6 @@ public final class DefaultConceptCategories {
 	public static final String UNITS_OF_MEASURE = "Units of measure";
 
 	/**
-	 * The User type concept category
-	 */
-	@ConceptCategoryAnnotation(id = "B8C98E8F-4154-475a-BA18-B153CD9B10B4", description = "User types")
-	public static final String USER_TYPE = "User type";
-
-	/**
 	 * The Selling Type Concept category
 	 */
 	@ConceptCategoryAnnotation(id = "E6389C2A-171F-48b2-B60E-CE7AD8FB9C46", description = "Selling type i.e retail or whole-sale")
@@ -49,10 +43,34 @@ public final class DefaultConceptCategories {
 	public static final String FORUM_POST_TYPE = "Forum post type";
 
 	/**
+	 * The Crop inputs Concept category
+	 */
+	@ConceptCategoryAnnotation(id = "C3C6C165-1D00-47b8-B3E7-8DCF8CFFFD6F", description = "Crop inputs")
+	public static final String CROP_INPUTS = "Crop Inputs";
+
+	/**
+	 * The Seed varieties Concept category
+	 */
+	@ConceptCategoryAnnotation(id = "48A4A3EB-396A-4e98-B39D-D672AEB62D90", description = "Seed varieties")
+	public static final String SEED_VARIETIES = "Seed varieties";
+
+	/**
+	 * The Ploughing Methods Concept category
+	 */
+	@ConceptCategoryAnnotation(id = "E576BD45-9868-4723-9990-39B3C94CEBDA", description = "Ploughing Methods")
+	public static final String PLOUGHING_METHODS = "Ploughing Methods";
+
+	/**
+	 * The Inter-cropping types Concept category
+	 */
+	@ConceptCategoryAnnotation(id = "88F1E58F-B372-4cfa-9764-42DDE9888ACD", description = "Inter-cropping types")
+	public static final String INTER_CROPING_TYPES = "Inter-cropping types";
+
+	/**
 	 * array of the default concept categories
 	 */
 	public static final String[] DEFAULT_CONCEPT_CATEGORIES = new String[] {
-			UNITS_OF_MEASURE, USER_TYPE, SELLING_TYPE, FORUM_POST_TYPE };
+			UNITS_OF_MEASURE, SELLING_TYPE, FORUM_POST_TYPE };
 
 	/**
 	 * gets the id of the field in this class representing the given concept

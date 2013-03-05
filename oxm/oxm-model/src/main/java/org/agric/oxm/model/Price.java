@@ -1,5 +1,7 @@
 package org.agric.oxm.model;
 
+import java.util.Date;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -10,7 +12,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "price")
-public class Price extends BaseData {
+public class Price extends BaseData implements Comparable<Price> {
 
 	private Crop crop;
 
@@ -24,6 +26,10 @@ public class Price extends BaseData {
 	
 	//date .
 	// quanity.
+
+	private Date date;
+
+	private Double quantity;
 
 	public Price() {
 		super();
@@ -40,7 +46,7 @@ public class Price extends BaseData {
 	}
 
 	@ManyToOne
-	@JoinColumn(name = "selling_price_id", nullable = false)
+	@JoinColumn(name = "selling_place_id", nullable = false)
 	public SellingPlace getSellingPlace() {
 		return sellingPlace;
 	}
@@ -76,6 +82,54 @@ public class Price extends BaseData {
 
 	public void setPrice(Double price) {
 		this.price = price;
+	}
+
+	@Column(name = "date", nullable = false)
+	public Date getDate() {
+		return date;
+	}
+
+	public void setDate(Date date) {
+		this.date = date;
+	}
+
+	@Column(name = "quantity", nullable = false)
+	public Double getQuantity() {
+		return quantity;
+	}
+
+	public void setQuantity(Double quantity) {
+		this.quantity = quantity;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((getId() == null) ? 0 : getId().hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Price other = (Price) obj;
+		if (super.getId() == null) {
+			if (other.getId() != null)
+				return false;
+		} else if (!super.getId().equals(other.getId()))
+			return false;
+		return true;
+	}
+
+	@Override
+	public int compareTo(Price o) {
+		return this.getDate().compareTo(o.getDate());
 	}
 
 }

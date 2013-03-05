@@ -3,6 +3,7 @@
 	pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix='fn' uri='http://java.sun.com/jsp/jstl/functions'%>
+
 <div id="buttonStrip"></div>
 <div>
 <div>
@@ -47,8 +48,7 @@
 						<%
 							User usr = (User)pageContext.getAttribute("u");
 						%>
-						<td>${u.firstName }</td>
-						<td>${u.lastName }</td>
+						<td>${u.name }</td>
 						<td>${u.status }</td>
 						<td><span <%= usr.hasAdministrativePrivileges()? "class=\"icon icon-tick\"": ""  %> style="display:inline-block; width: 16px; height: 16px;"></span></td>
 						<td>

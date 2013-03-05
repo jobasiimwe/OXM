@@ -30,117 +30,129 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class SellingPlaceController {
 
-    @Autowired
-    private SellingPlaceService sellingPlaceService;
+	@Autowired
+	private SellingPlaceService sellingPlaceService;
 
-    @Autowired
-    private ConceptService conceptService;
+	@Autowired
+	private ConceptService conceptService;
 
-    @RequestMapping(value = "/sellingplace/view/", method = RequestMethod.GET)
-    public ModelAndView viewSellingPlaceHandler(ModelMap model) throws SessionExpiredException {
-	List<SellingPlace> sellingPrices = sellingPlaceService.getSellingPlaces();
-	WebConstants.loadLoggedInUserProfile(OXMSecurityUtil.getLoggedInUser(), model);
-	model.put("sellingplaces", sellingPrices);
-	return new ModelAndView("viewSellingPlace", model);
+	@RequestMapping(value = "/sellingplace/view/", method = RequestMethod.GET)
+	public ModelAndView viewSellingPlaceHandler(ModelMap model)
+			throws SessionExpiredException {
+		List<SellingPlace> sellingPrices = sellingPlaceService
+				.getSellingPlaces();
+		WebConstants.loadLoggedInUserProfile(OXMSecurityUtil.getLoggedInUser(),
+				model);
+		model.put("sellingplaces", sellingPrices);
+		return new ModelAndView("viewSellingPlace", model);
 
-    }
-
-    @RequestMapping(value = "/sellingplace/add/", method = RequestMethod.GET)
-    public ModelAndView addSellingPlaceHandler(ModelMap model) throws SessionExpiredException {
-	WebConstants.loadLoggedInUserProfile(OXMSecurityUtil.getLoggedInUser(), model);
-	model.put("sellingprice", new SellingPlace());
-	prepareSellingPlaceModel(model);
-	return new ModelAndView("addOREditSellingPlace", model);
-
-    }
-
-    @RequestMapping(value = "/sellingplace/edit/{id}", method = RequestMethod.GET)
-    public ModelAndView editSellingPlaceHandler(ModelMap model, @PathVariable("id") String sPlaceId)
-	    throws SessionExpiredException {
-	WebConstants.loadLoggedInUserProfile(OXMSecurityUtil.getLoggedInUser(), model);
-
-	SellingPlace sPlace = sellingPlaceService.getSellingPlaceById(sPlaceId);
-
-	if (sPlace != null) {
-	    model.put("sellingprice", sPlace);
-	    prepareSellingPlaceModel(model);
-	    return new ModelAndView("addOREditSellingPlace", model);
 	}
 
-	model.put(WebConstants.MODEL_ATTRIBUTE_ERROR_MESSAGE, "Invalid selling price id submitted");
-	return viewSellingPlaceHandler(model);
+	@RequestMapping(value = "/sellingplace/add/", method = RequestMethod.GET)
+	public ModelAndView addSellingPlaceHandler(ModelMap model)
+			throws SessionExpiredException {
+		WebConstants.loadLoggedInUserProfile(OXMSecurityUtil.getLoggedInUser(),
+				model);
+		model.put("sellingprice", new SellingPlace());
+		prepareSellingPlaceModel(model);
+		return new ModelAndView("addOREditSellingPlace", model);
 
-    }
-
-    @RequestMapping(method = RequestMethod.POST, value = "/sellingplace/delete/")
-    public void deleteSellingPlaceHandler(@RequestParam("selectedSellingPlace") List<String> ids,
-	    HttpServletResponse response) {
-
-	try {
-	    if (ids != null) {
-		String[] sPlaceIds = new String[ids.size()];
-		sPlaceIds = ids.toArray(sPlaceIds);
-
-		sellingPlaceService.deleteSellingPlacesByIds(sPlaceIds);
-		response.setStatus(HttpServletResponse.SC_OK);
-		response.getWriter().write("Selling place(s) deleted successfully");
-	    } else {
-		response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-		response.getWriter().write(
-						"no selling place(s) supplied for deleting");
-	    }
-	} catch (IOException e) {
-	    response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
 	}
-    }
 
-    private void prepareSellingPlaceModel(ModelMap model) {
-	try {
-	    ConceptCategoryAnnotation typeRoleAnnotation = OXMUtil
-		    .getConceptCategoryFieldAnnotation(
-			    DefaultConceptCategories.class,
-			    DefaultConceptCategories.SELLING_TYPE);
+	@RequestMapping(value = "/sellingplace/edit/{id}", method = RequestMethod.GET)
+	public ModelAndView editSellingPlaceHandler(ModelMap model,
+			@PathVariable("id") String sPlaceId) throws SessionExpiredException {
+		WebConstants.loadLoggedInUserProfile(OXMSecurityUtil.getLoggedInUser(),
+				model);
 
-	    if (typeRoleAnnotation != null) {
-		ConceptCategory sellingTypeRole = conceptService
-			.getConceptCategoryById(typeRoleAnnotation.id());
+		SellingPlace sPlace = sellingPlaceService.getSellingPlaceById(sPlaceId);
 
-		if (sellingTypeRole != null) {
-		    model.put("sellingTypes", conceptService
-			    .getConceptsByCategory(sellingTypeRole));
+		if (sPlace != null) {
+			model.put("sellingprice", sPlace);
+			prepareSellingPlaceModel(model);
+			return new ModelAndView("addOREditSellingPlace", model);
 		}
-	    }
-	} catch (SecurityException e) {
-	} catch (NoSuchFieldException e) {
-	}
-    }
 
-    @RequestMapping(method = RequestMethod.POST, value = "/sellingplace/save/")
-    public ModelAndView saveSellingPlaceHandler(
-	    @ModelAttribute("sellingplace") SellingPlace sellingPlace,
+		model.put(WebConstants.MODEL_ATTRIBUTE_ERROR_MESSAGE,
+				"Invalid selling price id submitted");
+		return viewSellingPlaceHandler(model);
+
+	}
+
+	@RequestMapping(method = RequestMethod.POST, value = "/sellingplace/delete/")
+	public void deleteSellingPlaceHandler(
+			@RequestParam("selectedSellingPlace") List<String> ids,
+			HttpServletResponse response) {
+
+		try {
+			if (ids != null) {
+				String[] sPlaceIds = new String[ids.size()];
+				sPlaceIds = ids.toArray(sPlaceIds);
+
+				sellingPlaceService.deleteSellingPlacesByIds(sPlaceIds);
+				response.setStatus(HttpServletResponse.SC_OK);
+				response.getWriter().write(
+						"Selling place(s) deleted successfully");
+			} else {
+				response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+				response.getWriter().write(
+						"no selling place(s) supplied for deleting");
+			}
+		} catch (IOException e) {
+			response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+		}
+	}
+
+	private void prepareSellingPlaceModel(ModelMap model) {
+		try {
+			ConceptCategoryAnnotation typeRoleAnnotation = OXMUtil
+					.getConceptCategoryFieldAnnotation(
+							DefaultConceptCategories.class,
+							DefaultConceptCategories.SELLING_TYPE);
+
+			if (typeRoleAnnotation != null) {
+				ConceptCategory sellingTypeRole = conceptService
+						.getConceptCategoryById(typeRoleAnnotation.id());
+
+				if (sellingTypeRole != null) {
+					model.put("sellingTypes", conceptService
+							.getConceptsByCategory(sellingTypeRole));
+				}
+			}
+		} catch (SecurityException e) {
+		} catch (NoSuchFieldException e) {
+		}
+	}
+
+	@RequestMapping(method = RequestMethod.POST, value = "/sellingplace/save/")
+	public ModelAndView saveSellingPlaceHandler(
+			@ModelAttribute("sellingplace") SellingPlace sellingPlace,
 			ModelMap model) throws SessionExpiredException {
 
-	SellingPlace existingSellingPlace = sellingPlace;
+		SellingPlace existingSellingPlace = sellingPlace;
 
-	if (StringUtils.isNotEmpty(sellingPlace.getId())) {
-	    existingSellingPlace = sellingPlaceService.getSellingPlaceById(sellingPlace.getId());
-	    existingSellingPlace.setName(sellingPlace.getName());
-	    existingSellingPlace.setType(sellingPlace.getType());
-	}else{
-	    existingSellingPlace.setId(null);
-	}
+		if (StringUtils.isNotEmpty(sellingPlace.getId())) {
+			existingSellingPlace = sellingPlaceService
+					.getSellingPlaceById(sellingPlace.getId());
+			existingSellingPlace.setName(sellingPlace.getName());
+			existingSellingPlace
+					.setSellingTypes(sellingPlace.getSellingTypes());
+		} else {
+			existingSellingPlace.setId(null);
+		}
 
-	try {
-	    sellingPlaceService.validate(existingSellingPlace);
-	    sellingPlaceService.save(existingSellingPlace);
-	    model.put(WebConstants.MODEL_ATTRIBUTE_SYSTEM_MESSAGE,
-		    "Selling Place saved sucessfully.");
-	} catch (ValidationException e) {
-	    model.put(WebConstants.MODEL_ATTRIBUTE_ERROR_MESSAGE, e.getMessage());
-	    model.put("sellingprice", sellingPlace);
-	    prepareSellingPlaceModel(model);
-	    return new ModelAndView("addOREditSellingPlace", model);
+		try {
+			sellingPlaceService.validate(existingSellingPlace);
+			sellingPlaceService.save(existingSellingPlace);
+			model.put(WebConstants.MODEL_ATTRIBUTE_SYSTEM_MESSAGE,
+					"Selling Place saved sucessfully.");
+		} catch (ValidationException e) {
+			model.put(WebConstants.MODEL_ATTRIBUTE_ERROR_MESSAGE,
+					e.getMessage());
+			model.put("sellingprice", sellingPlace);
+			prepareSellingPlaceModel(model);
+			return new ModelAndView("addOREditSellingPlace", model);
+		}
+		return viewSellingPlaceHandler(model);
 	}
-	return viewSellingPlaceHandler(model);
-    }
 }

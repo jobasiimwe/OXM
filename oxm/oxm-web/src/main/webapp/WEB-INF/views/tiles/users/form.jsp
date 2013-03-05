@@ -2,11 +2,8 @@
     "http://www.w3.org/TR/html4/loose.dtd">
 <%@page language="java" isELIgnored="false" contentType="text/html"
 	pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix='fn' uri='http://java.sun.com/jsp/jstl/functions'%>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
 <style>	
 	#staffForm .uiDropdown{
 		width: 125px;
@@ -24,12 +21,8 @@
 		<div class="splitcontentleft">	
 			<h3>Personal Information</h3>
 			<p>
-				<label class="uiLabel">First Name:<span class="required">*</span></label>
-				<form:input path="firstName" cssClass="uiTextbox"/>
-			</p>
-			<p>
-				<label class="uiLabel">Last Name:<span class="required">*</span></label>
-				<form:input path="lastName" cssClass="uiTextbox"/>
+				<label class="uiLabel">Name:<span class="required">*</span></label>
+				<form:input path="name" cssClass="uiTextbox"/>
 			</p>
 			<p>
 				<label class="uiLabel">Gender:</label>

@@ -2,15 +2,25 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix='fn' uri='http://java.sun.com/jsp/jstl/functions'%>
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+
+<%@ taglib prefix="oxmBreadcrambs"
+	tagdir="/WEB-INF/tags/breadcramblinks"%>
+
+<div style="margin: 5px; width: 100%;">
+	<label class="uiLabel">You are here > </label>
+	<oxmBreadcrambs:cpanel />
+	>
+	<oxmBreadcrambs:sellingplaces />
+</div>
 
 <div id="buttonStrip">
 	<div class="contextual" style="float: left;">
-		<a id="lnkAddSellingPlace" class="uiButton" href="${baseUrl }/sellingplace/add/">Add</a>
-		<a id="lnkEditSellingPlace" class="uiButton"
-			href="${baseUrl }/sellingplace/edit/">Edit</a> 
-		<a id="lnkDeleteSellingPlace"
-			class="uiButton" href="${baseUrl }/sellingplace/delete/">Delete</a>
+		<a id="lnkAddSellingPlace" class="uiButton"
+			href="${baseUrl }/sellingplace/add/">Add</a> <a
+			id="lnkEditSellingPlace" class="uiButton"
+			href="${baseUrl }/sellingplace/edit/">Edit</a> <a
+			id="lnkDeleteSellingPlace" class="uiButton"
+			href="${baseUrl }/sellingplace/delete/">Delete</a>
 	</div>
 	<div style="float: right;">
 		<%@ include file="/WEB-INF/views/navigation.jsp"%>
@@ -22,22 +32,21 @@
 		<thead>
 			<tr>
 				<th><input type="checkbox" name="cbxSelectAllItems"
-					id="cbxSelectAllItems" />
-				</th>
+					id="cbxSelectAllItems" /></th>
 				<th>Name</th>
-				<th>Selling Type</th>
+				<th>Selling Types</th>
 			</tr>
 		</thead>
 		<tbody>
 			<c:choose>
-				<c:when test="${not empty sellingplaces  && fn:length(sellingplaces) > 0}">
+				<c:when
+					test="${not empty sellingplaces  && fn:length(sellingplaces) > 0}">
 					<c:forEach var="sellingplace" items="${sellingplaces }">
 						<tr id="${sellingplace.id }">
 							<td><input type="checkbox" name="selectedSellingPlace"
-								value="${sellingplace.id }" />
-							</td>
+								value="${sellingplace.id }" /></td>
 							<td>${sellingplace.name }</td>
-							<td>${sellingplace.type.name }</td>
+							<td>${sellingplace.sellingTypesString }</td>
 						</tr>
 					</c:forEach>
 				</c:when>
