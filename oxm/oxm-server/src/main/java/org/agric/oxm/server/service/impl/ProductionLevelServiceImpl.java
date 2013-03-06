@@ -32,7 +32,20 @@ public class ProductionLevelServiceImpl implements ProductionLevelService {
 	@Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
 	@Override
 	public void validate(ProductionLevel productionLevel) throws ValidationException {
-
+	    if(productionLevel.getCrop() == null)
+		throw new ValidationException("Suppplied production level missing crop");
+	    if(productionLevel.getProducer() == null)
+		throw new ValidationException("Supplied production level missing producer");
+	    
+	    if(productionLevel.getSeason() == null)
+		throw new ValidationException("Supplied production level missing season");
+	    
+	    if(productionLevel.getAcrage() < 0)
+		throw new ValidationException("Supplied production level acrage is invalid");
+	    if(productionLevel.getActualAmount() < 0)
+		throw new ValidationException("Supplied production level actual ammont is invalid");
+	    if(productionLevel.getProjectedAmount() < 0 )
+		throw new ValidationException("Invalid Projected Amount");
 	}
 
 	@Secured({ PermissionConstants.VIEW_PROD_LEVEL })

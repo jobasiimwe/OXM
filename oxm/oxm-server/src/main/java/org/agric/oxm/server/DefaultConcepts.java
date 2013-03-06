@@ -52,6 +52,9 @@ public final class DefaultConcepts {
 	 */
 	@ConceptAnnotation(id = "18047DAA-BCB0-425f-B739-3A9735315DB4", description = "Ton - unit of measure", ConceptCategories = { DefaultConceptCategories.UNITS_OF_MEASURE })
 	public static final String TON = "Ton";
+	
+	@ConceptAnnotation(id = "18KKKJS-BCB0-425f-B739-89PoQ4", description = "Dry", ConceptCategories = { DefaultConceptCategories.SEASON_NAME })
+	public static final String DRY = "Dry";
 
 	public static String getConceptId(String name) {
 		try {

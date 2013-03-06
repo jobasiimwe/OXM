@@ -11,6 +11,7 @@ import org.agric.oxm.model.exception.ValidationException;
 import org.agric.oxm.server.dao.SellingPlaceDAO;
 import org.agric.oxm.server.security.PermissionConstants;
 import org.agric.oxm.server.service.SellingPlaceService;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Service;
@@ -40,7 +41,15 @@ public class SellingPlaceServiceImpl implements SellingPlaceService {
 	@Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
 	@Override
 	public void validate(SellingPlace sellingPlace) throws ValidationException {
-
+	    if(sellingPlace.getDistrict() == null){
+		throw new ValidationException("Districts are missing.");
+	    }
+	    
+	    if(StringUtils.isEmpty(sellingPlace.getName()))
+		throw new ValidationException("Supplied selling place missing name");
+	    
+	    if(sellingPlace.getSellingTypes() == null)
+		throw new ValidationException("Selling Types are missing");
 	}
 
 	@Secured({ PermissionConstants.VIEW_SELLING_PLACE })

@@ -205,5 +205,29 @@
 		<put-attribute name="body" type="template" value="/WEB-INF/views/tiles/position/form.jsp" />
 	</definition>
 	
+	<!-- ======= FORM for SEASON ========== -->
+	<definition name="viewSeason" extends="layout">
+	    <put-attribute name="scripts" type="template" value="/WEB-INF/views/tiles/season/scripts.jsp" />
+		<put-attribute name="pageTitle" type="string" value="View Season(s)" />
+		<put-attribute name="body" type="template" value="/WEB-INF/views/tiles/season/view.jsp" />
+	</definition>
 	
+	<definition name="formSeason" extends="layout">
+	    <put-attribute name="scripts" type="template" value="/WEB-INF/views/tiles/season/scripts.jsp" />
+		<put-attribute name="pageTitle" type="string" value="Add/Edit Season" />
+		<put-attribute name="body" type="template" value="/WEB-INF/views/tiles/season/form.jsp" />
+	</definition>
+	
+	<!-- ======= FORM for Financial Institution ========== -->
+	<definition name="viewFinancialInstitution" extends="layout">
+	    <put-attribute name="scripts" type="template" value="/WEB-INF/views/tiles/fInstitution/scripts.jsp" />
+		<put-attribute name="pageTitle" type="string" value="View Financial Institution(s)" />
+		<put-attribute name="body" type="template" value="/WEB-INF/views/tiles/fInstitution/view.jsp" />
+	</definition>
+	
+	<definition name="formFinancialInstitution" extends="layout">
+	    <put-attribute name="scripts" type="template" value="/WEB-INF/views/tiles/fInstitution/scripts.jsp" />
+		<put-attribute name="pageTitle" type="string" value="Add/Edit Financial Institution" />
+		<put-attribute name="body" type="template" value="/WEB-INF/views/tiles/fInstitution/form.jsp" />
+	</definition>
 </tiles-definitions>

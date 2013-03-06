@@ -49,19 +49,11 @@
 	</div>
 	<div class="menu">
 		<a class="menu-lnk" id="lnkProductionOrg"
-			title="Production Organisation"
+			title="Production Organization"
 			href="${baseUrl }/pOrganization/view/"> <span
 			class="panellink porganization-icon"></span><label
 			style="margin: 10px; font-size: 12px; font-weight: bold;">Production
 				Org</label> </a>
-	</div>
-
-	<div class="menu">
-		<a class="menu-lnk" id="lnkPosition" title="Positions"
-			href="${baseUrl }/position/view/page/1"> <span
-			class="panellink position-icon"></span><label
-			style="margin: 10px; font-size: 12px; font-weight: bold;">Positions</label>
-		</a>
 	</div>
 </div>
 <div style="clear: both;"></div>
@@ -70,6 +62,25 @@
 		<a class="menu-lnk" id="lnkPrice" title="Price"
 			href="${baseUrl }/price/view/1"> <span class="panellink price-icon"></span><label
 			style="margin: 10px; font-size: 12px; font-weight: bold;">Prices</label>
+		</a>
+	</div>
+	<div class="menu">
+		<a class="menu-lnk" id="lnkSeason" title="Season"
+			href="${baseUrl }/season/view/"> <span class="panellink season-icon"></span><label
+			style="margin: 10px; font-size: 12px; font-weight: bold;">Season</label>
+		</a>
+	</div>
+	<div class="menu">
+		<a class="menu-lnk" id="lnkfInstition" title="Financial Institution"
+			href="${baseUrl }/fInstitution/view/"> <span class="panellink fInstitution-icon"></span><label
+			style="margin: 10px; font-size: 12px; font-weight: bold;">Financial Institution</label>
+		</a>
+	</div>
+		<div class="menu">
+		<a class="menu-lnk" id="lnkPosition" title="Positions"
+			href="${baseUrl }/position/view/page/1"> <span
+			class="panellink position-icon"></span><label
+			style="margin: 10px; font-size: 12px; font-weight: bold;">Positions</label>
 		</a>
 	</div>
 </div>

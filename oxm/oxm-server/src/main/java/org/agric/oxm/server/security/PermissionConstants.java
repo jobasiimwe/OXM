@@ -396,5 +396,11 @@ public final class PermissionConstants {
 	 */
 	@PermissionAnnotation(id = "B4A66B4D-BB9D-4e4a-8797-35DB9C8C9A77", description = "Ability to delete a prod organisation")
 	public static final String DELETE_PROD_ORG = "delete_prod_org";
+	
+	@PermissionAnnotation(id = "B000IIIK44-BB9D-4e4a-8797-567UUUUHG", description = "Ability to perform CRUD operations on season")
+	public static final String MANAGE_SEASONS = "manage_season";
+	
+	@PermissionAnnotation(id = "56555IIjGWRW-BB9D-4e4a-8797-00USDSD4", description = "Ability to view seasons")
+	public static final String VIEW_SEASONS = "view_season";
 
 }
