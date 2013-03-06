@@ -9,28 +9,28 @@ import org.springframework.stereotype.Component;
 @Component("districtPropertyEditor")
 public class DistrictPropertyEditor extends BasePropertyEditor {
 
-    @Autowired
-    private Adminservice setupService;
+	@Autowired
+	private Adminservice setupService;
 
-    @Override
-    public String getAsText() {
-	if (super.getValue() != null && super.getValue() instanceof District) {
-	    return ((District) super.getValue()).getId();
+	@Override
+	public String getAsText() {
+		if (super.getValue() != null && super.getValue() instanceof District) {
+			return ((District) super.getValue()).getId();
+		}
+
+		return super.getAsText();
 	}
 
-	return super.getAsText();
-    }
-
-    @Override
-    public void setAsText(String text) throws IllegalArgumentException {
-	if (StringUtils.isNotBlank(text) && StringUtils.isNotEmpty(text)) {
-	    if (StringUtils.equalsIgnoreCase("none", text)) {
-		super.setValue(null);
-	    } else {
-		super.setValue(setupService.getDistrictById(text));
-	    }
-	} else {
-	    super.setAsText(text);
+	@Override
+	public void setAsText(String text) throws IllegalArgumentException {
+		if (StringUtils.isNotBlank(text) && StringUtils.isNotEmpty(text)) {
+			if (StringUtils.equalsIgnoreCase("none", text)) {
+				super.setValue(null);
+			} else {
+				super.setValue(setupService.getDistrictById(text));
+			}
+		} else {
+			super.setAsText(text);
+		}
 	}
-    }
 }

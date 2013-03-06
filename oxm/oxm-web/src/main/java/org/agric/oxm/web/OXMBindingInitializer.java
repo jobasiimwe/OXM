@@ -53,7 +53,7 @@ public class OXMBindingInitializer implements WebBindingInitializer {
     private ConceptCategoryPropertyEditor conceptCategoryPropertyEditor;
 
     @Autowired
-    private SubCountyPropertyEditor subcountyPropertyEditor;
+    private SubCountyPropertyEditor subCountyPropertyEditor;
 
     @Autowired
     private ParishPropertyEditor parishPropertyEditor;
@@ -85,7 +85,7 @@ public class OXMBindingInitializer implements WebBindingInitializer {
 	binder.registerCustomEditor(Role.class, rolePropertyEditor);
 	binder.registerCustomEditor(Permission.class, permissionPropertyEditor);
 	binder.registerCustomEditor(ConceptCategory.class, conceptCategoryPropertyEditor);
-	binder.registerCustomEditor(SubCounty.class, subcountyPropertyEditor);
+	binder.registerCustomEditor(SubCounty.class, subCountyPropertyEditor);
 	binder.registerCustomEditor(Parish.class, parishPropertyEditor);
 	binder.registerCustomEditor(Village.class, villagePropertyEditor);
 	binder.registerCustomEditor(Publication.class, publicationPropertyEditor);

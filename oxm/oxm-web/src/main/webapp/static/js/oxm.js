@@ -20,6 +20,16 @@ function setErrorMessage(message){
 		$("div#systemMsg").addClass('hide');
 }
 
+function getBaseURL() {
+	var baseUrl = $("#baseUrl").attr("value");
+	if (baseUrl == null || baseUrl == "")
+		baseUrl = location.protocol + "//" + location.hostname
+				+ (location.port && ":" + location.port) + "/";
+	else
+		baseUrl = baseUrl + "/";
+	return baseUrl;
+}
+
 /**
  * System wide Javascript file
  */

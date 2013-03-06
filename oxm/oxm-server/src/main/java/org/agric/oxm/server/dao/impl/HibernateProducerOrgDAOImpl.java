@@ -4,16 +4,16 @@
 package org.agric.oxm.server.dao.impl;
 
 import org.agric.oxm.model.ProducerOrganisation;
-import org.agric.oxm.server.dao.ProducerOrganisationDAO;
+import org.agric.oxm.server.dao.ProducerOrgDAO;
 import org.springframework.stereotype.Repository;
 
 /**
  * @author Job
  * 
  */
-@Repository("producuserOrganisationDAO")
-public class HibernateProducerOrganisationDAOImpl extends
+@Repository("producerOrgDAO")
+public class HibernateProducerOrgDAOImpl extends
 		BaseDAOImpl<ProducerOrganisation> implements
-		ProducerOrganisationDAO {
+		ProducerOrgDAO {
 
 }

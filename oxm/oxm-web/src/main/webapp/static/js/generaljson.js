@@ -27,10 +27,6 @@ $(document).ready(
 				}
 			}
 
-			$('#dddistrict').live("focus", function() {
-				loadSubCounties();
-			});
-
 			$('#dddistrict').live("change", function() {
 				loadSubCounties();
 			});
@@ -49,10 +45,6 @@ $(document).ready(
 				$("#ddvillageLc1Zone").html('');
 				return false;
 			}
-
-			$('#ddsubcounty').live("focus", function() {
-				loadParishes();
-			});
 
 			$('#ddsubcounty').live("change", function() {
 				loadParishes();

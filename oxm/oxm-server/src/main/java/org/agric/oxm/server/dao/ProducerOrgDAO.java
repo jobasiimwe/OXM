@@ -9,7 +9,7 @@ import org.agric.oxm.model.ProducerOrganisation;
  * @author Job
  *
  */
-public interface ProducerOrganisationDAO extends
+public interface ProducerOrgDAO extends
 		BaseDAO<ProducerOrganisation> {
 
 }

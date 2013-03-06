@@ -1,10 +1,10 @@
 package org.agric.oxm.model.search;
 
-public class ProductionOrganisationSearchParameters {
+public class ProducerOrgSearchParameters {
 
 	private String name;
 
-	public ProductionOrganisationSearchParameters() {
+	public ProducerOrgSearchParameters() {
 	}
 
 	public String getName() {

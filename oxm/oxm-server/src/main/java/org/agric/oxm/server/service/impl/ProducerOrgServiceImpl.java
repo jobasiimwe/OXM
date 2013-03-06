@@ -5,10 +5,10 @@ import java.util.List;
 import org.agric.oxm.model.ProducerOrganisation;
 import org.agric.oxm.model.RecordStatus;
 import org.agric.oxm.model.exception.ValidationException;
-import org.agric.oxm.model.search.ProductionOrganisationSearchParameters;
-import org.agric.oxm.server.dao.ProducerOrganisationDAO;
+import org.agric.oxm.model.search.ProducerOrgSearchParameters;
+import org.agric.oxm.server.dao.ProducerOrgDAO;
 import org.agric.oxm.server.security.PermissionConstants;
-import org.agric.oxm.server.service.ProductionOrganisationService;
+import org.agric.oxm.server.service.ProducerOrgService;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
@@ -24,18 +24,18 @@ import com.googlecode.genericdao.search.Search;
  * @author Job
  * 
  */
-@Service("productionOrganisationService")
+@Service("producerOrgService")
 @Transactional
-public class ProductionOrganisationServiceImpl implements
-		ProductionOrganisationService {
+public class ProducerOrgServiceImpl implements ProducerOrgService {
 	@Autowired
-	private ProducerOrganisationDAO productionOrganisationDAO;
+	private ProducerOrgDAO producerOrgDAO;
 
-	@Secured({ PermissionConstants.ADD_PROD_ORG, PermissionConstants.EDIT_PROD_ORG })
+	@Secured({ PermissionConstants.ADD_PROD_ORG,
+			PermissionConstants.EDIT_PROD_ORG })
 	@Transactional(propagation = Propagation.REQUIRED)
 	@Override
 	public void save(ProducerOrganisation productionOrganisation) {
-		productionOrganisationDAO.save(productionOrganisation);
+		producerOrgDAO.save(productionOrganisation);
 	}
 
 	@Secured({ PermissionConstants.VIEW_PROD_ORG })
@@ -49,16 +49,15 @@ public class ProductionOrganisationServiceImpl implements
 	@Secured({ PermissionConstants.VIEW_PROD_ORG })
 	@Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
 	@Override
-	public List<ProducerOrganisation> getProductionOrganisations() {
-		return productionOrganisationDAO
-				.searchByRecordStatus(RecordStatus.ACTIVE);
+	public List<ProducerOrganisation> getProducerOrganisations() {
+		return producerOrgDAO.searchByRecordStatus(RecordStatus.ACTIVE);
 	}
 
 	@Secured({ PermissionConstants.VIEW_PROD_ORG })
 	@Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
 	@Override
-	public List<ProducerOrganisation> getProductionOrganisationsWithParams(
-			ProductionOrganisationSearchParameters params) {
+	public List<ProducerOrganisation> getProducerOrgsWithParams(
+			ProducerOrgSearchParameters params) {
 		Search search = new Search();
 
 		if (StringUtils.isNotEmpty(params.getName())) {
@@ -69,20 +68,20 @@ public class ProductionOrganisationServiceImpl implements
 		}
 
 		search.addSort("name", false, true);
-		return productionOrganisationDAO.search(search);
+		return producerOrgDAO.search(search);
 	}
 
 	@Secured({ PermissionConstants.VIEW_PROD_ORG })
 	@Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
 	@Override
-	public ProducerOrganisation getProductionOrganisationById(String id) {
-		return productionOrganisationDAO.searchUniqueByPropertyEqual("id", id);
+	public ProducerOrganisation getProducerOrganisationById(String id) {
+		return producerOrgDAO.searchUniqueByPropertyEqual("id", id);
 	}
 
 	@Secured({ PermissionConstants.DELETE_PROD_ORG })
 	@Transactional(propagation = Propagation.REQUIRED)
 	@Override
-	public void deleteProductionOrganisationsByIds(String[] ids) {
-		productionOrganisationDAO.removeByIds(ids);
+	public void deleteProducerOrganisationsByIds(String[] ids) {
+		producerOrgDAO.removeByIds(ids);
 	}
 }

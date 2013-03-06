@@ -18,7 +18,7 @@ form#concept input[type="text"] {
 			title="Back to Production Organization"
 			href="${baseUrl }/pOrganization/view/">Back</a>
 	</div>
-	<form:form action="${baseUrl }/pOrganization/save/"
+	<form:form action="${baseUrl }/producerorg/save/"
 		commandName="pOrganization">
 
 		<form:hidden path="id" />
@@ -26,24 +26,21 @@ form#concept input[type="text"] {
 			<div class="box tabular">
 				<table>
 					<tr>
-						<td><label>Name <span class="required">*</span> </label>
-						</td>
-						<td><form:input path="name" cssClass="uiTextbox" />
-						</td>
+						<td><label>Name <span class="required">*</span> </label></td>
+						<td><form:input path="name" cssClass="uiTextbox" /></td>
 					</tr>
 					<tr>
 						<td><label>District <span class="required">*</span> </label>
 						</td>
-						<td><form:select id="dddistrict" path="select"
-								cssClass="uiTextbox" />
-						</td>
+						<td><form:select id="dddistrict" path="district"
+								cssClass="uiTextbox" items="${districts }" itemLabel="name"
+								itemValue="id" /></td>
 					</tr>
 					<tr>
-						<td><label>Sub-County <span class="required">*</span> </label>
-						</td>
-						<td><form:select id="ddsubcounty" path="select"
-								cssClass="uiTextbox" />
-						</td>
+						<td><label>Sub-County <span class="required">*</span>
+						</label></td>
+						<td><form:select id="ddsubcounty" path="subCounty"
+								cssClass="uiTextbox" /></td>
 					</tr>
 
 

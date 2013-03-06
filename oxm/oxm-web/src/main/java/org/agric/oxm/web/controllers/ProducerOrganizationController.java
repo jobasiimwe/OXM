@@ -1,11 +1,15 @@
 package org.agric.oxm.web.controllers;
 
+import java.util.List;
+
+import org.agric.oxm.model.District;
 import org.agric.oxm.model.ProducerOrganisation;
 import org.agric.oxm.model.exception.SessionExpiredException;
 import org.agric.oxm.model.exception.ValidationException;
 import org.agric.oxm.server.security.PermissionConstants;
 import org.agric.oxm.server.security.util.OXMSecurityUtil;
-import org.agric.oxm.server.service.ProductionOrganisationService;
+import org.agric.oxm.server.service.Adminservice;
+import org.agric.oxm.server.service.ProducerOrgService;
 import org.agric.oxm.web.WebConstants;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,41 +23,55 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
+@RequestMapping("producerorg")
 public class ProducerOrganizationController {
 
 	@Autowired
-	private ProductionOrganisationService prdnOrgService;
+	private Adminservice adminservice;
+
+	@Autowired
+	private ProducerOrgService producerOrgService;
 
 	@Secured({ PermissionConstants.VIEW_PROD_ORG })
-	@RequestMapping(value = "/pOrganization/view/", method = RequestMethod.GET)
+	@RequestMapping(value = "/view", method = RequestMethod.GET)
 	public ModelAndView viewProdnOrgHandler(ModelMap model)
 			throws SessionExpiredException {
 		WebConstants.loadLoggedInUserProfile(OXMSecurityUtil.getLoggedInUser(),
 				model);
-		model.put("pOrganizations", prdnOrgService.getProductionOrganisations());
+		model.put("pOrganizations",
+				producerOrgService.getProducerOrganisations());
 		return new ModelAndView("viewProducerOrg", model);
 	}
 
 	@Secured({ PermissionConstants.PERM_VIEW_ADMINISTRATION })
-	@RequestMapping(value = "/pOrganization/add/", method = RequestMethod.GET)
+	@RequestMapping(value = "/add", method = RequestMethod.GET)
 	public ModelAndView addProdnOrgHandler(ModelMap model)
 			throws SessionExpiredException {
 		WebConstants.loadLoggedInUserProfile(OXMSecurityUtil.getLoggedInUser(),
 				model);
 		model.put("pOrganization", new ProducerOrganisation());
+		List<District> districts = adminservice.getDistricts();
+		if (districts.size() == 0) {
+			model.put(
+					WebConstants.MODEL_ATTRIBUTE_ERROR_MESSAGE,
+					"No districts found, saving a Producer Organisation requires a District and sub-county!!");
+			return viewProdnOrgHandler(model);
+		}
+
+		model.put("districts", districts);
 		return new ModelAndView("formProducerOrg", model);
 
 	}
 
 	@Secured({ PermissionConstants.EDIT_PROD_ORG })
-	@RequestMapping(value = "/pOrganization/edit/{id}", method = RequestMethod.GET)
+	@RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
 	public ModelAndView editProdnOrgHandler(ModelMap model,
 			@PathVariable("id") String pOrgId) throws SessionExpiredException {
 		WebConstants.loadLoggedInUserProfile(OXMSecurityUtil.getLoggedInUser(),
 				model);
 
-		ProducerOrganisation pOrg = prdnOrgService
-				.getProductionOrganisationById(pOrgId);
+		ProducerOrganisation pOrg = producerOrgService
+				.getProducerOrganisationById(pOrgId);
 
 		if (pOrg != null) {
 			model.put("pOrganization", pOrg);
@@ -67,14 +85,14 @@ public class ProducerOrganizationController {
 	}
 
 	@Secured({ PermissionConstants.DELETE_PROD_ORG })
-	@RequestMapping(method = RequestMethod.GET, value = "/pOrganization/delete/{idz}")
+	@RequestMapping(method = RequestMethod.GET, value = "/delete/{idz}")
 	public ModelAndView deleteProducerOrgHandler(
 			@PathVariable("idz") String idz, ModelMap model)
 			throws SessionExpiredException {
 
 		String[] ids = idz.split(",");
 		try {
-			prdnOrgService.deleteProductionOrganisationsByIds(ids);
+			producerOrgService.deleteProducerOrganisationsByIds(ids);
 
 		} catch (Exception e) {
 			model.put(WebConstants.MODEL_ATTRIBUTE_ERROR_MESSAGE,
@@ -86,7 +104,7 @@ public class ProducerOrganizationController {
 
 	@Secured({ PermissionConstants.ADD_PROD_ORG,
 			PermissionConstants.EDIT_PROD_ORG })
-	@RequestMapping(method = RequestMethod.POST, value = "/pOrganization/save/")
+	@RequestMapping(method = RequestMethod.POST, value = "/save")
 	public ModelAndView saveProductionOrgHandler(
 			@ModelAttribute("pOrganization") ProducerOrganisation pOrganization,
 			ModelMap model) throws SessionExpiredException {
@@ -94,8 +112,8 @@ public class ProducerOrganizationController {
 		ProducerOrganisation existingPOrganization = pOrganization;
 
 		if (StringUtils.isNotEmpty(pOrganization.getId())) {
-			existingPOrganization = prdnOrgService
-					.getProductionOrganisationById(pOrganization.getId());
+			existingPOrganization = producerOrgService
+					.getProducerOrganisationById(pOrganization.getId());
 			existingPOrganization.setName(pOrganization.getName());
 
 			if (pOrganization.getProducers() != null) {
@@ -107,8 +125,8 @@ public class ProducerOrganizationController {
 		}
 
 		try {
-			prdnOrgService.validate(existingPOrganization);
-			prdnOrgService.save(existingPOrganization);
+			producerOrgService.validate(existingPOrganization);
+			producerOrgService.save(existingPOrganization);
 			model.put(WebConstants.MODEL_ATTRIBUTE_SYSTEM_MESSAGE,
 					"Production Organization saved sucessfully.");
 		} catch (ValidationException e) {

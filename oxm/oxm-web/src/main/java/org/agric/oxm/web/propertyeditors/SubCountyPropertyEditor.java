@@ -1,24 +1,36 @@
 package org.agric.oxm.web.propertyeditors;
 
+import org.agric.oxm.model.SubCounty;
+import org.agric.oxm.server.service.Adminservice;
+import org.apache.commons.lang.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component("subCountyPropertyEditor")
 public class SubCountyPropertyEditor extends BasePropertyEditor {
 
-    /*@Autowired
-    private AdminService adminService;
+	@Autowired
+	private Adminservice setupService;
 
-    @Override
-    public void setAsText(String text) throws IllegalArgumentException {
-	if (StringUtils.isNotBlank(text) && StringUtils.isNotEmpty(text)) {
-	    if (StringUtils.equalsIgnoreCase("none", text)) {
-		super.setValue(null);
-	    } else {
-		super.setValue(adminService.getSubCountyById(text));
-	    }
-	} else {
-	    super.setAsText(text);
+	@Override
+	public String getAsText() {
+		if (super.getValue() != null && super.getValue() instanceof SubCounty) {
+			return ((SubCounty) super.getValue()).getId();
+		}
+
+		return super.getAsText();
 	}
-    }
-*/
+
+	@Override
+	public void setAsText(String text) throws IllegalArgumentException {
+		if (StringUtils.isNotBlank(text) && StringUtils.isNotEmpty(text)) {
+			if (StringUtils.equalsIgnoreCase("none", text)) {
+				super.setValue(null);
+			} else {
+				super.setValue(setupService.getSubCountyById(text));
+			}
+		} else {
+			super.setAsText(text);
+		}
+	}
 }

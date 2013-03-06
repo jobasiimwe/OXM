@@ -28,6 +28,9 @@
 <tiles:insertAttribute name="scripts" ignore="true" />
 </head>
 <body style="background: white;">
+
+<input id="baseUrl" value=${baseUrl } type="hidden"/>
+
 	<%
 	    User user = null;
 	    try {
