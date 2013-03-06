@@ -12,7 +12,7 @@
 	<label class="uiLabel">You are here >> </label>
 	<oxmBreadcrambs:cpanel />
 	>
-	<oxmBreadcrambs:croplist />
+	<oxmBreadcrambs:positionlist />
 </div>
 
 <div id="buttonStrip">
@@ -44,7 +44,7 @@
 					<c:forEach var="position" items="${positions }">
 						<tr id="${position.id }">
 							<td><input type="checkbox" name="selectedPosition"
-								value="${crop.id }" /></td>
+								value="${position.id }" /></td>
 							<td>${position.index }</td>
 							<td>${position.name }</td>
 						</tr>

@@ -1,2 +1,2 @@
 
-<script type="text/javascript" src="${baseUrl }/static/js/crop.js"></script>
+<script type="text/javascript" src="${baseUrl }/static/js/position.js"></script>

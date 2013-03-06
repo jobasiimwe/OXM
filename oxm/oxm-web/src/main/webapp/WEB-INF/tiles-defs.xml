@@ -167,16 +167,16 @@
 	</definition>
 	
 	<!-- ======= FORM for Production Organization ========== -->
-	<definition name="viewProductionOrg" extends="layout">
-	    <put-attribute name="scripts" type="template" value="/WEB-INF/views/tiles/productionorg/scripts.jsp" />
-		<put-attribute name="pageTitle" type="string" value="View Production Organization(s)" />
-		<put-attribute name="body" type="template" value="/WEB-INF/views/tiles/productionorg/view.jsp" />
+	<definition name="viewProducerOrg" extends="layout">
+	    <put-attribute name="scripts" type="template" value="/WEB-INF/views/tiles/producerorg/scripts.jsp" />
+		<put-attribute name="pageTitle" type="string" value="View Production Organisation(s)" />
+		<put-attribute name="body" type="template" value="/WEB-INF/views/tiles/producerorg/view.jsp" />
 	</definition>
 	
-	<definition name="formProductionOrg" extends="layout">
-	    <put-attribute name="scripts" type="template" value="/WEB-INF/views/tiles/productionorg/scripts.jsp" />
+	<definition name="formProducerOrg" extends="layout">
+	    <put-attribute name="scripts" type="template" value="/WEB-INF/views/tiles/producerorg/scripts.jsp" />
 		<put-attribute name="pageTitle" type="string" value="Add/Edit Production Organization" />
-		<put-attribute name="body" type="template" value="/WEB-INF/views/tiles/productionorg/form.jsp" />
+		<put-attribute name="body" type="template" value="/WEB-INF/views/tiles/producerorg/form.jsp" />
 	</definition>
 	
 	<!-- ======= FORM for Price ========== -->
@@ -190,6 +190,19 @@
 	    <put-attribute name="scripts" type="template" value="/WEB-INF/views/tiles/price/scripts.jsp" />
 		<put-attribute name="pageTitle" type="string" value="Add/Edit Price" />
 		<put-attribute name="body" type="template" value="/WEB-INF/views/tiles/price/form.jsp" />
+	</definition>
+	
+	<!-- ======= Position tile definitions ========== -->
+	<definition name="viewPosition" extends="layout">
+	    <put-attribute name="scripts" type="template" value="/WEB-INF/views/tiles/position/scripts.jsp" />
+		<put-attribute name="pageTitle" type="template" value="/WEB-INF/views/tiles/contentheader.jsp" />
+		<put-attribute name="body" type="template" value="/WEB-INF/views/tiles/position/view.jsp" />
+	</definition>
+	
+	<definition name="formPosition" extends="layout">
+	    <put-attribute name="scripts" type="template" value="/WEB-INF/views/tiles/price/scripts.jsp" />
+		<put-attribute name="pageTitle" type="template" value="/WEB-INF/views/tiles/contentheader.jsp" />
+		<put-attribute name="body" type="template" value="/WEB-INF/views/tiles/position/form.jsp" />
 	</definition>
 	
 	

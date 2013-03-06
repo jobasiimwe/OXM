@@ -23,6 +23,8 @@
 					id="cbxSelectAllItems" />
 				</th>
 				<th>Name</th>
+				<th>Sub-County</th>
+				<th>District</th>
 				<th></th>
 			</tr>
 		</thead>
@@ -35,6 +37,8 @@
 								value="${pOrg.id }" />
 							</td>
 							<td>${pOrg.name }</td>
+							<td>${pOrg.subCounty.name }</td>
+							<td>${pOrg.district.name }</td>
 							<td>
 								<a class="icon icon-list" title="view Productions"
 								href="${baseUrl }/production/view/${pOrg.id }">View Productions</a>

@@ -2,7 +2,8 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 
-<%@ taglib prefix="oxmBreadcrambs" tagdir="/WEB-INF/tags/breadcramblinks"%>
+<%@ taglib prefix="oxmBreadcrambs"
+	tagdir="/WEB-INF/tags/breadcramblinks"%>
 
 <style>
 form#concept input[type="text"] {
@@ -19,50 +20,32 @@ form#concept input[type="text"] {
 		<label class="uiLabel">You are here > </label>
 		<oxmBreadcrambs:cpanel />
 		>
-		<oxmBreadcrambs:croplist /> > form
+		<oxmBreadcrambs:positionlist />
+		> form
 	</div>
 
-	<form:form action="${baseUrl }/crop/save/" commandName="crop">
+	<form:form action="${baseUrl }/position/save/" commandName="position">
 
 		<form:hidden path="id" />
 		<div class="splitcontentleft">
-			<div class="box ">
-				<p>
-					<label>Name <span class="required">*</span> </label>
-					<form:input path="name" cssClass="uiTextbox" />
-				</p>
-				<p>
-					<label>Inputs <span class="required">*</span> </label>
-					<form:checkboxes id="cropInputs" items="${cropInputs }"
-						path="inputs" itemValue="id" itemLabel="name" />
-				</p>
-				<p>
-					<label>Seed Varieties <span class="required">*</span> </label>
-					<form:checkboxes id="seedVarieties" items="${seedVarieties }"
-						path="seedVarieties" itemValue="id" itemLabel="name" />
-				</p>
-				<p>
-					<label>Ploughing Methods <span class="required">*</span> </label>
-					<form:checkboxes id="ploughingMethods" items="${ploughingMethods }"
-						path="ploughingMethods" itemValue="id" itemLabel="name" />
-				</p>
-				<p>
-					<label>Inter Croping Types <span class="required">*</span>
-					</label>
-					<form:checkboxes id="interCropingTypes"
-						items="${interCropingTypes }" path="interCroppingTypes"
-						itemValue="id" itemLabel="name" />
-				</p>
-				<p>
-					<label>Units of Measure <span class="required">*</span> </label>
-					<form:checkboxes id="unitsOfMeasure" items="${unitsOfMeasure }"
-						path="unitsOfMeasure" itemValue="id" itemLabel="name" />
-				</p>
+			<div class="box">
+				<table>
+					<tr>
+						<td><label>No. <span class="required">*</span> </label>
+						</td>
+						<td><form:input path="index" cssClass="uiTextbox" />
+						</td>
+					<tr>
+						<td><label>Name <span class="required">*</span> </label>
+						</td>
+						<td><form:input path="name" cssClass="uiTextbox" />
+						</td>
+				</table>
 			</div>
 		</div>
 		<div style="clear: both"></div>
 		<div>
-			<input id="btnSaveConcept" type="submit" value="Save"
+			<input id="btnSavePosition" type="submit" value="Save"
 				class="uiButton" />
 		</div>
 	</form:form>

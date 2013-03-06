@@ -25,7 +25,7 @@ public class Position extends BaseData implements Comparable<Position> {
 		this.name = name;
 	}
 
-	@Column(name = "index", nullable = false)
+	@Column(name = "index_no", nullable = false)
 	public int getIndex() {
 		return index;
 	}

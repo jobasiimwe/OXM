@@ -194,16 +194,6 @@ $(document).ready(function(){
             );
     }
     
-    
-    $("#studentbtnSave").click(function(){
-    	var studentNo = $("#studentNoField").val();
-    	if(studentNo.length == 9){
-    		return true;
-    	}else{
-    		alert("The Student No should be 9 digits")
-    		return false;
-    	}
-	});
 	
     
 });

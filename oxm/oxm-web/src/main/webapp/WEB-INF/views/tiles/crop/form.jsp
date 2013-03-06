@@ -62,7 +62,7 @@ form#concept input[type="text"] {
 		</div>
 		<div style="clear: both"></div>
 		<div>
-			<input id="btnSaveConcept" type="submit" value="Save"
+			<input id="btnSaveCrop" type="submit" value="Save"
 				class="uiButton" />
 		</div>
 	</form:form>

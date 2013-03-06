@@ -67,7 +67,7 @@ public class PositionController {
 
 	@Secured({ PermissionConstants.PERM_VIEW_ADMINISTRATION })
 	@RequestMapping(value = "/search", method = RequestMethod.POST)
-	public ModelAndView courseSearchHandler(
+	public ModelAndView positionSearchHandler(
 			@ModelAttribute(COMMAND_NAME) GenericCommand searchCommand,
 			@RequestParam(value = "pageNo", required = false) Integer pageNo,
 			ModelMap model) {
@@ -79,7 +79,7 @@ public class PositionController {
 
 		preparePositionSearchModel(params, true, true, pageNo, model);
 
-		return new ModelAndView("viewCourses", model);
+		return new ModelAndView("viewPosition", model);
 	}
 
 	/**
@@ -145,7 +145,7 @@ public class PositionController {
 		return buffer.toString();
 	}
 
-	@Secured({ PermissionConstants.VIEW_CROP })
+	@Secured({ PermissionConstants.VIEW_COMMITTEE__DETAILS })
 	@RequestMapping(method = RequestMethod.GET, params = { "action=search" })
 	public ModelAndView userSearchNavigationHandler(
 			@RequestParam(value = PositionController.PARAM_NAME, required = false) String name,
@@ -161,7 +161,7 @@ public class PositionController {
 				extractPositionSearchParamsFromCommand(command), true, false,
 				pageNo, model);
 
-		return new ModelAndView("viewPositions", model);
+		return new ModelAndView("viewPosition", model);
 	}
 
 	private SingleStringSearchParameters extractPositionSearchParamsFromCommand(
@@ -175,22 +175,22 @@ public class PositionController {
 		return params;
 	}
 
-	@Secured({ PermissionConstants.VIEW_CROP })
-	@RequestMapping(value = "/details/{positionid}", method = RequestMethod.GET)
-	public ModelAndView viewPositionDetailsHandler(
+	@Secured({ PermissionConstants.VIEW_COMMITTEE__DETAILS })
+	@RequestMapping(value = "/holders/{positionid}", method = RequestMethod.GET)
+	public ModelAndView viewPositionHoldersHandler(
 			@PathVariable("positionid") String positionid, ModelMap model) {
 
 		if (!model.containsAttribute("position")) {
 			Position position = positionService.getPositionById(positionid);
 			model.put("position", position);
-			model.put(WebConstants.CONTENT_HEADER, position.getName()
-					+ " Details");
+			model.put(WebConstants.CONTENT_HEADER, "Holders of Position - "
+					+ position.getName());
 		}
 
-		return new ModelAndView("positionDetails", model);
+		return new ModelAndView("positionHolders", model);
 	}
 
-	@Secured({ PermissionConstants.ADD_CROP })
+	@Secured({ PermissionConstants.ADD_COMMITTEE_DETAILS })
 	@RequestMapping(value = "/edit/{positionid}", method = RequestMethod.GET)
 	public ModelAndView editPositionHandler(
 			@PathVariable("positionid") String positionid, ModelMap model) {
@@ -201,10 +201,11 @@ public class PositionController {
 			model.put(WebConstants.CONTENT_HEADER, "Edit " + position.getName());
 		}
 
-		return new ModelAndView("positionForm", model);
+		return new ModelAndView("formPosition", model);
 	}
 
-	@Secured({ PermissionConstants.EDIT_CROP, PermissionConstants.ADD_CROP })
+	@Secured({ PermissionConstants.EDIT_COMMITTEE__DETAILS,
+			PermissionConstants.ADD_CROP })
 	@RequestMapping(method = RequestMethod.POST, value = "/save")
 	public ModelAndView savePositionHandler(
 			@ModelAttribute("position") Position position, ModelMap model) {
@@ -243,7 +244,7 @@ public class PositionController {
 
 	}
 
-	@Secured({ PermissionConstants.ADD_CROP })
+	@Secured({ PermissionConstants.ADD_COMMITTEE_DETAILS })
 	@RequestMapping(value = "/add", method = RequestMethod.GET)
 	public ModelAndView addPositionHandler(ModelMap model) {
 
@@ -251,7 +252,7 @@ public class PositionController {
 		model.put("position", position);
 		model.put(WebConstants.CONTENT_HEADER, "Add new Position");
 
-		return new ModelAndView("positionForm", model);
+		return new ModelAndView("formPosition", model);
 	}
 
 	/**
