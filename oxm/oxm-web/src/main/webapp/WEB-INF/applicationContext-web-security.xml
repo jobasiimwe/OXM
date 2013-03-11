@@ -13,7 +13,7 @@
     <bean id="filterChainProxy" class="org.springframework.security.web.FilterChainProxy">
         <security:filter-chain-map path-type="ant">
             <security:filter-chain pattern="/static/**" filters="none" />
-            <security:filter-chain pattern="/midlet/**" filters="none" />
+            <security:filter-chain pattern="/annoymous/**" filters="none" />
             <security:filter-chain pattern="/ServiceLogin" filters="none" />
             <security:filter-chain pattern="/ServiceLoginFailure" filters="none" />
             <security:filter-chain pattern="/**" filters="securityContextPersistenceFilterWithASCTrue,

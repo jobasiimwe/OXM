@@ -60,14 +60,13 @@
 		<label>Status </label>
 		<form:select path="status" items="${userstatus }" itemLabel="name"></form:select>
 	</p>
-</div>
-<div style="clear: both"></div>
-<div class="splitcontentright">
-	<div class="box">
-		<h3>Roles</h3>
+	<h3>Roles</h3>
 		<p>
 			<form:checkboxes items="${roles }" path="roles" itemValue="id"
 				itemLabel="name" />
 		</p>
-	</div>
+</div>
+<div style="clear: both"></div>
+<div class="splitcontentright">
+	
 </div>

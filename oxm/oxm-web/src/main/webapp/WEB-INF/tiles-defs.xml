@@ -9,6 +9,14 @@
 		<put-attribute name="body" type="template" value="/WEB-INF/views/tiles/body.jsp" />
 		<put-attribute name="footer" type="template" value="/WEB-INF/views/tiles/footer.jsp" />
 	</definition>
+	
+	<definition name="annoymouslayout" template="/WEB-INF/views/annoymouslayout.jsp">
+		<put-attribute name="title" type="string" value="Oxfam e-agric System" />
+		<put-attribute name="header" type="template" value="/WEB-INF/views/tiles/header.jsp" />
+		<put-attribute name="baseurl" type="template" value="/WEB-INF/views/tiles/baseurl.jsp" />
+		<put-attribute name="body" type="template" value="/WEB-INF/views/tiles/body.jsp" />
+		<put-attribute name="footer" type="template" value="/WEB-INF/views/tiles/footer.jsp" />
+	</definition>
 
 	<definition name="index" extends="layout" />
 	
@@ -240,4 +248,17 @@
 		<put-attribute name="pageTitle" type="string" value="Add/Edit Financial Institution" />
 		<put-attribute name="body" type="template" value="/WEB-INF/views/tiles/fInstitution/form.jsp" />
 	</definition>
+	
+	<definition name="createUser" extends="annoymouslayout">
+	    <put-attribute name="title" type="string" value="e-agric System" />
+	    <put-attribute name="pageTitle" type="string" value="Create Free Account" />
+		<put-attribute name="body" type="template" value="/WEB-INF/views/tiles/users/annoymoususerform.jsp" />
+	
+	</definition>
+		<definition name="sucessfullogin" extends="annoymouslayout">
+	    <put-attribute name="title" type="string" value="e-agric System" />
+	    <put-attribute name="pageTitle" type="string" value="Information" />
+		<put-attribute name="body" type="template" value="/WEB-INF/views/success.jsp" />
+	</definition>
+	
 </tiles-definitions>

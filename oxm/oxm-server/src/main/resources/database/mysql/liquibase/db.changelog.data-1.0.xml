@@ -269,14 +269,23 @@
 	</changeSet>
 
 
-	<!-- <changeSet author="Job (Manual)" id="b1"> <preConditions> <tableExists 
-		tableName="district" /> </preConditions> <sqlFile path="database/mysql/sql/insert-district.sql"></sqlFile> 
-		</changeSet> <changeSet author="Job (Manual)" id="b2"> <preConditions> <tableExists 
-		tableName="suc_county" /> </preConditions> <sqlFile path="database/mysql/sql/insert-subcounty.sql"></sqlFile> 
-		</changeSet> <changeSet author="Job (Manual)" id="b3"> <preConditions> <tableExists 
-		tableName="parish" /> </preConditions> <sqlFile path="database/mysql/sql/insert-parish.sql"></sqlFile> 
-		</changeSet> <changeSet author="Job (Manual)" id="b4"> <preConditions> <tableExists 
-		tableName="village" /> </preConditions> <sqlFile path="database/mysql/sql/insert-village.sql"></sqlFile> 
-		</changeSet> <changeSet author="Job (Manual)" id="b5"> <sqlFile path="database/mysql/sql/insert-sellingplace.sql"></sqlFile> 
-		</changeSet> -->
+<changeSet author="jompango@gmail.com" id="142EDw1-C123-424A-BD75-4eef-KTPEs">
+		<preConditions onFail="MARK_RAN" onError="HALT">
+			<tableExists tableName="roles" />
+			<and>
+				<sqlCheck expectedResult="0">
+	    			<![CDATA[
+					SELECT count(*) FROM roles where id='142EDw1-C123-424A-BD75-4eef-KTPEs';
+					]]>
+				</sqlCheck>
+			</and>
+		</preConditions>
+		<insert tableName="roles">
+			<column name="id" value="142EDw1-C123-424A-BD75-4eef-KTPEs" />
+			<column name="role_name" value="ROLE_ANNOYMOUS_USER" />
+			<column name="description" value="Default User Role"></column>
+			<column name="record_status" valueNumeric="0" />
+		</insert>
+	</changeSet>
+
 </databaseChangeLog>

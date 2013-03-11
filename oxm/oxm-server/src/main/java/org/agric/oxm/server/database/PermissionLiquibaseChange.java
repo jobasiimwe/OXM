@@ -28,7 +28,7 @@ public class PermissionLiquibaseChange implements CustomTaskChange {
 	public void execute(Database database) throws CustomChangeException,
 			UnsupportedChangeException {
 		log
-				.debug("Extracting fields from >> class org.mak.cis.mohr.security.SecurityConstants");
+				.debug("Extracting fields from >>");
 		Field[] fields = PermissionConstants.class.getFields();
 		if (fields != null) {
 			for (Field field : fields) {
