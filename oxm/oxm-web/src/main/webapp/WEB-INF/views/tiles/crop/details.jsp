@@ -13,7 +13,7 @@
 		<label class="uiLabel">You are here > </label>
 		<oxmBreadcrambs:cpanel />
 		>
-		<oxmBreadcrambs:croplist />
+		<oxmBreadcrambs:crops />
 	</div>
 
 	<oxmTags:printconcepts listHeader="Inputs" concepts="${crop.inputs }" />

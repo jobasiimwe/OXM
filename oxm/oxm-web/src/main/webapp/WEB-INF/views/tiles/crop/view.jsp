@@ -12,7 +12,7 @@
 	<label class="uiLabel">You are here >> </label>
 	<oxmBreadcrambs:cpanel />
 	>
-	<oxmBreadcrambs:croplist />
+	<oxmBreadcrambs:crops />
 </div>
 
 <div id="buttonStrip">
@@ -54,7 +54,7 @@
 							<td>${fn:length(crop.seedVarieties) }</td>
 							<td>${fn:length(crop.ploughingMethods) }</td>
 							<td>${fn:length(crop.interCroppingTypes) }</td>
-							<td>${fn:length(crop.unitsOfMeasure)}</td>
+							<td>${crop.unitsOfMeasureNames}</td>
 						</tr>
 					</c:forEach>
 				</c:when>

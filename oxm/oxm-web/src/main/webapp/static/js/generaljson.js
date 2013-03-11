@@ -31,18 +31,23 @@ $(document).ready(
 				loadSubCounties();
 			});
 
+			loadSubCounties();
+
 			function loadSubCounties() {
-				var districtId = $("#dddistrict").attr("value");
-				var districtId = $.trim(districtId);
-				if (districtId == '') {
-					alert("Select a district first");
-					return false;
+				if ($('#dddistrict').length) {
+					var districtId = $("#dddistrict").attr("value");
+					var districtId = $.trim(districtId);
+					if (districtId == '') {
+						alert("Select a district first");
+						return false;
+					}
+					var url = getBaseURL() + 'get/json/subcounties/'
+							+ districtId;
+					fetchChildObjects(url, "ddsubcounty")
+
+					$("#ddparish").html('');
+					$("#ddvillageLc1Zone").html('');
 				}
-				var url = getBaseURL() + 'get/json/subcounties/' + districtId;
-				fetchChildObjects(url, "ddsubcounty")
-				
-				$("#ddparish").html('');
-				$("#ddvillageLc1Zone").html('');
 				return false;
 			}
 
@@ -59,7 +64,7 @@ $(document).ready(
 				}
 				var url = getBaseURL() + 'get/json/parishes/' + subcountyId;
 				fetchChildObjects(url, "ddparish")
-				
+
 				$("#ddvillageLc1Zone").html('');
 				return false;
 			}

@@ -12,7 +12,7 @@
 	<label class="uiLabel">You are here >> </label>
 	<oxmBreadcrambs:cpanel />
 	>
-	<oxmBreadcrambs:positionlist />
+	<oxmBreadcrambs:positions />
 </div>
 
 <div id="buttonStrip">

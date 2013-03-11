@@ -1,2 +1,2 @@
 
-<script type="text/javascript" src="${baseUrl }/static/js/sellingplace.js"></script>
+<script type="text/javascript" src="${baseUrl }/static/js/pricemonitor.js"></script>

@@ -32,6 +32,11 @@ public class Price extends BaseData implements Comparable<Price> {
 		super();
 	}
 
+	public Price(Crop crop) {
+		super();
+		this.setCrop(crop);
+	}
+
 	@OneToOne
 	@JoinColumn(name = "crop_id", nullable = false)
 	public Crop getCrop() {

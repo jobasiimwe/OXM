@@ -179,6 +179,16 @@
 		<put-attribute name="body" type="template" value="/WEB-INF/views/tiles/producerorg/form.jsp" />
 	</definition>
 	
+	<definition name="viewPOrgProducers" extends="layout">
+	    <put-attribute name="scripts" type="template" value="/WEB-INF/views/tiles/producerorg/scripts.jsp" />
+		<put-attribute name="pageTitle" type="template" value="/WEB-INF/views/tiles/contentheader.jsp" />
+		<put-attribute name="body" type="template" value="/WEB-INF/views/tiles/producerorg/viewproducer.jsp" />
+	</definition>
+	
+	<definition name="formPOrgProducer" extends="viewPOrgProducers">
+		<put-attribute name="body" type="template" value="/WEB-INF/views/tiles/producerorg/formproducer.jsp" />
+	</definition>
+	
 	<!-- ======= FORM for Price ========== -->
 	<definition name="viewPrice" extends="layout">
 	    <put-attribute name="scripts" type="template" value="/WEB-INF/views/tiles/price/scripts.jsp" />

@@ -3,9 +3,21 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix='fn' uri='http://java.sun.com/jsp/jstl/functions'%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
+<%@ taglib prefix="oxmBreadcrambs"
+	tagdir="/WEB-INF/tags/breadcramblinks"%>
+	
+
+<div style="margin: 5px; width: 100%;">
+	<label class="uiLabel">You are here >> </label>
+	<oxmBreadcrambs:cpanel />
+	>
+	<oxmBreadcrambs:prices />
+</div>
+
 <div id="buttonStrip">
 	<div class="contextual" style="float: left;">
-		<a id="lnkAddPrice" class="uiButton" href="${baseUrl }/price/add/">Add</a>
+		<a id="lnkAddPrice1" class="uiButton" href="${baseUrl }/price/add/">Add</a>
 		<a id="lnkEditPrice" class="uiButton" href="${baseUrl }/price/edit/">Edit</a> 
 		<a id="lnkDeletePrice"
 			class="uiButton" href="${baseUrl }/price/delete/">Delete</a>
@@ -25,10 +37,9 @@
 				<th>Crop</th>
 				<th>Selling Place</th>
 				<th>Type</th>
-				<th>Unit of Measure</th>
+				<th>Quantity/Unit</th>
 				<th>Price</th>
 				<th>Date</th>
-				<th>Quantity</th>
 				
 			</tr>
 		</thead>
@@ -43,10 +54,9 @@
 							<td>${price.crop.name }</td>
 							<td>${price.sellingPlace.name }</td>
 							<td>${price.sellType.name }</td>
-							<td>${price.unitOfMeasure.name }</td>
+							<td>${price.quantity }(${price.unitOfMeasure.name })</td>
 							<td>${price.price }</td>
 							<td><fmt:formatDate value="${price.date}" pattern="dd/MM/yyyy"/></td>
-							<td>${price.quantity }</td>
 						</tr>
 					</c:forEach>
 				</c:when>

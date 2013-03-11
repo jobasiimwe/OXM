@@ -69,6 +69,14 @@ public class User extends BaseData implements Comparable<User> {
 		super();
 	}
 
+	public User(ProducerOrganisation pOrg, Role role) {
+		super();
+		this.setProducerOrganisation(pOrg);
+		this.setSubCounty(pOrg.getSubCounty());
+
+		this.addRole(role);
+	}
+
 	@Transient
 	public String getClearTextPassword() {
 		return clearTextPassword;

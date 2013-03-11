@@ -3,6 +3,16 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix='fn' uri='http://java.sun.com/jsp/jstl/functions'%>
 
+<%@ taglib prefix="oxmBreadcrambs"
+	tagdir="/WEB-INF/tags/breadcramblinks"%>
+	
+
+<div style="margin: 5px; width: 100%;">
+	<label class="uiLabel">You are here >> </label>
+	<oxmBreadcrambs:cpanel />
+	>
+	<oxmBreadcrambs:producerorg />
+</div>
 <div id="buttonStrip">
 	<div class="contextual" style="float: left;">
 		<a id="lnkAddProductionOrg" class="uiButton"
@@ -11,7 +21,7 @@
 			href="${baseUrl }/producerorg/edit/">Edit</a> <a
 			id="lnkDeleteProductionOrg" class="uiButton"
 			href="${baseUrl }/producerorg/delete/">Delete</a> <a
-			id="lnkProducers" class="uiButton"
+			id="lnkProducerOrgProducers" class="uiButton"
 			href="${baseUrl }/producerorg/producers/view/">Producers</a>
 	</div>
 	<div style="float: right;">

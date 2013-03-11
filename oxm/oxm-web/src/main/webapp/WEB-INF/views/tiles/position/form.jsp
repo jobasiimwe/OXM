@@ -20,7 +20,7 @@ form#concept input[type="text"] {
 		<label class="uiLabel">You are here > </label>
 		<oxmBreadcrambs:cpanel />
 		>
-		<oxmBreadcrambs:positionlist />
+		<oxmBreadcrambs:positions />
 		> form
 	</div>
 

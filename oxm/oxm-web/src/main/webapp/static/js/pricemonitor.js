@@ -77,6 +77,22 @@ $(document)
 										return false;
 									});
 
+					$('#lnkAddPrice').click(function() {
+
+						var cropId = $('#ddCrops').attr("value");
+						if (cropId == null || cropId == "") {
+							alert("Select a crop to add a price");
+							return false;
+						} else {
+							var href = $(this).attr("href");
+							href = href + cropId;
+							$(this).attr("href", href);
+
+							return true;
+						}
+
+					});
+
 					$("#lnkDeletePrice")
 							.click(
 									function() {

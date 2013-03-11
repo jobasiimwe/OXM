@@ -9,6 +9,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 
 @Entity
@@ -159,6 +160,24 @@ public class Crop extends BaseData implements Comparable<Crop> {
 			"crop_id", "concept_id" }), name = "crop_units_of_measure", joinColumns = @JoinColumn(name = "crop_id", unique = false), inverseJoinColumns = @JoinColumn(name = "concept_id", unique = false))
 	public List<Concept> getUnitsOfMeasure() {
 		return unitsOfMeasure;
+	}
+
+	@Transient
+	public String getUnitsOfMeasureNames() {
+		String units = "";
+		if (unitsOfMeasure == null || unitsOfMeasure.size() == 0) {
+			units = "none";
+		} else {
+			if (unitsOfMeasure.size() == 1)
+				units = unitsOfMeasure.get(0).getName();
+			else if (unitsOfMeasure.size() == 2)
+				units = unitsOfMeasure.get(0).getName() + ", "
+						+ unitsOfMeasure.get(1).getName();
+			else if (unitsOfMeasure.size() > 2)
+				units = unitsOfMeasure.get(0).getName() + ", "
+						+ unitsOfMeasure.get(1).getName() + "...";
+		}
+		return units;
 	}
 
 	public void setUnitsOfMeasure(List<Concept> unitsOfMeasure) {

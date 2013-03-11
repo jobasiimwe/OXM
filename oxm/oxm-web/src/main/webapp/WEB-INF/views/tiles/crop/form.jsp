@@ -19,7 +19,7 @@ form#concept input[type="text"] {
 		<label class="uiLabel">You are here > </label>
 		<oxmBreadcrambs:cpanel />
 		>
-		<oxmBreadcrambs:croplist /> > form
+		<oxmBreadcrambs:crops /> > form
 	</div>
 
 	<form:form action="${baseUrl }/crop/save/" commandName="crop">

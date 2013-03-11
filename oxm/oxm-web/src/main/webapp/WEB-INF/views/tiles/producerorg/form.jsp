@@ -12,12 +12,20 @@ form#concept input[type="text"] {
 	width: 50%;
 }
 </style>
+
+<%@ taglib prefix="oxmBreadcrambs"
+	tagdir="/WEB-INF/tags/breadcramblinks"%>
+	
+
+<div style="margin: 5px; width: 100%;">
+	<label class="uiLabel">You are here >> </label>
+	<oxmBreadcrambs:cpanel />
+	>
+	<oxmBreadcrambs:producerorg />
+</div>
+
 <div>
-	<div style="margin: 5px; width: 100%;">
-		<label class="uiLabel">Production Organization >> </label><a
-			title="Back to Production Organization"
-			href="${baseUrl }/pOrganization/view/">Back</a>
-	</div>
+	
 	<form:form action="${baseUrl }/producerorg/save/"
 		commandName="pOrganization">
 
