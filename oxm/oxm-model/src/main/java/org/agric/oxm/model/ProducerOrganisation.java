@@ -61,7 +61,7 @@ public class ProducerOrganisation extends BaseData implements
 		this.subCounty = subCounty;
 	}
 
-	@OneToMany(mappedBy = "producerOrganisation", cascade = { CascadeType.ALL }, orphanRemoval = false)
+	@OneToMany(mappedBy = "producerOrg", cascade = { CascadeType.ALL }, orphanRemoval = false)
 	public List<User> getProducers() {
 		return producers;
 	}

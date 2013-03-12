@@ -7,18 +7,18 @@ import org.springframework.stereotype.Component;
 
 @Component("cropPropertyEditor")
 public class CropPropertyEditor extends BasePropertyEditor {
-    @Autowired
-    private CropService cropService;
+	@Autowired
+	private CropService cropService;
 
-    public void setAsText(String text) throws IllegalArgumentException {
-	if (StringUtils.isNotBlank(text) && StringUtils.isNotEmpty(text)) {
-	    if (StringUtils.equalsIgnoreCase("none", text)) {
-		super.setValue(null);
-	    } else {
-		super.setValue(cropService.getCropById(text));
-	    }
-	} else {
-	    super.setAsText(text);
+	public void setAsText(String text) throws IllegalArgumentException {
+		if (StringUtils.isNotBlank(text) && StringUtils.isNotEmpty(text)) {
+			if (StringUtils.equalsIgnoreCase("none", text)) {
+				super.setValue(null);
+			} else {
+				super.setValue(cropService.getCropById(text));
+			}
+		} else {
+			super.setAsText(text);
+		}
 	}
-    }
 }

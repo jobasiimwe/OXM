@@ -10,7 +10,6 @@ import org.agric.oxm.model.User;
 import org.agric.oxm.model.UserStatus;
 import org.agric.oxm.model.exception.OperationFailedException;
 import org.agric.oxm.model.exception.SessionExpiredException;
-import org.agric.oxm.model.exception.ValidationException;
 import org.agric.oxm.server.security.PermissionConstants;
 import org.agric.oxm.server.security.util.OXMSecurityUtil;
 import org.agric.oxm.server.service.UserService;
@@ -41,9 +40,8 @@ public class UserController {
 			@PathVariable("qpage") String userPage, ModelMap model)
 			throws SessionExpiredException {
 
-		User user = userService.getUserById(id);
-
-		if (user != null) {
+		if (!model.containsAttribute("user")) {
+			User user = userService.getUserById(id);
 			WebConstants.loadLoggedInUserProfile(
 					OXMSecurityUtil.getLoggedInUser(), model);
 
@@ -74,39 +72,22 @@ public class UserController {
 
 		User existingUser = user;
 		try {
-			if (!WebConstants.isFileAnImage(userPic)) {
-				throw new Exception(
-						"error: the file uploaded for the user photo is not an image.");
-			}
-
-			if (!WebUtils.isValidSize(userPic,
-					WebConstants.DEFAULT_IMAGE_SIZE_IN_BYTES)) {
-				throw new Exception(
-						String.format(
-								"error: the next of kin photo exceeds the maximum size of >> %s",
-								WebConstants.DEFAULT_IMAGE_SIZE_IN_BYTES));
-			}
-
-		} catch (Exception e) {
-			model.put(WebConstants.MODEL_ATTRIBUTE_ERROR_MESSAGE,
-					e.getMessage());
-			return editUserHandler(existingUser.getId(), qPage, model);
-		}
-		if (StringUtils.isNotEmpty(user.getId())) {
-			existingUser = userService.getUserById(user.getId());
-			copyUserContents(existingUser, user);
-		} else {
-			existingUser.setId(null);
-		}
-
-		try {
-
+			
 			if (userPic != null && userPic.getSize() > 0) {
+				validatePic(userPic);
 				existingUser.setProfilePicture(userPic.getBytes());
 			}
+			
+			if (StringUtils.isNotEmpty(user.getId())) {
+				existingUser = userService.getUserById(user.getId());
+				copyUserContents(existingUser, user);
+			} else {
+				existingUser.setId(null);
+			}
+			
 			userService.validate(existingUser);
 			userService.saveUser(existingUser);
-		} catch (ValidationException e) {
+		} catch (Exception e) {
 			model.put(WebConstants.MODEL_ATTRIBUTE_ERROR_MESSAGE,
 					e.getMessage());
 			return editUserHandler(existingUser.getId(), qPage, model);
@@ -136,13 +117,27 @@ public class UserController {
 		return new ModelAndView("dashboard", model);
 	}
 
-	private void copyUserContents(User existingUser, User user) {
+	public void validatePic(MultipartFile userPic) throws Exception {
+		if (!WebConstants.isFileAnImage(userPic)) {
+			throw new Exception(
+					"error: the file uploaded for the user photo is not an image.");
+		}
+
+		if (!WebUtils.isValidSize(userPic,
+				WebConstants.DEFAULT_IMAGE_SIZE_IN_BYTES)) {
+			throw new Exception(
+					String.format(
+							"error: the next of kin photo exceeds the maximum size of >> %s",
+							WebConstants.DEFAULT_IMAGE_SIZE_IN_BYTES));
+		}
+	}
+
+	public void copyUserContents(User existingUser, User user) {
 		existingUser.setName(user.getName());
 		existingUser.setGender(user.getGender());
 		existingUser.setDateOfBirth(user.getDateOfBirth());
 		existingUser.setPhone1(user.getPhone1());
 		existingUser.setPhone2(user.getPhone2());
-		existingUser.setUserTypes(user.getUserTypes());
 		existingUser.setUsername(user.getUsername());
 
 		if (StringUtils.isNotEmpty(user.getPassword())) {

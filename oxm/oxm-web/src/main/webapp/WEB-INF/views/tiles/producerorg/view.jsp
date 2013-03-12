@@ -11,7 +11,7 @@
 	<label class="uiLabel">You are here >> </label>
 	<oxmBreadcrambs:cpanel />
 	>
-	<oxmBreadcrambs:producerorg />
+	<oxmBreadcrambs:producerorgs />
 </div>
 <div id="buttonStrip">
 	<div class="contextual" style="float: left;">

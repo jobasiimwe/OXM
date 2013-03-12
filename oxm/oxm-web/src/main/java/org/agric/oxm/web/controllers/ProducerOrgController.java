@@ -10,7 +10,6 @@ import org.agric.oxm.model.User;
 import org.agric.oxm.model.UserStatus;
 import org.agric.oxm.model.exception.SessionExpiredException;
 import org.agric.oxm.model.exception.ValidationException;
-import org.agric.oxm.server.DefaultConcepts;
 import org.agric.oxm.server.security.PermissionConstants;
 import org.agric.oxm.server.security.util.OXMSecurityUtil;
 import org.agric.oxm.server.service.Adminservice;
@@ -27,6 +26,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
@@ -41,16 +42,19 @@ public class ProducerOrgController {
 
 	@Autowired
 	private UserService userService;
-	
+
+	@Autowired
+	private UserController userController;
+
 	@Secured({ PermissionConstants.VIEW_PROD_ORG })
 	@RequestMapping(value = "/view", method = RequestMethod.GET)
-	public ModelAndView viewProducerOrgHandler(ModelMap model)
+	public ModelAndView viewProducerOrgHandler(ModelMap modelMap)
 			throws SessionExpiredException {
 		WebConstants.loadLoggedInUserProfile(OXMSecurityUtil.getLoggedInUser(),
-				model);
-		model.put("pOrganizations",
+				modelMap);
+		modelMap.put("pOrganizations",
 				producerOrgService.getProducerOrganisations());
-		return new ModelAndView("viewProducerOrg", model);
+		return new ModelAndView("viewProducerOrg", modelMap);
 	}
 
 	@Secured({ PermissionConstants.PERM_VIEW_ADMINISTRATION })
@@ -104,7 +108,7 @@ public class ProducerOrgController {
 	@Secured({ PermissionConstants.DELETE_PROD_ORG })
 	@RequestMapping(method = RequestMethod.GET, value = "/delete/{idz}")
 	public ModelAndView deleteProducerOrgHandler(
-			@PathVariable("idz") String idz, ModelMap model)
+			@PathVariable("idz") String idz, ModelMap modelMap)
 			throws SessionExpiredException {
 
 		String[] ids = idz.split(",");
@@ -112,11 +116,11 @@ public class ProducerOrgController {
 			producerOrgService.deleteProducerOrganisationsByIds(ids);
 
 		} catch (Exception e) {
-			model.put(WebConstants.MODEL_ATTRIBUTE_ERROR_MESSAGE,
+			modelMap.put(WebConstants.MODEL_ATTRIBUTE_ERROR_MESSAGE,
 					"no producer organisation(s) supplied for deleting");
 		}
 
-		return viewProducerOrgHandler(model);
+		return viewProducerOrgHandler(modelMap);
 	}
 
 	@Secured({ PermissionConstants.ADD_PROD_ORG,
@@ -124,7 +128,7 @@ public class ProducerOrgController {
 	@RequestMapping(method = RequestMethod.POST, value = "/save")
 	public ModelAndView saveProducerOrgHandler(
 			@ModelAttribute("pOrganization") ProducerOrganisation pOrganization,
-			ModelMap model) throws SessionExpiredException {
+			ModelMap modelMap) throws SessionExpiredException {
 
 		ProducerOrganisation existingPOrganization = pOrganization;
 
@@ -144,56 +148,97 @@ public class ProducerOrgController {
 		try {
 			producerOrgService.validate(existingPOrganization);
 			producerOrgService.save(existingPOrganization);
-			model.put(WebConstants.MODEL_ATTRIBUTE_SYSTEM_MESSAGE,
+			modelMap.put(WebConstants.MODEL_ATTRIBUTE_SYSTEM_MESSAGE,
 					"Production Organization saved sucessfully.");
 		} catch (ValidationException e) {
-			model.put(WebConstants.MODEL_ATTRIBUTE_ERROR_MESSAGE,
+			modelMap.put(WebConstants.MODEL_ATTRIBUTE_ERROR_MESSAGE,
 					e.getMessage());
 			WebConstants.loadLoggedInUserProfile(
-					OXMSecurityUtil.getLoggedInUser(), model);
-			model.put("pOrganization", pOrganization);
-			return new ModelAndView("formProducerOrg", model);
+					OXMSecurityUtil.getLoggedInUser(), modelMap);
+			modelMap.put("pOrganization", pOrganization);
+			return new ModelAndView("formProducerOrg", modelMap);
 
 		}
-		return viewProducerOrgHandler(model);
+		return viewProducerOrgHandler(modelMap);
 	}
 
 	@Secured({ PermissionConstants.VIEW_PROD_ORG })
 	@RequestMapping(value = "/producers/view/{pOrgId}", method = RequestMethod.GET)
 	public ModelAndView viewProducerOrgProducersHandler(
-			@PathVariable("pOrgId") String pOrgId, ModelMap model) {
+			@PathVariable("pOrgId") String pOrgId, ModelMap modelMap) {
 
 		ProducerOrganisation pOrg = producerOrgService
 				.getProducerOrganisationById(pOrgId);
-		model.put("pOrg", pOrg);
-		return new ModelAndView("viewPOrgProducers", model);
+		modelMap.put("pOrg", pOrg);
+		return new ModelAndView("viewPOrgProducers", modelMap);
 	}
-	
+
 	@Secured({ PermissionConstants.ADD_PRODUCER })
 	@RequestMapping(value = "/producers/add/{pOrgId}", method = RequestMethod.GET)
 	public ModelAndView addProducerOrgProducersHandler(
-			@PathVariable("pOrgId") String pOrgId, ModelMap model) {
+			@PathVariable("pOrgId") String pOrgId, ModelMap modelMap) {
 
 		ProducerOrganisation pOrg = producerOrgService
 				.getProducerOrganisationById(pOrgId);
-		model.put("pOrg", pOrg);
-		
-		//ROLE_PRODUCER id = 4836AFAB-3D62-482c-BA9A-D9D15839C68A
-		Role roleProducer = userService.getRoleById("4836AFAB-3D62-482c-BA9A-D9D15839C68A");
-		User producer = new User(pOrg, roleProducer);
-		
-		List<Role> roles = new ArrayList<Role>();
-		roles.add(roleProducer);
-		model.put("roles", roles);
-		model.put("userstatus", UserStatus.values());
-		return new ModelAndView("formPOrgProducer", model);
+		modelMap.put("pOrg", pOrg);
+
+		User producer = new User(pOrg);
+		modelMap.put("producer", producer);
+
+		prepareUserFormModel(modelMap);
+		return new ModelAndView("formPOrgProducer", modelMap);
 	}
 
-	private void prepareUserFormModel(ModelMap model) {
-		List<Role> roles = userService.getRoles();
-		model.put("roles", roles);
-		model.put("userstatus", new UserStatus[] { UserStatus.ENABLED,
+	private void prepareUserFormModel(ModelMap modelMap) {
+		// ROLE_PRODUCER id = 4836AFAB-3D62-482c-BA9A-D9D15839C68A
+		Role roleProducer = userService
+				.getRoleById("4836AFAB-3D62-482c-BA9A-D9D15839C68A");
+		List<Role> roles = new ArrayList<Role>();
+		roles.add(roleProducer);
+		modelMap.put("roles", roles);
+		modelMap.put("userstatus", new UserStatus[] { UserStatus.ENABLED,
 				UserStatus.DISABLED });
-		model.put("gender", OXMUtil.getGenderList());
+		modelMap.put("gender", OXMUtil.getGenderList());
+	}
+
+	@RequestMapping(method = RequestMethod.POST, value = "producers/save")
+	public ModelAndView saveProducerOrgProducersHandler(
+			@ModelAttribute("producer") User producer,
+			@RequestParam(value = "userPic", required = false) MultipartFile userPic,
+			ModelMap modelMap) {
+
+		User existingProducer = producer;
+
+		try {
+
+			WebConstants.loadLoggedInUserProfile(
+					OXMSecurityUtil.getLoggedInUser(), modelMap);
+
+			userController.validatePic(userPic);
+
+			if (userPic != null && userPic.getSize() > 0) {
+				existingProducer.setProfilePicture(userPic.getBytes());
+			}
+
+			if (StringUtils.isNotEmpty(producer.getId())) {
+				existingProducer = userService.getUserById(producer.getId());
+				userController.copyUserContents(existingProducer, producer);
+			} else {
+				existingProducer.setId(null);
+			}
+
+			userService.validate(existingProducer);
+			userService.saveUser(existingProducer);
+
+		} catch (Exception e) {
+			modelMap.put(WebConstants.MODEL_ATTRIBUTE_ERROR_MESSAGE,
+					"Error "+e.getMessage());
+
+			modelMap.put("producer", producer);
+			prepareUserFormModel(modelMap);
+			return new ModelAndView("formPOrgProducer", modelMap);
+		}
+		return viewProducerOrgProducersHandler(producer
+				.getProducerOrg().getId(), modelMap);
 	}
 }

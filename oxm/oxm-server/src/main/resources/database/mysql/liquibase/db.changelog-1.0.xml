@@ -851,4 +851,9 @@
     <changeSet author="Job (generated)" id="1362526178969-108">
         <addForeignKeyConstraint baseColumnNames="parish_id" baseTableName="village" constraintName="FK1B70A4AC8CDA553B" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="parish"/>
     </changeSet>
+    
+    <changeSet author="Job (generated)" id="1363045918338-137">
+        <dropTable tableName="user_usertypes"/>
+    </changeSet>
+    
 </databaseChangeLog>

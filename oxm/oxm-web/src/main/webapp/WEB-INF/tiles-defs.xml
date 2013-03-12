@@ -186,6 +186,8 @@
 	</definition>
 	
 	<definition name="formPOrgProducer" extends="viewPOrgProducers">
+		<put-attribute name="scripts" type="template" value="/WEB-INF/views/tiles/producerorg/scripts.jsp" />
+		<put-attribute name="pageTitle" type="template" value="/WEB-INF/views/tiles/contentheader.jsp" />
 		<put-attribute name="body" type="template" value="/WEB-INF/views/tiles/producerorg/formproducer.jsp" />
 	</definition>
 	

@@ -4,6 +4,7 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 
 
+<div class="box tabular">
 <div class="splitcontentleft">
 	<h3>Personal Information</h3>
 	<p>
@@ -70,4 +71,6 @@
 				itemLabel="name" />
 		</p>
 	</div>
+</div>
+
 </div>

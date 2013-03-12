@@ -12,18 +12,18 @@
 	<label class="uiLabel">You are here >> </label>
 	<oxmBreadcrambs:cpanel />
 	>
-	<oxmBreadcrambs:producerorg /> > producers
+	<oxmBreadcrambs:producerorgs /> > producers
 </div>
 
 
 <div id="buttonStrip">
 	<div class="contextual" style="float: left;">
 		<a id="lnkAddProducer" class="uiButton"
-			href="${baseUrl }/producerorg/producer/add/${pOrg.id}">Add</a> <a
+			href="${baseUrl }/producerorg/producers/add/${pOrg.id}">Add</a> <a
 			id="lnkEditProducer" class="uiButton"
-			href="${baseUrl }/producerorg/producer/edit/${pOrg.id}/">Edit</a> <a
+			href="${baseUrl }/producerorg/producers/edit/${pOrg.id}/">Edit</a> <a
 			id="lnkDeleteProducer" class="uiButton"
-			href="${baseUrl }/producerorg/producer/delete/${pOrg.id}/">Delete</a> 
+			href="${baseUrl }/producerorg/producers/delete/${pOrg.id}/">Delete</a> 
 	</div>
 	<div style="float: right;">
 		<%@ include file="/WEB-INF/views/navigation.jsp"%>
@@ -54,7 +54,7 @@
 							<td>${producer.gender.name }</td>
 							<td><fmt:formatDate value="${producer.dateOfBirth}" pattern="dd/MM/yyyy"/></td>
 							
-							<td>${producer.subCounty.name }(${producer.district.name })</td>
+							<td>${producer.subCounty.name }</td>
 						</tr>
 					</c:forEach>
 				</c:when>

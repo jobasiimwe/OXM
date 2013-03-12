@@ -53,15 +53,13 @@ public class User extends BaseData implements Comparable<User> {
 
 	private String phone2;
 
-	private List<Concept> userTypes;
-
 	private SubCounty subCounty;
 	private Parish parish;
 	private Village village;
 	private GisCordinate gisCordinates;
 	private Double landSize;
 	private List<LandUse> landUses;
-	private ProducerOrganisation producerOrganisation;
+	private ProducerOrganisation producerOrg;
 
 	private byte[] profilePicture = new byte[1];
 
@@ -69,12 +67,10 @@ public class User extends BaseData implements Comparable<User> {
 		super();
 	}
 
-	public User(ProducerOrganisation pOrg, Role role) {
+	public User(ProducerOrganisation pOrg) {
 		super();
-		this.setProducerOrganisation(pOrg);
+		this.setProducerOrg(pOrg);
 		this.setSubCounty(pOrg.getSubCounty());
-
-		this.addRole(role);
 	}
 
 	@Transient
@@ -219,16 +215,6 @@ public class User extends BaseData implements Comparable<User> {
 		this.phone2 = phone2;
 	}
 
-	@OneToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
-	@JoinTable(name = "user_userTypes", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "userType_id"))
-	public List<Concept> getUserTypes() {
-		return userTypes;
-	}
-
-	public void setUserTypes(List<Concept> userTypes) {
-		this.userTypes = userTypes;
-	}
-
 	@Lob()
 	@Column(name = "picture", nullable = true)
 	public byte[] getProfilePicture() {
@@ -320,13 +306,13 @@ public class User extends BaseData implements Comparable<User> {
 
 	@ManyToOne
 	@JoinColumn(name = "producer_organisation_id", nullable = true)
-	public ProducerOrganisation getProducerOrganisation() {
-		return producerOrganisation;
+	public ProducerOrganisation getProducerOrg() {
+		return producerOrg;
 	}
 
-	public void setProducerOrganisation(
-			ProducerOrganisation producerOrganisation) {
-		this.producerOrganisation = producerOrganisation;
+	public void setProducerOrg(
+			ProducerOrganisation producerOrg) {
+		this.producerOrg = producerOrg;
 	}
 
 	public boolean hasNewPassword() {
