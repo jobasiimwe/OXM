@@ -88,6 +88,15 @@ public class RoleController {
 
 	if (StringUtils.isNotEmpty(role.getId())) {
 	    existingRole = userService.getRoleById(role.getId());
+	    if(existingRole.getName().equals("ROLE_ANNOYMOUS_USER")){
+		if(!existingRole.getName().equalsIgnoreCase(role.getName())){
+		    WebConstants.loadLoggedInUserProfile(OXMSecurityUtil.getLoggedInUser(), model);
+		    prepareRoleFormModel(model);
+		    model.put("role", role);
+		    model.put(WebConstants.MODEL_ATTRIBUTE_ERROR_MESSAGE, "Can't edit the name for the default user role");
+		    return new ModelAndView("addOREditRole", model);
+		}
+	    }
 	    copyRoleContents(existingRole, role);
 	}else{
 	    existingRole.setId(null);

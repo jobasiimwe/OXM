@@ -49,7 +49,6 @@ public class UserServiceImpl implements UserService {
 	private RoleDAO roleDAO;
 
 	@Override
-	@Secured(PermissionConstants.VIEW_USER)
 	@Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
 	public User getUserByUserName(String username) {
 		User user = userDAO.searchUniqueByPropertyEqual("username", username);
@@ -79,7 +78,6 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	@Secured({ PermissionConstants.ADD_USER, PermissionConstants.EDIT_USER })
 	@Transactional(propagation = Propagation.REQUIRED)
 	public void saveUser(User user) {
 		OXMSecurityUtil.prepUserCredentials(user);
@@ -87,7 +85,6 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	@Secured(PermissionConstants.VIEW_USER)
 	@Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
 	public void validate(User user) throws ValidationException {
 
@@ -181,7 +178,7 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	@Secured(PermissionConstants.VIEW_ROLE)
+	//@Secured(PermissionConstants.VIEW_ROLE)
 	@Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
 	public List<Role> getRoles() {
 		List<Role> roles = roleDAO.searchByRecordStatus(RecordStatus.ACTIVE);
@@ -221,6 +218,11 @@ public class UserServiceImpl implements UserService {
 			throw new OperationFailedException(
 					"cannot delete default administration role");
 		}
+		
+		if (StringUtils.equalsIgnoreCase(role.getName(),"ROLE_ANNOYMOUS_USER")) {
+		throw new OperationFailedException(
+				"cannot delete default user role");
+	}
 
 		roleDAO.remove(role);
 	}
@@ -241,7 +243,6 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	@Secured(PermissionConstants.VIEW_ROLE)
 	@Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
 	public Role getRoleById(String id) {
 		Role role = roleDAO.searchUniqueByPropertyEqual("id", id);

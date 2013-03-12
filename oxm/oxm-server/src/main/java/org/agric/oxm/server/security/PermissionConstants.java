@@ -402,5 +402,7 @@ public final class PermissionConstants {
 	
 	@PermissionAnnotation(id = "56555IIjGWRW-BB9D-4e4a-8797-00USDSD4", description = "Ability to view seasons")
 	public static final String VIEW_SEASONS = "view_season";
-
+	
+	@PermissionAnnotation(id = "5PSQQQH-458e-BB9D-4e4a-8797-00USDSD4", description = "Ability to save annoymous user")
+	public static final String ANNONYMOUS_USER = "annonymous_user";
 }

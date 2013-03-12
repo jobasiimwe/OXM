@@ -1,6 +1,7 @@
 package org.agric.oxm.web.controllers;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
@@ -10,13 +11,17 @@ import org.agric.oxm.model.User;
 import org.agric.oxm.model.UserStatus;
 import org.agric.oxm.model.exception.OperationFailedException;
 import org.agric.oxm.model.exception.SessionExpiredException;
+import org.agric.oxm.model.exception.ValidationException;
 import org.agric.oxm.server.security.PermissionConstants;
 import org.agric.oxm.server.security.util.OXMSecurityUtil;
+import org.agric.oxm.server.service.Adminservice;
 import org.agric.oxm.server.service.UserService;
 import org.agric.oxm.web.OXMUtil;
 import org.agric.oxm.web.WebConstants;
 import org.agric.oxm.web.WebUtils;
 import org.apache.commons.lang.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
@@ -31,8 +36,14 @@ import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 public class UserController {
+
 	@Autowired
 	private UserService userService;
+
+	@Autowired
+	private Adminservice adminService;
+
+	private Logger log = LoggerFactory.getLogger(this.getClass());
 
 	@Secured({ PermissionConstants.PERM_VIEW_ADMINISTRATION })
 	@RequestMapping(value = "/user/edit/{userid}/{qpage}", method = RequestMethod.GET)
@@ -62,7 +73,8 @@ public class UserController {
 		model.put("gender", OXMUtil.getGenderList());
 	}
 
-	@Secured({ PermissionConstants.PERM_VIEW_ADMINISTRATION })
+	@Secured({ PermissionConstants.PERM_VIEW_ADMINISTRATION,
+			PermissionConstants.ANNONYMOUS_USER })
 	@RequestMapping(value = "/user/save/{qpage}", method = RequestMethod.POST)
 	public ModelAndView saveUserHandler(
 			@PathVariable("qpage") String qPage,
@@ -72,19 +84,19 @@ public class UserController {
 
 		User existingUser = user;
 		try {
-			
+
 			if (userPic != null && userPic.getSize() > 0) {
 				validatePic(userPic);
 				existingUser.setProfilePicture(userPic.getBytes());
 			}
-			
+
 			if (StringUtils.isNotEmpty(user.getId())) {
 				existingUser = userService.getUserById(user.getId());
 				copyUserContents(existingUser, user);
 			} else {
 				existingUser.setId(null);
 			}
-			
+
 			userService.validate(existingUser);
 			userService.saveUser(existingUser);
 		} catch (Exception e) {
@@ -111,10 +123,12 @@ public class UserController {
 							"Invalid path");
 				}
 			} catch (SessionExpiredException e) {
-				e.printStackTrace();
+				log.error("Error", e);
 			}
 		}
+
 		return new ModelAndView("dashboard", model);
+
 	}
 
 	public void validatePic(MultipartFile userPic) throws Exception {
@@ -139,16 +153,13 @@ public class UserController {
 		existingUser.setPhone1(user.getPhone1());
 		existingUser.setPhone2(user.getPhone2());
 		existingUser.setUsername(user.getUsername());
-
-		if (StringUtils.isNotEmpty(user.getPassword())) {
-			existingUser.setPassword(user.getPassword());
-		}
-
 		existingUser.setStatus(user.getStatus());
 		existingUser.setRoles(user.getRoles());
-		existingUser.setSalt(user.getSalt());
-		existingUser.setClearTextPassword(user.getClearTextPassword());
 
+		if (StringUtils.isNotEmpty(user.getPassword())) {
+			existingUser.setSalt(user.getSalt());
+			existingUser.setClearTextPassword(user.getClearTextPassword());
+		}
 	}
 
 	@Secured({ PermissionConstants.PERM_VIEW_ADMINISTRATION })
@@ -210,4 +221,92 @@ public class UserController {
 		}
 		return viewUsersHandler(model);
 	}
+
+	@RequestMapping("/annoymous/create")
+	public ModelAndView annoymousUserHander(ModelMap model)
+			throws SessionExpiredException {
+		model.put("annoymousUser", new User());
+		prepareAnnoymousUser(model);
+		return new ModelAndView("createUser", model);
+	}
+
+	private void prepareAnnoymousUser(ModelMap model) {
+		List<Role> roles = userService.getRoles();
+		List<Role> rz = new ArrayList<Role>();
+		Role dd = null;
+		for (Role r : roles) {
+			if (r.getName().endsWith("ROLE_ANNOYMOUS_USER")) {
+				dd = r;
+			}
+
+		}
+		rz.add(dd);
+		model.put("roles", rz);
+		model.put("userstatus", new UserStatus[] { UserStatus.ENABLED,
+				UserStatus.DISABLED });
+		model.put("gender", OXMUtil.getGenderList());
+
+		model.put("subcounties", adminService.getSubCounties());
+		model.put("parishes", adminService.getParishes());
+		model.put("villages", adminService.getVillages());
+	}
+
+	@RequestMapping(value = "/annoymous/save", method = RequestMethod.POST)
+	public ModelAndView saveAnnoymousUserHandler(
+			@ModelAttribute("annoymousUser") User user,
+			@RequestParam(value = "userPic", required = false) MultipartFile userPic,
+			ModelMap model) throws IOException, SessionExpiredException {
+
+		User existingUser = user;
+		try {
+			if (!WebConstants.isFileAnImage(userPic)) {
+				throw new Exception(
+						"error: the file uploaded for the user photo is not an image.");
+			}
+
+			if (!WebUtils.isValidSize(userPic,
+					WebConstants.DEFAULT_IMAGE_SIZE_IN_BYTES)) {
+				throw new Exception(
+						String.format(
+								"error: the next of kin photo exceeds the maximum size of >> %s",
+								WebConstants.DEFAULT_IMAGE_SIZE_IN_BYTES));
+			}
+
+		} catch (Exception e) {
+			model.put(WebConstants.MODEL_ATTRIBUTE_ERROR_MESSAGE,
+					e.getMessage());
+			model.put("annoymousUser", user);
+			prepareAnnoymousUser(model);
+			return new ModelAndView("createUser", model);
+		}
+		if (StringUtils.isNotEmpty(user.getId())) {
+			existingUser = userService.getUserById(user.getId());
+			copyUserContents(existingUser, user);
+			existingUser.setSubCounty(user.getSubCounty());
+			existingUser.setParish(user.getParish());
+			existingUser.setVillage(user.getVillage());
+		} else {
+			existingUser.setId(null);
+		}
+
+		try {
+
+			if (userPic != null && userPic.getSize() > 0) {
+				existingUser.setProfilePicture(userPic.getBytes());
+			}
+			userService.validate(existingUser);
+			userService.saveUser(existingUser);
+			model.put(WebConstants.MODEL_ATTRIBUTE_SYSTEM_MESSAGE,
+					"Thank You for registering. you can now login.");
+			return new ModelAndView("sucessfullogin", model);
+		} catch (ValidationException e) {
+			model.put(WebConstants.MODEL_ATTRIBUTE_ERROR_MESSAGE,
+					e.getMessage());
+			model.put("annoymousUser", user);
+			prepareAnnoymousUser(model);
+			return new ModelAndView("createUser", model);
+		}
+
+	}
+
 }

@@ -20,7 +20,8 @@
 	src="static/js/jquery-ui-1.8.15.custom.min.js"></script>
 <script type="text/javascript" src="static/js/oxm.js"></script>
 
-<link rel="icon" type="image/png" href="/static/images/oxm-footer-lg.png" />
+<link rel="icon" type="image/png"
+	href="/static/images/oxm-footer-lg.png" />
 
 </head>
 <body style="background: white;">
@@ -29,7 +30,7 @@
 		<form name="loginForm" action="j_spring_security_check" method="post">
 			<div class="login-box">
 				<div class="username-dv">
-					<div style="font-weight: bold; margin-bottom: 2px;">
+					<div style="font-weight: bold;">
 						<label class="uiLabel">Username:</label>
 					</div>
 					<div>
@@ -43,7 +44,7 @@
 					</div>
 				</div>
 				<div class="pwd-dv">
-					<div style="font-weight: bold; margin-bottom: 2px;">
+					<div style="font-weight: bold;">
 						<label class="uiLabel">Password:</label>
 					</div>
 					<div>
@@ -59,45 +60,22 @@
 					</div>
 				</div>
 				<div class="btn-dv">
-				<div>
-					<input name="btnSubmit" id="btnSubmit" type="submit"
-						value="Sign In" class="uiButton" /></div>
-						<div style="margin: 5px 10px; float: left;"><a href="#" title="you dont have an account? sign up">Sign Up</a></div>
+					<div>
+						<input name="btnSubmit" id="btnSubmit" type="submit"
+							value="Sign In" class="uiButton" />
+					</div>
 				</div>
 			</div>
 		</form>
 	</div>
 
-	<div class="login-signup-dv" >
-		<div class="left-side-dv" style="display: none;"></div>
-		<div class="right-side-dv" style="display: none;">
+	<div class="login-signup-dv">
+		<div class="left-side-dv"></div>
+		<div class="right-side-dv">
 			<div style="display: block; margin-top: 5px;">
-				<label class="sign-up-txt">Sign up </label>
-			</div>
-			<div class="sign-up-content">
-
-				<div class="box tabular">
-					<form name="registerUser" action="" method="post">
-						<p>
-							<label class="uiLabel">FirstName:</label> <input
-								class="uiTextbox" onkeypress="checkChar(event)" />
-						</p>
-						<p>
-							<label class="uiLabel">LastName:</label> <input class="uiTextbox"
-								onkeypress="checkChar(event)" />
-						</p>
-						<p>
-							<label class="uiLabel">Gender:</label> <input class="uiTextbox"
-								onkeypress="checkChar(event)" />
-						</p>
-						<p>
-							<label class="uiLabel">Date Of Birth:</label> <input
-								class="uiTextbox" onkeypress="checkChar(event)" />
-						</p>
-					</form>
-				</div>
-				<div>
-					<button class="sign-up-button-dv" type="submit">Sign Up</button>			
+				<label class="sign-up-txt">Sign up for free. </label>
+				<div style="margin-top: 10px;">
+					<a href="${baseUrl}/annoymous/create" class="sign-up-button-dv">Create	Account</a>
 				</div>
 			</div>
 		</div>

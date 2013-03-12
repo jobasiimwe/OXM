@@ -130,14 +130,12 @@ public class AdminServiceImpl implements Adminservice {
 	}
     }
 
-    @Secured({ PermissionConstants.VIEW_DISTRICT_DETAILS })
     @Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
     @Override
     public List<SubCounty> getSubCounties() {
 	return subCountyDAO.searchByRecordStatus(RecordStatus.ACTIVE);
     }
 
-    @Secured({ PermissionConstants.VIEW_DISTRICT_DETAILS })
     @Transactional(readOnly = true)
     @Override
     public SubCounty getSubCountyById(String id) {
@@ -180,14 +178,12 @@ public class AdminServiceImpl implements Adminservice {
 	}
     }
 
-    @Secured({ PermissionConstants.VIEW_DISTRICT_DETAILS })
     @Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
     @Override
     public List<Parish> getParishes() {
 	return parishDAO.searchByRecordStatus(RecordStatus.ACTIVE);
     }
 
-    @Secured({ PermissionConstants.VIEW_DISTRICT_DETAILS })
     @Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
     @Override
     public Parish getParishById(String id) {
@@ -234,14 +230,12 @@ public class AdminServiceImpl implements Adminservice {
 
     }
 
-    @Secured({ PermissionConstants.VIEW_DISTRICT_DETAILS })
     @Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
     @Override
     public List<Village> getVillages() {
 	return villageDAO.searchByRecordStatus(RecordStatus.ACTIVE);
     }
 
-    @Secured({ PermissionConstants.VIEW_DISTRICT_DETAILS })
     @Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
     @Override
     public Village getVillageById(String id) {
