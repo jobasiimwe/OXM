@@ -41,15 +41,11 @@ public class SellingPlaceServiceImpl implements SellingPlaceService {
 	@Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
 	@Override
 	public void validate(SellingPlace sellingPlace) throws ValidationException {
-	    if(sellingPlace.getDistrict() == null){
-		throw new ValidationException("Districts are missing.");
-	    }
-	    
-	    if(StringUtils.isEmpty(sellingPlace.getName()))
-		throw new ValidationException("Supplied selling place missing name");
-	    
-	    if(sellingPlace.getSellingTypes() == null)
-		throw new ValidationException("Selling Types are missing");
+		if (StringUtils.isEmpty(sellingPlace.getName()))
+			throw new ValidationException("Name is required");
+
+		if (sellingPlace.getSellingTypes() == null)
+			throw new ValidationException("Selling types required");
 	}
 
 	@Secured({ PermissionConstants.VIEW_SELLING_PLACE })

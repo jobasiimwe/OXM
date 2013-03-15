@@ -7,9 +7,7 @@
 	tagdir="/WEB-INF/tags/breadcramblinks"%>
 
 <div style="margin: 5px; width: 100%;">
-	<label class="uiLabel">You are here > </label>
-	<oxmBreadcrambs:cpanel />
-	>
+	<oxmBreadcrambs:cpanel startingBreadcramb="true" />
 	<oxmBreadcrambs:sellingplaces />
 </div>
 
@@ -33,6 +31,7 @@
 			<tr>
 				<th><input type="checkbox" name="cbxSelectAllItems"
 					id="cbxSelectAllItems" /></th>
+				<th>No.</th>
 				<th>Name</th>
 				<th>Selling Types</th>
 			</tr>
@@ -41,10 +40,11 @@
 			<c:choose>
 				<c:when
 					test="${not empty sellingplaces  && fn:length(sellingplaces) > 0}">
-					<c:forEach var="sellingplace" items="${sellingplaces }">
+					<c:forEach var="sellingplace" items="${sellingplaces }" varStatus="status">
 						<tr id="${sellingplace.id }">
 							<td><input type="checkbox" name="selectedSellingPlace"
 								value="${sellingplace.id }" /></td>
+							<td>${status.count }</td>
 							<td>${sellingplace.name }</td>
 							<td>${sellingplace.sellingTypesString }</td>
 						</tr>

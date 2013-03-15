@@ -2,6 +2,7 @@
 <!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN" "http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
 <tiles-definitions>
 	<definition name="layout" template="/WEB-INF/views/layout.jsp">
+		<put-attribute name="pageTitle" type="template" value="/WEB-INF/views/tiles/contentheader.jsp" />
 		<put-attribute name="title" type="string" value="Oxfam e-agric System" />
 		<put-attribute name="header" type="template" value="/WEB-INF/views/tiles/header.jsp" />
 		<put-attribute name="baseurl" type="template" value="/WEB-INF/views/tiles/baseurl.jsp" />
@@ -148,15 +149,10 @@
 	
 	<!-- ======= FORM for Selling Place ========== -->
 	<definition name="viewSellingPlace" extends="layout">
-	    <put-attribute name="scripts" type="template" value="/WEB-INF/views/tiles/sellingplace/scripts.jsp" />
-		<put-attribute name="pageTitle" type="string" value="View Selling Place(s)" />
 		<put-attribute name="body" type="template" value="/WEB-INF/views/tiles/sellingplace/view.jsp" />
 	</definition>
 	
-		<!-- ======= FORM for Selling Place ========== -->
-	<definition name="addOREditSellingPlace" extends="layout">
-	    <put-attribute name="scripts" type="template" value="/WEB-INF/views/tiles/sellingplace/scripts.jsp" />
-		<put-attribute name="pageTitle" type="string" value="Add/Edit Selling Place" />
+	<definition name="formSellingPlace" extends="viewSellingPlace">
 		<put-attribute name="body" type="template" value="/WEB-INF/views/tiles/sellingplace/form.jsp" />
 	</definition>
 	
@@ -180,21 +176,16 @@
 	</definition>
 	
 	<definition name="formPOrgProducer" extends="viewPOrgProducers">
-		<put-attribute name="scripts" type="template" value="/WEB-INF/views/tiles/producerorg/scripts.jsp" />
-		<put-attribute name="pageTitle" type="template" value="/WEB-INF/views/tiles/contentheader.jsp" />
 		<put-attribute name="body" type="template" value="/WEB-INF/views/tiles/producerorg/formproducer.jsp" />
 	</definition>
 	
 	<!-- ======= FORM for Price ========== -->
 	<definition name="viewPrice" extends="layout">
-	    <put-attribute name="scripts" type="template" value="/WEB-INF/views/tiles/price/scripts.jsp" />
-		<put-attribute name="pageTitle" type="string" value="View Prices(s)" />
+		<put-attribute name="pageTitle" type="template" value="/WEB-INF/views/tiles/contentheader.jsp" />
 		<put-attribute name="body" type="template" value="/WEB-INF/views/tiles/price/view.jsp" />
 	</definition>
 	
-	<definition name="formPrice" extends="layout">
-	    <put-attribute name="scripts" type="template" value="/WEB-INF/views/tiles/price/scripts.jsp" />
-		<put-attribute name="pageTitle" type="string" value="Add/Edit Price" />
+	<definition name="formPrice" extends="viewPrice">
 		<put-attribute name="body" type="template" value="/WEB-INF/views/tiles/price/form.jsp" />
 	</definition>
 	
@@ -205,35 +196,28 @@
 		<put-attribute name="body" type="template" value="/WEB-INF/views/tiles/position/view.jsp" />
 	</definition>
 	
-	<definition name="formPosition" extends="layout">
-	    <put-attribute name="scripts" type="template" value="/WEB-INF/views/tiles/price/scripts.jsp" />
-		<put-attribute name="pageTitle" type="template" value="/WEB-INF/views/tiles/contentheader.jsp" />
+	<definition name="formPosition" extends="viewPosition">
 		<put-attribute name="body" type="template" value="/WEB-INF/views/tiles/position/form.jsp" />
 	</definition>
 	
 	<!-- ======= FORM for SEASON ========== -->
 	<definition name="viewSeason" extends="layout">
 	    <put-attribute name="scripts" type="template" value="/WEB-INF/views/tiles/season/scripts.jsp" />
-		<put-attribute name="pageTitle" type="string" value="View Season(s)" />
+		<put-attribute name="pageTitle" type="template" value="/WEB-INF/views/tiles/contentheader.jsp" />
 		<put-attribute name="body" type="template" value="/WEB-INF/views/tiles/season/view.jsp" />
 	</definition>
 	
-	<definition name="formSeason" extends="layout">
-	    <put-attribute name="scripts" type="template" value="/WEB-INF/views/tiles/season/scripts.jsp" />
-		<put-attribute name="pageTitle" type="string" value="Add/Edit Season" />
+	<definition name="formSeason" extends="viewSeason">
 		<put-attribute name="body" type="template" value="/WEB-INF/views/tiles/season/form.jsp" />
 	</definition>
 	
 	<!-- ======= FORM for Financial Institution ========== -->
 	<definition name="viewFinancialInstitution" extends="layout">
-	    <put-attribute name="scripts" type="template" value="/WEB-INF/views/tiles/fInstitution/scripts.jsp" />
-		<put-attribute name="pageTitle" type="string" value="View Financial Institution(s)" />
+		<put-attribute name="pageTitle" type="template" value="/WEB-INF/views/tiles/contentheader.jsp" />
 		<put-attribute name="body" type="template" value="/WEB-INF/views/tiles/fInstitution/view.jsp" />
 	</definition>
 	
-	<definition name="formFinancialInstitution" extends="layout">
-	    <put-attribute name="scripts" type="template" value="/WEB-INF/views/tiles/fInstitution/scripts.jsp" />
-		<put-attribute name="pageTitle" type="string" value="Add/Edit Financial Institution" />
+	<definition name="formFinancialInstitution" extends="viewFinancialInstitution">
 		<put-attribute name="body" type="template" value="/WEB-INF/views/tiles/fInstitution/form.jsp" />
 	</definition>
 	

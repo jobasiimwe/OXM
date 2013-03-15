@@ -1,9 +1,6 @@
 package org.agric.oxm.web.controllers;
 
-import java.io.IOException;
 import java.util.List;
-
-import javax.servlet.http.HttpServletResponse;
 
 import org.agric.oxm.model.ConceptCategory;
 import org.agric.oxm.model.Crop;
@@ -29,7 +26,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
@@ -51,70 +47,75 @@ public class PriceController {
 
 	@Secured({ PermissionConstants.PERM_VIEW_ADMINISTRATION })
 	@RequestMapping(value = { "/price/view/page/{pageNo}" }, method = RequestMethod.GET)
-	public ModelAndView viewPriceHandler(ModelMap model,
+	public ModelAndView viewPriceHandler(ModelMap modelMap,
 			@PathVariable(value = "pageNo") Integer pageNo) {
 		if (pageNo == null || (pageNo != null && pageNo <= 0)) {
 			pageNo = 1;
 		}
-		model.put("prices", priceService.getPrices());
-		return new ModelAndView("viewPrice", model);
+		modelMap.put("prices", priceService.getPrices());
+
+		modelMap.put(WebConstants.CONTENT_HEADER, "List of Prices");
+		return new ModelAndView("viewPrice", modelMap);
 	}
 
 	@Secured({ PermissionConstants.PERM_VIEW_ADMINISTRATION })
 	@RequestMapping(value = { "/price/add/" }, method = RequestMethod.GET)
-	public ModelAndView addPriceHandler(ModelMap model) {
+	public ModelAndView addPriceHandler(ModelMap modelMap) {
 
 		List<Crop> crops = cropService.getCrops();
 		if (crops != null && crops.size() > 0) {
-			model.put("crops", crops);
+			modelMap.put("crops", crops);
+			modelMap.put(WebConstants.CONTENT_HEADER, "Add price ");
 		} else {
-			model.put(WebConstants.MODEL_ATTRIBUTE_ERROR_MESSAGE,
+			modelMap.put(WebConstants.MODEL_ATTRIBUTE_ERROR_MESSAGE,
 					"No Crops found in the database");
-			return viewPriceHandler(model, 1);
+			return viewPriceHandler(modelMap, 1);
 		}
 
-		return new ModelAndView("formPrice", model);
+		return new ModelAndView("formPrice", modelMap);
 	}
 
 	@Secured({ PermissionConstants.PERM_VIEW_ADMINISTRATION })
 	@RequestMapping(value = { "/price/add/{cropid}" }, method = RequestMethod.GET)
 	public ModelAndView addPriceHandler2(@PathVariable("cropid") String cropid,
-			ModelMap model) {
+			ModelMap modelMap) {
 		if (StringUtils.isNotBlank(cropid)) {
 			Crop crop = cropService.getCropById(cropid);
 
 			if (crop.getUnitsOfMeasure() == null
 					|| crop.getUnitsOfMeasure().size() == 0) {
-				model.put(
+				modelMap.put(
 						WebConstants.MODEL_ATTRIBUTE_ERROR_MESSAGE,
 						"No Units of measure found for Crop - "
 								+ crop.getName());
 				List<Crop> crops = cropService.getCrops();
-				model.put("crops", crops);
+				modelMap.put("crops", crops);
 			} else {
 				Price price = new Price(crop);
-				preparePriceModel(price, model);
+				preparePriceModel(price, modelMap);
+				modelMap.put(WebConstants.CONTENT_HEADER, "Add price of "
+						+ crop.getName());
 			}
 		} else {
-			model.put(WebConstants.MODEL_ATTRIBUTE_ERROR_MESSAGE,
+			modelMap.put(WebConstants.MODEL_ATTRIBUTE_ERROR_MESSAGE,
 					"No Crop selected");
 			List<Crop> crops = cropService.getCrops();
-			model.put("crops", crops);
+			modelMap.put("crops", crops);
 		}
 
-		return new ModelAndView("formPrice", model);
+		return new ModelAndView("formPrice", modelMap);
 	}
 
-	private void preparePriceModel(Price price, ModelMap model) {
+	private void preparePriceModel(Price price, ModelMap modelMap) {
 
 		Crop crop = price.getCrop();
 		List<Crop> crops = cropService.getCrops();
-		model.put("crops", crops);
+		modelMap.put("crops", crops);
 
-		model.put("price", price);
-		model.put("unitOfMeasures", crop.getUnitsOfMeasure());
+		modelMap.put("price", price);
+		modelMap.put("unitOfMeasures", crop.getUnitsOfMeasure());
 
-		model.put("sellingPlaces", sellingPlaceService.getSellingPlaces());
+		modelMap.put("sellingPlaces", sellingPlaceService.getSellingPlaces());
 		try {
 			ConceptCategoryAnnotation sellTypeRoleAnnotation = OXMUtil
 					.getConceptCategoryFieldAnnotation(
@@ -126,14 +127,14 @@ public class PriceController {
 						.getConceptCategoryById(sellTypeRoleAnnotation.id());
 
 				if (sellingTypeRole != null) {
-					model.put("sellingTypes", conceptService
+					modelMap.put("sellingTypes", conceptService
 							.getConceptsByCategory(sellingTypeRole));
 				}
 			}
 
 		} catch (Exception e) {
 			log.error("Error", e);
-			model.put(WebConstants.MODEL_ATTRIBUTE_ERROR_MESSAGE,
+			modelMap.put(WebConstants.MODEL_ATTRIBUTE_ERROR_MESSAGE,
 					e.getMessage());
 		}
 	}
@@ -141,46 +142,46 @@ public class PriceController {
 	@Secured({ PermissionConstants.PERM_VIEW_ADMINISTRATION })
 	@RequestMapping(value = { "/price/edit/{pid}" }, method = RequestMethod.GET)
 	public ModelAndView editPriceHandler(@PathVariable("pid") String priceId,
-			ModelMap model) {
+			ModelMap modelMap) {
 
 		Price price = priceService.getPriceById(priceId);
 
 		if (price != null) {
-			preparePriceModel(price, model);
-			return new ModelAndView("formPrice", model);
+			preparePriceModel(price, modelMap);
+			modelMap.put(WebConstants.CONTENT_HEADER, "Edit price of "
+					+ price.getCrop().getName() + " in "
+					+ price.getSellingPlace().getName());
+			return new ModelAndView("formPrice", modelMap);
 		}
 
-		model.put(WebConstants.MODEL_ATTRIBUTE_ERROR_MESSAGE,
+		modelMap.put(WebConstants.MODEL_ATTRIBUTE_ERROR_MESSAGE,
 				"Invalid price id supplied");
-		return viewPriceHandler(model, 1);
+		return viewPriceHandler(modelMap, 1);
 	}
 
 	@Secured({ PermissionConstants.PERM_VIEW_ADMINISTRATION })
-	@RequestMapping(method = RequestMethod.POST, value = "/price/delete/")
-	public void deletePriceHandler(
-			@RequestParam("selectedPrice") List<String> ids,
-			HttpServletResponse response) {
-		try {
-			if (ids != null) {
-				String[] priceIds = new String[ids.size()];
-				priceIds = ids.toArray(priceIds);
+	@RequestMapping(method = RequestMethod.GET, value = "/price/delete/{ids}")
+	public ModelAndView deletePriceHandler(@PathVariable("ids") String ids,
+			ModelMap modelMap) {
 
-				priceService.deletePricesByIds(priceIds);
-				response.setStatus(HttpServletResponse.SC_OK);
-				response.getWriter().write("Prices(s) deleted successfully");
-			} else {
-				response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-				response.getWriter().write("no Price(s) supplied for deleting");
-			}
-		} catch (IOException e) {
-			response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+		String[] priceIdzToDelete = ids.split(",");
+		try {
+			priceService.deletePricesByIds(priceIdzToDelete);
+			modelMap.put(WebConstants.MODEL_ATTRIBUTE_SYSTEM_MESSAGE,
+					"Price(s)  deleted successfully");
+		} catch (Exception e) {
+			log.error("Error", e);
+			modelMap.put(WebConstants.MODEL_ATTRIBUTE_ERROR_MESSAGE, "Error "
+					+ e.getMessage());
 		}
+
+		return viewPriceHandler(modelMap, null);
 	}
 
 	@Secured({ PermissionConstants.PERM_VIEW_ADMINISTRATION })
 	@RequestMapping(method = RequestMethod.POST, value = "/price/save/")
 	public ModelAndView savePriceHandler(@ModelAttribute("price") Price price,
-			ModelMap model) {
+			ModelMap modelMap) {
 		Price existingPrice = price;
 
 		if (StringUtils.isNotEmpty(price.getId())) {
@@ -197,13 +198,13 @@ public class PriceController {
 		try {
 			priceService.validate(existingPrice);
 			priceService.save(existingPrice);
-			model.put(WebConstants.MODEL_ATTRIBUTE_SYSTEM_MESSAGE,
+			modelMap.put(WebConstants.MODEL_ATTRIBUTE_SYSTEM_MESSAGE,
 					"Price saved sucessfully.");
 		} catch (ValidationException e) {
-			model.put("price", price);
-			preparePriceModel(price, model);
-			return new ModelAndView("formPrice", model);
+			modelMap.put("price", price);
+			preparePriceModel(price, modelMap);
+			return new ModelAndView("formPrice", modelMap);
 		}
-		return viewPriceHandler(model, 1);
+		return viewPriceHandler(modelMap, 1);
 	}
 }

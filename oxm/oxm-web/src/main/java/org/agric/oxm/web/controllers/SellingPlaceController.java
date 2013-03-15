@@ -1,9 +1,6 @@
 package org.agric.oxm.web.controllers;
 
-import java.io.IOException;
 import java.util.List;
-
-import javax.servlet.http.HttpServletResponse;
 
 import org.agric.oxm.model.ConceptCategory;
 import org.agric.oxm.model.SellingPlace;
@@ -19,6 +16,8 @@ import org.agric.oxm.server.service.SellingPlaceService;
 import org.agric.oxm.web.OXMUtil;
 import org.agric.oxm.web.WebConstants;
 import org.apache.commons.lang.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
@@ -27,7 +26,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
@@ -38,23 +36,29 @@ public class SellingPlaceController {
 
 	@Autowired
 	private ConceptService conceptService;
-	
+
 	@Autowired
 	private Adminservice adminservice;
 
-	@Secured({ PermissionConstants.VIEW_SELLING_PLACE})
+	private Logger log = LoggerFactory.getLogger(this.getClass());
+
+	@Secured({ PermissionConstants.VIEW_SELLING_PLACE })
 	@RequestMapping(value = "/sellingplace/view/", method = RequestMethod.GET)
-	public ModelAndView viewSellingPlaceHandler(ModelMap model)
-			throws SessionExpiredException {
+	public ModelAndView viewSellingPlaceHandler(ModelMap model) {
 		List<SellingPlace> sellingPrices = sellingPlaceService
 				.getSellingPlaces();
-		WebConstants.loadLoggedInUserProfile(OXMSecurityUtil.getLoggedInUser(),
-				model);
+		try {
+			WebConstants.loadLoggedInUserProfile(
+					OXMSecurityUtil.getLoggedInUser(), model);
+		} catch (SessionExpiredException e) {
+			log.error("Error", e.getMessage());
+		}
 		model.put("sellingplaces", sellingPrices);
+		model.put(WebConstants.CONTENT_HEADER, "Markets/Selling Places");
 		return new ModelAndView("viewSellingPlace", model);
 
 	}
-	
+
 	@Secured({ PermissionConstants.ADD_SELLING_PLACE })
 	@RequestMapping(value = "/sellingplace/add/", method = RequestMethod.GET)
 	public ModelAndView addSellingPlaceHandler(ModelMap model)
@@ -63,7 +67,7 @@ public class SellingPlaceController {
 				model);
 		model.put("sellingprice", new SellingPlace());
 		prepareSellingPlaceModel(model);
-		return new ModelAndView("addOREditSellingPlace", model);
+		return new ModelAndView("formSellingPlace", model);
 
 	}
 
@@ -79,7 +83,7 @@ public class SellingPlaceController {
 		if (sPlace != null) {
 			model.put("sellingprice", sPlace);
 			prepareSellingPlaceModel(model);
-			return new ModelAndView("addOREditSellingPlace", model);
+			return new ModelAndView("formSellingPlace", model);
 		}
 
 		model.put(WebConstants.MODEL_ATTRIBUTE_ERROR_MESSAGE,
@@ -89,32 +93,27 @@ public class SellingPlaceController {
 	}
 
 	@Secured({ PermissionConstants.DELETE_SELLING_PLACE })
-	@RequestMapping(method = RequestMethod.POST, value = "/sellingplace/delete/")
-	public void deleteSellingPlaceHandler(
-			@RequestParam("selectedSellingPlace") List<String> ids,
-			HttpServletResponse response) {
+	@RequestMapping(method = RequestMethod.GET, value = "/sellingplace/delete/{ids}")
+	public ModelAndView deleteSellingPlaceHandler(
+			@PathVariable("ids") String ids, ModelMap modelMap) {
 
+		String[] sellingPlaceIdzToDelete = ids.split(",");
 		try {
-			if (ids != null) {
-				String[] sPlaceIds = new String[ids.size()];
-				sPlaceIds = ids.toArray(sPlaceIds);
-
-				sellingPlaceService.deleteSellingPlacesByIds(sPlaceIds);
-				response.setStatus(HttpServletResponse.SC_OK);
-				response.getWriter().write(
-						"Selling place(s) deleted successfully");
-			} else {
-				response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-				response.getWriter().write(
-						"no selling place(s) supplied for deleting");
-			}
-		} catch (IOException e) {
-			response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+			sellingPlaceService
+					.deleteSellingPlacesByIds(sellingPlaceIdzToDelete);
+			modelMap.put(WebConstants.MODEL_ATTRIBUTE_SYSTEM_MESSAGE,
+					"Selling Place(s)  deleted successfully");
+		} catch (Exception e) {
+			log.error("Error", e);
+			modelMap.put(WebConstants.MODEL_ATTRIBUTE_ERROR_MESSAGE, "Error "
+					+ e.getMessage());
 		}
+
+		return viewSellingPlaceHandler(modelMap);
 	}
 
 	private void prepareSellingPlaceModel(ModelMap model) {
-	    model.put("districts", adminservice.getDistricts());
+		model.put("districts", adminservice.getDistricts());
 		try {
 			ConceptCategoryAnnotation typeRoleAnnotation = OXMUtil
 					.getConceptCategoryFieldAnnotation(
@@ -141,20 +140,21 @@ public class SellingPlaceController {
 			@ModelAttribute("sellingplace") SellingPlace sellingPlace,
 			ModelMap model) throws SessionExpiredException {
 
-		SellingPlace existingSellingPlace = sellingPlace;
-
-		if (StringUtils.isNotEmpty(sellingPlace.getId())) {
-			existingSellingPlace = sellingPlaceService
-					.getSellingPlaceById(sellingPlace.getId());
-			existingSellingPlace.setName(sellingPlace.getName());
-			existingSellingPlace
-					.setSellingTypes(sellingPlace.getSellingTypes());
-		} else {
-			existingSellingPlace.setId(null);
-		}
-
 		try {
-			sellingPlaceService.validate(existingSellingPlace);
+			sellingPlaceService.validate(sellingPlace);
+
+			SellingPlace existingSellingPlace = sellingPlace;
+
+			if (StringUtils.isNotEmpty(sellingPlace.getId())) {
+				existingSellingPlace = sellingPlaceService
+						.getSellingPlaceById(sellingPlace.getId());
+				existingSellingPlace.setName(sellingPlace.getName());
+				existingSellingPlace.setSellingTypes(sellingPlace
+						.getSellingTypes());
+			} else {
+				existingSellingPlace.setId(null);
+			}
+
 			sellingPlaceService.save(existingSellingPlace);
 			model.put(WebConstants.MODEL_ATTRIBUTE_SYSTEM_MESSAGE,
 					"Selling Place saved sucessfully.");
@@ -163,7 +163,7 @@ public class SellingPlaceController {
 					e.getMessage());
 			model.put("sellingprice", sellingPlace);
 			prepareSellingPlaceModel(model);
-			return new ModelAndView("addOREditSellingPlace", model);
+			return new ModelAndView("formSellingPlace", model);
 		}
 		return viewSellingPlaceHandler(model);
 	}
