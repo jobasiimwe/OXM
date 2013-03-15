@@ -68,6 +68,8 @@ public class SellingPlace extends BaseData implements Comparable<SellingPlace> {
 				sellingTypesString += ", " + concept.getName();
 		}
 
+		if (StringUtils.isBlank(sellingTypesString))
+			sellingTypesString = "--";
 		return sellingTypesString;
 	}
 

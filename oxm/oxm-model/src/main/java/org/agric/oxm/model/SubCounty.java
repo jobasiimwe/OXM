@@ -13,6 +13,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
+
+import org.apache.commons.lang.StringUtils;
 
 @Entity
 @Table(name = "sub_county")
@@ -72,6 +75,30 @@ public class SubCounty extends BaseData implements Comparable<SubCounty> {
 		return parishes;
 	}
 
+	@Transient
+	public String getParishesString() {
+		String returnString = "";
+
+		if (parishes != null) {
+			if (parishes.size() > 0) {
+				for (int i = 0; i <  parishes.size() && i < 3; i++) {
+					if (StringUtils.isBlank(returnString))
+						returnString += parishes.get(i).getName();
+					else
+						returnString += ", " + parishes.get(i).getName();
+				}
+				if (parishes.size() > 3) {
+					int x = parishes.size() - 3;
+					returnString += ", and " + x + " more";
+				}
+			}
+		}
+
+		if (StringUtils.isBlank(returnString))
+			returnString = "--";
+		return returnString;
+	}
+	
 	/**
 	 * 
 	 * @param parishes

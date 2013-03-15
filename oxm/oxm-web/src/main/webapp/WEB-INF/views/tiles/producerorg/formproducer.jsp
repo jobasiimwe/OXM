@@ -12,7 +12,9 @@
 		<oxmBreadcrambs:cpanel />
 		>
 		<oxmBreadcrambs:producerorgs />
-		> producers
+		>
+		<oxmBreadcrambs:producerorgproducers producerOrg="${pOrg }" />
+		> form
 	</div>
 	<form:form action="${baseUrl }/producerorg/producers/save"
 		commandName="producer" method="POST" enctype="multipart/form-data">
@@ -20,7 +22,8 @@
 		<form:hidden path="id" />
 		<form:hidden path="producerOrg" />
 		<jsp:include page="/WEB-INF/views/tiles/users/formfields.jsp"></jsp:include>
-
+		<div style="clear: both"></div>
+		<jsp:include page="/WEB-INF/views/tiles/users/locationformfields.jsp"></jsp:include>
 		<div style="clear: both"></div>
 		<div>
 			<input id="btnSavePOrgProducer" type="submit" value="Save"

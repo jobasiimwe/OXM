@@ -90,52 +90,38 @@
 	<!-- ======= FORM for district ========== -->
 	<definition name="viewDistrict" extends="layout">
 		<put-attribute name="scripts" type="template" value="/WEB-INF/views/tiles/district/scripts.jsp" />
-		<put-attribute name="pageTitle" type="string" value="View District(s)" />
+		<put-attribute name="pageTitle" type="template" value="/WEB-INF/views/tiles/contentheader.jsp" />
 		<put-attribute name="body" type="template" value="/WEB-INF/views/tiles/district/districtView.jsp" />
 	</definition>
 
-	<definition name="addOREditDistrict" extends="layout">
-		<put-attribute name="scripts" type="template" value="/WEB-INF/views/tiles/district/scripts.jsp" />
-		<put-attribute name="pageTitle" type="string" value="Add/Edit District" />
+	<definition name="formDistrict" extends="viewDistrict">
 		<put-attribute name="body" type="template" value="/WEB-INF/views/tiles/district/districtform.jsp" />
 	</definition>
 	
 	<!-- ======= FORM for subcounty ========== -->
-	<definition name="viewSubCounty" extends="layout">
-		<put-attribute name="scripts" type="template" value="/WEB-INF/views/tiles/district/scripts.jsp" />
-		<put-attribute name="pageTitle" type="string" value="View SubCounty(s)" />
+	<definition name="viewSubCounty" extends="viewDistrict">
 		<put-attribute name="body" type="template" value="/WEB-INF/views/tiles/district/subcountyView.jsp" />
 	</definition>
 
-	<definition name="addOREditSubCounty" extends="layout">
-		<put-attribute name="scripts" type="template" value="/WEB-INF/views/tiles/district/scripts.jsp" />
-		<put-attribute name="pageTitle" type="string" value="Add/Edit SubCounty" />
+	<definition name="formSubCounty" extends="viewDistrict">
 		<put-attribute name="body" type="template" value="/WEB-INF/views/tiles/district/subcountyform.jsp" />
 	</definition>
 	
 	<!-- ======= FORM for parish ========== -->
-	<definition name="viewParish" extends="layout">
-		<put-attribute name="scripts" type="template" value="/WEB-INF/views/tiles/district/scripts.jsp" />
-		<put-attribute name="pageTitle" type="string" value="View Parish(s)" />
+	<definition name="viewParish" extends="viewDistrict">
 		<put-attribute name="body" type="template" value="/WEB-INF/views/tiles/district/parishView.jsp" />
 	</definition>
 
-	<definition name="addOREditParish" extends="layout">
-		<put-attribute name="scripts" type="template" value="/WEB-INF/views/tiles/district/scripts.jsp" />
-		<put-attribute name="pageTitle" type="string" value="Add/Edit Parish" />
+	<definition name="formParish" extends="viewDistrict">
 		<put-attribute name="body" type="template" value="/WEB-INF/views/tiles/district/parishform.jsp" />
 	</definition>
 	
 	<!-- ======= FORM for village ========== -->
-	<definition name="viewVillage" extends="layout">
-		<put-attribute name="scripts" type="template" value="/WEB-INF/views/tiles/district/scripts.jsp" />
-		<put-attribute name="pageTitle" type="string" value="View Village(s)" />
+	<definition name="viewVillage" extends="viewDistrict">
 		<put-attribute name="body" type="template" value="/WEB-INF/views/tiles/district/villageView.jsp" />
 	</definition>
 
-	<definition name="addOREditVillage" extends="layout">
-		<put-attribute name="scripts" type="template" value="/WEB-INF/views/tiles/district/scripts.jsp" />
-		<put-attribute name="pageTitle" type="string" value="Add/Edit Village" />
+	<definition name="formVillage" extends="viewDistrict">
 		<put-attribute name="body" type="template" value="/WEB-INF/views/tiles/district/villageform.jsp" />
 	</definition>
 	

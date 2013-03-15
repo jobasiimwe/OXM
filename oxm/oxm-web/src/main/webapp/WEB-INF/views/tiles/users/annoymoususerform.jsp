@@ -4,15 +4,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 
-<style>
-#staffForm .uiDropdown {
-	width: 125px;
-}
 
-#staffForm .formSection span {
-	width: 300px;
-}
-</style>
 <form:form action="${baseUrl}/annoymous/save"
 	commandName="annoymousUser" id="userForm" cssClass="tabular"
 	enctype="multipart/form-data">

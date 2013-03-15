@@ -15,13 +15,13 @@
 </div>
 <div id="buttonStrip">
 	<div class="contextual" style="float: left;">
-		<a id="lnkAddProductionOrg" class="uiButton"
+		<a id="lnkAddPOrg" class="uiButton"
 			href="${baseUrl }/producerorg/add/">Add</a> <a
-			id="lnkEditProductionOrg" class="uiButton"
+			id="lnkEditPOrg" class="uiButton"
 			href="${baseUrl }/producerorg/edit/">Edit</a> <a
-			id="lnkDeleteProductionOrg" class="uiButton"
+			id="lnkDeletePOrg" class="uiButton"
 			href="${baseUrl }/producerorg/delete/">Delete</a> <a
-			id="lnkProducerOrgProducers" class="uiButton"
+			id="lnkPOrgProducers" class="uiButton"
 			href="${baseUrl }/producerorg/producers/view/">Producers</a>
 	</div>
 	<div style="float: right;">
@@ -47,7 +47,7 @@
 					test="${not empty pOrganizations  && fn:length(pOrganizations) > 0}">
 					<c:forEach var="pOrg" items="${pOrganizations }">
 						<tr id="${pOrg.id }">
-							<td><input type="checkbox" name="selectedPOrganization"
+							<td><input type="checkbox" name="selectedProducer-Organisation"
 								value="${pOrg.id }" /></td>
 							<td>${pOrg.name }</td>
 							<td>${pOrg.subCounty.name }</td>

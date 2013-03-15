@@ -32,6 +32,9 @@ public interface Adminservice {
 	District getDistrictByName(String name);
 
 	void deleteDistrict(String id);
+
+	void deleteDistrictsByIds(String[] ids);
+
 	List<District> searchDistrict(String query);
 
 	// ---------------------
@@ -46,6 +49,8 @@ public interface Adminservice {
 
 	void deleteSubCounty(String id);
 
+	void deleteSubCountiesByIds(String[] ids);
+
 	// ------------------------
 
 	void save(Parish parish) throws ValidationException;
@@ -58,6 +63,8 @@ public interface Adminservice {
 
 	void deleteParish(String id);
 
+	void deleteParishesByIds(String[] ids);
+
 	// -------------------
 
 	void save(Village village) throws ValidationException;
@@ -69,4 +76,7 @@ public interface Adminservice {
 	Village getVillageById(String id);
 
 	void deleteVillage(String id);
+
+	void deleteVillagesByIds(String[] ids);
+
 }

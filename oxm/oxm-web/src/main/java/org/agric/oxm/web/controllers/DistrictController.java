@@ -13,6 +13,8 @@ import org.agric.oxm.server.security.util.OXMSecurityUtil;
 import org.agric.oxm.server.service.Adminservice;
 import org.agric.oxm.web.WebConstants;
 import org.apache.commons.lang.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
@@ -30,94 +32,105 @@ public class DistrictController {
 	@Autowired
 	private Adminservice adminService;
 
+	private Logger log = LoggerFactory.getLogger(this.getClass());
+
 	@Secured({ PermissionConstants.PERM_VIEW_ADMINISTRATION })
 	@RequestMapping(value = "/district/view/", method = RequestMethod.GET)
-	public ModelAndView viewDistrictHandler(ModelMap model)
+	public ModelAndView viewDistrictHandler(ModelMap modelMap)
 			throws SessionExpiredException {
 		WebConstants.loadLoggedInUserProfile(OXMSecurityUtil.getLoggedInUser(),
-				model);
-		model.put("district", new District());
-		model.put("districts", adminService.getDistricts());
-		return new ModelAndView("viewDistrict", model);
+				modelMap);
+		modelMap.put("district", new District());
+		modelMap.put("districts", adminService.getDistricts());
+
+		modelMap.put(WebConstants.CONTENT_HEADER, "List of Districts");
+		return new ModelAndView("viewDistrict", modelMap);
 	}
 
 	@Secured({ PermissionConstants.PERM_VIEW_ADMINISTRATION })
 	@RequestMapping(method = RequestMethod.GET, value = "/district/add/")
-	public ModelAndView viewAddDistrictHandler(ModelMap model)
+	public ModelAndView addDistrictHandler(ModelMap modelMap)
 			throws SessionExpiredException {
 		WebConstants.loadLoggedInUserProfile(OXMSecurityUtil.getLoggedInUser(),
-				model);
-		model.put("district", new District());
-		return new ModelAndView("addOREditDistrict", model);
+				modelMap);
+		modelMap.put("district", new District());
+		modelMap.put(WebConstants.CONTENT_HEADER, "Add a District");
+		return new ModelAndView("formDistrict", modelMap);
 	}
 
 	@Secured({ PermissionConstants.PERM_VIEW_ADMINISTRATION })
 	@RequestMapping(method = RequestMethod.GET, value = "/district/edit/{id}")
-	public ModelAndView viewEditDistrictHandler(
-			@PathVariable("id") String districtId, ModelMap model)
+	public ModelAndView editDistrictHandler(
+			@PathVariable("id") String districtId, ModelMap modelMap)
 			throws SessionExpiredException {
 		WebConstants.loadLoggedInUserProfile(OXMSecurityUtil.getLoggedInUser(),
-				model);
-		District district = adminService.getDistrictById(districtId);
-		if (district != null) {
-			model.put("district", district);
-			return new ModelAndView("addOREditDistrict", model);
-		} else {
-			model.put(WebConstants.MODEL_ATTRIBUTE_ERROR_MESSAGE,
-					"the id of the district supplied doesn't match a district in the system");
-			return new ModelAndView("viewDistrict", model);
+				modelMap);
+		if (!modelMap.containsAttribute("district")) {
+			District district = adminService.getDistrictById(districtId);
+			if (district != null) {
+				modelMap.put("district", district);
+				modelMap.put(WebConstants.CONTENT_HEADER,
+						"Edit " + district.getName());
+			} else {
+				modelMap.put(WebConstants.MODEL_ATTRIBUTE_ERROR_MESSAGE,
+						"the id doesn't match a district in the system");
+				return new ModelAndView("viewDistrict", modelMap);
+			}
 		}
+
+		return new ModelAndView("formDistrict", modelMap);
 	}
 
 	@Secured({ PermissionConstants.PERM_VIEW_ADMINISTRATION })
 	@RequestMapping(method = RequestMethod.POST, value = "/district/save/")
 	public ModelAndView saveDistrictHandler(
-			@ModelAttribute("district") District district, ModelMap model)
+			@ModelAttribute("district") District district, ModelMap modelMap)
 			throws SessionExpiredException {
 
-		if (district != null) {
-			try {
+		try {
 
-				District existingDistrict = district;
+			District existingDistrict = district;
 
-				if (StringUtils.isNotEmpty(district.getId())) {
-					existingDistrict = adminService.getDistrictById(district
-							.getId());
-					existingDistrict.setName(district.getName());
-				} else {
-					existingDistrict.setId(null);
-				}
-
-				adminService.validate(existingDistrict);
-				adminService.save(existingDistrict);
-				model.put(WebConstants.MODEL_ATTRIBUTE_SYSTEM_MESSAGE,
-						"district saved successfully");
-			} catch (ValidationException ex) {
-				model.put(WebConstants.MODEL_ATTRIBUTE_ERROR_MESSAGE,
-						ex.getMessage());
+			if (StringUtils.isNotEmpty(district.getId())) {
+				existingDistrict = adminService.getDistrictById(district
+						.getId());
+				existingDistrict.setName(district.getName());
+			} else {
+				existingDistrict.setId(null);
 			}
+
+			adminService.validate(existingDistrict);
+			adminService.save(existingDistrict);
+			modelMap.put(WebConstants.MODEL_ATTRIBUTE_SYSTEM_MESSAGE,
+					"district saved successfully");
+			return viewDistrictHandler(modelMap);
+		} catch (ValidationException ex) {
+			modelMap.put(WebConstants.MODEL_ATTRIBUTE_ERROR_MESSAGE,
+					ex.getMessage());
+
+			modelMap.put(WebConstants.CONTENT_HEADER, "Retry Add/Edit District");
+			return new ModelAndView("formDistrict", modelMap);
 		}
 
-		return viewDistrictHandler(model);
 	}
 
 	@Secured({ PermissionConstants.PERM_VIEW_ADMINISTRATION })
 	@RequestMapping(method = RequestMethod.GET, value = "/district/delete/{id}")
 	public ModelAndView deleteDistrictHandler(
-			@PathVariable("id") String districtId, ModelMap model)
+			@PathVariable("id") String districtIds, ModelMap modelMap)
 			throws SessionExpiredException {
-		District district = adminService.getDistrictById(districtId);
-		if (district != null) {
-			adminService.deleteDistrict(districtId);
-			model.put(WebConstants.MODEL_ATTRIBUTE_SYSTEM_MESSAGE,
-					"District >> " + district.getName()
-							+ " deleted successfully");
-		} else {
-			model.put(WebConstants.MODEL_ATTRIBUTE_ERROR_MESSAGE,
-					"the district id supplied does not belong to a valid district in the system");
+		String[] districtIdzToDelete = districtIds.split(",");
+		try {
+			adminService.deleteDistrictsByIds(districtIdzToDelete);
+			modelMap.put(WebConstants.MODEL_ATTRIBUTE_SYSTEM_MESSAGE,
+					"District(s)  deleted successfully");
+		} catch (Exception e) {
+			log.error("Error", e);
+			modelMap.put(WebConstants.MODEL_ATTRIBUTE_ERROR_MESSAGE, "Error "
+					+ e.getMessage());
 		}
 
-		return viewDistrictHandler(model);
+		return viewDistrictHandler(modelMap);
 	}
 
 	@Secured({ PermissionConstants.PERM_VIEW_ADMINISTRATION })
@@ -125,55 +138,57 @@ public class DistrictController {
 	public ModelAndView searchDistrict(
 			@RequestParam(value = "pageNo", required = false) Integer pageNo,
 			@RequestParam(WebConstants.SEARCH_QUERY_REQUEST_PARAMETER_NAME) String query,
-			ModelMap model) throws SessionExpiredException {
-		model.put("query", query);
+			ModelMap modelMap) throws SessionExpiredException {
+		modelMap.put("query", query);
 
 		if (pageNo == null || (pageNo != null && pageNo <= 0)) {
 			pageNo = 1;
 		}
 
 		if (query.equals("")) {
-			model.put(WebConstants.MODEL_ATTRIBUTE_SYSTEM_MESSAGE,
+			modelMap.put(WebConstants.MODEL_ATTRIBUTE_SYSTEM_MESSAGE,
 					"No search query!");
-			return viewDistrictHandler(model);
+			return viewDistrictHandler(modelMap);
 		} else {
 
 			List<District> districts = adminService.searchDistrict(query);
 
 			if (districts != null && districts.size() == 0) {
-				model.put(WebConstants.MODEL_ATTRIBUTE_SYSTEM_MESSAGE,
+				modelMap.put(WebConstants.MODEL_ATTRIBUTE_SYSTEM_MESSAGE,
 						"search for query >> \"" + query
 								+ "\" completed with no results");
 			} else {
 
 				if (districts != null && districts.size() > 0) {
-					model.put(
+					modelMap.put(
 							WebConstants.MODEL_ATTRIBUTE_SYSTEM_MESSAGE,
 							"search for query >> \""
 									+ query
 									+ "\" completed successfully with the following results");
 				}
-				model.put("districts", districts);
+				modelMap.put("districts", districts);
 
 			}
 		}
-		return new ModelAndView("viewDistrict", model);
+		return new ModelAndView("viewDistrict", modelMap);
 	}
 
 	@Secured({ PermissionConstants.PERM_VIEW_ADMINISTRATION })
 	@RequestMapping(method = RequestMethod.GET, value = "/subcounty/add/{did}")
-	public ModelAndView viewAddSubCountyHandler(
-			@PathVariable("did") String districtId, ModelMap model)
+	public ModelAndView addSubCountyHandler(
+			@PathVariable("did") String districtId, ModelMap modelMap)
 			throws SessionExpiredException {
 		District district = adminService.getDistrictById(districtId);
 		WebConstants.loadLoggedInUserProfile(OXMSecurityUtil.getLoggedInUser(),
-				model);
+				modelMap);
 		if (district != null) {
 			SubCounty subCounty = new SubCounty();
 			subCounty.setDistrict(district);
-			model.put("district", district);
-			model.put("subcounty", subCounty);
-			return new ModelAndView("addOREditSubCounty", model);
+			modelMap.put("district", district);
+			modelMap.put("subcounty", subCounty);
+			modelMap.put(WebConstants.CONTENT_HEADER, "Add SubCounty to "
+					+ district.getName());
+			return new ModelAndView("formSubCounty", modelMap);
 		}
 
 		return null;
@@ -181,87 +196,94 @@ public class DistrictController {
 
 	@Secured({ PermissionConstants.PERM_VIEW_ADMINISTRATION })
 	@RequestMapping(method = RequestMethod.GET, value = "/subcounty/edit/{sid}")
-	public ModelAndView viewEditSubCountyHandler(
-			@PathVariable("sid") String subCountyId, ModelMap model)
+	public ModelAndView editSubCountyHandler(
+			@PathVariable("sid") String subCountyId, ModelMap modelMap)
 			throws SessionExpiredException {
-		SubCounty subCounty = adminService.getSubCountyById(subCountyId);
 		WebConstants.loadLoggedInUserProfile(OXMSecurityUtil.getLoggedInUser(),
-				model);
-		if (subCounty != null) {
-			model.put("subcounty", subCounty);
-			model.put("district", subCounty.getDistrict());
-			return new ModelAndView("addOREditSubCounty", model);
-		} else {
-			model.put(WebConstants.MODEL_ATTRIBUTE_ERROR_MESSAGE,
-					"the id of the subcounty supplied doesn't match a district in the system");
-			return viewSubCountyHandler(null, null, model);
+				modelMap);
+		if (!modelMap.containsAttribute("subcounty")) {
+			SubCounty subCounty = adminService.getSubCountyById(subCountyId);
+			if (subCounty != null) {
+				modelMap.put("subcounty", subCounty);
+				modelMap.put("district", subCounty.getDistrict());
+			} else {
+				modelMap.put(WebConstants.MODEL_ATTRIBUTE_ERROR_MESSAGE,
+						"the id of the subcounty supplied doesn't match a district in the system");
+				return viewSubCountyHandler(null, null, modelMap);
+			}
 		}
+
+		return new ModelAndView("formSubCounty", modelMap);
 	}
 
 	@Secured({ PermissionConstants.PERM_VIEW_ADMINISTRATION })
 	@RequestMapping(method = RequestMethod.POST, value = "/subcounty/save/{did}")
 	public ModelAndView saveSubCountyHandler(
 			@ModelAttribute("subCounty") SubCounty subCounty,
-			@PathVariable("did") String districtId, ModelMap model)
+			@PathVariable("did") String districtId, ModelMap modelMap)
 			throws SessionExpiredException {
-		SubCounty existingSubcounty = null;
-		if (subCounty != null) {
-			try {
 
-				existingSubcounty = subCounty;
+		try {
 
-				if (StringUtils.isNotEmpty(subCounty.getId())) {
-					existingSubcounty = adminService.getSubCountyById(subCounty
-							.getId());
-					existingSubcounty.setName(subCounty.getName());
-					existingSubcounty.setDistrict(subCounty.getDistrict());
-				} else {
-					existingSubcounty.setId(null);
-				}
+			District district = subCounty.getDistrict();
+			adminService.validate(subCounty);
 
-				adminService.validate(existingSubcounty);
-				adminService.save(existingSubcounty);
-				model.put(WebConstants.MODEL_ATTRIBUTE_SYSTEM_MESSAGE,
-						"subcounty saved successfully");
+			SubCounty existingSubcounty = subCounty;
+			if (StringUtils.isNotEmpty(subCounty.getId())) {
+				existingSubcounty = adminService.getSubCountyById(subCounty
+						.getId());
+				existingSubcounty.setName(subCounty.getName());
 
-			} catch (ValidationException ex) {
-				model.put(WebConstants.MODEL_ATTRIBUTE_ERROR_MESSAGE,
-						ex.getMessage());
+				district.removeSubCounty(existingSubcounty);
+				district.addSubCounty(existingSubcounty);
+			} else {
+				existingSubcounty.setId(null);
+				district.addSubCounty(existingSubcounty);
 			}
+
+			adminService.save(district);
+			modelMap.put(WebConstants.MODEL_ATTRIBUTE_SYSTEM_MESSAGE,
+					"subcounty saved successfully");
+
+			return viewSubCountyHandler(1, existingSubcounty.getDistrict()
+					.getId(), modelMap);
+
+		} catch (ValidationException ex) {
+			modelMap.put(WebConstants.MODEL_ATTRIBUTE_ERROR_MESSAGE,
+					ex.getMessage());
+			modelMap.put(WebConstants.CONTENT_HEADER,
+					"Re-try Add/Edit Sub-County");
+			return new ModelAndView("formSubCounty", modelMap);
 		}
 
-		return viewSubCountyHandler(1, existingSubcounty.getDistrict().getId(),
-				model);
 	}
 
 	@Secured({ PermissionConstants.PERM_VIEW_ADMINISTRATION })
-	@RequestMapping(method = RequestMethod.GET, value = "/subcounty/delete/{id}")
+	@RequestMapping(method = RequestMethod.GET, value = "/subcounty/delete/{districtId}/{ids}")
 	public ModelAndView deleteSubCountyHandler(
-			@PathVariable("id") String subcountyId, ModelMap model)
+			@PathVariable("districtId") String districtId,
+			@PathVariable("ids") String subcountyIds, ModelMap modelMap)
 			throws SessionExpiredException {
-		SubCounty subCounty = adminService.getSubCountyById(subcountyId);
-		if (subCounty != null) {
-			subCounty.getDistrict().removeSubCounty(subCounty);
-			adminService.deleteSubCounty(subcountyId);
 
-			model.put(WebConstants.MODEL_ATTRIBUTE_SYSTEM_MESSAGE,
-					"District >> " + subCounty.getName()
-							+ " deleted successfully");
-			return viewSubCountyHandler(null, subCounty.getDistrict().getId(),
-					model);
-		} else {
-			model.put(WebConstants.MODEL_ATTRIBUTE_ERROR_MESSAGE,
-					"the subcounty id supplied does not belong to a valid district in the system");
+		String[] subcountyIdzToDelete = subcountyIds.split(",");
+		try {
+			adminService.deleteSubCountiesByIds(subcountyIdzToDelete);
+			modelMap.put(WebConstants.MODEL_ATTRIBUTE_SYSTEM_MESSAGE,
+					"Sub-County(ies)  deleted successfully");
+		} catch (Exception e) {
+			log.error("Error", e);
+			modelMap.put(WebConstants.MODEL_ATTRIBUTE_ERROR_MESSAGE, "Error "
+					+ e.getMessage());
 		}
 
-		return viewSubCountyHandler(null, null, model);
+		return viewSubCountyHandler(1, districtId, modelMap);
 	}
 
 	@Secured({ PermissionConstants.PERM_VIEW_ADMINISTRATION })
 	@RequestMapping(method = RequestMethod.GET, value = "/subcounty/view/{did}")
 	public ModelAndView viewSubCountyHandler(
 			@RequestParam(value = "pageNo", required = false) Integer pageNo,
-			@PathVariable("did") String districtId, ModelMap model)
+			@PathVariable("did") String districtId, ModelMap modelMap)
 			throws SessionExpiredException {
 
 		if (pageNo == null || (pageNo != null && pageNo <= 0)) {
@@ -269,34 +291,39 @@ public class DistrictController {
 		}
 
 		WebConstants.loadLoggedInUserProfile(OXMSecurityUtil.getLoggedInUser(),
-				model);
+				modelMap);
 
 		District district = adminService.getDistrictById(districtId);
 		if (district != null) {
-			model.put("district", district);
-			model.put("subcounties", district.getSubCounties());
-			return new ModelAndView("viewSubCounty", model);
+			modelMap.put("district", district);
+			modelMap.put("subcounties", district.getSubCounties());
+			modelMap.put(WebConstants.CONTENT_HEADER, "Sub Counties of "
+					+ district.getName());
+			return new ModelAndView("viewSubCounty", modelMap);
+		} else {
+			modelMap.put(WebConstants.MODEL_ATTRIBUTE_ERROR_MESSAGE,
+					"supplied district does not exist");
+			return viewDistrictHandler(modelMap);
 		}
-		model.put(WebConstants.MODEL_ATTRIBUTE_ERROR_MESSAGE,
-				"supplied district does not exist");
-		return viewDistrictHandler(model);
 
 	}
 
 	@Secured({ PermissionConstants.PERM_VIEW_ADMINISTRATION })
 	@RequestMapping(method = RequestMethod.GET, value = "/parish/add/{scid}")
 	public ModelAndView addParishHandler(
-			@PathVariable("scid") String subCountyId, ModelMap model)
+			@PathVariable("scid") String subCountyId, ModelMap modelMap)
 			throws SessionExpiredException {
 		SubCounty subCounty = adminService.getSubCountyById(subCountyId);
 		WebConstants.loadLoggedInUserProfile(OXMSecurityUtil.getLoggedInUser(),
-				model);
+				modelMap);
 		if (subCounty != null) {
 			Parish parish = new Parish();
 			parish.setSubCounty(subCounty);
-			model.put("subCounty", parish.getSubCounty());
-			model.put("parish", parish);
-			return new ModelAndView("addOREditParish", model);
+			modelMap.put("subCounty", parish.getSubCounty());
+			modelMap.put("parish", parish);
+			modelMap.put(WebConstants.CONTENT_HEADER, "Add Parish to "
+					+ subCounty.getName());
+			return new ModelAndView("formParish", modelMap);
 		}
 
 		return null;
@@ -305,18 +332,20 @@ public class DistrictController {
 	@Secured({ PermissionConstants.PERM_VIEW_ADMINISTRATION })
 	@RequestMapping(method = RequestMethod.GET, value = "/parish/edit/{pid}")
 	public ModelAndView editParishHandler(@PathVariable("pid") String parishID,
-			ModelMap model) throws SessionExpiredException {
+			ModelMap modelMap) throws SessionExpiredException {
 		Parish parish = adminService.getParishById(parishID);
 		WebConstants.loadLoggedInUserProfile(OXMSecurityUtil.getLoggedInUser(),
-				model);
+				modelMap);
 		if (parish != null) {
-			model.put("subCounty", parish.getSubCounty());
-			model.put("parish", parish);
-			return new ModelAndView("addOREditParish", model);
+			modelMap.put("subCounty", parish.getSubCounty());
+			modelMap.put("parish", parish);
+			modelMap.put(WebConstants.CONTENT_HEADER,
+					"Editing " + parish.getName());
+			return new ModelAndView("formParish", modelMap);
 		} else {
-			model.put(WebConstants.MODEL_ATTRIBUTE_ERROR_MESSAGE,
+			modelMap.put(WebConstants.MODEL_ATTRIBUTE_ERROR_MESSAGE,
 					"the id of the parish supplied doesn't match a district in the system");
-			return viewSubCountyHandler(null, null, model);
+			return viewSubCountyHandler(null, null, modelMap);
 		}
 	}
 
@@ -324,66 +353,65 @@ public class DistrictController {
 	@RequestMapping(method = RequestMethod.POST, value = "/parish/save/{scid}")
 	public ModelAndView saveParishHandler(
 			@ModelAttribute("parish") Parish parish,
-			@PathVariable("scid") String subCountyId, ModelMap model)
+			@PathVariable("scid") String subCountyId, ModelMap modelMap)
 			throws SessionExpiredException {
-		Parish existingParish = null;
 
-		SubCounty sbCounty = adminService.getSubCountyById(subCountyId);
-		if (parish != null) {
-			try {
+		try {
+			SubCounty subCounty = parish.getSubCounty();
+			adminService.validate(parish);
 
-				existingParish = parish;
+			Parish existingParish = parish;
 
-				if (StringUtils.isNotEmpty(parish.getId())) {
-					existingParish = adminService.getParishById(parish.getId());
-					existingParish.setName(parish.getName());
-					existingParish.setSubCounty(sbCounty);
-				} else {
-					existingParish.setId(null);
-					existingParish.setSubCounty(sbCounty);
-				}
-
-				adminService.validate(existingParish);
-				adminService.save(existingParish);
-				model.put(WebConstants.MODEL_ATTRIBUTE_SYSTEM_MESSAGE,
-						"parish saved successfully");
-
-			} catch (ValidationException ex) {
-				model.put(WebConstants.MODEL_ATTRIBUTE_ERROR_MESSAGE,
-						ex.getMessage());
+			if (StringUtils.isNotEmpty(parish.getId())) {
+				existingParish = adminService.getParishById(parish.getId());
+				existingParish.setName(parish.getName());
+				subCounty.removeParish(existingParish);
+				subCounty.addParish(existingParish);
+			} else {
+				existingParish.setId(null);
+				subCounty.addParish(existingParish);
 			}
-		}
 
-		return viewParishHandler(1, existingParish.getSubCounty().getId(),
-				model);
+			adminService.save(subCounty);
+			modelMap.put(WebConstants.MODEL_ATTRIBUTE_SYSTEM_MESSAGE,
+					"parish saved successfully");
+			return viewParishHandler(1, existingParish.getSubCounty().getId(),
+					modelMap);
+		} catch (ValidationException ex) {
+			modelMap.put(WebConstants.MODEL_ATTRIBUTE_ERROR_MESSAGE,
+					ex.getMessage());
+			modelMap.put(WebConstants.CONTENT_HEADER, "Re-try Add/Edit parish");
+			return new ModelAndView("formParish", modelMap);
+		}
 	}
 
 	@Secured({ PermissionConstants.PERM_VIEW_ADMINISTRATION })
 	@RequestMapping(method = RequestMethod.GET, value = "/parish/delete/{pid}")
 	public ModelAndView deleteParishHandler(
-			@PathVariable("pid") String parishId, ModelMap model)
+			@PathVariable("pid") String parishId, ModelMap modelMap)
 			throws SessionExpiredException {
 		Parish parish = adminService.getParishById(parishId);
 		if (parish != null) {
 			parish.getSubCounty().removeParish(parish);
 			adminService.deleteParish(parishId);
 
-			model.put(WebConstants.MODEL_ATTRIBUTE_SYSTEM_MESSAGE, "Parish >> "
-					+ parish.getName() + " deleted successfully");
-			return viewParishHandler(null, parish.getSubCounty().getId(), model);
+			modelMap.put(WebConstants.MODEL_ATTRIBUTE_SYSTEM_MESSAGE,
+					"Parish >> " + parish.getName() + " deleted successfully");
+			return viewParishHandler(null, parish.getSubCounty().getId(),
+					modelMap);
 		} else {
-			model.put(WebConstants.MODEL_ATTRIBUTE_ERROR_MESSAGE,
+			modelMap.put(WebConstants.MODEL_ATTRIBUTE_ERROR_MESSAGE,
 					"the subcounty id supplied does not belong to a valid district in the system");
 		}
 
-		return viewParishHandler(null, null, model);
+		return viewParishHandler(null, null, modelMap);
 	}
 
 	@Secured({ PermissionConstants.PERM_VIEW_ADMINISTRATION })
 	@RequestMapping(method = RequestMethod.GET, value = "/parish/view/{scid}")
 	public ModelAndView viewParishHandler(
 			@RequestParam(value = "pageNo", required = false) Integer pageNo,
-			@PathVariable("scid") String subCountyId, ModelMap model)
+			@PathVariable("scid") String subCountyId, ModelMap modelMap)
 			throws SessionExpiredException {
 
 		if (pageNo == null || (pageNo != null && pageNo <= 0)) {
@@ -391,54 +419,63 @@ public class DistrictController {
 		}
 
 		WebConstants.loadLoggedInUserProfile(OXMSecurityUtil.getLoggedInUser(),
-				model);
+				modelMap);
 
 		SubCounty subCounty = adminService.getSubCountyById(subCountyId);
 		if (subCounty != null) {
-			model.put("subCounty", subCounty);
-			model.put("parishes", subCounty.getParishes());
-			return new ModelAndView("viewParish", model);
+			modelMap.put("subCounty", subCounty);
+			modelMap.put("parishes", subCounty.getParishes());
+			modelMap.put(WebConstants.CONTENT_HEADER, "Parishes of "
+					+ subCounty.getName());
+			return new ModelAndView("viewParish", modelMap);
+		} else {
+			modelMap.put(WebConstants.MODEL_ATTRIBUTE_ERROR_MESSAGE,
+					"supplied parish does not exist");
+			return viewSubCountyHandler(1, null, modelMap);
 		}
-		model.put(WebConstants.MODEL_ATTRIBUTE_ERROR_MESSAGE,
-				"supplied parish does not exist");
-		return viewSubCountyHandler(1, null, model);
 
 	}
 
 	@Secured({ PermissionConstants.PERM_VIEW_ADMINISTRATION })
 	@RequestMapping(method = RequestMethod.GET, value = "/village/add/{pid}")
 	public ModelAndView addVillageHandler(@PathVariable("pid") String parishId,
-			ModelMap model) throws SessionExpiredException {
+			ModelMap modelMap) throws SessionExpiredException {
 		Parish parish = adminService.getParishById(parishId);
 		WebConstants.loadLoggedInUserProfile(OXMSecurityUtil.getLoggedInUser(),
-				model);
+				modelMap);
 		if (parish != null) {
 			Village village = new Village();
 			village.setParish(parish);
-			model.put("parish", village.getParish());
-			model.put("village", village);
-			return new ModelAndView("addOREditVillage", model);
+			modelMap.put("parish", village.getParish());
+			modelMap.put("village", village);
+			modelMap.put(WebConstants.CONTENT_HEADER, "Add village to "
+					+ parish.getName());
+			return new ModelAndView("formVillage", modelMap);
+		} else {
+			modelMap.put(WebConstants.MODEL_ATTRIBUTE_ERROR_MESSAGE,
+					"the id doesn't match a parish in the system");
+			return viewDistrictHandler(modelMap);
 		}
-
-		return null;
 	}
 
 	@Secured({ PermissionConstants.PERM_VIEW_ADMINISTRATION })
 	@RequestMapping(method = RequestMethod.GET, value = "/village/edit/{vid}")
 	public ModelAndView editVillageHandler(
-			@PathVariable("vid") String VillageID, ModelMap model)
+			@PathVariable("vid") String VillageID, ModelMap modelMap)
 			throws SessionExpiredException {
 		Village village = adminService.getVillageById(VillageID);
 		WebConstants.loadLoggedInUserProfile(OXMSecurityUtil.getLoggedInUser(),
-				model);
+				modelMap);
 		if (village != null) {
-			model.put("parish", village.getParish());
-			model.put("village", village);
-			return new ModelAndView("addOREditVillage", model);
+			modelMap.put("parish", village.getParish());
+			modelMap.put("village", village);
+			modelMap.put(WebConstants.CONTENT_HEADER,
+					"Editing " + village.getName());
+			return new ModelAndView("formVillage", modelMap);
 		} else {
-			model.put(WebConstants.MODEL_ATTRIBUTE_ERROR_MESSAGE,
-					"the id of the village supplied doesn't match a district in the system");
-			return viewVillageHandler(null, null, model);
+			modelMap.put(WebConstants.MODEL_ATTRIBUTE_ERROR_MESSAGE,
+					"the id doesn't match a village in the system");
+			return viewDistrictHandler(modelMap);
 		}
 	}
 
@@ -446,67 +483,69 @@ public class DistrictController {
 	@RequestMapping(method = RequestMethod.POST, value = "/village/save/{pid}")
 	public ModelAndView saveVillageHandler(
 			@ModelAttribute("village") Village village,
-			@PathVariable("pid") String parishId, ModelMap model)
+			@PathVariable("pid") String parishId, ModelMap modelMap)
 			throws SessionExpiredException {
-		Village exisitingVillage = null;
 
-		Parish parish = adminService.getParishById(parishId);
-		if (parish != null) {
-			try {
-
-				exisitingVillage = village;
-
-				if (StringUtils.isNotEmpty(village.getId())) {
-					exisitingVillage = adminService.getVillageById(village
-							.getId());
-					exisitingVillage.setName(village.getName());
-					exisitingVillage.setParish(parish);
-				} else {
-					exisitingVillage.setId(null);
-					exisitingVillage.setParish(parish);
-				}
-
-				adminService.validate(exisitingVillage);
-				adminService.save(exisitingVillage);
-				model.put(WebConstants.MODEL_ATTRIBUTE_SYSTEM_MESSAGE,
-						"village saved successfully");
-
-			} catch (ValidationException ex) {
-				model.put(WebConstants.MODEL_ATTRIBUTE_ERROR_MESSAGE,
-						ex.getMessage());
+		try {
+			
+			Parish parish = village.getParish();
+			adminService.validate(village);
+			Village exisitingVillage = village;
+			
+			if (StringUtils.isNotEmpty(village.getId())) {
+				exisitingVillage = adminService.getVillageById(village.getId());
+				exisitingVillage.setName(village.getName());
+				
+				parish.removeVillage(exisitingVillage);
+				parish.addVillage(exisitingVillage);
+			} else {
+				exisitingVillage.setId(null);
+				parish.addVillage(exisitingVillage);
 			}
-		}
 
-		return viewVillageHandler(1, exisitingVillage.getParish().getId(),
-				model);
+			adminService.save(parish);
+			modelMap.put(WebConstants.MODEL_ATTRIBUTE_SYSTEM_MESSAGE,
+					"village saved successfully");
+
+			return viewVillageHandler(1, exisitingVillage.getParish().getId(),
+					modelMap);
+		} catch (ValidationException ex) {
+			modelMap.put(WebConstants.MODEL_ATTRIBUTE_ERROR_MESSAGE,
+					ex.getMessage());
+			modelMap.put(WebConstants.CONTENT_HEADER, "Retry Add/Edit "
+					+ (StringUtils.isBlank(village.getName()) ? "Village"
+							: village.getName()));
+			return new ModelAndView("formVillage", modelMap);
+		}
 	}
 
 	@Secured({ PermissionConstants.PERM_VIEW_ADMINISTRATION })
 	@RequestMapping(method = RequestMethod.GET, value = "/village/delete/{vid}")
 	public ModelAndView deleteVillagehHandler(
-			@PathVariable("vid") String villageId, ModelMap model)
+			@PathVariable("vid") String villageId, ModelMap modelMap)
 			throws SessionExpiredException {
 		Village village = adminService.getVillageById(villageId);
 		if (village != null) {
 			village.getParish().removeVillage(village);
 			adminService.deleteVillage(villageId);
 
-			model.put(WebConstants.MODEL_ATTRIBUTE_SYSTEM_MESSAGE,
+			modelMap.put(WebConstants.MODEL_ATTRIBUTE_SYSTEM_MESSAGE,
 					"Village >> " + village.getName() + " deleted successfully");
-			return viewVillageHandler(null, village.getParish().getId(), model);
+			return viewVillageHandler(null, village.getParish().getId(),
+					modelMap);
 		} else {
-			model.put(WebConstants.MODEL_ATTRIBUTE_ERROR_MESSAGE,
+			modelMap.put(WebConstants.MODEL_ATTRIBUTE_ERROR_MESSAGE,
 					"the village id supplied does not belong to a valid district in the system");
 		}
 
-		return viewVillageHandler(null, null, model);
+		return viewVillageHandler(null, null, modelMap);
 	}
 
 	@Secured({ PermissionConstants.PERM_VIEW_ADMINISTRATION })
 	@RequestMapping(method = RequestMethod.GET, value = "/village/view/{pid}")
 	public ModelAndView viewVillageHandler(
 			@RequestParam(value = "pageNo", required = false) Integer pageNo,
-			@PathVariable("pid") String parishId, ModelMap model)
+			@PathVariable("pid") String parishId, ModelMap modelMap)
 			throws SessionExpiredException {
 
 		if (pageNo == null || (pageNo != null && pageNo <= 0)) {
@@ -514,17 +553,20 @@ public class DistrictController {
 		}
 
 		WebConstants.loadLoggedInUserProfile(OXMSecurityUtil.getLoggedInUser(),
-				model);
+				modelMap);
 
 		Parish parish = adminService.getParishById(parishId);
 		if (parish != null) {
-			model.put("parish", parish);
-			model.put("villages", parish.getVillages());
-			return new ModelAndView("viewVillage", model);
+			modelMap.put("parish", parish);
+			modelMap.put("villages", parish.getVillages());
+			modelMap.put(WebConstants.CONTENT_HEADER,
+					"Villages of " + parish.getName());
+			return new ModelAndView("viewVillage", modelMap);
+		} else {
+			modelMap.put(WebConstants.MODEL_ATTRIBUTE_ERROR_MESSAGE,
+					"supplied parish id does not exist");
+			return viewDistrictHandler(modelMap);
 		}
-		model.put(WebConstants.MODEL_ATTRIBUTE_ERROR_MESSAGE,
-				"supplied village does not exist");
-		return viewVillageHandler(1, null, model);
 
 	}
 }

@@ -10,6 +10,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
+
+import org.apache.commons.lang.StringUtils;
 
 @Entity
 @Table(name = "parish")
@@ -53,6 +56,30 @@ public class Parish extends BaseData implements Comparable<Parish> {
 	@OneToMany(mappedBy = "parish", cascade = { CascadeType.ALL }, orphanRemoval = true)
 	public List<Village> getVillages() {
 		return villages;
+	}
+
+	@Transient
+	public String getVillagesString() {
+		String returnString = "";
+
+		if (villages != null) {
+			if (villages.size() > 0) {
+				for (int i = 0; i < villages.size() && i < 3; i++) {
+					if (StringUtils.isBlank(returnString))
+						returnString += villages.get(i).getName();
+					else
+						returnString += ", " + villages.get(i).getName();
+				}
+				if (villages.size() > 3) {
+					int x = villages.size() - 3;
+					returnString += ", and " + x + " more";
+				}
+			}
+		}
+
+		if (StringUtils.isBlank(returnString))
+			returnString = "--";
+		return returnString;
 	}
 
 	public void setVillages(List<Village> villages) {

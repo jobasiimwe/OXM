@@ -23,6 +23,7 @@
 <script type="text/javascript" src="${baseUrl }/static/js/jquery-ui-1.8.15.custom.min.js"></script>
 <script type="text/javascript" src="${baseUrl }/static/js/jquery.getUrlParam.js"></script>
 <script type="text/javascript" src="${baseUrl }/static/js/oxm.js"></script>
+<script type="text/javascript" src="${baseUrl }/static/js/admin.js"></script>
 <script type="text/javascript" src="${baseUrl }/static/js/scrolltable.js"></script>
 
 <tiles:insertAttribute name="scripts" ignore="true" />

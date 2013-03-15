@@ -3,51 +3,59 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix='fn' uri='http://java.sun.com/jsp/jstl/functions'%>
 
-<div id="buttonStrip"></div>
-<div>
-	<div>
-		<div id="breadcrumbs" style="margin: 5px;">
-	District: >> ${parish.subCounty.district.name } >> SubCounty : ${parish.subCounty.name } >> Parish : ${parish.name } >> <a href="${baseUrl }/parish/view/${parish.subCounty.id }">Back</a>
+<%@ taglib prefix="oxmBreadcrambs"
+	tagdir="/WEB-INF/tags/breadcramblinks"%>
+<%@ taglib prefix="oxmDistrictBreadcrambs"
+	tagdir="/WEB-INF/tags/breadcramblinks/districts"%>
+
+<div style="margin: 5px; width: 100%;">
+	<label class="uiLabel">You are here >> </label>
+	<oxmBreadcrambs:cpanel />
+	>
+	<oxmDistrictBreadcrambs:districts />
+	>
+	<oxmDistrictBreadcrambs:subcounty
+		district="${parish.subCounty.district }" />
+	>
+	<oxmDistrictBreadcrambs:parish subCounty="${parish.subCounty }" />
+	>
+	<oxmDistrictBreadcrambs:village parish="${parish }" />
+	> Villages
 </div>
-<div class="contextual">
-			<a class="uiButton" href="${baseUrl }/village/add/${parish.id }">New
-				Village</a>
-		</div>
-		<div style="float: right; display: none;">
-			<!--<form method="post" action="controlpanel?action=search&item=district&cid=${country.id }" style="display: inline-block">
-				<input type="text" class="uiTextbox" id="txtSearch" size="30" name="query" /> <input
-					type="submit" class="uiButton" id="btnSearchSubmit" value="Search" />
-			</form>
-		--></div>
-		<div style="clear: both"></div>
+<div id="buttonStrip">
+	<div class="contextual">
+		<a id="lnkAddVillage" class="uiButton"
+			href="${baseUrl }/village/add/${parish.id }">Add</a> <a
+			id="lnkEditVillage" class="uiButton" href="${baseUrl }/village/edit/">Edit</a>
+		<a id="lnkDeleteVillage" class="uiButton"
+			href="${baseUrl }/village/delete/${parish.id }/">Delete</a>
 	</div>
-	<div><h4>Villages in ${parish.name } parish</h4></div>
+
+	<div style="clear: both"></div>
+</div>
+
+<div>
 	<table id="recordTable" class="recordTable list" width="100%"
 		cellpadding="0" cellspacing="0">
 		<thead>
 			<tr>
+				<th><input type="checkbox" name="cbxSelectAllItems"
+					id="cbxSelectAllItems" /></th>
 				<th>Name</th>
 				<th>Parish</th>
-				<th></th>
 			</tr>
-			<c:choose>
-				<c:when test="${not empty villages  && fn:length(villages) > 0}">
-					<c:forEach var="village" items="${villages }">
-						<tr>
-							<td>${village.name }</td>
-							<td>${village.parish.name }</td>
-							<td><a id="btnDeleteParish" class="icon icon-delete"
-								title="delete" onclick="" href="${baseUrl }/village/delete/${village.id }">Delete</a>
-								<a class="icon icon-edit" title="edit" href="${baseUrl }/village/edit/${village.id }">Edit</a>
-							</td>
-						</tr>
-					</c:forEach>
-				</c:when>
-				<c:otherwise>
-
-				</c:otherwise>
-			</c:choose>
 		</thead>
+		<tbody>
+			<c:if test="${not empty villages  && fn:length(villages) > 0}">
+				<c:forEach var="village" items="${villages }">
+					<tr id="${village.id }">
+						<td><input type="checkbox" name="selectedVillage"
+							value="${village.id }" /></td>
+						<td>${village.name }</td>
+						<td>${village.parish.name }</td>
+					</tr>
+				</c:forEach>
+			</c:if>
+		</tbody>
 	</table>
-	<div id="navigation" style="display: none;"></div>
 </div>

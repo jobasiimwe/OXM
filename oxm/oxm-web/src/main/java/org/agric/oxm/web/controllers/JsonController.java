@@ -2,6 +2,7 @@ package org.agric.oxm.web.controllers;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -34,8 +35,42 @@ public class JsonController {
 	 * @param districtId
 	 * @param response
 	 */
+	@RequestMapping(method = RequestMethod.GET, value = "/districts")
+	public void getJSONDistricts(HttpServletResponse response) {
+
+		try {
+			List<District> districts = adminService.getDistricts();
+
+			if (districts != null) {
+				ArrayList<Object> districtsObjects = new ArrayList<Object>();
+
+				for (District district : districts) {
+					HashMap<String, String> map = new HashMap<String, String>();
+					map.put("value", district.getId());
+					map.put("text", district.getName());
+					districtsObjects.add(map);
+				}
+
+				MappingJacksonHttpMessageConverter converter = new MappingJacksonHttpMessageConverter();
+				HttpOutputMessage message = new ServletServerHttpResponse(
+						response);
+
+				converter.write(districtsObjects, MediaType.APPLICATION_JSON,
+						message);
+			}
+		} catch (Exception e) {
+			response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+		}
+	}
+
+	/**
+	 * gets a jazonized list of counties in a given district
+	 * 
+	 * @param districtId
+	 * @param response
+	 */
 	@RequestMapping(method = RequestMethod.GET, value = "/subcounties/{districtid}")
-	public void getJSONSbCountiesForDistrict(
+	public void getJSONSubCountiesForDistrict(
 			@PathVariable("districtid") String districtId,
 			HttpServletResponse response) {
 
@@ -48,8 +83,8 @@ public class JsonController {
 
 					for (SubCounty subcounty : district.getSubCounties()) {
 						HashMap<String, String> map = new HashMap<String, String>();
-						map.put("id", subcounty.getId());
-						map.put("name", subcounty.getName());
+						map.put("value", subcounty.getId());
+						map.put("text", subcounty.getName());
 						subCounties.add(map);
 					}
 
@@ -72,7 +107,7 @@ public class JsonController {
 	 * @param subCountyId
 	 * @param response
 	 */
-	@RequestMapping(method = RequestMethod.GET, value = "get/json/parishes/{subcountyid}")
+	@RequestMapping(method = RequestMethod.GET, value = "/parishes/{subcountyid}")
 	public void getJSONParishesForSubCounty(
 			@PathVariable("subcountyid") String subCountyId,
 			HttpServletResponse response) {
@@ -87,8 +122,8 @@ public class JsonController {
 
 					for (Parish parish : subCounty.getParishes()) {
 						HashMap<String, String> map = new HashMap<String, String>();
-						map.put("id", parish.getId());
-						map.put("name", parish.getName());
+						map.put("value", parish.getId());
+						map.put("text", parish.getName());
 						parishes.add(map);
 					}
 
@@ -111,7 +146,7 @@ public class JsonController {
 	 * @param parishId
 	 * @param response
 	 */
-	@RequestMapping(method = RequestMethod.GET, value = "get/json/villages/{parishid}")
+	@RequestMapping(method = RequestMethod.GET, value = "/villages/{parishid}")
 	public void getJSONVillagesForParish(
 			@PathVariable("parishid") String parishId,
 			HttpServletResponse response) {
@@ -125,8 +160,8 @@ public class JsonController {
 
 					for (Village village : parish.getVillages()) {
 						HashMap<String, String> map = new HashMap<String, String>();
-						map.put("id", village.getId());
-						map.put("name", village.getName());
+						map.put("value", village.getId());
+						map.put("text", village.getName());
 						villages.add(map);
 					}
 

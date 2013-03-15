@@ -3,9 +3,7 @@ package org.agric.oxm.model;
 public enum Gender {
     MALE("Male"),
 
-    FEMALE("Female"),
-
-    UNKNOWN("Unknown");
+    FEMALE("Female");
 
     Gender(String name) {
 	this.name = name;

@@ -10,16 +10,26 @@ form#district input[type="text"] {
 }
 </style>
 
-<div id="breadcrumbs" style="margin: 5px;">
-	${district.name } >> <a href="${baseUrl }/subcounty/view/${district.id }"> Back</a>
+<%@ taglib prefix="oxmBreadcrambs"
+	tagdir="/WEB-INF/tags/breadcramblinks"%>
+<%@ taglib prefix="oxmDistrictBreadcrambs"
+	tagdir="/WEB-INF/tags/breadcramblinks/districts"%>
+
+<div style="margin: 5px; width: 100%;">
+	<label class="uiLabel">You are here >> </label>
+	<oxmBreadcrambs:cpanel />
+	>
+	<oxmDistrictBreadcrambs:districts />
+	>
+	<oxmDistrictBreadcrambs:subcounty district="${district }" /> > Sub-County form
 </div>
+
 <div>
 	<form:form action="${baseUrl }/subcounty/save/${district.id }" commandName="subcounty">
 		<form:hidden path="id" />
 		<form:hidden path="district"/>
 		<div>
 			<div class="box tabular">
-				<h3>New SubCounty in District - ${district.name }</h3>
 				<p>
 					<label>Name <span class="required">*</span> </label>
 					<form:input path="name" cssClass="uiTextbox"/>

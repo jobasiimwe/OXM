@@ -8,6 +8,9 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
+
+import org.apache.commons.lang.StringUtils;
 
 @Entity
 @Table(name = "district")
@@ -37,6 +40,30 @@ public class District extends BaseData implements Comparable<District> {
 	@OneToMany(mappedBy = "district", cascade = { CascadeType.ALL }, orphanRemoval = true)
 	public List<SubCounty> getSubCounties() {
 		return subCounties;
+	}
+
+	@Transient
+	public String getSubCountiesString() {
+		String returnString = "";
+
+		if (subCounties != null) {
+			if (subCounties.size() > 0) {
+				for (int i = 0; i < subCounties.size() && i < 3; i++) {
+					if (StringUtils.isBlank(returnString))
+						returnString += subCounties.get(i).getName();
+					else
+						returnString += ", " + subCounties.get(i).getName();
+				}
+				if (subCounties.size() > 3) {
+					int x = subCounties.size() - 3;
+					returnString += ", and " + x + " more";
+				}
+			}
+		}
+
+		if (StringUtils.isBlank(returnString))
+			returnString = "--";
+		return returnString;
 	}
 
 	public void setSubCounties(List<SubCounty> subCounties) {

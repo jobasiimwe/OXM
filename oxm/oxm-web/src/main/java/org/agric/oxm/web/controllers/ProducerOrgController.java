@@ -201,6 +201,22 @@ public class ProducerOrgController {
 		modelMap.put("gender", OXMUtil.getGenderList());
 	}
 
+	@Secured({ PermissionConstants.ADD_PRODUCER })
+	@RequestMapping(value = "/producers/edit/{producerId}", method = RequestMethod.GET)
+	public ModelAndView editProducerOrgProducersHandler(
+			@PathVariable("pOrgId") String pOrgId, ModelMap modelMap) {
+
+		ProducerOrganisation pOrg = producerOrgService
+				.getProducerOrganisationById(pOrgId);
+		modelMap.put("pOrg", pOrg);
+
+		User producer = new User(pOrg);
+		modelMap.put("producer", producer);
+
+		prepareUserFormModel(modelMap);
+		return new ModelAndView("formPOrgProducer", modelMap);
+	}
+
 	@RequestMapping(method = RequestMethod.POST, value = "producers/save")
 	public ModelAndView saveProducerOrgProducersHandler(
 			@ModelAttribute("producer") User producer,
@@ -231,14 +247,14 @@ public class ProducerOrgController {
 			userService.saveUser(existingProducer);
 
 		} catch (Exception e) {
-			modelMap.put(WebConstants.MODEL_ATTRIBUTE_ERROR_MESSAGE,
-					"Error "+e.getMessage());
+			modelMap.put(WebConstants.MODEL_ATTRIBUTE_ERROR_MESSAGE, "Error "
+					+ e.getMessage());
 
 			modelMap.put("producer", producer);
 			prepareUserFormModel(modelMap);
 			return new ModelAndView("formPOrgProducer", modelMap);
 		}
-		return viewProducerOrgProducersHandler(producer
-				.getProducerOrg().getId(), modelMap);
+		return viewProducerOrgProducersHandler(producer.getProducerOrg()
+				.getId(), modelMap);
 	}
 }

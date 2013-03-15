@@ -43,7 +43,7 @@ public class User extends BaseData implements Comparable<User> {
 
 	private String name;
 
-	private Gender gender = Gender.UNKNOWN;
+	private Gender gender;
 
 	private Date dateOfBirth;
 
@@ -53,6 +53,7 @@ public class User extends BaseData implements Comparable<User> {
 
 	private String phone2;
 
+	private District district;
 	private SubCounty subCounty;
 	private Parish parish;
 	private Village village;
@@ -236,6 +237,16 @@ public class User extends BaseData implements Comparable<User> {
 	}
 
 	@ManyToOne
+	@JoinColumn(name = "district_id", nullable = true)
+	public District getDistrict() {
+		return district;
+	}
+
+	public void setDistrict(District district) {
+		this.district = district;
+	}
+
+	@ManyToOne
 	@JoinColumn(name = "subcounty_id", nullable = true)
 	public SubCounty getSubCounty() {
 		return subCounty;
@@ -310,8 +321,7 @@ public class User extends BaseData implements Comparable<User> {
 		return producerOrg;
 	}
 
-	public void setProducerOrg(
-			ProducerOrganisation producerOrg) {
+	public void setProducerOrg(ProducerOrganisation producerOrg) {
 		this.producerOrg = producerOrg;
 	}
 

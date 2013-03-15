@@ -856,4 +856,13 @@
         <dropTable tableName="user_usertypes"/>
     </changeSet>
     
+    <changeSet author="Job (generated)" id="1363131074823-1">
+        <addColumn tableName="users">
+            <column name="district_id" type="varchar(255)"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="Job (generated)" id="1363131074823-111">
+        <addForeignKeyConstraint baseColumnNames="district_id" baseTableName="users" constraintName="FK6A68E08A1DA35B" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="district"/>
+    </changeSet>
+    
 </databaseChangeLog>

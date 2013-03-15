@@ -83,7 +83,7 @@ public final class OXMUtil {
     }
 
     public static Gender[] getGenderList() {
-	return new Gender[] { Gender.FEMALE, Gender.MALE, Gender.UNKNOWN };
+	return new Gender[] { Gender.FEMALE, Gender.MALE };
     }
 
 
