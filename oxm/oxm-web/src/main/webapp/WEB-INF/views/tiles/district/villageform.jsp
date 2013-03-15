@@ -14,17 +14,12 @@ form#district input[type="text"] {
 	tagdir="/WEB-INF/tags/breadcramblinks/districts"%>
 
 <div style="margin: 5px; width: 100%;">
-	<label class="uiLabel">You are here >> </label>
-	<oxmBreadcrambs:cpanel />
-	>
+	<oxmBreadcrambs:cpanel startingBreadcramb="true" />
 	<oxmDistrictBreadcrambs:districts />
-	>
 	<oxmDistrictBreadcrambs:subcounty
 		district="${parish.subCounty.district }" />
-	>
 	<oxmDistrictBreadcrambs:parish subCounty="${parish.subCounty }" />
-	>
-	<oxmDistrictBreadcrambs:village parish="${parish }" /> >
+	<oxmDistrictBreadcrambs:village parish="${parish }" />
 	Village form
 </div>
 

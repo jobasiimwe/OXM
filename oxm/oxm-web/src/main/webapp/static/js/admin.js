@@ -135,4 +135,19 @@ $(document).ready(function() {
 	$('#btnSaveVillage').click(function() {
 		return isNotBlank('txtName', "Name");
 	});
+	
+	/**
+	 * village functions
+	 */
+	$('#lnkEditfInstitution').click(function() {
+		return singleItemAction('lnkEditfInstitution', "Financial-Institution");
+	});
+
+	$('#lnkDeletefInstitution').click(function() {
+		return multipleItemAction('lnkDeletefInstitution', "Financial-Institution");
+	});
+
+	$('#btnSavefInstitution').click(function() {
+		return isNotBlank('txtName', "Name");
+	});
 });

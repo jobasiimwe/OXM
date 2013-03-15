@@ -16,33 +16,30 @@ form#district input[type="text"] {
 	tagdir="/WEB-INF/tags/breadcramblinks/districts"%>
 
 <div style="margin: 5px; width: 100%;">
-	<label class="uiLabel">You are here >> </label>
-	<oxmBreadcrambs:cpanel />
-	>
+	<oxmBreadcrambs:cpanel startingBreadcramb="true" />
 	<oxmDistrictBreadcrambs:districts />
-	>
 	<oxmDistrictBreadcrambs:subcounty district="${subCounty.district }" />
-	>
 	<oxmDistrictBreadcrambs:parish subCounty="${subCounty }" />
-	> Parish form
+	Parish form
 </div>
 
 
 <div>
-	<form:form action="${baseUrl }/parish/save/${subCounty.id }" commandName="parish">
+	<form:form action="${baseUrl }/parish/save/${subCounty.id }"
+		commandName="parish">
 		<form:hidden path="id" />
 		<form:hidden path="subCounty" />
 		<div>
 			<div class="box tabular">
 				<p>
 					<label>Name <span class="required">*</span> </label>
-					<form:input path="name" cssClass="uiTextbox"/>
+					<form:input path="name" cssClass="uiTextbox" />
 				</p>
 			</div>
 		</div>
 		<div>
-			<input id="btnSaveParish" type="submit" value="Save" class="uiButton"/>
+			<input id="btnSaveParish" type="submit" value="Save" class="uiButton" />
 		</div>
 	</form:form>
-	
+
 </div>

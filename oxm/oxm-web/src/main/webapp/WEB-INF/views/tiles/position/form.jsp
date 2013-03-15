@@ -15,15 +15,13 @@ form#concept input[type="text"] {
 	width: 50%;
 }
 </style>
-<div>
-	<div style="margin: 5px; width: 100%;">
-		<label class="uiLabel">You are here > </label>
-		<oxmBreadcrambs:cpanel />
-		>
-		<oxmBreadcrambs:positions />
-		> form
-	</div>
+<div style="margin: 5px; width: 100%;">
+	<oxmBreadcrambs:cpanel startingBreadcramb="true" />
+	<oxmBreadcrambs:positions />
+	form
+</div>
 
+<div>
 	<form:form action="${baseUrl }/position/save/" commandName="position">
 
 		<form:hidden path="id" />
@@ -31,15 +29,11 @@ form#concept input[type="text"] {
 			<div class="box">
 				<table>
 					<tr>
-						<td><label>No. <span class="required">*</span> </label>
-						</td>
-						<td><form:input path="index" cssClass="uiTextbox" />
-						</td>
+						<td><label>No. <span class="required">*</span> </label></td>
+						<td><form:input path="index" cssClass="uiTextbox" /></td>
 					<tr>
-						<td><label>Name <span class="required">*</span> </label>
-						</td>
-						<td><form:input path="name" cssClass="uiTextbox" />
-						</td>
+						<td><label>Name <span class="required">*</span> </label></td>
+						<td><form:input path="name" cssClass="uiTextbox" /></td>
 				</table>
 			</div>
 		</div>

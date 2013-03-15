@@ -9,11 +9,8 @@
 
 
 <div style="margin: 5px; width: 100%;">
-	<label class="uiLabel">You are here >> </label>
-	<oxmBreadcrambs:cpanel />
-	>
+	<oxmBreadcrambs:cpanel startingBreadcramb="true" />
 	<oxmBreadcrambs:producerorgs />
-	>
 	<oxmBreadcrambs:producerorgproducers producerOrg="${pOrg }" />
 </div>
 
@@ -37,8 +34,7 @@
 		<thead>
 			<tr>
 				<th><input type="checkbox" name="cbxSelectAllItems"
-					id="cbxSelectAllItems" />
-				</th>
+					id="cbxSelectAllItems" /></th>
 				<th>Name</th>
 				<th>Gender</th>
 				<th>DateOfBirth</th>
@@ -52,13 +48,11 @@
 					<c:forEach var="producer" items="${pOrg.producers }">
 						<tr id="${producer.id }">
 							<td><input type="checkbox" name="selectedProducer"
-								value="${producer.id }" />
-							</td>
+								value="${producer.id }" /></td>
 							<td>${producer.name }</td>
 							<td>${producer.gender.name }</td>
 							<td><fmt:formatDate value="${producer.dateOfBirth}"
-									pattern="dd/MM/yyyy" />
-							</td>
+									pattern="dd/MM/yyyy" /></td>
 
 							<td>${producer.subCounty.name }</td>
 						</tr>
@@ -66,8 +60,7 @@
 				</c:when>
 				<c:otherwise>
 					<tr>
-						<td><span style="color: red;">no producers found</span>
-						</td>
+						<td><span style="color: red;">no producers found</span></td>
 					</tr>
 				</c:otherwise>
 			</c:choose>

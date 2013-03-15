@@ -8,9 +8,7 @@
 	
 
 <div style="margin: 5px; width: 100%;">
-	<label class="uiLabel">You are here >> </label>
-	<oxmBreadcrambs:cpanel />
-	>
+	<oxmBreadcrambs:cpanel startingBreadcramb="true" />
 	<oxmBreadcrambs:producerorgs />
 </div>
 <div id="buttonStrip">

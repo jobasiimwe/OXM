@@ -52,7 +52,7 @@ $(document)
 									});
 
 					/*
-					 * edit a concept
+					 * edit a selling place
 					 */
 					$("#lnkEditSellingPlace")
 							.click(
@@ -138,7 +138,7 @@ $(document)
 									});
 
 					/*
-					 * edit a concept
+					 * edit a price
 					 */
 					$("#lnkEditPrice")
 							.click(

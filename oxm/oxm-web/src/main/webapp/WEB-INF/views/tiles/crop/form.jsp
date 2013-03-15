@@ -2,7 +2,8 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 
-<%@ taglib prefix="oxmBreadcrambs" tagdir="/WEB-INF/tags/breadcramblinks"%>
+<%@ taglib prefix="oxmBreadcrambs"
+	tagdir="/WEB-INF/tags/breadcramblinks"%>
 
 <style>
 form#concept input[type="text"] {
@@ -16,10 +17,9 @@ form#concept input[type="text"] {
 </style>
 <div>
 	<div style="margin: 5px; width: 100%;">
-		<label class="uiLabel">You are here > </label>
-		<oxmBreadcrambs:cpanel />
-		>
-		<oxmBreadcrambs:crops /> > form
+		<oxmBreadcrambs:cpanel startingBreadcramb="true" />
+		<oxmBreadcrambs:crops />
+		> form
 	</div>
 
 	<form:form action="${baseUrl }/crop/save/" commandName="crop">
@@ -62,8 +62,7 @@ form#concept input[type="text"] {
 		</div>
 		<div style="clear: both"></div>
 		<div>
-			<input id="btnSaveCrop" type="submit" value="Save"
-				class="uiButton" />
+			<input id="btnSaveCrop" type="submit" value="Save" class="uiButton" />
 		</div>
 	</form:form>
 </div>

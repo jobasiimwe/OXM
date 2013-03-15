@@ -5,17 +5,14 @@
 	tagdir="/WEB-INF/tags/breadcramblinks"%>
 
 
-<div>
+<div style="margin: 5px; width: 100%;">
+	<oxmBreadcrambs:cpanel startingBreadcramb="true" />
+	<oxmBreadcrambs:producerorgs />
+	<oxmBreadcrambs:producerorgproducers producerOrg="${pOrg }" />
+	form
+</div>
 
-	<div style="margin: 5px; width: 100%;">
-		<label class="uiLabel">You are here >> </label>
-		<oxmBreadcrambs:cpanel />
-		>
-		<oxmBreadcrambs:producerorgs />
-		>
-		<oxmBreadcrambs:producerorgproducers producerOrg="${pOrg }" />
-		> form
-	</div>
+<div>
 	<form:form action="${baseUrl }/producerorg/producers/save"
 		commandName="producer" method="POST" enctype="multipart/form-data">
 

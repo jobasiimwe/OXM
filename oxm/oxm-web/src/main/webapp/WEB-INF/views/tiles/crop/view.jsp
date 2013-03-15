@@ -6,12 +6,10 @@
 
 <%@ taglib prefix="oxmBreadcrambs"
 	tagdir="/WEB-INF/tags/breadcramblinks"%>
-	
+
 
 <div style="margin: 5px; width: 100%;">
-	<label class="uiLabel">You are here >> </label>
-	<oxmBreadcrambs:cpanel />
-	>
+	<oxmBreadcrambs:cpanel startingBreadcramb="true" />
 	<oxmBreadcrambs:crops />
 </div>
 
@@ -33,7 +31,8 @@
 		<thead>
 			<tr>
 				<th><input type="checkbox" name="cbxSelectAllItems"
-					id="cbxSelectAllItems" /></th>
+					id="cbxSelectAllItems" />
+				</th>
 				<th>Name</th>
 				<th>Inputs</th>
 				<th>seed Varieties</th>
@@ -48,7 +47,8 @@
 					<c:forEach var="crop" items="${crops }">
 						<tr id="${crop.id }">
 							<td><input type="checkbox" name="selectedCrop"
-								value="${crop.id }" /></td>
+								value="${crop.id }" />
+							</td>
 							<td>${crop.name }</td>
 							<td>${fn:length(crop.inputs) }</td>
 							<td>${fn:length(crop.seedVarieties) }</td>

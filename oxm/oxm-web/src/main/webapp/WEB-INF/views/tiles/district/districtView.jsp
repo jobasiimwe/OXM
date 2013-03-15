@@ -9,9 +9,7 @@
 	tagdir="/WEB-INF/tags/breadcramblinks/districts"%>
 
 <div style="margin: 5px; width: 100%;">
-	<label class="uiLabel">You are here >> </label>
-	<oxmBreadcrambs:cpanel />
-	>
+	<oxmBreadcrambs:cpanel startingBreadcramb="true" />
 	<oxmDistrictBreadcrambs:districts />
 </div>
 
@@ -37,12 +35,13 @@
 </div>
 
 <div>
-	<table class="recordTable list" width="100%"
-		cellpadding="0" cellspacing="0">
+	<table class="recordTable list" width="100%" cellpadding="0"
+		cellspacing="0">
 		<thead>
 			<tr>
 				<th><input type="checkbox" name="cbxSelectAllItems"
-					id="cbxSelectAllItems" /></th>
+					id="cbxSelectAllItems" />
+				</th>
 				<th>No.</th>
 				<th>Name</th>
 				<th>Sub-Counties</th>
@@ -54,8 +53,7 @@
 					<c:forEach var="district" items="${districts }" varStatus="status">
 						<tr id="${district.id }">
 							<td><input type="checkbox" name="selectedDistrict"
-								value="${district.id }" />
-							</td>
+								value="${district.id }" /></td>
 							<td>${status.count }</td>
 							<td>${district.name }</td>
 							<td>${district.subCountiesString }</td>

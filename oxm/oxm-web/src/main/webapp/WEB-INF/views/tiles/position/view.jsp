@@ -6,21 +6,21 @@
 
 <%@ taglib prefix="oxmBreadcrambs"
 	tagdir="/WEB-INF/tags/breadcramblinks"%>
-	
+
 
 <div style="margin: 5px; width: 100%;">
-	<label class="uiLabel">You are here >> </label>
-	<oxmBreadcrambs:cpanel />
-	>
+	<oxmBreadcrambs:cpanel startingBreadcramb="true" />
 	<oxmBreadcrambs:positions />
 </div>
 
 <div id="buttonStrip">
 	<div class="contextual" style="float: left;">
-		<a id="btnAddPosition" class="uiButton" href="${baseUrl }/position/add/">Add</a>
-		<a id="btnEditPosition" class="uiButton" href="${baseUrl }/position/edit/">Edit</a>
-		<a id="btnDeletePosition" class="uiButton" href="${baseUrl }/position/delete/">Delete</a>
-		&emsp;<a id="btnPositionHolders" class="uiButton"
+		<a id="btnAddPosition" class="uiButton"
+			href="${baseUrl }/position/add/">Add</a> <a id="btnEditPosition"
+			class="uiButton" href="${baseUrl }/position/edit/">Edit</a> <a
+			id="btnDeletePosition" class="uiButton"
+			href="${baseUrl }/position/delete/">Delete</a> &emsp;<a
+			id="btnPositionHolders" class="uiButton"
 			href="${baseUrl }/position/holders/">Holders</a>
 	</div>
 	<div style="float: right;">
@@ -33,7 +33,8 @@
 		<thead>
 			<tr>
 				<th><input type="checkbox" name="cbxSelectAllItems"
-					id="cbxSelectAllItems" /></th>
+					id="cbxSelectAllItems" />
+				</th>
 				<th>Index</th>
 				<th>Name</th>
 			</tr>
@@ -44,7 +45,8 @@
 					<c:forEach var="position" items="${positions }">
 						<tr id="${position.id }">
 							<td><input type="checkbox" name="selectedPosition"
-								value="${position.id }" /></td>
+								value="${position.id }" />
+							</td>
 							<td>${position.index }</td>
 							<td>${position.name }</td>
 						</tr>
