@@ -253,6 +253,7 @@ public class DistrictController {
 					ex.getMessage());
 			modelMap.put(WebConstants.CONTENT_HEADER,
 					"Re-try Add/Edit Sub-County");
+			modelMap.put("district", subCounty.getDistrict());
 			return new ModelAndView("formSubCounty", modelMap);
 		}
 
@@ -381,30 +382,30 @@ public class DistrictController {
 			modelMap.put(WebConstants.MODEL_ATTRIBUTE_ERROR_MESSAGE,
 					ex.getMessage());
 			modelMap.put(WebConstants.CONTENT_HEADER, "Re-try Add/Edit parish");
+			modelMap.put("subCounty", parish.getSubCounty());
 			return new ModelAndView("formParish", modelMap);
 		}
 	}
 
 	@Secured({ PermissionConstants.PERM_VIEW_ADMINISTRATION })
-	@RequestMapping(method = RequestMethod.GET, value = "/parish/delete/{pid}")
+	@RequestMapping(method = RequestMethod.GET, value = "/parish/delete/{sid}/{pids}")
 	public ModelAndView deleteParishHandler(
-			@PathVariable("pid") String parishId, ModelMap modelMap)
+			@PathVariable("sid") String subCountyId,
+			@PathVariable("pids") String parishIds, ModelMap modelMap)
 			throws SessionExpiredException {
-		Parish parish = adminService.getParishById(parishId);
-		if (parish != null) {
-			parish.getSubCounty().removeParish(parish);
-			adminService.deleteParish(parishId);
 
+		String[] parishIdzToDelete = parishIds.split(",");
+		try {
+			adminService.deleteParishesByIds(parishIdzToDelete);
 			modelMap.put(WebConstants.MODEL_ATTRIBUTE_SYSTEM_MESSAGE,
-					"Parish >> " + parish.getName() + " deleted successfully");
-			return viewParishHandler(null, parish.getSubCounty().getId(),
-					modelMap);
-		} else {
-			modelMap.put(WebConstants.MODEL_ATTRIBUTE_ERROR_MESSAGE,
-					"the subcounty id supplied does not belong to a valid district in the system");
+					"Parish(es)  deleted successfully");
+		} catch (Exception e) {
+			log.error("Error", e);
+			modelMap.put(WebConstants.MODEL_ATTRIBUTE_ERROR_MESSAGE, "Error "
+					+ e.getMessage());
 		}
 
-		return viewParishHandler(null, null, modelMap);
+		return viewParishHandler(null, subCountyId, modelMap);
 	}
 
 	@Secured({ PermissionConstants.PERM_VIEW_ADMINISTRATION })
@@ -487,15 +488,15 @@ public class DistrictController {
 			throws SessionExpiredException {
 
 		try {
-			
+
 			Parish parish = village.getParish();
 			adminService.validate(village);
 			Village exisitingVillage = village;
-			
+
 			if (StringUtils.isNotEmpty(village.getId())) {
 				exisitingVillage = adminService.getVillageById(village.getId());
 				exisitingVillage.setName(village.getName());
-				
+
 				parish.removeVillage(exisitingVillage);
 				parish.addVillage(exisitingVillage);
 			} else {
@@ -515,30 +516,30 @@ public class DistrictController {
 			modelMap.put(WebConstants.CONTENT_HEADER, "Retry Add/Edit "
 					+ (StringUtils.isBlank(village.getName()) ? "Village"
 							: village.getName()));
+			modelMap.put("parish", village.getParish());
 			return new ModelAndView("formVillage", modelMap);
 		}
 	}
 
 	@Secured({ PermissionConstants.PERM_VIEW_ADMINISTRATION })
-	@RequestMapping(method = RequestMethod.GET, value = "/village/delete/{vid}")
+	@RequestMapping(method = RequestMethod.GET, value = "/village/delete/{pid}/{vids}")
 	public ModelAndView deleteVillagehHandler(
-			@PathVariable("vid") String villageId, ModelMap modelMap)
+			@PathVariable("pid") String parishId,
+			@PathVariable("vids") String villageIds, ModelMap modelMap)
 			throws SessionExpiredException {
-		Village village = adminService.getVillageById(villageId);
-		if (village != null) {
-			village.getParish().removeVillage(village);
-			adminService.deleteVillage(villageId);
 
+		String[] villageIdzToDelete = villageIds.split(",");
+		try {
+			adminService.deleteVillagesByIds(villageIdzToDelete);
 			modelMap.put(WebConstants.MODEL_ATTRIBUTE_SYSTEM_MESSAGE,
-					"Village >> " + village.getName() + " deleted successfully");
-			return viewVillageHandler(null, village.getParish().getId(),
-					modelMap);
-		} else {
-			modelMap.put(WebConstants.MODEL_ATTRIBUTE_ERROR_MESSAGE,
-					"the village id supplied does not belong to a valid district in the system");
+					"Village(s)  deleted successfully");
+		} catch (Exception e) {
+			log.error("Error", e);
+			modelMap.put(WebConstants.MODEL_ATTRIBUTE_ERROR_MESSAGE, "Error "
+					+ e.getMessage());
 		}
 
-		return viewVillageHandler(null, null, modelMap);
+		return viewVillageHandler(null, parishId, modelMap);
 	}
 
 	@Secured({ PermissionConstants.PERM_VIEW_ADMINISTRATION })

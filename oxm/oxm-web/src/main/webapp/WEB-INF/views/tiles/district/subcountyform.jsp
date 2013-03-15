@@ -21,30 +21,25 @@ form#district input[type="text"] {
 	>
 	<oxmDistrictBreadcrambs:districts />
 	>
-	<oxmDistrictBreadcrambs:subcounty district="${district }" /> > Sub-County form
+	<oxmDistrictBreadcrambs:subcounty district="${district }" />
+	> Sub-County form
 </div>
 
 <div>
-	<form:form action="${baseUrl }/subcounty/save/${district.id }" commandName="subcounty">
+	<form:form action="${baseUrl }/subcounty/save/${district.id }"
+		commandName="subcounty">
 		<form:hidden path="id" />
-		<form:hidden path="district"/>
-		<div>
-			<div class="box tabular">
-				<p>
-					<label>Name <span class="required">*</span> </label>
-					<form:input path="name" cssClass="uiTextbox"/>
-				</p><!--
-				<c:if test="${not empty countries  && fn:length(countries) > 0}">
-					<p>
-						<label>Country <span class="required">*</span> </label>
-						<form:select items="${countries }" itemLabel="name" itemValue="id" path="country" cssClass="uiTextbox"/>
-					</p>
-				</c:if>
-			--></div>
+		<form:hidden path="district" />
+		<div class="box tabular">
+			<p>
+				<label>Name <span class="required">*</span> </label>
+				<form:input path="name" cssClass="uiTextbox" />
+			</p>
 		</div>
 		<div>
-			<input id="btnSaveSubCounty" type="submit" value="Save" class="uiButton"/>
+			<input id="btnSaveSubCounty" type="submit" value="Save"
+				class="uiButton" />
 		</div>
 	</form:form>
-	
+
 </div>

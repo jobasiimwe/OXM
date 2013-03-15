@@ -213,28 +213,33 @@ $(document).ready(
 					'click',
 					function(event) {
 
-						if (event.target.type == 'checkbox'
-								&& $(':checkbox', this).attr('checked')) {
-							$(this).addClass("selected");
+						if (event.target.type == 'checkbox') {
+							if ($(':checkbox', this).attr('checked'))
+								$(this).addClass("selected");
+							else
+								$(this).removeClass("selected");
 						} else {
 							var url = $(this).attr("url");
 							if (url != null) {
-								window.location = url;
+								window.open(url);
 							}
+
 							if ($(':checkbox', this).attr('checked')
 									|| $(this).hasClass('selected')) {
 								$(this).removeClass("selected");
-								$(':checkbox', this).attr('checked', false);
+								$(':checkbox', this).attr('checked',
+										false);
 							} else {
 								$(this).addClass("selected");
-								$(':checkbox', this).attr('checked', true);
+								$(':checkbox', this).attr('checked',
+										true);
 							}
 						}
 					});
 
-			/*
-			 * everytime the cbxSelectAllItems is selected, all rows in the same
-			 * table should be selected.
+			/**
+			 * everytime the cbxSelectAllItems is selected, all rows in
+			 * the same table should be selected.
 			 */
 			$("#cbxSelectAllItems").live('click', function(event) {
 				if ($(this).attr("checked") == "checked") {

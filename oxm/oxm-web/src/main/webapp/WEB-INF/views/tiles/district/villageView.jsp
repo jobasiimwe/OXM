@@ -35,22 +35,24 @@
 </div>
 
 <div>
-	<table id="recordTable" class="recordTable list" width="100%"
+	<table class="recordTable list" width="100%"
 		cellpadding="0" cellspacing="0">
 		<thead>
 			<tr>
 				<th><input type="checkbox" name="cbxSelectAllItems"
 					id="cbxSelectAllItems" /></th>
+				<th>No.</th>
 				<th>Name</th>
 				<th>Parish</th>
 			</tr>
 		</thead>
 		<tbody>
 			<c:if test="${not empty villages  && fn:length(villages) > 0}">
-				<c:forEach var="village" items="${villages }">
+				<c:forEach var="village" items="${villages }" varStatus="status">
 					<tr id="${village.id }">
 						<td><input type="checkbox" name="selectedVillage"
 							value="${village.id }" /></td>
+						<td>${status.count }</td>
 						<td>${village.name }</td>
 						<td>${village.parish.name }</td>
 					</tr>

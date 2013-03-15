@@ -37,13 +37,13 @@
 </div>
 
 <div>
-	<table id="recordTable" class="recordTable list" width="100%"
+	<table class="recordTable list" width="100%"
 		cellpadding="0" cellspacing="0">
 		<thead>
 			<tr>
 				<th><input type="checkbox" name="cbxSelectAllItems"
-					id="cbxSelectAllItems" />
-				</th>
+					id="cbxSelectAllItems" /></th>
+				<th>No.</th>
 				<th>Name</th>
 				<th>Sub-Counties</th>
 			</tr>
@@ -51,10 +51,12 @@
 		<tbody>
 			<c:choose>
 				<c:when test="${not empty districts  && fn:length(districts) > 0}">
-					<c:forEach var="district" items="${districts }">
+					<c:forEach var="district" items="${districts }" varStatus="status">
 						<tr id="${district.id }">
 							<td><input type="checkbox" name="selectedDistrict"
-								value="${district.id }" /></td>
+								value="${district.id }" />
+							</td>
+							<td>${status.count }</td>
 							<td>${district.name }</td>
 							<td>${district.subCountiesString }</td>
 						</tr>

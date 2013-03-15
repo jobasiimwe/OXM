@@ -1,3 +1,13 @@
+function isNotBlank(id, fieldName) {
+	var value = $.trim($("#" + id).val());
+	if (value == null || value == "") {
+		alert(fieldName + " is required!!");
+		return false;
+	}
+
+	return true;
+}
+
 /**
  * handles the farm scripting
  */
@@ -69,6 +79,10 @@ $(document).ready(function() {
 		return multipleItemAction('lnkDeleteDistrict', "District");
 	});
 
+	$('#btnSaveDistrict').click(function() {
+		return isNotBlank('txtName', "Name");
+	});
+
 	/**
 	 * subCounty functions
 	 */
@@ -83,7 +97,11 @@ $(document).ready(function() {
 	$('#lnkDeleteSubCounty').click(function() {
 		return multipleItemAction('lnkDeleteSubCounty', "SubCounty");
 	});
-	
+
+	$('#btnSaveSubCounty').click(function() {
+		return isNotBlank('txtName', "Name");
+	});
+
 	/**
 	 * parish functions
 	 */
@@ -98,7 +116,11 @@ $(document).ready(function() {
 	$('#lnkDeleteParish').click(function() {
 		return multipleItemAction('lnkDeleteParish', "Parish");
 	});
-	
+
+	$('#btnSaveParish').click(function() {
+		return isNotBlank('txtName', "Name");
+	});
+
 	/**
 	 * village functions
 	 */
@@ -110,4 +132,7 @@ $(document).ready(function() {
 		return multipleItemAction('lnkDeleteVillage', "Village");
 	});
 
+	$('#btnSaveVillage').click(function() {
+		return isNotBlank('txtName', "Name");
+	});
 });
