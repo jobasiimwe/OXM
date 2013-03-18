@@ -43,7 +43,14 @@ public class ProducerOrgServiceImpl implements ProducerOrgService {
 	@Override
 	public void validate(ProducerOrganisation productionOrganisation)
 			throws ValidationException {
-
+	    if(StringUtils.isEmpty(productionOrganisation.getName()))
+		throw new ValidationException("Supplied Production Org missing name");
+	    
+	    if(productionOrganisation.getDistrict() == null)
+		throw new ValidationException("Supplid Production Org missing district");
+	    
+	    if(productionOrganisation.getSubCounty() == null)
+		throw new ValidationException("Supplied Production Org missing subCountry");
 	}
 
 	@Secured({ PermissionConstants.VIEW_PROD_ORG })
