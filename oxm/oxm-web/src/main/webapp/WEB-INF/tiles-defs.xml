@@ -5,7 +5,6 @@
 		<put-attribute name="pageTitle" type="template" value="/WEB-INF/views/tiles/contentheader.jsp" />
 		<put-attribute name="title" type="string" value="Oxfam e-agric System" />
 		<put-attribute name="header" type="template" value="/WEB-INF/views/tiles/header.jsp" />
-		<put-attribute name="baseurl" type="template" value="/WEB-INF/views/tiles/baseurl.jsp" />
 		<put-attribute name="sidebarleft" type="template" value="/WEB-INF/views/tiles/menu.jsp" />
 		<put-attribute name="body" type="template" value="/WEB-INF/views/tiles/body.jsp" />
 		<put-attribute name="footer" type="template" value="/WEB-INF/views/tiles/footer.jsp" />
@@ -14,7 +13,6 @@
 	<definition name="annoymouslayout" template="/WEB-INF/views/annoymouslayout.jsp">
 		<put-attribute name="title" type="string" value="Oxfam e-agric System" />
 		<put-attribute name="header" type="template" value="/WEB-INF/views/tiles/header.jsp" />
-		<put-attribute name="baseurl" type="template" value="/WEB-INF/views/tiles/baseurl.jsp" />
 		<put-attribute name="body" type="template" value="/WEB-INF/views/tiles/body.jsp" />
 		<put-attribute name="footer" type="template" value="/WEB-INF/views/tiles/footer.jsp" />
 	</definition>
@@ -32,8 +30,8 @@
 		<put-attribute name="body" type="template" value="/WEB-INF/views/tiles/dashboard/view.jsp" />
 	</definition>
 
-	<!--===== FORM to addORedit a new user ====== -->
-	<definition name="editORAddUser" extends="layout">
+	<!--===== FORM to form a new user ====== -->
+	<definition name="formUser" extends="layout">
 		<put-attribute name="scripts" type="template" value="/WEB-INF/views/tiles/users/scripts.jsp" />
 		<put-attribute name="pageTitle" type="string" value="Add/Edit User" />
 		<put-attribute name="sidebarleft" type="template" value="/WEB-INF/views/tiles/menu.jsp" />
@@ -55,7 +53,7 @@
 		<put-attribute name="body" type="template" value="/WEB-INF/views/tiles/role/view.jsp" />
 	</definition>
 
-	<definition name="addOREditRole" extends="layout">
+	<definition name="formRole" extends="layout">
 		<put-attribute name="scripts" type="template" value="/WEB-INF/views/tiles/controlpanel/users/scripts.jsp" />
 		<put-attribute name="pageTitle" type="string" value="New/Edit Role" />
 		<put-attribute name="sidebarleft" type="template" value="/WEB-INF/views/tiles/menu.jsp" />
@@ -64,14 +62,10 @@
 
 	<!-- ========= FORM to add a concept ========= -->
 	<definition name="viewConcept" extends="layout">
-		<put-attribute name="scripts" type="template" value="/WEB-INF/views/tiles/concept/scripts.jsp" />
-		<put-attribute name="pageTitle" type="string" value="View Concept(s)" />
 		<put-attribute name="body" type="template" value="/WEB-INF/views/tiles/concept/view.jsp" />
 	</definition>
 
-	<definition name="addOREditConcept" extends="layout">
-		<put-attribute name="scripts" type="template" value="/WEB-INF/views/tiles/concept/scripts.jsp" />
-		<put-attribute name="pageTitle" type="string" value="Add/Edit Concept" />
+	<definition name="formConcept" extends="layout">
 		<put-attribute name="body" type="template" value="/WEB-INF/views/tiles/concept/form.jsp" />
 	</definition>
 
@@ -82,7 +76,7 @@
 		<put-attribute name="body" type="template" value="/WEB-INF/views/tiles/concept/categoryView.jsp" />
 	</definition>
 
-	<definition name="addOREditConceptCategory" extends="layout">
+	<definition name="formConceptCategory" extends="layout">
 		<put-attribute name="scripts" type="template" value="/WEB-INF/views/tiles/concept/scripts.jsp" />
 		<put-attribute name="pageTitle" type="string" value="Add/Edit Concept Category" />
 		<put-attribute name="body" type="template" value="/WEB-INF/views/tiles/concept/categoryform.jsp" />

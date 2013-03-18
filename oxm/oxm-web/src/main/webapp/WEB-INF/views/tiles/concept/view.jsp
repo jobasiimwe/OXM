@@ -4,32 +4,18 @@
 <%@ taglib prefix='fn' uri='http://java.sun.com/jsp/jstl/functions'%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 
+<%@ taglib prefix="oxmConceptBreadcrambs"
+	tagdir="/WEB-INF/tags/breadcramblinks/concept"%>
+<%@ taglib prefix="oxmBreadcrambs"
+	tagdir="/WEB-INF/tags/breadcramblinks"%>
+
 <div style="margin: 5px; width: 100%;">
-	
-	<a title="Reload Crops" href="${baseUrl }/crop/view/page/1">Crops</a>
+	<oxmBreadcrambs:cpanel startingBreadcramb="true" />
+	<oxmConceptBreadcrambs:concepts />
 </div>
 
-<div>
-	<div style="float: left">
-		<form:form method="post" action="${baseUrl }/concept/view/"
-			commandName="conceptCategory" id="conceptCategoryForm">
-			<label class="uiLabel">Concept in Category:</label>
-			<form:select id="category" path="id" cssClass="uiDropdown"
-				itemLabel="name" itemValue="id" items="${conceptcategories }" />
-			<input type="submit" class="uiButton"
-				id="btnLoadConceptCategoryConcepts" value="Load" />
-		</form:form>
-	</div>
-	<div style="float: right">
-		<form method="post" action="${baseUrl }/concept/search/"
-			style="display: inline-block">
-			<input type="text" class="uiTextbox" id="txtSearch" size="30"
-				name="query" value="${query }" /> <input type="submit"
-				class="uiButton" id="btnSearchSubmit" value="Search" />
-		</form>
-	</div>
-	<div style="clear: both"></div>
-</div>
+<jsp:include page="/WEB-INF/views/tiles/concept/searchfields.jsp"></jsp:include>
+
 <div id="buttonStrip">
 	<div class="contextual" style="float: left;">
 		<a id="lnkAddConcept" class="uiButton" href="${baseUrl }/concept/add/">Add</a>
@@ -57,7 +43,7 @@
 				<c:when test="${not empty concepts  && fn:length(concepts) > 0}">
 					<c:forEach var="concept" items="${concepts }">
 						<tr id="${concept.id }">
-							<td><input type="checkbox" name="selectedConcepts"
+							<td><input type="checkbox" name="selectedConcept"
 								value="${concept.id }" /></td>
 							<td>${concept.name }</td>
 							<td>${concept.description }</td>

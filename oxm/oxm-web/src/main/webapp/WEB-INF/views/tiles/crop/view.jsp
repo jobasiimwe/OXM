@@ -7,7 +7,6 @@
 <%@ taglib prefix="oxmBreadcrambs"
 	tagdir="/WEB-INF/tags/breadcramblinks"%>
 
-
 <div style="margin: 5px; width: 100%;">
 	<oxmBreadcrambs:cpanel startingBreadcramb="true" />
 	<oxmBreadcrambs:crops />
@@ -15,10 +14,10 @@
 
 <div id="buttonStrip">
 	<div class="contextual" style="float: left;">
-		<a id="btnAddCrop" class="uiButton" href="${baseUrl }/crop/add/">Add</a>
-		<a id="btnEditCrop" class="uiButton" href="${baseUrl }/crop/edit/">Edit</a>
-		<a id="btnDeleteCrop" class="uiButton" href="${baseUrl }/crop/delete/">Delete</a>
-		&emsp;<a id="btnCropDetails" class="uiButton"
+		<a id="lnkAddCrop" class="uiButton" href="${baseUrl }/crop/add/">Add</a>
+		<a id="lnkEditCrop" class="uiButton" href="${baseUrl }/crop/edit/">Edit</a>
+		<a id="lnkDeleteCrop" class="uiButton" href="${baseUrl }/crop/delete/">Delete</a>
+		&emsp;<a id="lnkCropDetails" class="uiButton"
 			href="${baseUrl }/crop/details/">Details</a>
 	</div>
 	<div style="float: right;">

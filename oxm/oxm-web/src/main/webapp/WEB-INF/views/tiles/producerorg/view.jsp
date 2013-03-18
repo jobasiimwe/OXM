@@ -50,7 +50,7 @@
 							<td>${pOrg.name }</td>
 							<td>${pOrg.subCounty.name }</td>
 							<td>${pOrg.district.name }</td>
-							<td></td>
+							<td>${fn:length(pOrg.producers) }</td>
 						</tr>
 					</c:forEach>
 				</c:when>

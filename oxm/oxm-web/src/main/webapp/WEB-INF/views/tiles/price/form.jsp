@@ -5,17 +5,6 @@
 <%@ taglib prefix='fn' uri='http://java.sun.com/jsp/jstl/functions'%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 
-<style>
-form#concept input[type="text"] {
-	width: 70%;
-}
-
-#conceptcategorylist span {
-	display: inline-block;
-	width: 50%;
-}
-</style>
-
 <%@ taglib prefix="oxmBreadcrambs"
 	tagdir="/WEB-INF/tags/breadcramblinks"%>
 
@@ -45,36 +34,39 @@ form#concept input[type="text"] {
 
 			<form:hidden path="id" />
 			<div class="splitcontentleft">
-				<div class="box tabular">
+				<div class="box ">
 					<h3>Adding Price of ${price.crop.name }</h3>
 					<form:hidden path="crop" />
-					<p>
-						<label>Selling Place <span class="required">*</span> </label>
-						<form:select path="sellingPlace" items="${sellingPlaces }"
-							itemLabel="name" itemValue="id" />
-					</p>
-					<p>
-						<label>Selling Type</label>
-						<form:select path="sellType" items="${sellingTypes }"
-							itemLabel="name" itemValue="id" />
-					</p>
-					<p>
-						<label>Unit of Measure</label>
-						<form:select path="unitOfMeasure" items="${unitOfMeasures }"
-							itemLabel="name" itemValue="id" />
-					</p>
-					<p>
-						<label>Price</label>
-						<form:input path="price" cssClass="uiTextbox" />
-					</p>
-					<p>
-						<label>Date</label>
-						<form:input path="date" cssClass="uiTextbox uiDateTextbox" />
-					</p>
-					<p>
-						<label>Quantity</label>
-						<form:input path="quantity" cssClass="uiTextbox" />
-					</p>
+					<table>
+						<tr>
+							<td><label>Selling Place <span class="required">*</span>
+							</label></td>
+							<td><form:select path="sellingPlace"
+									cssStyle="width: 100px;" items="${sellingPlaces }"
+									itemLabel="name" itemValue="id" /></td>
+							<td><label>Date</label> <form:input path="date"
+									cssStyle="width: 100px;" cssClass="uiTextbox uiDateTextbox" />
+							</td>
+						</tr>
+						<tr>
+							<td><label>Selling Type</label></td>
+							<td><form:select path="sellType" cssStyle="width: 100px;"
+									items="${sellingTypes }" itemLabel="name" itemValue="id" /></td>
+						</tr>
+						<tr>
+							<td><label>Quantity</label></td>
+							<td><form:input path="quantity" cssStyle="width: 100px;"
+									cssClass="uiTextbox" /></td>
+							<td><label>Units</label> <form:select
+									path="unitOfMeasure" items="${unitOfMeasures }"
+									itemLabel="name" itemValue="id" /></td>
+						</tr>
+						<tr>
+							<td><label>Price</label></td>
+							<td><form:input path="price" cssStyle="width: 100px;"
+									cssClass="uiTextbox" /></td>
+						</tr>
+					</table>
 				</div>
 			</div>
 			<div style="clear: both"></div>

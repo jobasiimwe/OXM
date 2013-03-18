@@ -28,6 +28,8 @@ public interface ConceptService {
 
 	List<Concept> getConcepts();
 
+	List<Concept> getConcepts(Integer pageNo);
+
 	List<Concept> getConceptsByCategory(ConceptCategory conceptCategory);
 
 	List<Concept> getConceptsByCategories(
@@ -37,10 +39,10 @@ public interface ConceptService {
 			ConceptCategoryAnnotation conceptCategoryAnnotation)
 			throws SecurityException, NoSuchFieldException;
 
-	List<Concept> getConceptsWithParams(
+	List<Concept> searchWithParams(
 			ConceptSearchParameters conceptSearchParameters, int pageNo);
 
-	int getNumberOfConceptsInSearch(
+	int numberOfConceptsWithSearchParams(
 			ConceptSearchParameters conceptSearchParameters);
 
 	// =========================

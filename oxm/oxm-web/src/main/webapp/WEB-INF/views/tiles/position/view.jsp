@@ -15,12 +15,12 @@
 
 <div id="buttonStrip">
 	<div class="contextual" style="float: left;">
-		<a id="btnAddPosition" class="uiButton"
-			href="${baseUrl }/position/add/">Add</a> <a id="btnEditPosition"
+		<a id="lnkAddPosition" class="uiButton"
+			href="${baseUrl }/position/add/">Add</a> <a id="lnkEditPosition"
 			class="uiButton" href="${baseUrl }/position/edit/">Edit</a> <a
-			id="btnDeletePosition" class="uiButton"
+			id="lnkDeletePosition" class="uiButton"
 			href="${baseUrl }/position/delete/">Delete</a> &emsp;<a
-			id="btnPositionHolders" class="uiButton"
+			id="lnkPositionHolders" class="uiButton"
 			href="${baseUrl }/position/holders/">Holders</a>
 	</div>
 	<div style="float: right;">

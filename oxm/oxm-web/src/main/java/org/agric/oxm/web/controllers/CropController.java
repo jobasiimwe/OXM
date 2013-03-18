@@ -426,7 +426,6 @@ public class CropController {
 					"Error " + e.getMessage());
 			return viewCropsHandler(1, model);
 		}
-
 	}
 
 	@Secured({ PermissionConstants.PERM_VIEW_ADMINISTRATION })

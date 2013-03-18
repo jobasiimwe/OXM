@@ -43,18 +43,34 @@ public class PriceController {
 	@Autowired
 	private SellingPlaceService sellingPlaceService;
 
+	public static final String CROP = "cropid";
+	public static final String SELLING_PLACE = "sellingplaceid";
+	private static final String COMMAND_NAME = "conceptsearch";
+
 	private Logger log = LoggerFactory.getLogger(this.getClass());
 
 	@Secured({ PermissionConstants.PERM_VIEW_ADMINISTRATION })
-	@RequestMapping(value = { "/price/view/page/{pageNo}" }, method = RequestMethod.GET)
+	@RequestMapping(value = { "/price/view/admin/page/{pageNo}" }, method = RequestMethod.GET)
 	public ModelAndView viewPriceHandler(ModelMap modelMap,
 			@PathVariable(value = "pageNo") Integer pageNo) {
+		preparePriceModel(modelMap, pageNo);
+		modelMap.put("adminView", true);
+		
+		return new ModelAndView("viewPrice", modelMap);
+	}
+	
+	private void preparePriceModel(ModelMap modelMap, Integer pageNo){
 		if (pageNo == null || (pageNo != null && pageNo <= 0)) {
 			pageNo = 1;
 		}
 		modelMap.put("prices", priceService.getPrices());
-
 		modelMap.put(WebConstants.CONTENT_HEADER, "List of Prices");
+	}
+	
+	@RequestMapping(value = { "/price/view/page/{pageNo}" }, method = RequestMethod.GET)
+	public ModelAndView viewPriceHandler2(ModelMap modelMap,
+			@PathVariable(value = "pageNo") Integer pageNo) {
+		preparePriceModel(modelMap, pageNo);
 		return new ModelAndView("viewPrice", modelMap);
 	}
 

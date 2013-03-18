@@ -17,7 +17,7 @@
 	</div>
 	<div class="menu">
 		<a class="menu-lnk" id="lnkConcepts" title="Concepts"
-			href="${baseUrl }/concept/view/x"> <span class="panellink concept-icon"></span><label
+			href="${baseUrl }/concept/view/page/1"> <span class="panellink concept-icon"></span><label
 			style="margin: 10px; font-size: 12px; font-weight: bold;">Concept</label>
 		</a>
 	</div>

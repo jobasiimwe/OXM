@@ -46,7 +46,7 @@ public class UserController {
 	private Logger log = LoggerFactory.getLogger(this.getClass());
 
 	@Secured({ PermissionConstants.PERM_VIEW_ADMINISTRATION })
-	@RequestMapping(value = "/user/edit/{userid}/{qpage}", method = RequestMethod.GET)
+	@RequestMapping(value = "/user/edit/{qpage}/{userid}", method = RequestMethod.GET)
 	public ModelAndView editUserHandler(@PathVariable("userid") String id,
 			@PathVariable("qpage") String userPage, ModelMap model)
 			throws SessionExpiredException {
@@ -59,7 +59,7 @@ public class UserController {
 			prepareUserFormModel(model);
 			model.put("user", user);
 			model.put("qUserPage", userPage);
-			return new ModelAndView("editORAddUser", model);
+			return new ModelAndView("formUser", model);
 		}
 
 		return WebConstants.DEFAULT_PAGE(OXMSecurityUtil.getLoggedInUser());
@@ -172,7 +172,7 @@ public class UserController {
 		prepareUserFormModel(model);
 		model.put("qUserPage", qPage);
 		model.put("profile_Img", "empty");
-		return new ModelAndView("editORAddUser", model);
+		return new ModelAndView("formUser", model);
 	}
 
 	@Secured({ PermissionConstants.PERM_VIEW_ADMINISTRATION })

@@ -2,16 +2,11 @@ package org.agric.oxm.web.controllers;
 
 import java.util.List;
 
-import org.agric.oxm.model.ConceptCategory;
 import org.agric.oxm.model.Season;
 import org.agric.oxm.model.exception.SessionExpiredException;
 import org.agric.oxm.model.exception.ValidationException;
-import org.agric.oxm.server.ConceptCategoryAnnotation;
-import org.agric.oxm.server.DefaultConceptCategories;
 import org.agric.oxm.server.security.PermissionConstants;
-import org.agric.oxm.server.service.ConceptService;
 import org.agric.oxm.server.service.SeasonService;
-import org.agric.oxm.web.OXMUtil;
 import org.agric.oxm.web.WebConstants;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
@@ -31,8 +26,6 @@ public class SeasonController {
 
 	@Autowired
 	private SeasonService seasonService;
-	@Autowired
-	private ConceptService conceptService;
 
 	private Logger log = LoggerFactory.getLogger(this.getClass());
 
@@ -51,7 +44,6 @@ public class SeasonController {
 	public ModelAndView addSeasonHandler(ModelMap modelMap)
 			throws SessionExpiredException {
 		modelMap.put("season", new Season());
-		prepareSeasonModel(modelMap);
 		return new ModelAndView("formSeason", modelMap);
 
 	}
@@ -66,7 +58,6 @@ public class SeasonController {
 
 		if (season != null) {
 			modelMap.put("season", season);
-			prepareSeasonModel(modelMap);
 			return new ModelAndView("formSeason", modelMap);
 		}
 
@@ -96,29 +87,6 @@ public class SeasonController {
 		return viewSeasonHandler(modelMap);
 	}
 
-	private void prepareSeasonModel(ModelMap modelMap) {
-		try {
-			ConceptCategoryAnnotation typeRoleAnnotation = OXMUtil
-					.getConceptCategoryFieldAnnotation(
-							DefaultConceptCategories.class,
-							DefaultConceptCategories.SEASON_NAME);
-
-			if (typeRoleAnnotation != null) {
-				ConceptCategory sellingTypeRole = conceptService
-						.getConceptCategoryById(typeRoleAnnotation.id());
-
-				if (sellingTypeRole != null) {
-					modelMap.put("names", conceptService
-							.getConceptsByCategory(sellingTypeRole));
-				}
-			}
-		} catch (Exception e) {
-			log.error("Error", e);
-			modelMap.put(WebConstants.MODEL_ATTRIBUTE_ERROR_MESSAGE,
-					e.getMessage());
-		}
-	}
-
 	@Secured({ PermissionConstants.VIEW_SEASONS,
 			PermissionConstants.MANAGE_SEASONS })
 	@RequestMapping(method = RequestMethod.POST, value = "/season/save/")
@@ -145,7 +113,6 @@ public class SeasonController {
 			modelMap.put(WebConstants.MODEL_ATTRIBUTE_ERROR_MESSAGE,
 					e.getMessage());
 			modelMap.put("season", season);
-			prepareSeasonModel(modelMap);
 			return new ModelAndView("formSeason", modelMap);
 		}
 		return viewSeasonHandler(modelMap);

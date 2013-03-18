@@ -194,7 +194,8 @@ public class ProducerOrgController {
 		Role roleProducer = userService
 				.getRoleById("4836AFAB-3D62-482c-BA9A-D9D15839C68A");
 		List<Role> roles = new ArrayList<Role>();
-		roles.add(roleProducer);
+		roles = userService.getRoles();
+		//roles.add(roleProducer);
 		modelMap.put("roles", roles);
 		modelMap.put("userstatus", new UserStatus[] { UserStatus.ENABLED,
 				UserStatus.DISABLED });
@@ -202,18 +203,17 @@ public class ProducerOrgController {
 	}
 
 	@Secured({ PermissionConstants.ADD_PRODUCER })
-	@RequestMapping(value = "/producers/edit/{producerId}", method = RequestMethod.GET)
+	@RequestMapping(value = "/producers/edit/{pOrgId}/{producerId}", method = RequestMethod.GET)
 	public ModelAndView editProducerOrgProducersHandler(
-			@PathVariable("pOrgId") String pOrgId, ModelMap modelMap) {
+			@PathVariable("pOrgId") String pOrgId,@PathVariable("producerId") String producerId, ModelMap modelMap) {
 
 		ProducerOrganisation pOrg = producerOrgService
 				.getProducerOrganisationById(pOrgId);
 		modelMap.put("pOrg", pOrg);
-
-		User producer = new User(pOrg);
+		User producer = userService.getUserById(producerId);
 		modelMap.put("producer", producer);
-
 		prepareUserFormModel(modelMap);
+		
 		return new ModelAndView("formPOrgProducer", modelMap);
 	}
 

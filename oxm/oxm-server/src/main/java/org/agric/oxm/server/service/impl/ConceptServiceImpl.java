@@ -87,6 +87,25 @@ public class ConceptServiceImpl implements ConceptService {
 	@Override
 	@Secured({ PermissionConstants.VIEW_CONCEPT_DETAILS })
 	@Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
+	public List<Concept> getConcepts(Integer pageNo) {
+		Search search = new Search();
+		search.setMaxResults(OXMConstants.MAX_NUM_PAGE_RECORD);
+
+		/*
+		 * if the page number is less than or equal to zero, no need for paging
+		 */
+		if (pageNo > 0) {
+			search.setPage(pageNo - 1);
+		} else {
+			search.setPage(0);
+		}
+		List<Concept> concepts = conceptDAO.search(search);
+		return concepts;
+	}
+
+	@Override
+	@Secured({ PermissionConstants.VIEW_CONCEPT_DETAILS })
+	@Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
 	public List<Concept> getConceptsByCategory(ConceptCategory conceptCategory) {
 		Search search = new Search();
 		search.addFilterEqual("recordStatus", RecordStatus.ACTIVE);
@@ -131,7 +150,7 @@ public class ConceptServiceImpl implements ConceptService {
 	@Override
 	@Secured({ PermissionConstants.VIEW_CONCEPT_DETAILS })
 	@Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
-	public List<Concept> getConceptsWithParams(ConceptSearchParameters params,
+	public List<Concept> searchWithParams(ConceptSearchParameters params,
 			int pageNo) {
 		Search search = prepareConceptSearch(params);
 		search.setMaxResults(OXMConstants.MAX_NUM_PAGE_RECORD);
@@ -153,13 +172,13 @@ public class ConceptServiceImpl implements ConceptService {
 
 		search.addSort("name", false, true);
 		search.addFilterEqual("recordStatus", RecordStatus.ACTIVE);
-		if (!StringUtils.isNotEmpty(params.getName())) {
-			/*
-			 * Filter nameFilter = new Filter("name", "%" + params.getName() +
-			 * "%", Filter.OP_LIKE); Filter descFilter = new
-			 * Filter("description", "%" + params.getName() + "%",
-			 * Filter.OP_ILIKE); search.addFilterOr(nameFilter, descFilter);
-			 */search.addFilterLike("name", params.getName());
+		if (!StringUtils.isEmpty(params.getName())) {
+			Filter nameFilter = new Filter("name",
+					"%" + params.getName() + "%", Filter.OP_LIKE);
+			Filter descFilter = new Filter("description", "%"
+					+ params.getName() + "%", Filter.OP_ILIKE);
+			search.addFilterOr(nameFilter, descFilter);
+			// search.addFilterLike("name", params.getName());
 		}
 
 		if (null != params.getConceptCategory())
@@ -170,7 +189,7 @@ public class ConceptServiceImpl implements ConceptService {
 	}
 
 	@Override
-	public int getNumberOfConceptsInSearch(ConceptSearchParameters params) {
+	public int numberOfConceptsWithSearchParams(ConceptSearchParameters params) {
 		Search search = prepareConceptSearch(params);
 		return conceptDAO.count(search);
 	}

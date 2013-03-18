@@ -65,7 +65,7 @@ public class RoleController {
 	WebConstants.loadLoggedInUserProfile(OXMSecurityUtil.getLoggedInUser(), model);
 	prepareRoleFormModel(model);
 	model.put("role", new Role());
-	return new ModelAndView("addOREditRole", model);
+	return new ModelAndView("formRole", model);
     }
 
     @Secured({ PermissionConstants.PERM_VIEW_ADMINISTRATION })
@@ -77,7 +77,7 @@ public class RoleController {
 	
 	Role role = userService.getRoleById(roleId);
 	model.put("role", role);
-	return new ModelAndView("addOREditRole", model);
+	return new ModelAndView("formRole", model);
     }
 
     @Secured({ PermissionConstants.PERM_VIEW_ADMINISTRATION })
@@ -94,7 +94,7 @@ public class RoleController {
 		    prepareRoleFormModel(model);
 		    model.put("role", role);
 		    model.put(WebConstants.MODEL_ATTRIBUTE_ERROR_MESSAGE, "Can't edit the name for the default user role");
-		    return new ModelAndView("addOREditRole", model);
+		    return new ModelAndView("formRole", model);
 		}
 	    }
 	    copyRoleContents(existingRole, role);
@@ -112,7 +112,7 @@ public class RoleController {
 	    prepareRoleFormModel(model);
 	    model.put("role", existingRole);
 	    model.put(WebConstants.MODEL_ATTRIBUTE_ERROR_MESSAGE, e.getMessage());
-	    return new ModelAndView("addOREditRole", model);
+	    return new ModelAndView("formRole", model);
 	}
     }
 
