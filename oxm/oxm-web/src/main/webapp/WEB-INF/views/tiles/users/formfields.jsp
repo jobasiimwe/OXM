@@ -2,7 +2,20 @@
 <%@page language="java" isELIgnored="false" contentType="text/html"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<style>
+#rolelist input[type="checkbox"] {
+	float: left;
+}
 
+#rolelist span {
+	display: inline-block;
+	width: 30%;
+}
+
+#rolelist label {
+	display: inline-block;
+}
+</style>
 
 <div class="tabular splitcontentleft">
 	<h3>Personal Information</h3>
@@ -61,10 +74,11 @@
 
 <div>
 	<div style="clear: both;"></div>
-	<b>Roles</b>
-	<p>
-		<form:checkboxes delimiter="<br>" items="${roles }" path="roles"
-			itemValue="id" itemLabel="name" />
+	<div class="box"><h3>Roles</h3>
+	<p id="rolelist">
+		<form:checkboxes items="${roles }" path="roles" itemValue="id"
+			itemLabel="name" />
 	</p>
+	</div>
 </div>
 
