@@ -167,6 +167,12 @@ public class PriceController {
 							.format(params.getToDate())));
 		}
 
+		if (params.getFromDate() != null && params.getToDate() != null) {
+			if (params.getToDate().before(params.getFromDate()))
+				modelMap.put(WebConstants.MODEL_ATTRIBUTE_ERROR_MESSAGE,
+						"Error, 'to' date is before 'from' date");
+		}
+
 		searchCommand.getPropertiesMap().put(ADMIN_VIEW,
 				new GenericCommandValue(params.getAdminView().toString()));
 		modelMap.put(ADMIN_VIEW, params.getAdminView());
