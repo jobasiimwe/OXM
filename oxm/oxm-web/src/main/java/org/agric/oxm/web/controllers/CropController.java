@@ -2,15 +2,12 @@ package org.agric.oxm.web.controllers;
 
 import java.util.List;
 
-import org.agric.oxm.model.Concept;
 import org.agric.oxm.model.Crop;
 import org.agric.oxm.model.search.CropSearchParameters;
-import org.agric.oxm.server.ConceptCategoryAnnotation;
 import org.agric.oxm.server.DefaultConceptCategories;
 import org.agric.oxm.server.security.PermissionConstants;
 import org.agric.oxm.server.service.ConceptService;
 import org.agric.oxm.server.service.CropService;
-import org.agric.oxm.web.OXMUtil;
 import org.agric.oxm.web.WebConstants;
 import org.agric.oxm.web.WebUtils;
 import org.agric.oxm.web.forms.GenericCommand;
@@ -38,6 +35,9 @@ public class CropController {
 
 	@Autowired
 	private ConceptService conceptService;
+
+	@Autowired
+	private ApplicationController applicationController;
 
 	private Logger log = LoggerFactory.getLogger(this.getClass());
 
@@ -91,55 +91,17 @@ public class CropController {
 	 * @param modelMap
 	 */
 	private void prepareCropModel(ModelMap modelMap) {
-
-		try {
-
-			List<Concept> cropInputs = conceptService
-					.getConceptsByCategoryAnnotation(OXMUtil
-							.getConceptCategoryFieldAnnotation(
-									DefaultConceptCategories.class,
-									DefaultConceptCategories.CROP_INPUTS));
-			modelMap.put("cropInputs", cropInputs);
-
-			List<Concept> interCropingTypes = conceptService
-					.getConceptsByCategoryAnnotation(OXMUtil
-							.getConceptCategoryFieldAnnotation(
-									DefaultConceptCategories.class,
-									DefaultConceptCategories.INTER_CROPING_TYPES));
-			modelMap.put("interCropingTypes", interCropingTypes);
-
-			List<Concept> ploughingMethods = conceptService
-					.getConceptsByCategoryAnnotation(OXMUtil
-							.getConceptCategoryFieldAnnotation(
-									DefaultConceptCategories.class,
-									DefaultConceptCategories.PLOUGHING_METHODS));
-			modelMap.put("ploughingMethods", ploughingMethods);
-
-			ConceptCategoryAnnotation seedVarietyCategoryAnnotation = OXMUtil
-					.getConceptCategoryFieldAnnotation(
-							DefaultConceptCategories.class,
-							DefaultConceptCategories.SEED_VARIETIES);
-			if (seedVarietyCategoryAnnotation != null) {
-				List<Concept> seedVarieties = conceptService
-						.getConceptsByCategoryAnnotation(seedVarietyCategoryAnnotation);
-				modelMap.put("seedVarieties", seedVarieties);
-			}
-
-			ConceptCategoryAnnotation unitsOfMeasureCategoryAnnotation = OXMUtil
-					.getConceptCategoryFieldAnnotation(
-							DefaultConceptCategories.class,
-							DefaultConceptCategories.UNITS_OF_MEASURE);
-			if (unitsOfMeasureCategoryAnnotation != null) {
-				List<Concept> unitsOfMeasure = conceptService
-						.getConceptsByCategoryAnnotation(unitsOfMeasureCategoryAnnotation);
-				modelMap.put("unitsOfMeasure", unitsOfMeasure);
-			}
-
-		} catch (Exception e) {
-			log.error("Error", e);
-			modelMap.put(WebConstants.MODEL_ATTRIBUTE_ERROR_MESSAGE, "Error "
-					+ e.getMessage());
-		}
+		applicationController.addConceptsToModelMap(modelMap,
+				DefaultConceptCategories.CROP_INPUTS, "cropInputs");
+		applicationController.addConceptsToModelMap(modelMap,
+				DefaultConceptCategories.INTER_CROPING_TYPES,
+				"interCropingTypes");
+		applicationController.addConceptsToModelMap(modelMap,
+				DefaultConceptCategories.PLOUGHING_METHODS, "ploughingMethods");
+		applicationController.addConceptsToModelMap(modelMap,
+				DefaultConceptCategories.SEED_VARIETIES, "seedVarieties");
+		applicationController.addConceptsToModelMap(modelMap,
+				DefaultConceptCategories.UNITS_OF_MEASURE, "unitsOfMeasure");
 	}
 
 	/**

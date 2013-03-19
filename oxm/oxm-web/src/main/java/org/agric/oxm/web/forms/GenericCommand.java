@@ -1,5 +1,6 @@
 package org.agric.oxm.web.forms;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -22,12 +23,42 @@ public class GenericCommand {
 	}
 
 	public String getValue(String key) {
-	    if(this.propertiesMap != null){
-		GenericCommandValue commandValue = this.propertiesMap.get(key);
-		if(commandValue != null)
-		    return commandValue.getValue();
-	    }
-	    
-	    return null;
+		if (this.propertiesMap != null) {
+			GenericCommandValue commandValue = this.propertiesMap.get(key);
+			if (commandValue != null)
+				return commandValue.getValue();
+		}
+
+		return null;
 	}
+
+	public Boolean getBooleanValue(String key) {
+		if (this.propertiesMap != null) {
+			GenericCommandValue commandValue = this.propertiesMap.get(key);
+			if (commandValue != null)
+				return commandValue.getBooleanValue();
+		}
+
+		return null;
+	}
+
+	public Date getAsDate(String key) {
+		if (this.propertiesMap != null) {
+			GenericCommandValue commandValue = this.propertiesMap.get(key);
+			if (commandValue != null)
+				return commandValue.getDateValue();
+		}
+
+		return null;
+	}
+	
+//	public String getDateText(String key) {
+//		if (this.propertiesMap != null) {
+//			GenericCommandValue commandValue = this.propertiesMap.get(key);
+//			if (commandValue != null)
+//				return commandValue.getDateText();
+//		}
+//
+//		return "";
+//	}
 }

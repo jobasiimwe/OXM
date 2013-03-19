@@ -51,7 +51,7 @@
 						<tr>
 							<td><label>Selling Type</label></td>
 							<td><form:select path="sellType" cssStyle="width: 100px;"
-									items="${sellingTypes }" itemLabel="name" itemValue="id" /></td>
+									items="${selltypes }" itemLabel="name" itemValue="id" /></td>
 						</tr>
 						<tr>
 							<td><label>Quantity</label></td>

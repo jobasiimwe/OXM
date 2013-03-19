@@ -4,22 +4,27 @@
 <%@ taglib prefix='fn' uri='http://java.sun.com/jsp/jstl/functions'%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
+
 <%@ taglib prefix="oxmBreadcrambs"
 	tagdir="/WEB-INF/tags/breadcramblinks"%>
 
-
-<div style="margin: 5px; width: 100%;">
-	<oxmBreadcrambs:cpanel startingBreadcramb="true" />
-	<oxmBreadcrambs:prices />
-</div>
+<c:if test="${not empty adminview and adminview }">
+	<div style="margin: 5px; width: 100%;">
+		<oxmBreadcrambs:cpanel startingBreadcramb="true" />
+		<oxmBreadcrambs:prices />
+	</div>
+</c:if>
+<jsp:include page="/WEB-INF/views/tiles/price/searchfields.jsp"></jsp:include>
 
 <div id="buttonStrip">
-	<div class="contextual" style="float: left;">
-		<a id="lnkAddPrice1" class="uiButton" href="${baseUrl }/price/add/">Add</a>
-		<a id="lnkEditPrice" class="uiButton" href="${baseUrl }/price/edit/">Edit</a>
-		<a id="lnkDeletePrice" class="uiButton"
-			href="${baseUrl }/price/delete/">Delete</a>
-	</div>
+	<c:if test="${not empty adminview and adminview }">
+		<div class="contextual" style="float: left;">
+			<a id="lnkAddPrice1" class="uiButton" href="${baseUrl }/price/add/">Add</a>
+			<a id="lnkEditPrice" class="uiButton" href="${baseUrl }/price/edit/">Edit</a>
+			<a id="lnkDeletePrice" class="uiButton"
+				href="${baseUrl }/price/delete/">Delete</a>
+		</div>
+	</c:if>
 	<div style="float: right;">
 		<%@ include file="/WEB-INF/views/navigation.jsp"%>
 	</div>

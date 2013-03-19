@@ -60,7 +60,7 @@
 <div class="cpanel">
 	<div class="menu">
 		<a class="menu-lnk" id="lnkPrice" title="Price"
-			href="${baseUrl }/price/view/page/1"> <span class="panellink price-icon"></span><label
+			href="${baseUrl }/price/view/admin/true/page/1"> <span class="panellink price-icon"></span><label
 			style="margin: 10px; font-size: 12px; font-weight: bold;">Prices</label>
 		</a>
 	</div>

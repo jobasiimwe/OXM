@@ -11,13 +11,13 @@
 </script>
 <div>
 	<div id="accordion">
-		<h3><a href="#">Price Monitor</a>
+		<h3><a href="${baseUrl }/price/view/admin/false/page/1">Price Monitor</a>
 		</h3>
 		<div class="adminstration-div">
 			<div class="admin-items">
-				<img alt="home" src="static/images/home.png" title="Home"> <a
-					title="Home" href="collegeControlPanel?action=view&item=student">
-					<span>Home</span> </a>
+				 <a
+					title="Prices" href="${baseUrl }/price/view/admin/false/page/1">
+					<span><img alt="price" src="static/images/price-ico.png" title="Prices">Prices</span> </a>
 			</div>
 		</div>
 		<h3>
