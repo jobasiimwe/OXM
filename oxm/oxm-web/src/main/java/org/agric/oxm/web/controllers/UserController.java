@@ -9,7 +9,6 @@ import javax.servlet.http.HttpServletResponse;
 import org.agric.oxm.model.Role;
 import org.agric.oxm.model.User;
 import org.agric.oxm.model.UserStatus;
-import org.agric.oxm.model.exception.OperationFailedException;
 import org.agric.oxm.model.exception.SessionExpiredException;
 import org.agric.oxm.model.exception.ValidationException;
 import org.agric.oxm.server.security.PermissionConstants;
