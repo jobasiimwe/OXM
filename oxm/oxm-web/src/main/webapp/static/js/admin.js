@@ -261,6 +261,26 @@ $(document)
 					});
 
 					/**
+					 * Role js
+					 */
+					$("#lnkEditRole").click(function() {
+						return singleItemAction('lnkEditRole', "Role");
+					});
+
+					$("#lnkDeleteRole").click(function() {
+						return multipleItemAction('lnkDeleteRole', "Role");
+					});
+					
+					$('#btnSaveRole').click(function() {
+						if (!hasText('txtName', "Name"))
+							return false;
+						if (!hasText('txtDescription', "Description"))
+							return false;
+
+						return true;
+					});
+					
+					/**
 					 * Users js
 					 */
 					$("#lnkEditUser").click(function() {

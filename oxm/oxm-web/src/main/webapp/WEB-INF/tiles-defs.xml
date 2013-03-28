@@ -47,16 +47,12 @@
 
 	<!--===== Roles form ====== -->
 	<definition name="viewRole" extends="layout">
-		<put-attribute name="scripts" type="template" value="/WEB-INF/views/tiles/role/scripts.jsp" />
-		<put-attribute name="pageTitle" type="string" value="View Role(s)" />
+		<put-attribute name="pageTitle" type="template" value="/WEB-INF/views/tiles/contentheader.jsp" />
 		<put-attribute name="sidebarleft" type="template" value="/WEB-INF/views/tiles/menu.jsp" />
 		<put-attribute name="body" type="template" value="/WEB-INF/views/tiles/role/view.jsp" />
 	</definition>
 
-	<definition name="formRole" extends="layout">
-		<put-attribute name="scripts" type="template" value="/WEB-INF/views/tiles/controlpanel/users/scripts.jsp" />
-		<put-attribute name="pageTitle" type="string" value="New/Edit Role" />
-		<put-attribute name="sidebarleft" type="template" value="/WEB-INF/views/tiles/menu.jsp" />
+	<definition name="formRole" extends="viewRole">
 		<put-attribute name="body" type="template" value="/WEB-INF/views/tiles/role/form.jsp" />
 	</definition>
 

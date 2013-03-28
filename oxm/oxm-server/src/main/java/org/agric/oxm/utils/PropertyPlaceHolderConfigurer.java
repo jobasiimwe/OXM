@@ -17,8 +17,8 @@ import org.springframework.core.io.FileSystemResource;
  */
 public class PropertyPlaceHolderConfigurer extends
 		PropertyPlaceholderConfigurer {
-	private String classPathPropertiesFilename = "RMS_SETTINGS.properties";
-	private String environmentVariable = "RMS_SETTINGS";
+	private String classPathPropertiesFilename = "OXM_SETTINGS.properties";
+	private String environmentVariable = "OXM_SETTINGS";
 	private Properties applicationSettings;
 	private Logger log = LoggerFactory.getLogger(this.getClass());
 

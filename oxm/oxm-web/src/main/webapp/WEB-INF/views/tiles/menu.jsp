@@ -21,17 +21,7 @@
 			</div>
 		</div>
 		<h3>
-			<a href="#">Market Place</a>
-		</h3>
-		<div class="adminstration-div">
-			<div class="admin-items">
-				<img alt="home" src="static/images/home.png" title="Home"> <a
-					title="Home" href="collegeControlPanel?action=view&item=student">
-					<span>Home</span> </a>
-			</div>
-		</div>
-		<h3>
-			<a href="#">Forum</a>
+			<a href="#">Forum (Buy/Sell)</a>
 		</h3>
 		<div class="adminstration-div">
 			<div class="admin-items">

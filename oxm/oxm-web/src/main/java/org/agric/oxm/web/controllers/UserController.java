@@ -204,22 +204,20 @@ public class UserController {
 	}
 
 	@Secured({ PermissionConstants.PERM_VIEW_ADMINISTRATION })
-	@RequestMapping(value = "/user/delete/{id}/", method = RequestMethod.GET)
-	public ModelAndView deleteUserHandler(@PathVariable("id") String userId,
-			ModelMap model) throws SessionExpiredException {
-		User user = userService.getUserById(userId);
-		if (user != null) {
-			try {
-				userService.deleteUser(user);
-				model.put(WebConstants.MODEL_ATTRIBUTE_SYSTEM_MESSAGE,
-						"User deleted sucessful");
-			} catch (OperationFailedException e) {
-				model.put(WebConstants.MODEL_ATTRIBUTE_ERROR_MESSAGE,
-						e.getMessage());
-				return viewUsersHandler(model);
-			}
+	@RequestMapping(value = "/user/delete/{ids}", method = RequestMethod.GET)
+	public ModelAndView deleteUserHandler(@PathVariable("ids") String userIds,
+			ModelMap modelMap) throws SessionExpiredException {
+		String[] idz2Delete = userIds.split(",");
+		try {
+			userService.deleteUsersByIds(idz2Delete);
+			modelMap.put(WebConstants.MODEL_ATTRIBUTE_SYSTEM_MESSAGE,
+					"User(s)  deleted successfully");
+		} catch (Exception e) {
+			log.error("Error", e);
+			modelMap.put(WebConstants.MODEL_ATTRIBUTE_ERROR_MESSAGE, "Error "
+					+ e.getMessage());
 		}
-		return viewUsersHandler(model);
+		return viewUsersHandler(modelMap);
 	}
 
 	@RequestMapping("/annoymous/create")

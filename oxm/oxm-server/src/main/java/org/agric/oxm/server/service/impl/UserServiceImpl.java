@@ -141,6 +141,17 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
+	@Secured(PermissionConstants.DELETE_ROLE)
+	@Transactional(propagation = Propagation.REQUIRED)
+	public void deleteUsersByIds(String[] ids) throws OperationFailedException {
+		for (String id : ids) {
+			User user = getUserById(id);
+			if (user != null)
+				deleteUser(user);
+		}
+	}
+
+	@Override
 	@Secured({ PermissionConstants.ADD_ROLE, PermissionConstants.EDIT_ROLE })
 	@Transactional(propagation = Propagation.REQUIRED)
 	public void saveRole(Role role) {
@@ -178,7 +189,7 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	//@Secured(PermissionConstants.VIEW_ROLE)
+	// @Secured(PermissionConstants.VIEW_ROLE)
 	@Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
 	public List<Role> getRoles() {
 		List<Role> roles = roleDAO.searchByRecordStatus(RecordStatus.ACTIVE);
@@ -218,13 +229,25 @@ public class UserServiceImpl implements UserService {
 			throw new OperationFailedException(
 					"cannot delete default administration role");
 		}
-		
-		if (StringUtils.equalsIgnoreCase(role.getName(),"ROLE_ANNOYMOUS_USER")) {
-		throw new OperationFailedException(
-				"cannot delete default user role");
-	}
+
+		if (StringUtils.equalsIgnoreCase(role.getName(), "ROLE_ANNOYMOUS_USER")) {
+			throw new OperationFailedException(
+					"cannot delete default user role");
+		}
 
 		roleDAO.remove(role);
+	}
+
+	@Override
+	@Secured(PermissionConstants.DELETE_ROLE)
+	@Transactional(propagation = Propagation.REQUIRED)
+	public void deleteRolesByIds(String[] roleIds)
+			throws OperationFailedException {
+		for (String id : roleIds) {
+			Role role = getRoleById(id);
+			if (role != null)
+				deleteRole(role);
+		}
 	}
 
 	@Override

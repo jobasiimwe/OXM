@@ -3,18 +3,30 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 
 
+<%@ taglib prefix="oxmBreadcrambs"
+	tagdir="/WEB-INF/tags/breadcramblinks"%>
+<%@ taglib prefix="oxmDistrictBreadcrambs"
+	tagdir="/WEB-INF/tags/breadcramblinks/districts"%>
+
 <style>
 form#role input[type="text"] {
 	width: 70%;
 }
 
-#permissionlist span{
-	display:inline-block;
-	width: 50%;
+#permissionlist span {
+	display: inline-block;
+	width: 25%;
 }
 </style>
+
+<div style="margin: 5px; width: 100%;">
+	<oxmBreadcrambs:cpanel startingBreadcramb="true" />
+	<oxmBreadcrambs:roles />
+	Form
+</div>
+
 <div>
-	<form:form action="${baseUrl }/role/save/" commandName="role">
+	<form:form action="${baseUrl }/role/save" commandName="role">
 
 		<form:hidden path="id" />
 		<div class="splitcontentleft">
@@ -22,11 +34,13 @@ form#role input[type="text"] {
 				<h3>Information</h3>
 				<p>
 					<label>Name <span class="required">*</span> </label>
-					<form:input path="name" cssClass="uiTextbox" readonly="${ (role.name eq 'ROLE_ADMINISTRATOR') ? true: false}"/>
+					<form:input id="txtName" path="name" cssClass="uiTextbox"
+						readonly="${ (role.name eq 'ROLE_ADMINISTRATOR') ? true: false}" />
 				</p>
 				<p>
-					<label>Description <span class="required">*</span></label>
-					<form:input path="description" cssClass="uiTextbox" />
+					<label>Description <span class="required">*</span>
+					</label>
+					<form:input id="txtDescription" path="description" cssClass="uiTextbox" />
 				</p>
 			</div>
 		</div>
@@ -34,8 +48,8 @@ form#role input[type="text"] {
 			<div class="box">
 				<h3>Permissions</h3>
 				<p id="permissionlist">
-					<form:checkboxes items="${permissions }" path="permissions" itemValue="id"
-						itemLabel="name" />
+					<form:checkboxes items="${permissions }" path="permissions"
+						itemValue="id" itemLabel="name" />
 				</p>
 			</div>
 		</div>

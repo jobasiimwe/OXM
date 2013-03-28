@@ -10,6 +10,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
+
+import org.apache.commons.lang.StringUtils;
 
 @Entity
 @Table(name = "roles")
@@ -61,6 +64,30 @@ public class Role extends BaseData implements Comparable<Role> {
 
 	public void setPermissions(List<Permission> permissions) {
 		this.permissions = permissions;
+	}
+
+	@Transient
+	public String getPermissionsString() {
+		String returnString = "";
+
+		if (permissions != null) {
+			if (permissions.size() > 0) {
+				for (int i = 0; i < permissions.size() && i < 3; i++) {
+					if (StringUtils.isBlank(returnString))
+						returnString += permissions.get(i).getName();
+					else
+						returnString += ", " + permissions.get(i).getName();
+				}
+				if (permissions.size() > 3) {
+					int x = permissions.size() - 3;
+					returnString += ", and " + x + " more";
+				}
+			}
+		}
+
+		if (StringUtils.isBlank(returnString))
+			returnString = "--";
+		return returnString;
 	}
 
 	public void addPermission(Permission permission) {

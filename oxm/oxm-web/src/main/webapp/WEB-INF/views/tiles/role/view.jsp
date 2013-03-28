@@ -3,38 +3,52 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix='fn' uri='http://java.sun.com/jsp/jstl/functions'%>
 
-<div id="buttonStrip"></div>
-<div>
-	<div>
-		<div class="contextual">
-			<a class="uiButton" href="${baseUrl }/role/add/">New Role</a>
-		</div>
-		<div style="clear: both"></div>
+
+<%@ taglib prefix="oxmBreadcrambs"
+	tagdir="/WEB-INF/tags/breadcramblinks"%>
+<%@ taglib prefix="oxmDistrictBreadcrambs"
+	tagdir="/WEB-INF/tags/breadcramblinks/districts"%>
+
+<div style="margin: 5px; width: 100%;">
+	<oxmBreadcrambs:cpanel startingBreadcramb="true" />
+	<oxmBreadcrambs:roles />
+</div>
+
+<div id="buttonStrip">
+	<div class="contextual">
+		<a id="lnkAddRole" class="uiButton" href="${baseUrl }/role/add">Add</a>
+		<a id="lnkEditRole" class="uiButton" href="${baseUrl }/role/edit/">Edit</a>
+		<a id="lnkDeleteRole" class="uiButton" href="${baseUrl }/role/delete/">Delete</a>
 	</div>
-	<table id="recordTable" class="recordTable" width="100%" cellpadding="0" cellspacing="0">
+	<div style="clear: both"></div>
+</div>
+<div>
+	<table class="recordTable list" width="100%" cellpadding="0"
+		cellspacing="0">
 		<thead>
 			<tr>
+				<th><input type="checkbox" name="cbxSelectAllItems"
+					id="cbxSelectAllItems" />
+				</th>
+				<th>No.</th>
 				<th>Name</th>
 				<th>Description</th>
-				<th></th>
+				<th>Permissions</th>
 			</tr>
-			<c:choose>
-				<c:when test="${not empty roles  && fn:length(roles) > 0}">
-					<c:forEach var="role" items="${roles }">
-						<tr>
-							<td>${role.name }</td>
-							<td>${role.description }</td>
-							<td>
-								<a id="btnDeleteRole" class="icon icon-delete" title="delete" href="${baseUrl }/role/delete/${role.id }">Delete</a>
-								<a class="icon icon-edit " title="edit" href="${baseUrl }/role/edit/${role.id }">Edit</a>
-							</td>
-						</tr>
-					</c:forEach>
-				</c:when>
-				<c:otherwise>
-					
-				</c:otherwise>
-			</c:choose>
 		</thead>
+		<tbody>
+			<c:if test="${not empty roles  && fn:length(roles) > 0}">
+				<c:forEach var="role" items="${roles }" varStatus="status">
+					<tr>
+						<td><input type="checkbox" name="selectedRole"
+							value="${role.id }" /></td>
+						<td>${status.count }</td>
+						<td>${role.name }</td>
+						<td>${role.description }</td>
+						<td>${role.permissionsString }</td>
+					</tr>
+				</c:forEach>
+			</c:if>
+		</tbody>
 	</table>
 </div>
