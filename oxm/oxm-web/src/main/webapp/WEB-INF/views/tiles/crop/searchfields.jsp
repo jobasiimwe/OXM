@@ -45,7 +45,7 @@ border: 1px solid #a4c3ca;*/
 </style>
 
 <div class="searchform group">
-	<form:form action="${baseUrl}/settings/courses/search"
+	<form:form action="${baseUrl}/crop/search"
 		commandName="coursesearch">
 		<fieldset>
 			<legend>

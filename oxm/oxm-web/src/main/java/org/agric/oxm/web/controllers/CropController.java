@@ -123,7 +123,7 @@ public class CropController {
 
 	@Secured({ PermissionConstants.PERM_VIEW_ADMINISTRATION })
 	@RequestMapping(value = "/search", method = RequestMethod.POST)
-	public ModelAndView courseSearchHandler(
+	public ModelAndView searchHandler(
 			@ModelAttribute(COMMAND_NAME) GenericCommand searchCommand,
 			@RequestParam(value = "pageNo", required = false) Integer pageNo,
 			ModelMap model) {
