@@ -74,6 +74,12 @@ $(document)
 								return singleItemAction('lnkPOrgProducers',
 										"Producer-Organisation");
 							});
+					
+					$("#lnkPOrgDetails").click(
+							function() {
+								return singleItemAction('lnkPOrgDetails',
+										"Producer-Organisation");
+							});
 
 					$("#lnkEditPOrgProducer").click(
 							function() {

@@ -6,12 +6,14 @@
 
 <%@ taglib prefix="oxmBreadcrambs"
 	tagdir="/WEB-INF/tags/breadcramblinks"%>
-
+<%@ taglib prefix="oxmProducerOrgBreadcrambs"
+	tagdir="/WEB-INF/tags/breadcramblinks/producerorg"%>
 
 <div style="margin: 5px; width: 100%;">
 	<oxmBreadcrambs:cpanel startingBreadcramb="true" />
-	<oxmBreadcrambs:producerorgs />
-	<oxmBreadcrambs:producerorgproducers producerOrg="${pOrg }" />
+	<oxmProducerOrgBreadcrambs:producerorgs />
+	<oxmProducerOrgBreadcrambs:details producerOrg="${pOrg }" />
+	<oxmProducerOrgBreadcrambs:producers producerOrg="${pOrg }" />
 </div>
 
 

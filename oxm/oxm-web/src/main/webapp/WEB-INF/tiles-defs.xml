@@ -31,20 +31,14 @@
 	</definition>
 
 	<!--===== FORM to form a new user ====== -->
+	<definition name="viewUser" extends="layout">
+		<put-attribute name="body" type="template" value="/WEB-INF/views/tiles/users/view.jsp" />
+	</definition>
+	
 	<definition name="formUser" extends="layout">
-		<put-attribute name="scripts" type="template" value="/WEB-INF/views/tiles/users/scripts.jsp" />
-		<put-attribute name="pageTitle" type="string" value="Add/Edit User" />
-		<put-attribute name="sidebarleft" type="template" value="/WEB-INF/views/tiles/menu.jsp" />
 		<put-attribute name="body" type="template" value="/WEB-INF/views/tiles/users/form.jsp" />
 	</definition>
 	
-	<definition name="viewUser" extends="layout">
-		<put-attribute name="scripts" type="template" value="/WEB-INF/views/tiles/users/scripts.jsp" />
-		<put-attribute name="pageTitle" type="string" value="View User(s)" />
-		<put-attribute name="sidebarleft" type="template" value="/WEB-INF/views/tiles/menu.jsp" />
-		<put-attribute name="body" type="template" value="/WEB-INF/views/tiles/users/view.jsp" />
-	</definition>
-
 	<!--===== Roles form ====== -->
 	<definition name="viewRole" extends="layout">
 		<put-attribute name="pageTitle" type="template" value="/WEB-INF/views/tiles/contentheader.jsp" />
@@ -149,24 +143,55 @@
 	<!-- ======= FORM for Production Organization ========== -->
 	<definition name="viewProducerOrg" extends="layout">
 	    <put-attribute name="scripts" type="template" value="/WEB-INF/views/tiles/producerorg/scripts.jsp" />
-		<put-attribute name="pageTitle" type="string" value="View Production Organisation(s)" />
 		<put-attribute name="body" type="template" value="/WEB-INF/views/tiles/producerorg/view.jsp" />
 	</definition>
 	
-	<definition name="formProducerOrg" extends="layout">
-	    <put-attribute name="scripts" type="template" value="/WEB-INF/views/tiles/producerorg/scripts.jsp" />
-		<put-attribute name="pageTitle" type="string" value="Add/Edit Production Organization" />
+	<definition name="formProducerOrg" extends="viewProducerOrg">
 		<put-attribute name="body" type="template" value="/WEB-INF/views/tiles/producerorg/form.jsp" />
 	</definition>
 	
-	<definition name="viewPOrgProducers" extends="layout">
-	    <put-attribute name="scripts" type="template" value="/WEB-INF/views/tiles/producerorg/scripts.jsp" />
-		<put-attribute name="pageTitle" type="template" value="/WEB-INF/views/tiles/contentheader.jsp" />
+	<definition name="viewPOrgProducers" extends="viewProducerOrg">
 		<put-attribute name="body" type="template" value="/WEB-INF/views/tiles/producerorg/viewproducer.jsp" />
 	</definition>
 	
-	<definition name="formPOrgProducer" extends="viewPOrgProducers">
+	<definition name="formPOrgProducer" extends="viewProducerOrg">
 		<put-attribute name="body" type="template" value="/WEB-INF/views/tiles/producerorg/formproducer.jsp" />
+	</definition>
+	
+	<definition name="viewPOrgDetails" extends="viewProducerOrg">
+		<put-attribute name="body" type="template" value="/WEB-INF/views/tiles/producerorg/details.jsp" />
+	</definition>
+	
+	<definition name="pOrgCommitteeView" extends="viewProducerOrg">
+		<put-attribute name="body" type="template" value="/WEB-INF/views/tiles/producerorg/committee/view.jsp" />
+	</definition>
+	
+	<definition name="pOrgCommitteeForm" extends="viewProducerOrg">
+		<put-attribute name="body" type="template" value="/WEB-INF/views/tiles/producerorg/committee/form.jsp" />
+	</definition>
+	
+	<definition name="pOrgCommitteeMemberView" extends="viewProducerOrg">
+		<put-attribute name="body" type="template" value="/WEB-INF/views/tiles/producerorg/committee/view.jsp" />
+	</definition>
+	
+	<definition name="pOrgCommitteeMemberForm" extends="viewProducerOrg">
+		<put-attribute name="body" type="template" value="/WEB-INF/views/tiles/producerorg/committee/form.jsp" />
+	</definition>
+	
+	<definition name="pOrgDocumentView" extends="viewProducerOrg">
+		<put-attribute name="body" type="template" value="/WEB-INF/views/tiles/producerorg/document/view.jsp" />
+	</definition>
+	
+	<definition name="pOrgDocumentForm" extends="viewProducerOrg">
+		<put-attribute name="body" type="template" value="/WEB-INF/views/tiles/producerorg/document/form.jsp" />
+	</definition>
+	
+	<definition name="pOrgStaffView" extends="viewProducerOrg">
+		<put-attribute name="body" type="template" value="/WEB-INF/views/tiles/producerorg/staff/view.jsp" />
+	</definition>
+	
+	<definition name="pOrgStaffForm" extends="viewProducerOrg">
+		<put-attribute name="body" type="template" value="/WEB-INF/views/tiles/producerorg/staff/form.jsp" />
 	</definition>
 	
 	<!-- ======= FORM for Price ========== -->

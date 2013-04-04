@@ -5,22 +5,28 @@
 
 <%@ taglib prefix="oxmBreadcrambs"
 	tagdir="/WEB-INF/tags/breadcramblinks"%>
-	
+<%@ taglib prefix="oxmProducerOrgBreadcrambs"
+	tagdir="/WEB-INF/tags/breadcramblinks/producerorg"%>
 
 <div style="margin: 5px; width: 100%;">
 	<oxmBreadcrambs:cpanel startingBreadcramb="true" />
-	<oxmBreadcrambs:producerorgs />
+	<oxmProducerOrgBreadcrambs:producerorgs />
 </div>
+
 <div id="buttonStrip">
 	<div class="contextual" style="float: left;">
-		<a id="lnkAddPOrg" class="uiButton"
-			href="${baseUrl }/producerorg/add/">Add</a> <a
-			id="lnkEditPOrg" class="uiButton"
-			href="${baseUrl }/producerorg/edit/">Edit</a> <a
-			id="lnkDeletePOrg" class="uiButton"
-			href="${baseUrl }/producerorg/delete/">Delete</a> <a
+		<a id="lnkAddPOrg" class="uiButton" href="${baseUrl }/porg/add/">Add</a>
+		<a id="lnkEditPOrg" class="uiButton" href="${baseUrl }/porg/edit/">Edit</a>
+		<a id="lnkDeletePOrg" class="uiButton" href="${baseUrl }/porg/delete/">Delete</a>
+		<a id="lnkPOrgDetails" class="uiButton"
+			href="${baseUrl }/porg/details/">Details</a> &emsp;&emsp;&emsp; <a
 			id="lnkPOrgProducers" class="uiButton"
-			href="${baseUrl }/producerorg/producers/view/">Producers</a>
+			href="${baseUrl }/porg/producers/">Members</a> <a id="lnkPOrgDocs"
+			class="uiButton" href="${baseUrl }/porg/docs/">Documents</a> <a
+			id="lnkPOrgCommittees" class="uiButton"
+			href="${baseUrl }/porg/staff/">Staff</a> <a id="lnkPOrgStaff"
+			class="uiButton" href="${baseUrl }/porg/committee/">Committees</a>
+
 	</div>
 	<div style="float: right;">
 		<%@ include file="/WEB-INF/views/navigation.jsp"%>
@@ -45,8 +51,8 @@
 					test="${not empty pOrganizations  && fn:length(pOrganizations) > 0}">
 					<c:forEach var="pOrg" items="${pOrganizations }">
 						<tr id="${pOrg.id }">
-							<td><input type="checkbox" name="selectedProducer-Organisation"
-								value="${pOrg.id }" /></td>
+							<td><input type="checkbox"
+								name="selectedProducer-Organisation" value="${pOrg.id }" /></td>
 							<td>${pOrg.name }</td>
 							<td>${pOrg.subCounty.name }</td>
 							<td>${pOrg.district.name }</td>

@@ -31,7 +31,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
-@RequestMapping("producerorg")
+@RequestMapping("porg")
 public class ProducerOrgController {
 
 	@Autowired
@@ -54,6 +54,8 @@ public class ProducerOrgController {
 				modelMap);
 		modelMap.put("pOrganizations",
 				producerOrgService.getProducerOrganisations());
+		modelMap.put(WebConstants.CONTENT_HEADER,
+				"List of Producer Organisations");
 		return new ModelAndView("viewProducerOrg", modelMap);
 	}
 
@@ -64,6 +66,8 @@ public class ProducerOrgController {
 		WebConstants.loadLoggedInUserProfile(OXMSecurityUtil.getLoggedInUser(),
 				modelMap);
 		modelMap.put("pOrganization", new ProducerOrganisation());
+		modelMap.put(WebConstants.CONTENT_HEADER,
+				"Add new Producer Organisation");
 		prepareProducerOrgFormModel(modelMap);
 		return new ModelAndView("formProducerOrg", modelMap);
 
@@ -91,9 +95,11 @@ public class ProducerOrgController {
 			ProducerOrganisation pOrg = producerOrgService
 					.getProducerOrganisationById(pOrgId);
 
-			if (pOrg != null)
+			if (pOrg != null) {
 				modelMap.put("pOrganization", pOrg);
-			else {
+				modelMap.put(WebConstants.CONTENT_HEADER,
+						"Edit Producer Organisation " + pOrg.getName());
+			} else {
 				modelMap.put(WebConstants.MODEL_ATTRIBUTE_ERROR_MESSAGE,
 						"Invalid production organization id submitted");
 				return viewProducerOrgHandler(modelMap);
@@ -156,6 +162,13 @@ public class ProducerOrgController {
 			WebConstants.loadLoggedInUserProfile(
 					OXMSecurityUtil.getLoggedInUser(), modelMap);
 			modelMap.put("pOrganization", pOrganization);
+
+			modelMap.put(
+					WebConstants.CONTENT_HEADER,
+					"Retry Add/Edit "
+							+ (StringUtils.isNotBlank(pOrganization.getName()) ? pOrganization
+									.getName() : "Producer organisation"));
+
 			return new ModelAndView("formProducerOrg", modelMap);
 
 		}
@@ -163,13 +176,17 @@ public class ProducerOrgController {
 	}
 
 	@Secured({ PermissionConstants.VIEW_PROD_ORG })
-	@RequestMapping(value = "/producers/view/{pOrgId}", method = RequestMethod.GET)
-	public ModelAndView viewProducerOrgProducersHandler(
+	@RequestMapping(value = "/producers/{pOrgId}", method = RequestMethod.GET)
+	public ModelAndView viewProducerOrgMembersHandler(
 			@PathVariable("pOrgId") String pOrgId, ModelMap modelMap) {
 
 		ProducerOrganisation pOrg = producerOrgService
 				.getProducerOrganisationById(pOrgId);
 		modelMap.put("pOrg", pOrg);
+
+		modelMap.put(WebConstants.CONTENT_HEADER,
+				"Producers in - " + pOrg.getName());
+
 		return new ModelAndView("viewPOrgProducers", modelMap);
 	}
 
@@ -185,6 +202,9 @@ public class ProducerOrgController {
 		User producer = new User(pOrg);
 		modelMap.put("producer", producer);
 
+		modelMap.put(WebConstants.CONTENT_HEADER,
+				"Add Producer to " + pOrg.getName());
+
 		prepareUserFormModel(modelMap);
 		return new ModelAndView("formPOrgProducer", modelMap);
 	}
@@ -195,7 +215,7 @@ public class ProducerOrgController {
 				.getRoleById("4836AFAB-3D62-482c-BA9A-D9D15839C68A");
 		List<Role> roles = new ArrayList<Role>();
 		roles = userService.getRoles();
-		//roles.add(roleProducer);
+		// roles.add(roleProducer);
 		modelMap.put("roles", roles);
 		modelMap.put("userstatus", new UserStatus[] { UserStatus.ENABLED,
 				UserStatus.DISABLED });
@@ -205,15 +225,21 @@ public class ProducerOrgController {
 	@Secured({ PermissionConstants.ADD_PRODUCER })
 	@RequestMapping(value = "/producers/edit/{pOrgId}/{producerId}", method = RequestMethod.GET)
 	public ModelAndView editProducerOrgProducersHandler(
-			@PathVariable("pOrgId") String pOrgId,@PathVariable("producerId") String producerId, ModelMap modelMap) {
+			@PathVariable("pOrgId") String pOrgId,
+			@PathVariable("producerId") String producerId, ModelMap modelMap) {
 
 		ProducerOrganisation pOrg = producerOrgService
 				.getProducerOrganisationById(pOrgId);
 		modelMap.put("pOrg", pOrg);
 		User producer = userService.getUserById(producerId);
 		modelMap.put("producer", producer);
+
+		modelMap.put(WebConstants.CONTENT_HEADER,
+				"Edit Producer " + producer.getName() + " in Producer org. "
+						+ pOrg.getName());
+
 		prepareUserFormModel(modelMap);
-		
+
 		return new ModelAndView("formPOrgProducer", modelMap);
 	}
 
@@ -251,10 +277,31 @@ public class ProducerOrgController {
 					+ e.getMessage());
 
 			modelMap.put("producer", producer);
+			modelMap.put(
+					WebConstants.CONTENT_HEADER,
+					"Retry Add/Edit Producer "
+							+ (StringUtils.isNotBlank(producer.getName()) ? producer
+									.getName() : "") + " in Producer org. "
+							+ producer.getProducerOrg().getName());
+
 			prepareUserFormModel(modelMap);
 			return new ModelAndView("formPOrgProducer", modelMap);
 		}
-		return viewProducerOrgProducersHandler(producer.getProducerOrg()
+		return viewProducerOrgMembersHandler(producer.getProducerOrg()
 				.getId(), modelMap);
 	}
+
+	@Secured({ PermissionConstants.VIEW_PROD_ORG })
+	@RequestMapping(value = "/details/{pOrgId}", method = RequestMethod.GET)
+	public ModelAndView viewProducerOrgDetailsHandler(
+			@PathVariable("pOrgId") String pOrgId, ModelMap modelMap) {
+		ProducerOrganisation pOrg = producerOrgService
+				.getProducerOrganisationById(pOrgId);
+		modelMap.put("pOrg", pOrg);
+
+		modelMap.put(WebConstants.CONTENT_HEADER,
+				"Details of - " + pOrg.getName());
+		return new ModelAndView("viewPOrgDetails", modelMap);
+	}
+
 }

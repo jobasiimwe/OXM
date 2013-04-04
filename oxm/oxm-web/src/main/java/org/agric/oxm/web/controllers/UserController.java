@@ -45,31 +45,63 @@ public class UserController {
 	private Logger log = LoggerFactory.getLogger(this.getClass());
 
 	@Secured({ PermissionConstants.PERM_VIEW_ADMINISTRATION })
+	@RequestMapping(value = "/user/view", method = RequestMethod.GET)
+	public ModelAndView viewUsersHandler(ModelMap modelMap)
+			throws SessionExpiredException {
+		WebConstants.loadLoggedInUserProfile(OXMSecurityUtil.getLoggedInUser(),
+				modelMap);
+		List<User> users = userService.getUsers();
+		modelMap.put("users", users);
+
+		modelMap.put(WebConstants.CONTENT_HEADER, "List of Users");
+		return new ModelAndView("viewUser", modelMap);
+	}
+
+	@Secured({ PermissionConstants.PERM_VIEW_ADMINISTRATION })
+	@RequestMapping(value = "/user/add/{qpage}", method = RequestMethod.GET)
+	public ModelAndView addUserHandler(@PathVariable("qpage") String qPage,
+			ModelMap modelMap) throws SessionExpiredException {
+		WebConstants.loadLoggedInUserProfile(OXMSecurityUtil.getLoggedInUser(),
+				modelMap);
+		modelMap.put("user", new User());
+		prepareUserFormModel(modelMap);
+		modelMap.put("qUserPage", qPage);
+		modelMap.put("profile_Img", "empty");
+
+		modelMap.put(WebConstants.CONTENT_HEADER, "Add new User");
+
+		return new ModelAndView("formUser", modelMap);
+	}
+
+	private void prepareUserFormModel(ModelMap modelMap) {
+		List<Role> roles = userService.getRoles();
+		modelMap.put("roles", roles);
+		modelMap.put("userstatus", new UserStatus[] { UserStatus.ENABLED,
+				UserStatus.DISABLED });
+		modelMap.put("gender", OXMUtil.getGenderList());
+	}
+
+	@Secured({ PermissionConstants.PERM_VIEW_ADMINISTRATION })
 	@RequestMapping(value = "/user/edit/{qpage}/{userid}", method = RequestMethod.GET)
 	public ModelAndView editUserHandler(@PathVariable("userid") String id,
-			@PathVariable("qpage") String userPage, ModelMap model)
+			@PathVariable("qpage") String userPage, ModelMap modelMap)
 			throws SessionExpiredException {
 
-		if (!model.containsAttribute("user")) {
+		if (!modelMap.containsAttribute("user")) {
 			User user = userService.getUserById(id);
 			WebConstants.loadLoggedInUserProfile(
-					OXMSecurityUtil.getLoggedInUser(), model);
+					OXMSecurityUtil.getLoggedInUser(), modelMap);
 
-			prepareUserFormModel(model);
-			model.put("user", user);
-			model.put("qUserPage", userPage);
-			return new ModelAndView("formUser", model);
+			prepareUserFormModel(modelMap);
+			modelMap.put("user", user);
+			modelMap.put("qUserPage", userPage);
+
+			modelMap.put(WebConstants.CONTENT_HEADER, "Edit " + user.getName());
+
+			return new ModelAndView("formUser", modelMap);
 		}
 
 		return WebConstants.DEFAULT_PAGE(OXMSecurityUtil.getLoggedInUser());
-	}
-
-	private void prepareUserFormModel(ModelMap model) {
-		List<Role> roles = userService.getRoles();
-		model.put("roles", roles);
-		model.put("userstatus", new UserStatus[] { UserStatus.ENABLED,
-				UserStatus.DISABLED });
-		model.put("gender", OXMUtil.getGenderList());
 	}
 
 	@Secured({ PermissionConstants.PERM_VIEW_ADMINISTRATION,
@@ -79,7 +111,7 @@ public class UserController {
 			@PathVariable("qpage") String qPage,
 			@ModelAttribute("user") User user,
 			@RequestParam(value = "userPic", required = false) MultipartFile userPic,
-			ModelMap model) throws IOException, SessionExpiredException {
+			ModelMap modelMap) throws IOException, SessionExpiredException {
 
 		User existingUser = user;
 		try {
@@ -99,15 +131,22 @@ public class UserController {
 			userService.validate(existingUser);
 			userService.saveUser(existingUser);
 		} catch (Exception e) {
-			model.put(WebConstants.MODEL_ATTRIBUTE_ERROR_MESSAGE,
+			modelMap.put(WebConstants.MODEL_ATTRIBUTE_ERROR_MESSAGE,
 					e.getMessage());
-			return editUserHandler(existingUser.getId(), qPage, model);
+
+			modelMap.put(
+					WebConstants.CONTENT_HEADER,
+					"Retry - add/edit "
+							+ (StringUtils.isNotBlank(existingUser.getName()) ? existingUser
+									.getName() : "User"));
+
+			return editUserHandler(existingUser.getId(), qPage, modelMap);
 		}
 
 		if (qPage.equals("0")) {
 			WebConstants.loadLoggedInUserProfile(
-					OXMSecurityUtil.getLoggedInUser(), model);
-			model.put(WebConstants.MODEL_ATTRIBUTE_SYSTEM_MESSAGE,
+					OXMSecurityUtil.getLoggedInUser(), modelMap);
+			modelMap.put(WebConstants.MODEL_ATTRIBUTE_SYSTEM_MESSAGE,
 					"User saved sucessfully.");
 		}
 
@@ -118,7 +157,7 @@ public class UserController {
 				if (loginedUser.hasAdministrativePrivileges()) {
 					return viewUsersHandler(new ModelMap());
 				} else {
-					model.put(WebConstants.MODEL_ATTRIBUTE_ERROR_MESSAGE,
+					modelMap.put(WebConstants.MODEL_ATTRIBUTE_ERROR_MESSAGE,
 							"Invalid path");
 				}
 			} catch (SessionExpiredException e) {
@@ -126,7 +165,7 @@ public class UserController {
 			}
 		}
 
-		return new ModelAndView("dashboard", model);
+		return new ModelAndView("dashboard", modelMap);
 
 	}
 
@@ -162,19 +201,6 @@ public class UserController {
 	}
 
 	@Secured({ PermissionConstants.PERM_VIEW_ADMINISTRATION })
-	@RequestMapping(value = "/user/add/{qpage}", method = RequestMethod.GET)
-	public ModelAndView addUserHandler(@PathVariable("qpage") String qPage,
-			ModelMap model) throws SessionExpiredException {
-		WebConstants.loadLoggedInUserProfile(OXMSecurityUtil.getLoggedInUser(),
-				model);
-		model.put("user", new User());
-		prepareUserFormModel(model);
-		model.put("qUserPage", qPage);
-		model.put("profile_Img", "empty");
-		return new ModelAndView("formUser", model);
-	}
-
-	@Secured({ PermissionConstants.PERM_VIEW_ADMINISTRATION })
 	@RequestMapping(value = "/user/pic/{id}", method = RequestMethod.GET)
 	public void userPicHandler(@PathVariable("id") String userId,
 			HttpServletResponse response) throws IOException {
@@ -192,42 +218,31 @@ public class UserController {
 	}
 
 	@Secured({ PermissionConstants.PERM_VIEW_ADMINISTRATION })
-	@RequestMapping(value = "/user/view", method = RequestMethod.GET)
-	public ModelAndView viewUsersHandler(ModelMap model)
-			throws SessionExpiredException {
-		WebConstants.loadLoggedInUserProfile(OXMSecurityUtil.getLoggedInUser(),
-				model);
-		List<User> users = userService.getUsers();
-		model.put("users", users);
-		return new ModelAndView("viewUser", model);
-	}
-
-	@Secured({ PermissionConstants.PERM_VIEW_ADMINISTRATION })
 	@RequestMapping(value = "/user/delete/{ids}", method = RequestMethod.GET)
 	public ModelAndView deleteUserHandler(@PathVariable("ids") String userIds,
-			ModelMap modelMap) throws SessionExpiredException {
+			ModelMap modelMapMap) throws SessionExpiredException {
 		String[] idz2Delete = userIds.split(",");
 		try {
 			userService.deleteUsersByIds(idz2Delete);
-			modelMap.put(WebConstants.MODEL_ATTRIBUTE_SYSTEM_MESSAGE,
+			modelMapMap.put(WebConstants.MODEL_ATTRIBUTE_SYSTEM_MESSAGE,
 					"User(s)  deleted successfully");
 		} catch (Exception e) {
 			log.error("Error", e);
-			modelMap.put(WebConstants.MODEL_ATTRIBUTE_ERROR_MESSAGE, "Error "
-					+ e.getMessage());
+			modelMapMap.put(WebConstants.MODEL_ATTRIBUTE_ERROR_MESSAGE,
+					"Error " + e.getMessage());
 		}
-		return viewUsersHandler(modelMap);
+		return viewUsersHandler(modelMapMap);
 	}
 
 	@RequestMapping("/annoymous/create")
-	public ModelAndView annoymousUserHander(ModelMap model)
+	public ModelAndView annoymousUserHander(ModelMap modelMap)
 			throws SessionExpiredException {
-		model.put("annoymousUser", new User());
-		prepareAnnoymousUser(model);
-		return new ModelAndView("createUser", model);
+		modelMap.put("annoymousUser", new User());
+		prepareAnnoymousUser(modelMap);
+		return new ModelAndView("createUser", modelMap);
 	}
 
-	private void prepareAnnoymousUser(ModelMap model) {
+	private void prepareAnnoymousUser(ModelMap modelMap) {
 		List<Role> roles = userService.getRoles();
 		List<Role> rz = new ArrayList<Role>();
 		Role dd = null;
@@ -238,21 +253,21 @@ public class UserController {
 
 		}
 		rz.add(dd);
-		model.put("roles", rz);
-		model.put("userstatus", new UserStatus[] { UserStatus.ENABLED,
+		modelMap.put("roles", rz);
+		modelMap.put("userstatus", new UserStatus[] { UserStatus.ENABLED,
 				UserStatus.DISABLED });
-		model.put("gender", OXMUtil.getGenderList());
+		modelMap.put("gender", OXMUtil.getGenderList());
 
-		model.put("subcounties", adminService.getSubCounties());
-		model.put("parishes", adminService.getParishes());
-		model.put("villages", adminService.getVillages());
+		modelMap.put("subcounties", adminService.getSubCounties());
+		modelMap.put("parishes", adminService.getParishes());
+		modelMap.put("villages", adminService.getVillages());
 	}
 
 	@RequestMapping(value = "/annoymous/save", method = RequestMethod.POST)
 	public ModelAndView saveAnnoymousUserHandler(
 			@ModelAttribute("annoymousUser") User user,
 			@RequestParam(value = "userPic", required = false) MultipartFile userPic,
-			ModelMap model) throws IOException, SessionExpiredException {
+			ModelMap modelMap) throws IOException, SessionExpiredException {
 
 		User existingUser = user;
 		try {
@@ -270,11 +285,11 @@ public class UserController {
 			}
 
 		} catch (Exception e) {
-			model.put(WebConstants.MODEL_ATTRIBUTE_ERROR_MESSAGE,
+			modelMap.put(WebConstants.MODEL_ATTRIBUTE_ERROR_MESSAGE,
 					e.getMessage());
-			model.put("annoymousUser", user);
-			prepareAnnoymousUser(model);
-			return new ModelAndView("createUser", model);
+			modelMap.put("annoymousUser", user);
+			prepareAnnoymousUser(modelMap);
+			return new ModelAndView("createUser", modelMap);
 		}
 		if (StringUtils.isNotEmpty(user.getId())) {
 			existingUser = userService.getUserById(user.getId());
@@ -293,15 +308,15 @@ public class UserController {
 			}
 			userService.validate(existingUser);
 			userService.saveUser(existingUser);
-			model.put(WebConstants.MODEL_ATTRIBUTE_SYSTEM_MESSAGE,
+			modelMap.put(WebConstants.MODEL_ATTRIBUTE_SYSTEM_MESSAGE,
 					"Thank You for registering. you can now login.");
-			return new ModelAndView("sucessfullogin", model);
+			return new ModelAndView("sucessfullogin", modelMap);
 		} catch (ValidationException e) {
-			model.put(WebConstants.MODEL_ATTRIBUTE_ERROR_MESSAGE,
+			modelMap.put(WebConstants.MODEL_ATTRIBUTE_ERROR_MESSAGE,
 					e.getMessage());
-			model.put("annoymousUser", user);
-			prepareAnnoymousUser(model);
-			return new ModelAndView("createUser", model);
+			modelMap.put("annoymousUser", user);
+			prepareAnnoymousUser(modelMap);
+			return new ModelAndView("createUser", modelMap);
 		}
 
 	}
