@@ -501,53 +501,27 @@ h4 {
 	margin: auto;
 }
 
-.cpanel span.user-icon {
-	background-image: url("../images/user-ico.png");
+span.smallicon {
+   	background-size: contain;
+   	background-position: 0 50%;
+    background-repeat: no-repeat;
+    padding-bottom: 3px;
+    padding-left: 20px;
+    padding-top: 2px;
 }
 
-.cpanel span.role-icon {
-	background-image: url("../images/role-ico.png");
-}
-
-.cpanel span.concept-icon {
-	background-image: url("../images/concept-ico.png");
-}
-
-.cpanel span.conceptCategory-icon {
-	background-image: url("../images/concept_category-ico.png");
-}
-
-.cpanel span.country-icon {
-	background-image: url("../images/country-ico.png");
-}
-
-.cpanel span.crop-icon {
-	background-image: url("../images/plant-ico.png");
-}
-
-.cpanel span.sellingplace-icon {
-	background-image: url("../images/sellingplace-ico.png");
-}
-
-.cpanel span.porganization-icon {
-	background-image: url("../images/production-ico.png");
-}
-
-.cpanel span.price-icon {
-	background-image: url("../images/price-ico.png");
-}
-
-.cpanel span.position-icon {
-	background-image: url("../images/position-ico.png");
-}
-
-.cpanel span.season-icon {
-	background-image: url("../images/season-ico.png");
-}
-
-.cpanel span.fInstitution-icon {
-	background-image: url("../images/fInstitution-ico.png");
-}
+span.user-icon {background-image: url("../images/user-ico.png");}
+span.role-icon {background-image: url("../images/role-ico.png");}
+span.concept-icon {background-image: url("../images/concept-ico.png");}
+span.conceptCategory-icon {background-image: url("../images/concept_category-ico.png");}
+span.country-icon {background-image: url("../images/country-ico.png");}
+span.crop-icon {background-image: url("../images/plant-ico.png");}
+span.sellingplace-icon {background-image: url("../images/sellingplace-ico.png");}
+span.porganization-icon {background-image: url("../images/production-ico.png");}
+span.price-icon {background-image: url("../images/price-ico.png");}
+span.position-icon {background-image: url("../images/position-ico.png");}
+span.season-icon {background-image: url("../images/season-ico.png");}
+span.fInstitution-icon {background-image: url("../images/fInstitution-ico.png");}
 
 .splitcontentright {
 	float: right;

@@ -12,7 +12,7 @@ import javax.persistence.Table;
 @Table(name = "staff_member")
 public class StaffMember extends BaseData implements Comparable<StaffMember> {
 
-	private ProducerOrganisation producerOrganisation;
+	private ProducerOrganisation producerOrg;
 
 	private User user;
 
@@ -28,13 +28,12 @@ public class StaffMember extends BaseData implements Comparable<StaffMember> {
 
 	@ManyToOne
 	@JoinColumn(name = "producer_organisation_id", nullable = false)
-	public ProducerOrganisation getProducerOrganisation() {
-		return producerOrganisation;
+	public ProducerOrganisation getProducerOrg() {
+		return producerOrg;
 	}
 
-	public void setProducerOrganisation(
-			ProducerOrganisation producerOrganisation) {
-		this.producerOrganisation = producerOrganisation;
+	public void setProducerOrg(ProducerOrganisation producerOrg) {
+		this.producerOrg = producerOrg;
 	}
 
 	@ManyToOne

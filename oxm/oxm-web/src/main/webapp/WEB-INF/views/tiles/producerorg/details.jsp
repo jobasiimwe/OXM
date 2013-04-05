@@ -10,22 +10,52 @@
 	tagdir="/WEB-INF/tags/breadcramblinks/producerorg"%>
 
 <div>
+
+
 	<div style="margin: 5px; width: 100%;">
 		<oxmBreadcrambs:cpanel startingBreadcramb="true" />
 		<oxmProducerOrgBreadcrambs:producerorgs />
-		<oxmProducerOrgBreadcrambs:details producerOrg="${pOrg }" />
+		<oxmProducerOrgBreadcrambs:details producerOrg="${pOrg}" />
 	</div>
 
 	<div>
-		<div style="float: left; width: 45%;">Producers</div>
+		<div style="float: left; width: 45%;">
+			<fieldset>
+				<legend>
+					<h3>Producers</h3>
+				</legend>
+				<jsp:include
+					page="/WEB-INF/views/tiles/producerorg/members/view.jsp"></jsp:include>
+			</fieldset>
+		</div>
 		<div style="float: left; width: 45%; padding-left: 5%">
-			Documents</div>
+			<fieldset>
+				<legend>
+					<h3>Documents</h3>
+				</legend>
+			</fieldset>
+		</div>
 
 		<div style="clear: both;"></div>
 
-		<div style="float: left; width: 45%;">Staff</div>
+		<div style="float: left; width: 45%;">
+			<fieldset>
+				<legend>
+					<h3>Staff</h3>
+					</a>
+				</legend>
+			</fieldset>
+		</div>
 		<div style="float: left; width: 45%; padding-left: 5%">
-			Committees</div>
+			<fieldset>
+				<legend>
+					<h3>Committees</h3>
+				</legend>
+				<jsp:include
+					page="/WEB-INF/views/tiles/producerorg/committee/view.jsp"></jsp:include>
+
+			</fieldset>
+		</div>
 	</div>
 
 </div>

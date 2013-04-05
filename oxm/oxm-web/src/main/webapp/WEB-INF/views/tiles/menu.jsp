@@ -9,7 +9,7 @@
 	<div class="left_menu">
 		<div class="left_menu_lnk">
 			<a title="Prices" href="${baseUrl }/price/view/admin/false/page/1">
-				<img alt="price" src="static/images/price-ico.png" title="Prices"><span>Prices</span>
+				<span class="smallicon price-icon"></span><span>Prices</span>
 			</a>
 		</div>
 		<div class="left_menu_lnk">

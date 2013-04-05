@@ -3,6 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix='fn' uri='http://java.sun.com/jsp/jstl/functions'%>
 
+<%@ taglib prefix="oxmTags" tagdir="/WEB-INF/tags"%>
 <%@ taglib prefix="oxmBreadcrambs"
 	tagdir="/WEB-INF/tags/breadcramblinks"%>
 <%@ taglib prefix="oxmProducerOrgBreadcrambs"
@@ -20,7 +21,7 @@
 		<a id="lnkDeletePOrg" class="uiButton" href="${baseUrl }/porg/delete/">Delete</a>
 		<a id="lnkPOrgDetails" class="uiButton"
 			href="${baseUrl }/porg/details/">Details</a> &emsp;&emsp;&emsp; <a
-			id="lnkPOrgProducers" class="uiButton"
+			id="lnkPOrgMembers" class="uiButton"
 			href="${baseUrl }/porg/producers/">Members</a> <a id="lnkPOrgDocs"
 			class="uiButton" href="${baseUrl }/porg/docs/">Documents</a> <a
 			id="lnkPOrgCommittees" class="uiButton"
@@ -34,6 +35,9 @@
 	<div style="clear: both"></div>
 </div>
 <div>
+
+	<oxmTags:name-of-item-on-page name="Producer-Organisation" />
+	
 	<table class="recordTable" width="100%" cellpadding="0" cellspacing="0">
 		<thead>
 			<tr>
@@ -52,7 +56,7 @@
 					<c:forEach var="pOrg" items="${pOrganizations }">
 						<tr id="${pOrg.id }">
 							<td><input type="checkbox"
-								name="selectedProducer-Organisation" value="${pOrg.id }" /></td>
+								name="selected${nameOfItemOnPage }" value="${pOrg.id }" /></td>
 							<td>${pOrg.name }</td>
 							<td>${pOrg.subCounty.name }</td>
 							<td>${pOrg.district.name }</td>

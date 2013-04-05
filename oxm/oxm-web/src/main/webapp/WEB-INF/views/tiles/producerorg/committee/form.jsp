@@ -13,50 +13,43 @@ form#concept input[type="text"] {
 }
 </style>
 
+<%@ taglib prefix="oxmTags" tagdir="/WEB-INF/tags"%>
 <%@ taglib prefix="oxmBreadcrambs"
 	tagdir="/WEB-INF/tags/breadcramblinks"%>
 <%@ taglib prefix="oxmProducerOrgBreadcrambs"
-	tagdir="/WEB-INF/tags/breadcramblinks/producerorg"%>	
+	tagdir="/WEB-INF/tags/breadcramblinks/producerorg"%>
 
 <div style="margin: 5px; width: 100%;">
 	<oxmBreadcrambs:cpanel startingBreadcramb="true" />
 	<oxmProducerOrgBreadcrambs:producerorgs />
+	<oxmProducerOrgBreadcrambs:details producerOrg="${pOrg }" />
+	<oxmProducerOrgBreadcrambs:committees producerOrg="${pOrg }" />
+	Form
+
 </div>
 
 <div>
-	
-	<form:form action="${baseUrl }/porg/save/"
-		commandName="pOrganization">
+
+	<form:form action="${baseUrl }/porg/committee/save/"
+		commandName="committee">
 
 		<form:hidden path="id" />
+		<form:hidden path="producerOrg" />
 		<div class="splitcontentleft">
 			<div class="box tabular">
 				<table>
 					<tr>
-						<td><label>Name <span class="required">*</span> </label></td>
-						<td><form:input path="name" cssClass="uiTextbox" /></td>
-					</tr>
-					<tr>
-						<td><label>District <span class="required">*</span> </label>
+						<td><label>Name <span class="required">*</span> </label>
 						</td>
-						<td><form:select id="dddistrict" path="district"
-								cssClass="uiTextbox" items="${districts }" itemLabel="name"
-								itemValue="id" /></td>
+						<td><form:input path="name" cssClass="uiTextbox" />
+						</td>
 					</tr>
-					<tr>
-						<td><label>Sub-County <span class="required">*</span>
-						</label></td>
-						<td><form:select id="ddsubcounty" path="subCounty"
-								cssClass="uiTextbox" /></td>
-					</tr>
-
-
 				</table>
 			</div>
 		</div>
 		<div style="clear: both"></div>
 		<div>
-			<input id="btnSavePOrganization" type="submit" value="Save"
+			<input id="btnSavePOrgCommittee" type="submit" value="Save"
 				class="uiButton" />
 		</div>
 	</form:form>

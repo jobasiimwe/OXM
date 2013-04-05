@@ -63,23 +63,13 @@ $(document)
 										"Producer-Organisation");
 							});
 
-					$("#lnkEditPOrg").click(
-							function() {
-								return singleItemAction('lnkEditPOrg',
-										"Producer-Organisation");
-							});
-
-					$("#lnkPOrgProducers").click(
-							function() {
-								return singleItemAction('lnkPOrgProducers',
-										"Producer-Organisation");
-							});
-					
-					$("#lnkPOrgDetails").click(
-							function() {
-								return singleItemAction('lnkPOrgDetails',
-										"Producer-Organisation");
-							});
+					$(
+							"#lnkEditPOrg, #lnkPOrgDetails, #lnkPOrgMembers, #lnkPOrgDocs, #lnkPOrgStaff, #lnkPOrgCommittees, ")
+							.click(
+									function() {
+										return singleItemAction($(this).attr(
+												'id'), $("#nameOfItemOnPage").attr("value"));
+									});
 
 					$("#lnkEditPOrgProducer").click(
 							function() {
@@ -276,7 +266,7 @@ $(document)
 					$("#lnkDeleteRole").click(function() {
 						return multipleItemAction('lnkDeleteRole', "Role");
 					});
-					
+
 					$('#btnSaveRole').click(function() {
 						if (!hasText('txtName', "Name"))
 							return false;
@@ -285,7 +275,7 @@ $(document)
 
 						return true;
 					});
-					
+
 					/**
 					 * Users js
 					 */

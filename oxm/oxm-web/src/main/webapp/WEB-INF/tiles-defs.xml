@@ -151,11 +151,11 @@
 	</definition>
 	
 	<definition name="viewPOrgProducers" extends="viewProducerOrg">
-		<put-attribute name="body" type="template" value="/WEB-INF/views/tiles/producerorg/viewproducer.jsp" />
+		<put-attribute name="body" type="template" value="/WEB-INF/views/tiles/producerorg/members/view.jsp" />
 	</definition>
 	
 	<definition name="formPOrgProducer" extends="viewProducerOrg">
-		<put-attribute name="body" type="template" value="/WEB-INF/views/tiles/producerorg/formproducer.jsp" />
+		<put-attribute name="body" type="template" value="/WEB-INF/views/tiles/producerorg/members/form.jsp" />
 	</definition>
 	
 	<definition name="viewPOrgDetails" extends="viewProducerOrg">

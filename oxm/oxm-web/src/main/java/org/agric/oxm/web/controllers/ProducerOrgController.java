@@ -3,6 +3,7 @@ package org.agric.oxm.web.controllers;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.agric.oxm.model.Committee;
 import org.agric.oxm.model.District;
 import org.agric.oxm.model.ProducerOrganisation;
 import org.agric.oxm.model.Role;
@@ -13,6 +14,7 @@ import org.agric.oxm.model.exception.ValidationException;
 import org.agric.oxm.server.security.PermissionConstants;
 import org.agric.oxm.server.security.util.OXMSecurityUtil;
 import org.agric.oxm.server.service.Adminservice;
+import org.agric.oxm.server.service.CommitteeService;
 import org.agric.oxm.server.service.ProducerOrgService;
 import org.agric.oxm.server.service.UserService;
 import org.agric.oxm.web.OXMUtil;
@@ -39,6 +41,9 @@ public class ProducerOrgController {
 
 	@Autowired
 	private ProducerOrgService producerOrgService;
+
+	@Autowired
+	private CommitteeService committeeService;
 
 	@Autowired
 	private UserService userService;
@@ -287,21 +292,89 @@ public class ProducerOrgController {
 			prepareUserFormModel(modelMap);
 			return new ModelAndView("formPOrgProducer", modelMap);
 		}
-		return viewProducerOrgMembersHandler(producer.getProducerOrg()
-				.getId(), modelMap);
+		return viewProducerOrgMembersHandler(producer.getProducerOrg().getId(),
+				modelMap);
 	}
 
 	@Secured({ PermissionConstants.VIEW_PROD_ORG })
 	@RequestMapping(value = "/details/{pOrgId}", method = RequestMethod.GET)
 	public ModelAndView viewProducerOrgDetailsHandler(
 			@PathVariable("pOrgId") String pOrgId, ModelMap modelMap) {
+		prepareProducerOrgViewsModel(pOrgId, "Details of - ", modelMap);
+		return new ModelAndView("viewPOrgDetails", modelMap);
+	}
+
+	@Secured({ PermissionConstants.VIEW_COMMITTEE__DETAILS })
+	@RequestMapping(value = "/committee/{pOrgId}", method = RequestMethod.GET)
+	public ModelAndView viewProducerOrgCommitteeHandler(
+			@PathVariable("pOrgId") String pOrgId, ModelMap modelMap) {
+		prepareProducerOrgViewsModel(pOrgId, "Committees of - ", modelMap);
+		return new ModelAndView("pOrgCommitteeView", modelMap);
+	}
+
+	/**
+	 * Prepares models for all views of producer org, i.e. the details,
+	 * committees, staff, documents views
+	 * 
+	 * @param pOrgId
+	 * @param contentHeaderString
+	 * @param modelMap
+	 */
+	private void prepareProducerOrgViewsModel(String pOrgId,
+			String contentHeaderString, ModelMap modelMap) {
 		ProducerOrganisation pOrg = producerOrgService
 				.getProducerOrganisationById(pOrgId);
 		modelMap.put("pOrg", pOrg);
 
 		modelMap.put(WebConstants.CONTENT_HEADER,
-				"Details of - " + pOrg.getName());
-		return new ModelAndView("viewPOrgDetails", modelMap);
+				contentHeaderString + pOrg.getName());
 	}
 
+	@Secured({ PermissionConstants.VIEW_PROD_ORG })
+	@RequestMapping(value = "/staff/{pOrgId}", method = RequestMethod.GET)
+	public ModelAndView viewProducerOrgStaffHandler(
+			@PathVariable("pOrgId") String pOrgId, ModelMap modelMap) {
+		prepareProducerOrgViewsModel(pOrgId, "Staff of - ", modelMap);
+		return new ModelAndView("pOrgStaffView", modelMap);
+	}
+
+	@Secured({ PermissionConstants.VIEW_COMMITTEE__DETAILS })
+	@RequestMapping(value = "/docs/{pOrgId}", method = RequestMethod.GET)
+	public ModelAndView viewProducerOrgDocumentHandler(
+			@PathVariable("pOrgId") String pOrgId, ModelMap modelMap) {
+		prepareProducerOrgViewsModel(pOrgId, "Documents of - ", modelMap);
+		return new ModelAndView("pOrgDocumentsView", modelMap);
+	}
+
+	@Secured({ PermissionConstants.VIEW_COMMITTEE__DETAILS })
+	@RequestMapping(value = "/committee/add/{pOrgId}", method = RequestMethod.GET)
+	public ModelAndView addPOrgCommitteeHandler(
+			@PathVariable("pOrgId") String pOrgId, ModelMap modelMap) {
+
+		ProducerOrganisation pOrg = producerOrgService
+				.getProducerOrganisationById(pOrgId);
+		modelMap.put("pOrg", pOrg);
+
+		Committee committee = new Committee(pOrg);
+		modelMap.put("committee", committee);
+
+		modelMap.put(WebConstants.CONTENT_HEADER,
+				"Add Committee to - " + pOrg.getName());
+		return new ModelAndView("pOrgCommitteeForm", modelMap);
+	}
+
+	@Secured({ PermissionConstants.VIEW_COMMITTEE__DETAILS })
+	@RequestMapping(value = "/committee/edit/{committeeId}", method = RequestMethod.GET)
+	public ModelAndView editPOrgCommitteeHandler(
+			@PathVariable("committeeId") String committeeId, ModelMap modelMap) {
+
+		Committee committee = committeeService.getCommitteeById(committeeId);
+		modelMap.put("pOrg", committee.getProducerOrg());
+
+		modelMap.put("committee", committee);
+
+		modelMap.put(WebConstants.CONTENT_HEADER, "Edit " + committee.getName()
+				+ " of " + committee.getProducerOrg().getName());
+		return new ModelAndView("pOrgCommitteeForm", modelMap);
+	}
 }

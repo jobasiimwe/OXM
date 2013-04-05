@@ -89,7 +89,7 @@ public class ProducerOrganisation extends BaseData implements
 		this.getProducers().remove(producer);
 	}
 
-	@OneToMany(mappedBy = "producerOrganisation", cascade = { CascadeType.ALL }, orphanRemoval = false)
+	@OneToMany(mappedBy = "producerOrg", cascade = { CascadeType.ALL }, orphanRemoval = false)
 	public List<StaffMember> getStaffMembers() {
 		return staffMembers;
 	}
@@ -118,7 +118,7 @@ public class ProducerOrganisation extends BaseData implements
 	}
 
 	
-	@OneToMany(mappedBy = "producerOrganisation", cascade = { CascadeType.ALL }, orphanRemoval = false)
+	@OneToMany(mappedBy = "producerOrg", cascade = { CascadeType.ALL }, orphanRemoval = false)
 	public List<Committee> getCommittees() {
 		return committees;
 	}

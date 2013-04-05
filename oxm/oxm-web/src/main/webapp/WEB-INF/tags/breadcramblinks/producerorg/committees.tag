@@ -3,7 +3,7 @@
 <%@ attribute type="org.agric.oxm.model.ProducerOrganisation"
 	name="producerOrg" rtexprvalue="true" required="true"%>
 
-<a title="Details of Producer organisation - ${producerOrg.name}"
-	href="${baseUrl }/porg/details/${producerOrg.id}">${producerOrg.name
+<a title="Committes of ${producerOrg.name}"
+	href="${baseUrl }/porg/committee/${producerOrg.id}">${producerOrg.name
 	}</a>
 &gt;

@@ -22,12 +22,16 @@ public class Committee extends BaseData implements Comparable<Committee> {
 
 	private String name;
 
-	private List<CommitteeMember> committeeMembers;
+	private List<CommitteeMember> members;
 
-	private ProducerOrganisation producerOrganisation;
+	private ProducerOrganisation producerOrg;
 
 	public Committee() {
 
+	}
+
+	public Committee(ProducerOrganisation producerOrg) {
+		this.setProducerOrg(producerOrg);
 	}
 
 	@Column(name = "name", nullable = false)
@@ -40,43 +44,42 @@ public class Committee extends BaseData implements Comparable<Committee> {
 	}
 
 	@OneToMany(mappedBy = "committee", cascade = { CascadeType.ALL }, orphanRemoval = true)
-	public List<CommitteeMember> getCommitteeMembers() {
-		return committeeMembers;
+	public List<CommitteeMember> getMembers() {
+		return members;
 	}
 
-	public void setCommitteeMembers(List<CommitteeMember> committeeMembers) {
-		this.committeeMembers = committeeMembers;
+	public void setMembers(List<CommitteeMember> members) {
+		this.members = members;
 	}
 
-	public void addCommitteeMember(CommitteeMember committeeMember) {
-		if (committeeMember == null) {
+	public void addMember(CommitteeMember member) {
+		if (member == null) {
 			return;
 		}
 
-		if (this.getCommitteeMembers() == null) {
-			this.setCommitteeMembers(new ArrayList<CommitteeMember>());
+		if (this.getMembers() == null) {
+			this.setMembers(new ArrayList<CommitteeMember>());
 		}
 
-		this.getCommitteeMembers().add(committeeMember);
+		this.getMembers().add(member);
 	}
 
-	public void removeCommitteeMember(CommitteeMember committeeMember) {
-		if (committeeMember == null || this.getCommitteeMembers() == null) {
+	public void removemMember(CommitteeMember member) {
+		if (member == null || this.getMembers() == null) {
 			return;
 		}
 
-		this.getCommitteeMembers().remove(committeeMember);
+		this.getMembers().remove(member);
 	}
 
 	@ManyToOne
 	@JoinColumn(name = "producer_organisation_id", nullable = false)
-	public ProducerOrganisation getProducerOrganisation() {
-		return producerOrganisation;
+	public ProducerOrganisation getProducerOrg() {
+		return producerOrg;
 	}
 
-	public void setProducerOrganisation(
-			ProducerOrganisation producerOrganisation) {
-		this.producerOrganisation = producerOrganisation;
+	public void setProducerOrg(ProducerOrganisation producerOrg) {
+		this.producerOrg = producerOrg;
 	}
 
 	@Override
