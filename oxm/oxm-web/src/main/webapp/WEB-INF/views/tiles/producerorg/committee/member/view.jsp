@@ -14,19 +14,17 @@
 	<oxmProducerOrgBreadcrambs:producerorgs />
 	<oxmProducerOrgBreadcrambs:details producerOrg="${pOrg }" />
 	<oxmProducerOrgBreadcrambs:committees producerOrg="${pOrg }" />
+	<oxmProducerOrgBreadcrambs:committeemembers committee="${committee }" />
 </div>
 
 <div id="buttonStrip">
 	<div class="contextual" style="float: left;">
-		<a id="lnkAddPOrgCommitte" class="uiButton"
-			href="${baseUrl }/porg/committee/add/${pOrg.id }">Add</a> <a
-			id="lnkEditPOrgCommittee" class="uiButton"
-			href="${baseUrl }/porg/committee/edit/">Edit</a> <a
-			id="lnkDeletePOrgCommittee" class="uiButton"
-			href="${baseUrl }/porg/committee/delete/${pOrg.id }/">Delete</a>
-		&emsp;&emsp;<a id="lnkPOrgCommitteeMembers" class="uiButton"
-			href="${baseUrl }/porg-committee/member/">Members</a>
-
+		<a id="lnkAddPOrgCommitteMember" class="uiButton"
+			href="${baseUrl }/porg-committee/member/add/${committee.id }">Add</a> <a
+			id="lnkEditPOrgCommitteeMember" class="uiButton"
+			href="${baseUrl }/porg-committee/member/edit/">Edit</a> <a
+			id="lnkDeletePOrgCommitteeMember" class="uiButton"
+			href="${baseUrl }/porg-committee/member/delete/${committee.id }/">Delete</a>
 	</div>
 	<div style="float: right;">
 		<%@ include file="/WEB-INF/views/navigation.jsp"%>
@@ -35,7 +33,7 @@
 </div>
 <div>
 
-	<oxmTags:name-of-item-on-page name="Committee" />
+	<oxmTags:name-of-item-on-page name="Committee-Member" />
 
 	<table class="recordTable" width="100%" cellpadding="0" cellspacing="0">
 		<thead>
@@ -43,25 +41,26 @@
 				<th><input type="checkbox" name="cbxSelectAllItems"
 					id="cbxSelectAllItems" /></th>
 				<th>No</th>
-				<th>Committee</th>
-				<th>No. of Members</th>
-				<th>Producer organisation</th>
+				<th>Position</th>
+				<th>Name</th>
+				<th>User-Roles</th>
 			</tr>
 		</thead>
 		<tbody>
 			<c:choose>
 				<c:when
-					test="${not empty pOrg.committees  && fn:length(pOrg.committees) > 0}">
-					<c:forEach var="committee" items="${pOrg.committees }"
+					test="${not empty committee.members && fn:length(committee.members) > 0}">
+					<c:forEach var="member" items="${committee.members }"
 						varStatus="status">
-						<tr id="${committee.id }">
+						<tr id="${member.id }">
 							<td><oxmTags:rowcheckbox
 									nameOfItemOnPage="${nameOfItemOnPage}" id="${committee.id }" />
 							</td>
 							<td>${status.count }</td>
-							<td>${committee.name }</td>
-							<td>${fn:length(committee.members) }</td>
-							<td>${committee.producerOrg.name }</td>
+							<td>${member.position.name }</td>
+							<td>${member.name }</td>
+							<td>${member.rolesString }</td>
+							<td>${member.address }</td>
 						</tr>
 					</c:forEach>
 				</c:when>

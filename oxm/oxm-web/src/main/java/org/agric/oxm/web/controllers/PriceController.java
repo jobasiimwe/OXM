@@ -383,6 +383,7 @@ public class PriceController {
 			existingPrice.setSellType(price.getSellType());
 			existingPrice.setPrice(price.getPrice());
 			existingPrice.setUnitOfMeasure(price.getUnitOfMeasure());
+			existingPrice.setDate(price.getDate());
 		} else {
 			existingPrice.setId(null);
 		}

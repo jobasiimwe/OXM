@@ -3,6 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix='fn' uri='http://java.sun.com/jsp/jstl/functions'%>
 
+<%@ taglib prefix="oxmTags" tagdir="/WEB-INF/tags"%>
 <%@ taglib prefix="oxmBreadcrambs"
 	tagdir="/WEB-INF/tags/breadcramblinks"%>
 <%@ taglib prefix="oxmDistrictBreadcrambs"
@@ -35,6 +36,9 @@
 </div>
 
 <div>
+
+	<oxmTags:name-of-item-on-page name="Position" />
+
 	<table class="recordTable list" width="100%" cellpadding="0"
 		cellspacing="0">
 		<thead>
@@ -52,8 +56,9 @@
 				<c:when test="${not empty districts  && fn:length(districts) > 0}">
 					<c:forEach var="district" items="${districts }" varStatus="status">
 						<tr id="${district.id }">
-							<td><input type="checkbox" name="selectedDistrict"
-								value="${district.id }" /></td>
+							<td><oxmTags:rowcheckbox
+									nameOfItemOnPage="${nameOfItemOnPage}" id="${district.id }" />
+							</td>
 							<td>${status.count }</td>
 							<td>${district.name }</td>
 							<td>${district.subCountiesString }</td>

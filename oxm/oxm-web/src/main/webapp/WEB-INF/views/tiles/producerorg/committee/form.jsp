@@ -41,7 +41,7 @@ form#concept input[type="text"] {
 					<tr>
 						<td><label>Name <span class="required">*</span> </label>
 						</td>
-						<td><form:input path="name" cssClass="uiTextbox" />
+						<td><form:input id="txtName" path="name" cssClass="uiTextbox" />
 						</td>
 					</tr>
 				</table>

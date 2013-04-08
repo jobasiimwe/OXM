@@ -10,6 +10,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 @Entity
 @Table(name = "producer_org")
@@ -17,11 +18,11 @@ public class ProducerOrganisation extends BaseData implements
 		Comparable<ProducerOrganisation> {
 
 	private String name;
-	
+
 	private District district;
 
 	private SubCounty subCounty;
-	
+
 	private List<User> producers;
 
 	private List<StaffMember> staffMembers;
@@ -40,9 +41,15 @@ public class ProducerOrganisation extends BaseData implements
 	public void setName(String name) {
 		this.name = name;
 	}
-	
+
+	@Transient
+	public String getNameAndSubCounty() {
+		String str = getName() + "(" + getSubCounty().getName() + ")";
+		return str;
+	}
+
 	@ManyToOne
-	@JoinColumn(name="district_id", nullable=false)
+	@JoinColumn(name = "district_id", nullable = false)
 	public District getDistrict() {
 		return district;
 	}
@@ -52,7 +59,7 @@ public class ProducerOrganisation extends BaseData implements
 	}
 
 	@ManyToOne
-	@JoinColumn(name="sub_county_id", nullable=false)
+	@JoinColumn(name = "sub_county_id", nullable = false)
 	public SubCounty getSubCounty() {
 		return subCounty;
 	}
@@ -117,7 +124,6 @@ public class ProducerOrganisation extends BaseData implements
 		this.getStaffMembers().remove(staffMember);
 	}
 
-	
 	@OneToMany(mappedBy = "producerOrg", cascade = { CascadeType.ALL }, orphanRemoval = false)
 	public List<Committee> getCommittees() {
 		return committees;

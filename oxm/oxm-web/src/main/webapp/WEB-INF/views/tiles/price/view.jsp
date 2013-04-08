@@ -4,7 +4,7 @@
 <%@ taglib prefix='fn' uri='http://java.sun.com/jsp/jstl/functions'%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
-
+<%@ taglib prefix="oxmTags" tagdir="/WEB-INF/tags"%>
 <%@ taglib prefix="oxmBreadcrambs"
 	tagdir="/WEB-INF/tags/breadcramblinks"%>
 
@@ -31,11 +31,15 @@
 	<div style="clear: both"></div>
 </div>
 <div>
+
+	<oxmTags:name-of-item-on-page name="Price"/>
+
 	<table class="recordTable" width="100%" cellpadding="0" cellspacing="0">
 		<thead>
 			<tr>
 				<th><input type="checkbox" name="cbxSelectAllItems"
-					id="cbxSelectAllItems" /></th>
+					id="cbxSelectAllItems" />
+				</th>
 				<th>Crop</th>
 				<th>Selling Place</th>
 				<th>Type</th>
@@ -50,16 +54,15 @@
 				<c:when test="${not empty prices  && fn:length(prices) > 0}">
 					<c:forEach var="price" items="${prices }">
 						<tr id="${price.id }">
-							<td><input type="checkbox" name="selectedPrice"
-								value="${price.id }" /></td>
+							<td><oxmTags:rowcheckbox
+									nameOfItemOnPage="${nameOfItemOnPage}" id="${price.id }" /></td>
 							<td>${price.crop.name }</td>
 							<td>${price.sellingPlace.name }</td>
 							<td>${price.sellType.name }</td>
 							<td>${price.quantity }(${price.unitOfMeasure.name })</td>
 							<td>${price.price }</td>
 							<td><fmt:formatDate value="${price.date}"
-									pattern="dd/MM/yyyy" />
-							</td>
+									pattern="dd/MM/yyyy" /></td>
 						</tr>
 					</c:forEach>
 				</c:when>

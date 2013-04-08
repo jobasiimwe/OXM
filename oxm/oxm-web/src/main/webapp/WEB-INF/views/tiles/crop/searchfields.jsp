@@ -46,7 +46,7 @@ border: 1px solid #a4c3ca;*/
 
 <div class="searchform group">
 	<form:form action="${baseUrl}/crop/search"
-		commandName="coursesearch">
+		commandName="cropsearch">
 		<fieldset>
 			<legend>
 				<a id="search-collapser" href="javascript:void(0)"

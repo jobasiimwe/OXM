@@ -26,7 +26,7 @@
 			class="uiButton" href="${baseUrl }/porg/docs/">Documents</a> <a
 			id="lnkPOrgCommittees" class="uiButton"
 			href="${baseUrl }/porg/staff/">Staff</a> <a id="lnkPOrgStaff"
-			class="uiButton" href="${baseUrl }/porg/committee/">Committees</a>
+			class="uiButton" href="${baseUrl }/porg-committee/">Committees</a>
 
 	</div>
 	<div style="float: right;">
@@ -37,12 +37,13 @@
 <div>
 
 	<oxmTags:name-of-item-on-page name="Producer-Organisation" />
-	
+
 	<table class="recordTable" width="100%" cellpadding="0" cellspacing="0">
 		<thead>
 			<tr>
 				<th><input type="checkbox" name="cbxSelectAllItems"
-					id="cbxSelectAllItems" /></th>
+					id="cbxSelectAllItems" />
+				</th>
 				<th>Name</th>
 				<th>Sub-County</th>
 				<th>District</th>
@@ -55,8 +56,8 @@
 					test="${not empty pOrganizations  && fn:length(pOrganizations) > 0}">
 					<c:forEach var="pOrg" items="${pOrganizations }">
 						<tr id="${pOrg.id }">
-							<td><input type="checkbox"
-								name="selected${nameOfItemOnPage }" value="${pOrg.id }" /></td>
+							<td><oxmTags:rowcheckbox
+									nameOfItemOnPage="${nameOfItemOnPage}" id="${pOrg.id }" />
 							<td>${pOrg.name }</td>
 							<td>${pOrg.subCounty.name }</td>
 							<td>${pOrg.district.name }</td>

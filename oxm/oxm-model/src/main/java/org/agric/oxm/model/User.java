@@ -3,6 +3,7 @@ package org.agric.oxm.model;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
@@ -23,6 +24,8 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
+
+import org.apache.commons.lang.StringUtils;
 
 @Entity
 @Table(name = "users")
@@ -107,6 +110,30 @@ public class User extends BaseData implements Comparable<User> {
 		synchronized (this) {
 			return roles;
 		}
+	}
+
+	@Transient
+	public String getRolesString() {
+		String str = "";
+		int i = 0;
+		for (Iterator<Role> rit = roles.iterator(); rit.hasNext();) {
+			Role role = rit.next();
+			String roleNameToDisplay = role.getName();
+
+			if (role.getName().toUpperCase().contains("ROLE_"))
+				roleNameToDisplay = role.getName().substring(5);
+
+			if (StringUtils.isBlank(str))
+				str += roleNameToDisplay;
+			else
+				str += ", " + roleNameToDisplay;
+			i++;
+			if (i == 2)
+				break;
+		}
+		if (roles.size() > 2)
+			str += ", and " + (roles.size() - 2) + " more";
+		return str;
 	}
 
 	public synchronized void setRoles(Set<Role> roles) {
@@ -196,6 +223,22 @@ public class User extends BaseData implements Comparable<User> {
 
 	public void setAddress(String address) {
 		this.address = address;
+	}
+
+	@Transient
+	public String getAddressString() {
+		if (StringUtils.isNotBlank(address))
+			return address;
+
+		if (village != null)
+			return village.getFullName();
+		if (parish != null)
+			return parish.getFullName();
+		if (subCounty != null)
+			return subCounty.getFullName();
+		if (district != null)
+			return district.getName();
+		return "";
 	}
 
 	@Column(name = "phone1", nullable = true)

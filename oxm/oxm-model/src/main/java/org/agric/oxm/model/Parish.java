@@ -43,6 +43,15 @@ public class Parish extends BaseData implements Comparable<Parish> {
 		this.name = name;
 	}
 
+	@Transient
+	public String getFullName() {
+		String fullName = this.getName();
+
+		fullName += ", " + this.getSubCounty().getName();
+		fullName += ", " + this.getSubCounty().getDistrict().getName();
+		return fullName;
+	}
+
 	@ManyToOne
 	@JoinColumn(name = "sub_county_id", nullable = false)
 	public SubCounty getSubCounty() {

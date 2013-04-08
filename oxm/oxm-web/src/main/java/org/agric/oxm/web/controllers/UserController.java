@@ -6,18 +6,23 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
 
+import org.agric.oxm.model.Gender;
 import org.agric.oxm.model.Role;
 import org.agric.oxm.model.User;
 import org.agric.oxm.model.UserStatus;
 import org.agric.oxm.model.exception.SessionExpiredException;
 import org.agric.oxm.model.exception.ValidationException;
+import org.agric.oxm.model.search.UserSearchParameters;
 import org.agric.oxm.server.security.PermissionConstants;
 import org.agric.oxm.server.security.util.OXMSecurityUtil;
 import org.agric.oxm.server.service.Adminservice;
+import org.agric.oxm.server.service.ProducerOrgService;
 import org.agric.oxm.server.service.UserService;
 import org.agric.oxm.web.OXMUtil;
 import org.agric.oxm.web.WebConstants;
 import org.agric.oxm.web.WebUtils;
+import org.agric.oxm.web.forms.GenericCommand;
+import org.agric.oxm.web.forms.GenericCommandValue;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -42,19 +47,202 @@ public class UserController {
 	@Autowired
 	private Adminservice adminService;
 
+	@Autowired
+	private ProducerOrgService producerOrgService;
+
 	private Logger log = LoggerFactory.getLogger(this.getClass());
 
+	/**
+	 * Search parameter field names
+	 */
+	public static final String NAME_OR_USERNAME = "name-or-username";
+	public static final String PRODUCER_ORG = "producerorg";
+	public static final String ROLE = "role";
+	public static final String GENDER = "gender";
+
+	private static final String COMMAND_NAME = "usersearch";
+
+	public void prepareSearchCommand(ModelMap modelMap,
+			UserSearchParameters params) {
+		GenericCommand searchCommand = new GenericCommand();
+
+		if (StringUtils.isNotEmpty(params.getNameOrUserName()))
+			searchCommand.getPropertiesMap().put(NAME_OR_USERNAME,
+					new GenericCommandValue(params.getNameOrUserName()));
+
+		if (params.getProducerOrg() != null) {
+			searchCommand.getPropertiesMap().put(PRODUCER_ORG,
+					new GenericCommandValue(params.getProducerOrg().getId()));
+		}
+
+		if (params.getRole() != null) {
+			searchCommand.getPropertiesMap().put(ROLE,
+					new GenericCommandValue(params.getRole().getId()));
+		}
+
+		if (null != params.getGender())
+			searchCommand.getPropertiesMap().put(GENDER,
+					new GenericCommandValue(params.getGender().getName()));
+
+		modelMap.put(COMMAND_NAME, searchCommand);
+
+		modelMap.put("pOrgs", producerOrgService.getProducerOrganisations());
+		modelMap.put("roles", userService.getRoles());
+		modelMap.put("genders", OXMUtil.getGenderList());
+	}
+
 	@Secured({ PermissionConstants.PERM_VIEW_ADMINISTRATION })
-	@RequestMapping(value = "/user/view", method = RequestMethod.GET)
-	public ModelAndView viewUsersHandler(ModelMap modelMap)
+	@RequestMapping(value = "/user/view/page/{pageNo}", method = RequestMethod.GET)
+	public ModelAndView viewUsersHandler(
+			@PathVariable(value = "pageNo") Integer pageNo, ModelMap modelMap)
 			throws SessionExpiredException {
 		WebConstants.loadLoggedInUserProfile(OXMSecurityUtil.getLoggedInUser(),
 				modelMap);
-		List<User> users = userService.getUsers();
-		modelMap.put("users", users);
+		prepareSearchModel(new UserSearchParameters(), false, false, pageNo,
+				modelMap);
 
 		modelMap.put(WebConstants.CONTENT_HEADER, "List of Users");
 		return new ModelAndView("viewUser", modelMap);
+	}
+
+	@Secured({ PermissionConstants.PERM_VIEW_ADMINISTRATION })
+	@RequestMapping(value = "/user/search", method = RequestMethod.POST)
+	public ModelAndView searchHandler(
+			@ModelAttribute(COMMAND_NAME) GenericCommand searchCommand,
+			@RequestParam(value = "pageNo", required = false) Integer pageNo,
+			ModelMap model) {
+
+		UserSearchParameters params = extractSearchParamsFromCommand(searchCommand);
+		if (pageNo == null || pageNo <= 0) {
+			pageNo = 1;
+		}
+
+		prepareSearchModel(params, true, true, pageNo, model);
+
+		return new ModelAndView("viewUser", model);
+	}
+
+	private UserSearchParameters extractSearchParamsFromCommand(
+			GenericCommand searchCommand) {
+		UserSearchParameters params = new UserSearchParameters();
+
+		if (StringUtils.isNotBlank(searchCommand.getValue(NAME_OR_USERNAME))) {
+			params.setNameOrUserName(searchCommand.getValue(NAME_OR_USERNAME));
+		}
+
+		if (StringUtils.isNotBlank(searchCommand.getValue(PRODUCER_ORG))) {
+			params.setProducerOrg(producerOrgService
+					.getProducerOrganisationById(searchCommand
+							.getValue(PRODUCER_ORG)));
+		}
+
+		if (StringUtils.isNotBlank(searchCommand.getValue(ROLE))) {
+			params.setRole(userService.getRoleById(searchCommand.getValue(ROLE)));
+		}
+
+		if (StringUtils.isNotBlank(searchCommand.getValue(GENDER))) {
+			params.setGender(Gender.valueOf(searchCommand.getValue(GENDER)));
+		}
+
+		return params;
+	}
+
+	/**
+	 * prepares the crop model for a search operation
+	 * 
+	 * @param params
+	 * @param pageNo
+	 * @param model
+	 */
+	public void prepareSearchModel(UserSearchParameters params,
+			Boolean searching, Boolean newSearch, Integer pageNo, ModelMap model) {
+
+		if (pageNo == null || (pageNo != null && pageNo <= 0)) {
+			pageNo = 1;
+		}
+
+		List<User> users = userService.searchWithParams(params, pageNo);
+		model.put("users", users);
+
+		WebUtils.prepareNavigation("User",
+				userService.numberOfUsersWithSearchParams(params),
+				users.size(), pageNo, buildSearchNavigationUrl(params), model);
+
+		prepareSearchCommand(model, params);
+
+		if (newSearch)
+			model.put(
+					WebConstants.MODEL_ATTRIBUTE_SYSTEM_MESSAGE,
+					String.format("search completed with: %s result(s)",
+							String.valueOf(users.size())));
+		if (searching) {
+			model.put(WebConstants.CONTENT_HEADER, "Users - search results ");
+
+			// set a variable searching to true
+			// this variable is used in determining what navigation file to use
+			model.put("searching", true);
+		} else
+			model.put(WebConstants.CONTENT_HEADER, "List of Users");
+
+	}
+
+	/**
+	 * builds a search navigation url based on the given search parameter
+	 * object.
+	 * 
+	 * @param params
+	 * @return
+	 */
+	private String buildSearchNavigationUrl(UserSearchParameters params) {
+		StringBuffer buffer = new StringBuffer();
+		buffer.append("/user?action=search");
+
+		if (StringUtils.isNotBlank(params.getNameOrUserName())) {
+			buffer.append("&").append(NAME_OR_USERNAME).append("=")
+					.append(params.getNameOrUserName());
+		}
+
+		if (params.getProducerOrg() != null) {
+			buffer.append("&").append(PRODUCER_ORG).append("=")
+					.append(params.getProducerOrg().getId());
+		}
+
+		if (params.getRole() != null) {
+			buffer.append("&").append(ROLE).append("=")
+					.append(params.getRole().getId());
+		}
+
+		if (params.getGender() != null) {
+			buffer.append("&").append(GENDER).append("=")
+					.append(params.getGender().toString());
+		}
+
+		return buffer.toString();
+	}
+
+	@Secured({ PermissionConstants.VIEW_CROP })
+	@RequestMapping(method = RequestMethod.GET, value = "user", params = { "action=search" })
+	public ModelAndView userSearchNavigationHandler(
+			@RequestParam(value = NAME_OR_USERNAME, required = false) String name,
+			@RequestParam(value = PRODUCER_ORG, required = false) String pOrgId,
+			@RequestParam(value = ROLE, required = false) String roleId,
+			@RequestParam(value = GENDER, required = false) String gender,
+			@RequestParam(value = "pageNo", required = false) Integer pageNo,
+			ModelMap model) {
+
+		GenericCommand command = new GenericCommand();
+
+		command.getPropertiesMap().put(NAME_OR_USERNAME,
+				new GenericCommandValue(name));
+		command.getPropertiesMap().put(PRODUCER_ORG,
+				new GenericCommandValue(pOrgId));
+		command.getPropertiesMap().put(ROLE, new GenericCommandValue(roleId));
+		command.getPropertiesMap().put(GENDER, new GenericCommandValue(gender));
+
+		prepareSearchModel(extractSearchParamsFromCommand(command), true,
+				false, pageNo, model);
+
+		return new ModelAndView("viewUser", model);
 	}
 
 	@Secured({ PermissionConstants.PERM_VIEW_ADMINISTRATION })
@@ -155,7 +343,7 @@ public class UserController {
 			try {
 				User loginedUser = OXMSecurityUtil.getLoggedInUser();
 				if (loginedUser.hasAdministrativePrivileges()) {
-					return viewUsersHandler(new ModelMap());
+					return viewUsersHandler(1, new ModelMap());
 				} else {
 					modelMap.put(WebConstants.MODEL_ATTRIBUTE_ERROR_MESSAGE,
 							"Invalid path");
@@ -231,7 +419,7 @@ public class UserController {
 			modelMapMap.put(WebConstants.MODEL_ATTRIBUTE_ERROR_MESSAGE,
 					"Error " + e.getMessage());
 		}
-		return viewUsersHandler(modelMapMap);
+		return viewUsersHandler(1, modelMapMap);
 	}
 
 	@RequestMapping("/annoymous/create")

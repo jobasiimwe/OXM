@@ -3,6 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix='fn' uri='http://java.sun.com/jsp/jstl/functions'%>
 
+<%@ taglib prefix="oxmTags" tagdir="/WEB-INF/tags"%>
 <%@ taglib prefix="oxmBreadcrambs"
 	tagdir="/WEB-INF/tags/breadcramblinks"%>
 <%@ taglib prefix="oxmDistrictBreadcrambs"
@@ -15,7 +16,7 @@
 		district="${parish.subCounty.district }" />
 	<oxmDistrictBreadcrambs:parish subCounty="${parish.subCounty }" />
 	<oxmDistrictBreadcrambs:village parish="${parish }" />
-	 Villages
+	Villages
 </div>
 <div id="buttonStrip">
 	<div class="contextual">
@@ -30,13 +31,15 @@
 </div>
 
 <div>
+
+	<oxmTags:name-of-item-on-page name="Village" />
+
 	<table class="recordTable list" width="100%" cellpadding="0"
 		cellspacing="0">
 		<thead>
 			<tr>
 				<th><input type="checkbox" name="cbxSelectAllItems"
-					id="cbxSelectAllItems" />
-				</th>
+					id="cbxSelectAllItems" /></th>
 				<th>No.</th>
 				<th>Name</th>
 				<th>Parish</th>
@@ -46,9 +49,8 @@
 			<c:if test="${not empty villages  && fn:length(villages) > 0}">
 				<c:forEach var="village" items="${villages }" varStatus="status">
 					<tr id="${village.id }">
-						<td><input type="checkbox" name="selectedVillage"
-							value="${village.id }" />
-						</td>
+						<td><oxmTags:rowcheckbox
+								nameOfItemOnPage="${nameOfItemOnPage}" id="${village.id }" /></td>
 						<td>${status.count }</td>
 						<td>${village.name }</td>
 						<td>${village.parish.name }</td>

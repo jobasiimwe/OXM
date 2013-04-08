@@ -44,8 +44,12 @@ public class CommitteeServiceImpl implements CommitteeService {
 	@Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
 	@Override
 	public void validate(Committee committee) throws ValidationException {
-		if (committee.getName() == null)
-			throw new ValidationException("Committee name can not be null");
+		if (committee.getProducerOrg() == null)
+			throw new ValidationException(
+					"Ooops, Technical Error - Producer Organisation can not be null");
+
+		if (StringUtils.isBlank(committee.getName()))
+			throw new ValidationException("Committee name can not be Blank");
 
 		Committee existingCommitteeWithSameName = getCommitteeByName(committee
 				.getName());

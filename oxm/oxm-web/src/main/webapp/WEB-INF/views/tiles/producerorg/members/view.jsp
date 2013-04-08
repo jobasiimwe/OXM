@@ -4,6 +4,7 @@
 <%@ taglib prefix='fn' uri='http://java.sun.com/jsp/jstl/functions'%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
+<%@ taglib prefix="oxmTags" tagdir="/WEB-INF/tags"%>
 <%@ taglib prefix="oxmBreadcrambs"
 	tagdir="/WEB-INF/tags/breadcramblinks"%>
 <%@ taglib prefix="oxmProducerOrgBreadcrambs"
@@ -19,12 +20,12 @@
 
 <div id="buttonStrip">
 	<div class="contextual" style="float: left;">
-		<a id="lnkAddProducer" class="uiButton"
-			href="${baseUrl }/producerorg/producers/add/${pOrg.id}">Add</a> <a
-			id="lnkEditPOrgProducer" class="uiButton"
-			href="${baseUrl }/producerorg/producers/edit/${pOrg.id}/">Edit</a> <a
-			id="lnkDeleteProducer" class="uiButton"
-			href="${baseUrl }/producerorg/producers/delete/${pOrg.id}/">Delete</a>
+		<a id="lnkAddMember" class="uiButton"
+			href="${baseUrl }/porg/producers/add/${pOrg.id}">Add</a> <a
+			id="lnkEditPOrgMember" class="uiButton"
+			href="${baseUrl }/porg/producers/edit/${pOrg.id}/">Edit</a> <a
+			id="lnkDeleteMember" class="uiButton"
+			href="${baseUrl }/porg/producers/delete/${pOrg.id}/">Delete</a>
 	</div>
 	<div style="float: right;">
 		<%@ include file="/WEB-INF/views/navigation.jsp"%>
@@ -32,11 +33,15 @@
 	<div style="clear: both"></div>
 </div>
 <div>
+
+	<oxmTags:name-of-item-on-page name="Producer-Organisation-Member" />
+
 	<table class="recordTable" width="100%" cellpadding="0" cellspacing="0">
 		<thead>
 			<tr>
 				<th><input type="checkbox" name="cbxSelectAllItems"
-					id="cbxSelectAllItems" /></th>
+					id="cbxSelectAllItems" />
+				</th>
 				<th>Name</th>
 				<th>Gender</th>
 				<th>DateOfBirth</th>
@@ -49,12 +54,14 @@
 					test="${not empty pOrg.producers  && fn:length(pOrg.producers) > 0}">
 					<c:forEach var="producer" items="${pOrg.producers }">
 						<tr id="${producer.id }">
-							<td><input type="checkbox" name="selectedProducer"
-								value="${producer.id }" /></td>
+							<td><oxmTags:rowcheckbox
+									nameOfItemOnPage="${nameOfItemOnPage }" id="${producer.id }" />
+							</td>
 							<td>${producer.name }</td>
 							<td>${producer.gender.name }</td>
 							<td><fmt:formatDate value="${producer.dateOfBirth}"
-									pattern="dd/MM/yyyy" /></td>
+									pattern="dd/MM/yyyy" />
+							</td>
 
 							<td>${producer.subCounty.name }</td>
 						</tr>
@@ -62,7 +69,8 @@
 				</c:when>
 				<c:otherwise>
 					<tr>
-						<td><span style="color: red;">no producers found</span></td>
+						<td><span style="color: red;">no producers found</span>
+						</td>
 					</tr>
 				</c:otherwise>
 			</c:choose>

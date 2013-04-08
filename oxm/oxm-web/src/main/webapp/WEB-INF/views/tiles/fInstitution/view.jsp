@@ -4,6 +4,7 @@
 <%@ taglib prefix='fn' uri='http://java.sun.com/jsp/jstl/functions'%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
+<%@ taglib prefix="oxmTags" tagdir="/WEB-INF/tags"%>
 <%@ taglib prefix="oxmBreadcrambs"
 	tagdir="/WEB-INF/tags/breadcramblinks"%>
 
@@ -27,6 +28,9 @@
 	<div style="clear: both"></div>
 </div>
 <div>
+
+	<oxmTags:name-of-item-on-page name="Financial-Institution" />
+
 	<table class="recordTable" width="100%" cellpadding="0" cellspacing="0">
 		<thead>
 			<tr>
@@ -44,8 +48,8 @@
 				<c:forEach var="fInstitution" items="${fInstitutions }"
 					varStatus="status">
 					<tr id="${fInstitution.id }">
-						<td><input type="checkbox"
-							name="selectedFinancial-Institution" value="${fInstitution.id }" />
+						<td><oxmTags:rowcheckbox
+									nameOfItemOnPage="${nameOfItemOnPage}" id="${fInstitution.id }" />
 						</td>
 						<td>${status.count }</td>
 						<td>${fInstitution.name }</td>

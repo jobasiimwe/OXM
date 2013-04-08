@@ -4,6 +4,7 @@
 <%@ taglib prefix='fn' uri='http://java.sun.com/jsp/jstl/functions'%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 
+<%@ taglib prefix="oxmTags" tagdir="/WEB-INF/tags"%>
 <%@ taglib prefix="oxmBreadcrambs"
 	tagdir="/WEB-INF/tags/breadcramblinks"%>
 
@@ -26,12 +27,14 @@
 	<div style="clear: both"></div>
 </div>
 <div>
+
+	<oxmTags:name-of-item-on-page name="Crop" />
+
 	<table class="recordTable" width="100%" cellpadding="0" cellspacing="0">
 		<thead>
 			<tr>
 				<th><input type="checkbox" name="cbxSelectAllItems"
-					id="cbxSelectAllItems" />
-				</th>
+					id="cbxSelectAllItems" /></th>
 				<th>Name</th>
 				<th>Inputs</th>
 				<th>seed Varieties</th>
@@ -45,9 +48,8 @@
 				<c:when test="${not empty crops  && fn:length(crops) > 0}">
 					<c:forEach var="crop" items="${crops }">
 						<tr id="${crop.id }">
-							<td><input type="checkbox" name="selectedCrop"
-								value="${crop.id }" />
-							</td>
+							<td><oxmTags:rowcheckbox
+									nameOfItemOnPage="${nameOfItemOnPage}" id="${crop.id }" /></td>
 							<td>${crop.name }</td>
 							<td>${fn:length(crop.inputs) }</td>
 							<td>${fn:length(crop.seedVarieties) }</td>

@@ -3,6 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix='fn' uri='http://java.sun.com/jsp/jstl/functions'%>
 
+<%@ taglib prefix="oxmTags" tagdir="/WEB-INF/tags"%>
 <%@ taglib prefix="oxmBreadcrambs"
 	tagdir="/WEB-INF/tags/breadcramblinks"%>
 
@@ -26,6 +27,9 @@
 	<div style="clear: both"></div>
 </div>
 <div>
+
+	<oxmTags:name-of-item-on-page name="Selling-Place" />
+
 	<table class="recordTable" width="100%" cellpadding="0" cellspacing="0">
 		<thead>
 			<tr>
@@ -40,10 +44,12 @@
 			<c:choose>
 				<c:when
 					test="${not empty sellingplaces  && fn:length(sellingplaces) > 0}">
-					<c:forEach var="sellingplace" items="${sellingplaces }" varStatus="status">
+					<c:forEach var="sellingplace" items="${sellingplaces }"
+						varStatus="status">
 						<tr id="${sellingplace.id }">
-							<td><input type="checkbox" name="selectedSellingPlace"
-								value="${sellingplace.id }" /></td>
+							<td><oxmTags:rowcheckbox
+									nameOfItemOnPage="${nameOfItemOnPage }"
+									id="${sellingplace.id }" /></td>
 							<td>${status.count }</td>
 							<td>${sellingplace.name }</td>
 							<td>${sellingplace.sellingTypesString }</td>

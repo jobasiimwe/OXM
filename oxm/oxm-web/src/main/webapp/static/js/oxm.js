@@ -1,3 +1,36 @@
+function hasText(id, fieldName) {
+	var value = $.trim($("#" + id).val());
+	if (value == null || value == "") {
+		alert(fieldName + " is required!!");
+		return false;
+	}
+
+	return true;
+}
+
+function someAreChecked(checkBoxesName, fieldName) {
+	if ($("input[name=" + checkBoxesName + "]:checked").length > 0)
+		return true;
+	else {
+		alert(fieldName + " is required!!");
+		return false;
+	}
+}
+
+function singleDropDownItemAction(buttonId, dropDownId, itemName) {
+	var selectedId = $('#' + dropDownId).attr("value");
+	if (selectedId == null || selectedId == "") {
+		alert("First select a " + itemName + " to perform this action");
+		return false;
+	} else {
+		var href = $('#' + buttonId).attr("href");
+		href = href + selectedId;
+		$('#' + buttonId).attr("href", href);
+
+		return true;
+	}
+}
+
 /**
  * sets the system message
  */
@@ -227,19 +260,17 @@ $(document).ready(
 							if ($(':checkbox', this).attr('checked')
 									|| $(this).hasClass('selected')) {
 								$(this).removeClass("selected");
-								$(':checkbox', this).attr('checked',
-										false);
+								$(':checkbox', this).attr('checked', false);
 							} else {
 								$(this).addClass("selected");
-								$(':checkbox', this).attr('checked',
-										true);
+								$(':checkbox', this).attr('checked', true);
 							}
 						}
 					});
 
 			/**
-			 * everytime the cbxSelectAllItems is selected, all rows in
-			 * the same table should be selected.
+			 * everytime the cbxSelectAllItems is selected, all rows in the same
+			 * table should be selected.
 			 */
 			$("#cbxSelectAllItems").live('click', function(event) {
 				if ($(this).attr("checked") == "checked") {

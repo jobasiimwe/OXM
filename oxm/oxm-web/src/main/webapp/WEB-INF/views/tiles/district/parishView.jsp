@@ -3,6 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix='fn' uri='http://java.sun.com/jsp/jstl/functions'%>
 
+<%@ taglib prefix="oxmTags" tagdir="/WEB-INF/tags"%>
 <%@ taglib prefix="oxmBreadcrambs"
 	tagdir="/WEB-INF/tags/breadcramblinks"%>
 <%@ taglib prefix="oxmDistrictBreadcrambs"
@@ -29,13 +30,15 @@
 	<div style="clear: both"></div>
 </div>
 <div>
+
+	<oxmTags:name-of-item-on-page name="Parish" />
+
 	<table class="recordTable list" width="100%" cellpadding="0"
 		cellspacing="0">
 		<thead>
 			<tr>
 				<th><input type="checkbox" name="cbxSelectAllItems"
-					id="cbxSelectAllItems" />
-				</th>
+					id="cbxSelectAllItems" /></th>
 				<th>No.</th>
 				<th>Name</th>
 				<th>Villages</th>
@@ -45,8 +48,8 @@
 			<c:if test="${not empty parishes  && fn:length(parishes) > 0}">
 				<c:forEach var="parish" items="${parishes }" varStatus="status">
 					<tr id="${parish.id }">
-						<td><input type="checkbox" name="selectedParish"
-							value="${parish.id }" /></td>
+						<td><oxmTags:rowcheckbox
+								nameOfItemOnPage="${nameOfItemOnPage}" id="${parish.id }" /></td>
 						<td>${status.count }</td>
 						<td>${parish.name }</td>
 						<td>${parish.villagesString }</td>

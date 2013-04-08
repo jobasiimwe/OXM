@@ -3,7 +3,6 @@ package org.agric.oxm.web.controllers;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.agric.oxm.model.Committee;
 import org.agric.oxm.model.District;
 import org.agric.oxm.model.ProducerOrganisation;
 import org.agric.oxm.model.Role;
@@ -14,12 +13,13 @@ import org.agric.oxm.model.exception.ValidationException;
 import org.agric.oxm.server.security.PermissionConstants;
 import org.agric.oxm.server.security.util.OXMSecurityUtil;
 import org.agric.oxm.server.service.Adminservice;
-import org.agric.oxm.server.service.CommitteeService;
 import org.agric.oxm.server.service.ProducerOrgService;
 import org.agric.oxm.server.service.UserService;
 import org.agric.oxm.web.OXMUtil;
 import org.agric.oxm.web.WebConstants;
 import org.apache.commons.lang.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
@@ -34,7 +34,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 @RequestMapping("porg")
-public class ProducerOrgController {
+public class POrgController {
 
 	@Autowired
 	private Adminservice adminservice;
@@ -43,13 +43,12 @@ public class ProducerOrgController {
 	private ProducerOrgService producerOrgService;
 
 	@Autowired
-	private CommitteeService committeeService;
-
-	@Autowired
 	private UserService userService;
 
 	@Autowired
 	private UserController userController;
+
+	private Logger log = LoggerFactory.getLogger(this.getClass());
 
 	@Secured({ PermissionConstants.VIEW_PROD_ORG })
 	@RequestMapping(value = "/view", method = RequestMethod.GET)
@@ -162,6 +161,8 @@ public class ProducerOrgController {
 			modelMap.put(WebConstants.MODEL_ATTRIBUTE_SYSTEM_MESSAGE,
 					"Production Organization saved sucessfully.");
 		} catch (ValidationException e) {
+			log.error("Error Saving producerOrg: - ", e);
+
 			modelMap.put(WebConstants.MODEL_ATTRIBUTE_ERROR_MESSAGE,
 					e.getMessage());
 			WebConstants.loadLoggedInUserProfile(
@@ -278,6 +279,8 @@ public class ProducerOrgController {
 			userService.saveUser(existingProducer);
 
 		} catch (Exception e) {
+			log.error("Error Saving producerOrg Member - ", e);
+
 			modelMap.put(WebConstants.MODEL_ATTRIBUTE_ERROR_MESSAGE, "Error "
 					+ e.getMessage());
 
@@ -304,14 +307,6 @@ public class ProducerOrgController {
 		return new ModelAndView("viewPOrgDetails", modelMap);
 	}
 
-	@Secured({ PermissionConstants.VIEW_COMMITTEE__DETAILS })
-	@RequestMapping(value = "/committee/{pOrgId}", method = RequestMethod.GET)
-	public ModelAndView viewProducerOrgCommitteeHandler(
-			@PathVariable("pOrgId") String pOrgId, ModelMap modelMap) {
-		prepareProducerOrgViewsModel(pOrgId, "Committees of - ", modelMap);
-		return new ModelAndView("pOrgCommitteeView", modelMap);
-	}
-
 	/**
 	 * Prepares models for all views of producer org, i.e. the details,
 	 * committees, staff, documents views
@@ -320,7 +315,7 @@ public class ProducerOrgController {
 	 * @param contentHeaderString
 	 * @param modelMap
 	 */
-	private void prepareProducerOrgViewsModel(String pOrgId,
+	public void prepareProducerOrgViewsModel(String pOrgId,
 			String contentHeaderString, ModelMap modelMap) {
 		ProducerOrganisation pOrg = producerOrgService
 				.getProducerOrganisationById(pOrgId);
@@ -346,35 +341,4 @@ public class ProducerOrgController {
 		return new ModelAndView("pOrgDocumentsView", modelMap);
 	}
 
-	@Secured({ PermissionConstants.VIEW_COMMITTEE__DETAILS })
-	@RequestMapping(value = "/committee/add/{pOrgId}", method = RequestMethod.GET)
-	public ModelAndView addPOrgCommitteeHandler(
-			@PathVariable("pOrgId") String pOrgId, ModelMap modelMap) {
-
-		ProducerOrganisation pOrg = producerOrgService
-				.getProducerOrganisationById(pOrgId);
-		modelMap.put("pOrg", pOrg);
-
-		Committee committee = new Committee(pOrg);
-		modelMap.put("committee", committee);
-
-		modelMap.put(WebConstants.CONTENT_HEADER,
-				"Add Committee to - " + pOrg.getName());
-		return new ModelAndView("pOrgCommitteeForm", modelMap);
-	}
-
-	@Secured({ PermissionConstants.VIEW_COMMITTEE__DETAILS })
-	@RequestMapping(value = "/committee/edit/{committeeId}", method = RequestMethod.GET)
-	public ModelAndView editPOrgCommitteeHandler(
-			@PathVariable("committeeId") String committeeId, ModelMap modelMap) {
-
-		Committee committee = committeeService.getCommitteeById(committeeId);
-		modelMap.put("pOrg", committee.getProducerOrg());
-
-		modelMap.put("committee", committee);
-
-		modelMap.put(WebConstants.CONTENT_HEADER, "Edit " + committee.getName()
-				+ " of " + committee.getProducerOrg().getName());
-		return new ModelAndView("pOrgCommitteeForm", modelMap);
-	}
 }

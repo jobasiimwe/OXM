@@ -56,6 +56,15 @@ public class SubCounty extends BaseData implements Comparable<SubCounty> {
 		this.name = name;
 	}
 
+	@Transient
+	public String getFullName() {
+		String fullName = this.getName();
+
+		fullName += ", " + this.getDistrict().getName();
+		return fullName;
+
+	}
+
 	@ManyToOne
 	@JoinColumn(name = "district_id", nullable = false)
 	public District getDistrict() {
@@ -81,7 +90,7 @@ public class SubCounty extends BaseData implements Comparable<SubCounty> {
 
 		if (parishes != null) {
 			if (parishes.size() > 0) {
-				for (int i = 0; i <  parishes.size() && i < 3; i++) {
+				for (int i = 0; i < parishes.size() && i < 3; i++) {
 					if (StringUtils.isBlank(returnString))
 						returnString += parishes.get(i).getName();
 					else
@@ -98,7 +107,7 @@ public class SubCounty extends BaseData implements Comparable<SubCounty> {
 			returnString = "--";
 		return returnString;
 	}
-	
+
 	/**
 	 * 
 	 * @param parishes

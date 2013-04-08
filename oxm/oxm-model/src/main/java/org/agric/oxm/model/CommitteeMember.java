@@ -12,12 +12,17 @@ public class CommitteeMember extends BaseData implements
 
 	private Committee committee;
 
-	private User producer;
+	private User positionHolder;
 
 	private Position position;
 
 	public CommitteeMember() {
 		super();
+	}
+
+	public CommitteeMember(Committee committee) {
+		super();
+		this.setCommittee(committee);
 	}
 
 	@ManyToOne
@@ -32,12 +37,12 @@ public class CommitteeMember extends BaseData implements
 
 	@ManyToOne
 	@JoinColumn(name = "producer_id", nullable = false)
-	public User getProducer() {
-		return producer;
+	public User getPositionHolder() {
+		return positionHolder;
 	}
 
-	public void setProducer(User producer) {
-		this.producer = producer;
+	public void setPositionHolder(User holder) {
+		this.positionHolder = holder;
 	}
 
 	@ManyToOne
@@ -77,7 +82,8 @@ public class CommitteeMember extends BaseData implements
 
 	@Override
 	public int compareTo(CommitteeMember o) {
-		return this.getProducer().getName()
-				.compareToIgnoreCase(o.getProducer().getName());
+		// return this.getHolder().getName()
+		// .compareToIgnoreCase(o.getHolder().getName());
+		return 0;
 	}
 }

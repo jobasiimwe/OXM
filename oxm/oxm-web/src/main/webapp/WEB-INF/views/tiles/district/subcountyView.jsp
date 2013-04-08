@@ -3,6 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix='fn' uri='http://java.sun.com/jsp/jstl/functions'%>
 
+<%@ taglib prefix="oxmTags" tagdir="/WEB-INF/tags"%>
 <%@ taglib prefix="oxmBreadcrambs"
 	tagdir="/WEB-INF/tags/breadcramblinks"%>
 <%@ taglib prefix="oxmDistrictBreadcrambs"
@@ -30,12 +31,16 @@
 </div>
 
 <div>
+
+	<oxmTags:name-of-item-on-page name="SubCounty" />
+
 	<table class="recordTable list" width="100%" cellpadding="0"
 		cellspacing="0">
 		<thead>
 			<tr>
 				<th><input type="checkbox" name="cbxSelectAllItems"
-					id="cbxSelectAllItems" /></th>
+					id="cbxSelectAllItems" />
+				</th>
 				<th>No.</th>
 				<th>Name</th>
 				<th>Parishes</th>
@@ -46,8 +51,8 @@
 				<c:forEach var="subcounty" items="${subcounties }"
 					varStatus="status">
 					<tr id="${subcounty.id }">
-						<td><input type="checkbox" name="selectedSubCounty"
-							value="${subcounty.id }" />
+						<td><oxmTags:rowcheckbox
+								nameOfItemOnPage="${nameOfItemOnPage}" id="${subcounty.id }" />
 						</td>
 						<td>${status.count }</td>
 						<td>${subcounty.name }</td>

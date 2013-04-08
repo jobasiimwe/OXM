@@ -171,11 +171,11 @@
 	</definition>
 	
 	<definition name="pOrgCommitteeMemberView" extends="viewProducerOrg">
-		<put-attribute name="body" type="template" value="/WEB-INF/views/tiles/producerorg/committee/view.jsp" />
+		<put-attribute name="body" type="template" value="/WEB-INF/views/tiles/producerorg/committee/member/view.jsp" />
 	</definition>
 	
 	<definition name="pOrgCommitteeMemberForm" extends="viewProducerOrg">
-		<put-attribute name="body" type="template" value="/WEB-INF/views/tiles/producerorg/committee/form.jsp" />
+		<put-attribute name="body" type="template" value="/WEB-INF/views/tiles/producerorg/committee/member/form.jsp" />
 	</definition>
 	
 	<definition name="pOrgDocumentView" extends="viewProducerOrg">
@@ -217,22 +217,19 @@
 	
 	<!-- ======= FORM for SEASON ========== -->
 	<definition name="viewSeason" extends="layout">
-	    <put-attribute name="scripts" type="template" value="/WEB-INF/views/tiles/season/scripts.jsp" />
-		<put-attribute name="pageTitle" type="template" value="/WEB-INF/views/tiles/contentheader.jsp" />
 		<put-attribute name="body" type="template" value="/WEB-INF/views/tiles/season/view.jsp" />
 	</definition>
 	
-	<definition name="formSeason" extends="viewSeason">
+	<definition name="formSeason" extends="layout">
 		<put-attribute name="body" type="template" value="/WEB-INF/views/tiles/season/form.jsp" />
 	</definition>
 	
 	<!-- ======= FORM for Financial Institution ========== -->
 	<definition name="viewFinancialInstitution" extends="layout">
-		<put-attribute name="pageTitle" type="template" value="/WEB-INF/views/tiles/contentheader.jsp" />
 		<put-attribute name="body" type="template" value="/WEB-INF/views/tiles/fInstitution/view.jsp" />
 	</definition>
 	
-	<definition name="formFinancialInstitution" extends="viewFinancialInstitution">
+	<definition name="formFinancialInstitution" extends="layout">
 		<put-attribute name="body" type="template" value="/WEB-INF/views/tiles/fInstitution/form.jsp" />
 	</definition>
 	

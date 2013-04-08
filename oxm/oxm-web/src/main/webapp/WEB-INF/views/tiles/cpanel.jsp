@@ -4,7 +4,7 @@
 
 <div class="cpanel">
 	<div class="menu">
-		<a id="lnkUsers" title="Users" href="${baseUrl }/user/view"> <span
+		<a id="lnkUsers" title="Users" href="${baseUrl }/user/view/page/1"> <span
 			class="panellink user-icon"></span> <span
 			style="margin: 10px; font-size: 12px; font-weight: bold;">Users</span>
 		</a>

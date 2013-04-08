@@ -4,6 +4,6 @@
 	name="producerOrg" rtexprvalue="true" required="true"%>
 
 <a title="Details of Producer organisation - ${producerOrg.name}"
-	href="${baseUrl }/porg/details/${producerOrg.id}">${producerOrg.name
-	}</a>
+	href="${baseUrl }/porg/details/${producerOrg.id}">Details of -
+	${producerOrg.name }</a>
 &gt;

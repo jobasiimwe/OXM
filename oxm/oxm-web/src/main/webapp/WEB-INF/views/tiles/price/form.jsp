@@ -21,7 +21,6 @@
 		<c:if test="${not empty crops  && fn:length(crops) > 0}">
 			<c:forEach var="crop" items="${crops }">
 				<option value="${crop.id }">${crop.name }</option>
-
 			</c:forEach>
 		</c:if>
 

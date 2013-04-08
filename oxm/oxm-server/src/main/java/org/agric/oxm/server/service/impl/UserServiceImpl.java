@@ -417,6 +417,7 @@ public class UserServiceImpl implements UserService {
 			Integer pageNo) {
 
 		Search search = prepareSearchUserWithParams(params);
+		search.setMaxResults(OXMConstants.MAX_NUM_PAGE_RECORD);
 		/*
 		 * if the page number is less than or equal to zero, no need for paging
 		 */
@@ -440,45 +441,30 @@ public class UserServiceImpl implements UserService {
 
 	public Search prepareSearchUserWithParams(UserSearchParameters params) {
 		Search search = new Search();
-		search.setMaxResults(OXMConstants.MAX_NUM_PAGE_RECORD);
 
-		Filter firstNameFilter;
-		Filter lastNameFilter;
-		Filter userNameFilter;
+		Filter nameFilter;
 
 		if (StringUtils.isNotBlank(params.getNameOrUserName())) {
+
+			Filter userNameFilter = new Filter("username", "%"
+					+ params.getNameOrUserName() + "%", Filter.OP_ILIKE);
+
 			if (params.getNameOrUserName().contains(" ")) {
 				String[] names = params.getNameOrUserName().split(" ");
 
-				Filter[] firstNameFilters = new Filter[names.length];
-				Filter[] lastNameFilters = new Filter[names.length];
-				Filter[] userNameFilters = new Filter[names.length];
+				Filter[] nameFilters = new Filter[names.length];
 				for (int i = 0; i < names.length; i++) {
-					firstNameFilters[i] = new Filter("firstName", "%"
-							+ names[i] + "%", Filter.OP_ILIKE);
-					lastNameFilters[i] = new Filter("lastName", "%" + names[i]
-							+ "%", Filter.OP_ILIKE);
-					userNameFilters[i] = new Filter("username", "%" + names[i]
-							+ "%", Filter.OP_ILIKE);
+					nameFilters[i] = new Filter("name", "%" + names[i] + "%",
+							Filter.OP_ILIKE);
 				}
 
-				firstNameFilter = Filter.and(firstNameFilters);
-				lastNameFilter = Filter.and(lastNameFilters);
-				userNameFilter = Filter.and(userNameFilters);
-
+				nameFilter = Filter.and(nameFilters);
 			} else {
-				firstNameFilter = new Filter("firstName", "%"
+				nameFilter = new Filter("name", "%"
 						+ params.getNameOrUserName() + "%", Filter.OP_ILIKE);
-
-				lastNameFilter = new Filter("lastName", "%"
-						+ params.getNameOrUserName() + "%", Filter.OP_ILIKE);
-
-				userNameFilter = new Filter("username", "%"
-						+ params.getNameOrUserName() + "%", Filter.OP_ILIKE);
-
 			}
 
-			search.addFilterOr(firstNameFilter, lastNameFilter, userNameFilter);
+			search.addFilterOr(nameFilter, userNameFilter);
 
 		}
 
@@ -490,13 +476,7 @@ public class UserServiceImpl implements UserService {
 			search.addFilterEqual("roles.name", params.getRole().getName());
 		}
 
-		if (params.getUserType() != null) {
-			search.addFilterEqual("userTypes", params.getUserType());
-		}
-
-		search.addSort("firstName", false, true);
-		search.addSort("lastName", false, true);
-		search.addSort("username", false, true);
+		search.addSort("name", false, true);
 
 		search.addFilterEqual("recordStatus", RecordStatus.ACTIVE);
 		return search;

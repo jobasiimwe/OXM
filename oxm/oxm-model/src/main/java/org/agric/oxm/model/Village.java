@@ -5,6 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 @Entity
 @Table(name = "village")
@@ -31,6 +32,17 @@ public class Village extends BaseData implements Comparable<Village> {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	@Transient
+	public String getFullName() {
+		String fullName = this.getName();
+
+		fullName += ", " + this.getParish().getName();
+		fullName += ", " + this.getParish().getSubCounty().getName();
+		fullName += ", "
+				+ this.getParish().getSubCounty().getDistrict().getName();
+		return fullName;
 	}
 
 	@ManyToOne

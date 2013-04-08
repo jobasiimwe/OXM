@@ -3,8 +3,8 @@
  */
 package org.agric.oxm.model.search;
 
-import org.agric.oxm.model.Concept;
 import org.agric.oxm.model.Gender;
+import org.agric.oxm.model.ProducerOrganisation;
 import org.agric.oxm.model.Role;
 
 /**
@@ -13,12 +13,17 @@ import org.agric.oxm.model.Role;
  */
 public class UserSearchParameters {
 	private String nameOrUserName = null;
+	private ProducerOrganisation producerOrg;
 	private Gender gender = null;
 	private Role role = null;
-	private Concept userType;
 
 	public UserSearchParameters() {
 
+	}
+
+	public UserSearchParameters(ProducerOrganisation pOrg, Role role) {
+		this.setProducerOrg(pOrg);
+		this.setRole(role);
 	}
 
 	public String getNameOrUserName() {
@@ -27,6 +32,14 @@ public class UserSearchParameters {
 
 	public void setNameOrUserName(String nameOrUserName) {
 		this.nameOrUserName = nameOrUserName;
+	}
+
+	public ProducerOrganisation getProducerOrg() {
+		return producerOrg;
+	}
+
+	public void setProducerOrg(ProducerOrganisation producerOrg) {
+		this.producerOrg = producerOrg;
 	}
 
 	public void setGender(Gender gender) {
@@ -44,13 +57,4 @@ public class UserSearchParameters {
 	public Role getRole() {
 		return role;
 	}
-
-	public Concept getUserType() {
-		return userType;
-	}
-
-	public void setUserType(Concept userType) {
-		this.userType = userType;
-	}
-
 }
