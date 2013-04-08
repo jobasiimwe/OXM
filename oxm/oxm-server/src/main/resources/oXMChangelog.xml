@@ -1,432 +1,473 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog/1.9" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog/1.9 http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-1.9.xsd">
-    
-    <changeSet author="Job (generated)" id="1363131074823-2">
+        <changeSet author="Job (generated)" id="1365451053727-1">
+        <addColumn tableName="committee_member">
+            <column name="from_date" type="datetime"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="Job (generated)" id="1365451053727-2">
+        <addColumn tableName="committee_member">
+            <column name="to_date" type="datetime"/>
+        </addColumn>
+    </changeSet>
+     <changeSet author="Job (generated)" id="1365451053727-140">
+        <dropColumn columnName="producer_id" tableName="committee_member"/>
+    </changeSet>
+    <changeSet author="Job (generated)" id="1365451053727-3">
+        <renameColumn tableName="committee_member" oldColumnName="producer_id" newColumnName="user_id" />
+    </changeSet>
+   
+   
+    <changeSet author="Job (generated)" id="1365451053727-1">
+        <addColumn tableName="committee_member">
+            <column name="from_date" type="datetime"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="Job (generated)" id="1365451053727-2">
+        <addColumn tableName="committee_member">
+            <column name="to_date" type="datetime"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="Job (generated)" id="1365451053727-140">
+        <dropColumn columnName="producer_id" tableName="committee_member"/>
+    </changeSet>
+    <changeSet author="Job (generated)" id="1365451053727-3">
+        <addColumn tableName="committee_member">
+            <column name="user_id" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+    </changeSet>
+    <changeSet author="Job (generated)" id="1365451053727-4">
         <createIndex indexName="key1" tableName="concept_category_link">
             <column name="concept_id"/>
             <column name="concept_category_id"/>
         </createIndex>
     </changeSet>
-    <changeSet author="Job (generated)" id="1363131074823-3">
+    <changeSet author="Job (generated)" id="1365451053727-5">
         <createIndex indexName="uk_crop_inputs" tableName="crop_inputs">
             <column name="crop_id"/>
             <column name="concept_id"/>
         </createIndex>
     </changeSet>
-    <changeSet author="Job (generated)" id="1363131074823-4">
+    <changeSet author="Job (generated)" id="1365451053727-6">
         <createIndex indexName="uk_inter_cropping_methods" tableName="crop_inter_cropping_types">
             <column name="crop_id"/>
             <column name="concept_id"/>
         </createIndex>
     </changeSet>
-    <changeSet author="Job (generated)" id="1363131074823-5">
+    <changeSet author="Job (generated)" id="1365451053727-7">
         <createIndex indexName="uk_crop_ploughing_methods" tableName="crop_ploughing_methods">
             <column name="crop_id"/>
             <column name="concept_id"/>
         </createIndex>
     </changeSet>
-    <changeSet author="Job (generated)" id="1363131074823-6">
+    <changeSet author="Job (generated)" id="1365451053727-8">
         <createIndex indexName="uk_crop_seedvirieties" tableName="crop_seed_varieties">
             <column name="crop_id"/>
             <column name="concept_id"/>
         </createIndex>
     </changeSet>
-    <changeSet author="Job (generated)" id="1363131074823-7">
+    <changeSet author="Job (generated)" id="1365451053727-9">
         <createIndex indexName="uk_crop_sunitsofmeasure" tableName="crop_units_of_measure">
             <column name="crop_id"/>
             <column name="concept_id"/>
         </createIndex>
     </changeSet>
-    <changeSet author="Job (generated)" id="1363131074823-8">
+    <changeSet author="Job (generated)" id="1365451053727-10">
         <createIndex indexName="uk_place_selling_types" tableName="place_selling_types">
             <column name="selling_place_id"/>
             <column name="concept_id"/>
         </createIndex>
     </changeSet>
-    <changeSet author="Job (generated)" id="1363131074823-9">
+    <changeSet author="Job (generated)" id="1365451053727-11">
         <createIndex indexName="UKC1E628651E3346BF" tableName="publication_documents">
             <column name="document_id"/>
         </createIndex>
     </changeSet>
-    <changeSet author="Job (generated)" id="1363131074823-10">
+    <changeSet author="Job (generated)" id="1365451053727-12">
         <dropIndex indexName="FK38A5EE5F6BA9B6BB" tableName="comment"/>
     </changeSet>
-    <changeSet author="Job (generated)" id="1363131074823-11">
+    <changeSet author="Job (generated)" id="1365451053727-13">
         <dropIndex indexName="FKA71EF77D7EF2A060" tableName="committee"/>
     </changeSet>
-    <changeSet author="Job (generated)" id="1363131074823-12">
+    <changeSet author="Job (generated)" id="1365451053727-14">
         <dropIndex indexName="FK1792999C1AC06994" tableName="committee_member"/>
     </changeSet>
-    <changeSet author="Job (generated)" id="1363131074823-13">
+    <changeSet author="Job (generated)" id="1365451053727-15">
         <dropIndex indexName="FK1792999C5BA33ADC" tableName="committee_member"/>
     </changeSet>
-    <changeSet author="Job (generated)" id="1363131074823-14">
+    <changeSet author="Job (generated)" id="1365451053727-16">
         <dropIndex indexName="key1" tableName="concept_category_link"/>
     </changeSet>
-    <changeSet author="Job (generated)" id="1363131074823-15">
+    <changeSet author="Job (generated)" id="1365451053727-17">
         <dropIndex indexName="FK7434E27836176439" tableName="crop_inputs"/>
     </changeSet>
-    <changeSet author="Job (generated)" id="1363131074823-16">
+    <changeSet author="Job (generated)" id="1365451053727-18">
         <dropIndex indexName="uk_crop_inputs" tableName="crop_inputs"/>
     </changeSet>
-    <changeSet author="Job (generated)" id="1363131074823-17">
+    <changeSet author="Job (generated)" id="1365451053727-19">
         <dropIndex indexName="FK68BD760E36176439" tableName="crop_inter_cropping_types"/>
     </changeSet>
-    <changeSet author="Job (generated)" id="1363131074823-18">
+    <changeSet author="Job (generated)" id="1365451053727-20">
         <dropIndex indexName="uk_inter_cropping_methods" tableName="crop_inter_cropping_types"/>
     </changeSet>
-    <changeSet author="Job (generated)" id="1363131074823-19">
+    <changeSet author="Job (generated)" id="1365451053727-21">
         <dropIndex indexName="FK2F54674336176439" tableName="crop_ploughing_methods"/>
     </changeSet>
-    <changeSet author="Job (generated)" id="1363131074823-20">
+    <changeSet author="Job (generated)" id="1365451053727-22">
         <dropIndex indexName="uk_crop_ploughing_methods" tableName="crop_ploughing_methods"/>
     </changeSet>
-    <changeSet author="Job (generated)" id="1363131074823-21">
+    <changeSet author="Job (generated)" id="1365451053727-23">
         <dropIndex indexName="FK7915702736176439" tableName="crop_seed_varieties"/>
     </changeSet>
-    <changeSet author="Job (generated)" id="1363131074823-22">
+    <changeSet author="Job (generated)" id="1365451053727-24">
         <dropIndex indexName="uk_crop_seedvirieties" tableName="crop_seed_varieties"/>
     </changeSet>
-    <changeSet author="Job (generated)" id="1363131074823-23">
+    <changeSet author="Job (generated)" id="1365451053727-25">
         <dropIndex indexName="FK582FF9536176439" tableName="crop_units_of_measure"/>
     </changeSet>
-    <changeSet author="Job (generated)" id="1363131074823-24">
+    <changeSet author="Job (generated)" id="1365451053727-26">
         <dropIndex indexName="uk_crop_sunitsofmeasure" tableName="crop_units_of_measure"/>
     </changeSet>
-    <changeSet author="Job (generated)" id="1363131074823-25">
+    <changeSet author="Job (generated)" id="1365451053727-27">
         <dropIndex indexName="FK383D52B880255C5" tableName="documents"/>
     </changeSet>
-    <changeSet author="Job (generated)" id="1363131074823-26">
+    <changeSet author="Job (generated)" id="1365451053727-28">
         <dropIndex indexName="FK383D52B8C61271BA" tableName="documents"/>
     </changeSet>
-    <changeSet author="Job (generated)" id="1363131074823-27">
+    <changeSet author="Job (generated)" id="1365451053727-29">
         <dropIndex indexName="FK383D52B8D0B0822F" tableName="documents"/>
     </changeSet>
-    <changeSet author="Job (generated)" id="1363131074823-28">
+    <changeSet author="Job (generated)" id="1365451053727-30">
         <dropIndex indexName="FK3C84CDF86B3B4639" tableName="financial_service_doc"/>
     </changeSet>
-    <changeSet author="Job (generated)" id="1363131074823-29">
+    <changeSet author="Job (generated)" id="1365451053727-31">
         <dropIndex indexName="FK9F9E99331AC06994" tableName="land_use"/>
     </changeSet>
-    <changeSet author="Job (generated)" id="1363131074823-30">
+    <changeSet author="Job (generated)" id="1365451053727-32">
         <dropIndex indexName="FK9F9E9933B248849B" tableName="land_use"/>
     </changeSet>
-    <changeSet author="Job (generated)" id="1363131074823-31">
+    <changeSet author="Job (generated)" id="1365451053727-33">
         <dropIndex indexName="FK38EB0007746ED727" tableName="message"/>
     </changeSet>
-    <changeSet author="Job (generated)" id="1363131074823-32">
+    <changeSet author="Job (generated)" id="1365451053727-34">
         <dropIndex indexName="FK38EB0007749EE056" tableName="message"/>
     </changeSet>
-    <changeSet author="Job (generated)" id="1363131074823-33">
+    <changeSet author="Job (generated)" id="1365451053727-35">
         <dropIndex indexName="FKC4AB183DEE32605A" tableName="parish"/>
     </changeSet>
-    <changeSet author="Job (generated)" id="1363131074823-34">
+    <changeSet author="Job (generated)" id="1365451053727-36">
         <dropIndex indexName="FK6A50819236176439" tableName="place_selling_types"/>
     </changeSet>
-    <changeSet author="Job (generated)" id="1363131074823-35">
+    <changeSet author="Job (generated)" id="1365451053727-37">
         <dropIndex indexName="uk_place_selling_types" tableName="place_selling_types"/>
     </changeSet>
-    <changeSet author="Job (generated)" id="1363131074823-36">
+    <changeSet author="Job (generated)" id="1365451053727-38">
         <dropIndex indexName="FK3498A076A74627" tableName="post"/>
     </changeSet>
-    <changeSet author="Job (generated)" id="1363131074823-37">
+    <changeSet author="Job (generated)" id="1365451053727-39">
         <dropIndex indexName="FK3498A07AC2BB5F" tableName="post"/>
     </changeSet>
-    <changeSet author="Job (generated)" id="1363131074823-38">
+    <changeSet author="Job (generated)" id="1365451053727-40">
         <dropIndex indexName="FK3498A0B248849B" tableName="post"/>
     </changeSet>
-    <changeSet author="Job (generated)" id="1363131074823-39">
+    <changeSet author="Job (generated)" id="1365451053727-41">
         <dropIndex indexName="FK65FB1491CC91A78" tableName="price"/>
     </changeSet>
-    <changeSet author="Job (generated)" id="1363131074823-40">
+    <changeSet author="Job (generated)" id="1365451053727-42">
         <dropIndex indexName="FK65FB14983E010B0" tableName="price"/>
     </changeSet>
-    <changeSet author="Job (generated)" id="1363131074823-41">
+    <changeSet author="Job (generated)" id="1365451053727-43">
         <dropIndex indexName="FK65FB149B248849B" tableName="price"/>
     </changeSet>
-    <changeSet author="Job (generated)" id="1363131074823-42">
+    <changeSet author="Job (generated)" id="1365451053727-44">
         <dropIndex indexName="FK65FB149D7199ADA" tableName="price"/>
     </changeSet>
-    <changeSet author="Job (generated)" id="1363131074823-43">
+    <changeSet author="Job (generated)" id="1365451053727-45">
         <dropIndex indexName="FK23E294B7A1DA35B" tableName="producer_org"/>
     </changeSet>
-    <changeSet author="Job (generated)" id="1363131074823-44">
+    <changeSet author="Job (generated)" id="1365451053727-46">
         <dropIndex indexName="FK23E294B7EE32605A" tableName="producer_org"/>
     </changeSet>
-    <changeSet author="Job (generated)" id="1363131074823-45">
+    <changeSet author="Job (generated)" id="1365451053727-47">
         <dropIndex indexName="FKC1E628656B3B4639" tableName="publication_documents"/>
     </changeSet>
-    <changeSet author="Job (generated)" id="1363131074823-46">
+    <changeSet author="Job (generated)" id="1365451053727-48">
         <dropIndex indexName="FK37B8A3C748408754" tableName="publications"/>
     </changeSet>
-    <changeSet author="Job (generated)" id="1363131074823-47">
+    <changeSet author="Job (generated)" id="1365451053727-49">
         <dropIndex indexName="FK37B8A3C796BC074C" tableName="publications"/>
     </changeSet>
-    <changeSet author="Job (generated)" id="1363131074823-48">
+    <changeSet author="Job (generated)" id="1365451053727-50">
         <dropIndex indexName="FKEAD9D23BC67EF2DB" tableName="role_permissions"/>
     </changeSet>
-    <changeSet author="Job (generated)" id="1363131074823-49">
+    <changeSet author="Job (generated)" id="1365451053727-51">
         <dropIndex indexName="FK6CF7C0FFC67EF2DB" tableName="role_users"/>
     </changeSet>
-    <changeSet author="Job (generated)" id="1363131074823-50">
+    <changeSet author="Job (generated)" id="1365451053727-52">
         <dropIndex indexName="FK71572F58A1DA35B" tableName="selling_place"/>
     </changeSet>
-    <changeSet author="Job (generated)" id="1363131074823-51">
+    <changeSet author="Job (generated)" id="1365451053727-53">
         <dropIndex indexName="FK5470C8D95BA33ADC" tableName="staff_member"/>
     </changeSet>
-    <changeSet author="Job (generated)" id="1363131074823-52">
+    <changeSet author="Job (generated)" id="1365451053727-54">
         <dropIndex indexName="FK5470C8D96BA9B6BB" tableName="staff_member"/>
     </changeSet>
-    <changeSet author="Job (generated)" id="1363131074823-53">
+    <changeSet author="Job (generated)" id="1365451053727-55">
         <dropIndex indexName="FK5470C8D97EF2A060" tableName="staff_member"/>
     </changeSet>
-    <changeSet author="Job (generated)" id="1363131074823-54">
+    <changeSet author="Job (generated)" id="1365451053727-56">
         <dropIndex indexName="FK952A8829A1DA35B" tableName="sub_county"/>
     </changeSet>
-    <changeSet author="Job (generated)" id="1363131074823-55">
+    <changeSet author="Job (generated)" id="1365451053727-57">
         <dropIndex indexName="FK6A68E087EF2A060" tableName="users"/>
     </changeSet>
-    <changeSet author="Job (generated)" id="1363131074823-56">
+    <changeSet author="Job (generated)" id="1365451053727-58">
         <dropIndex indexName="FK6A68E088CDA553B" tableName="users"/>
     </changeSet>
-    <changeSet author="Job (generated)" id="1363131074823-57">
+    <changeSet author="Job (generated)" id="1365451053727-59">
+        <dropIndex indexName="FK6A68E08A1DA35B" tableName="users"/>
+    </changeSet>
+    <changeSet author="Job (generated)" id="1365451053727-60">
         <dropIndex indexName="FK6A68E08A3C8C159" tableName="users"/>
     </changeSet>
-    <changeSet author="Job (generated)" id="1363131074823-58">
+    <changeSet author="Job (generated)" id="1365451053727-61">
         <dropIndex indexName="FK1B70A4AC8CDA553B" tableName="village"/>
     </changeSet>
-    <changeSet author="Job (generated)" id="1363131074823-59">
+    <changeSet author="Job (generated)" id="1365451053727-62">
         <addForeignKeyConstraint baseColumnNames="post_id" baseTableName="comment" constraintName="FK38A5EE5F5D1B0A9B" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="post"/>
     </changeSet>
-    <changeSet author="Job (generated)" id="1363131074823-60">
+    <changeSet author="Job (generated)" id="1365451053727-63">
         <addForeignKeyConstraint baseColumnNames="user_id" baseTableName="comment" constraintName="FK38A5EE5F6BA9B6BB" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="users"/>
     </changeSet>
-    <changeSet author="Job (generated)" id="1363131074823-61">
+    <changeSet author="Job (generated)" id="1365451053727-64">
         <addForeignKeyConstraint baseColumnNames="producer_organisation_id" baseTableName="committee" constraintName="FKA71EF77D7EF2A060" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="producer_org"/>
     </changeSet>
-    <changeSet author="Job (generated)" id="1363131074823-62">
+    <changeSet author="Job (generated)" id="1365451053727-65">
         <addForeignKeyConstraint baseColumnNames="committee_id" baseTableName="committee_member" constraintName="FK1792999C3406EC59" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="committee"/>
     </changeSet>
-    <changeSet author="Job (generated)" id="1363131074823-63">
+    <changeSet author="Job (generated)" id="1365451053727-66">
         <addForeignKeyConstraint baseColumnNames="postion_id" baseTableName="committee_member" constraintName="FK1792999C5BA33ADC" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="position"/>
     </changeSet>
-    <changeSet author="Job (generated)" id="1363131074823-64">
-        <addForeignKeyConstraint baseColumnNames="producer_id" baseTableName="committee_member" constraintName="FK1792999C1AC06994" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="users"/>
+    <changeSet author="Job (generated)" id="1365451053727-67">
+        <addForeignKeyConstraint baseColumnNames="user_id" baseTableName="committee_member" constraintName="FK1792999C6BA9B6BB" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="users"/>
     </changeSet>
-    <changeSet author="Job (generated)" id="1363131074823-65">
+    <changeSet author="Job (generated)" id="1365451053727-68">
         <addForeignKeyConstraint baseColumnNames="concept_category_id" baseTableName="concept_category_link" constraintName="FKD1B211043100D8AA" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="concept_categories"/>
     </changeSet>
-    <changeSet author="Job (generated)" id="1363131074823-66">
+    <changeSet author="Job (generated)" id="1365451053727-69">
         <addForeignKeyConstraint baseColumnNames="concept_id" baseTableName="concept_category_link" constraintName="FKD1B2110436176439" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="concepts"/>
     </changeSet>
-    <changeSet author="Job (generated)" id="1363131074823-67">
+    <changeSet author="Job (generated)" id="1365451053727-70">
         <addForeignKeyConstraint baseColumnNames="concept_id" baseTableName="crop_inputs" constraintName="FK7434E27836176439" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="concepts"/>
     </changeSet>
-    <changeSet author="Job (generated)" id="1363131074823-68">
+    <changeSet author="Job (generated)" id="1365451053727-71">
         <addForeignKeyConstraint baseColumnNames="crop_id" baseTableName="crop_inputs" constraintName="FK7434E278B248849B" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="crop"/>
     </changeSet>
-    <changeSet author="Job (generated)" id="1363131074823-69">
+    <changeSet author="Job (generated)" id="1365451053727-72">
         <addForeignKeyConstraint baseColumnNames="concept_id" baseTableName="crop_inter_cropping_types" constraintName="FK68BD760E36176439" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="concepts"/>
     </changeSet>
-    <changeSet author="Job (generated)" id="1363131074823-70">
+    <changeSet author="Job (generated)" id="1365451053727-73">
         <addForeignKeyConstraint baseColumnNames="crop_id" baseTableName="crop_inter_cropping_types" constraintName="FK68BD760EB248849B" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="crop"/>
     </changeSet>
-    <changeSet author="Job (generated)" id="1363131074823-71">
+    <changeSet author="Job (generated)" id="1365451053727-74">
         <addForeignKeyConstraint baseColumnNames="concept_id" baseTableName="crop_ploughing_methods" constraintName="FK2F54674336176439" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="concepts"/>
     </changeSet>
-    <changeSet author="Job (generated)" id="1363131074823-72">
+    <changeSet author="Job (generated)" id="1365451053727-75">
         <addForeignKeyConstraint baseColumnNames="crop_id" baseTableName="crop_ploughing_methods" constraintName="FK2F546743B248849B" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="crop"/>
     </changeSet>
-    <changeSet author="Job (generated)" id="1363131074823-73">
+    <changeSet author="Job (generated)" id="1365451053727-76">
         <addForeignKeyConstraint baseColumnNames="concept_id" baseTableName="crop_seed_varieties" constraintName="FK7915702736176439" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="concepts"/>
     </changeSet>
-    <changeSet author="Job (generated)" id="1363131074823-74">
+    <changeSet author="Job (generated)" id="1365451053727-77">
         <addForeignKeyConstraint baseColumnNames="crop_id" baseTableName="crop_seed_varieties" constraintName="FK79157027B248849B" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="crop"/>
     </changeSet>
-    <changeSet author="Job (generated)" id="1363131074823-75">
+    <changeSet author="Job (generated)" id="1365451053727-78">
         <addForeignKeyConstraint baseColumnNames="concept_id" baseTableName="crop_units_of_measure" constraintName="FK582FF9536176439" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="concepts"/>
     </changeSet>
-    <changeSet author="Job (generated)" id="1363131074823-76">
+    <changeSet author="Job (generated)" id="1365451053727-79">
         <addForeignKeyConstraint baseColumnNames="crop_id" baseTableName="crop_units_of_measure" constraintName="FK582FF95B248849B" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="crop"/>
     </changeSet>
-    <changeSet author="Job (generated)" id="1363131074823-77">
+    <changeSet author="Job (generated)" id="1365451053727-80">
         <addForeignKeyConstraint baseColumnNames="created_by" baseTableName="documents" constraintName="FK383D52B8C61271BA" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="users"/>
     </changeSet>
-    <changeSet author="Job (generated)" id="1363131074823-78">
+    <changeSet author="Job (generated)" id="1365451053727-81">
         <addForeignKeyConstraint baseColumnNames="document_type" baseTableName="documents" constraintName="FK383D52B880255C5" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="concepts"/>
     </changeSet>
-    <changeSet author="Job (generated)" id="1363131074823-79">
+    <changeSet author="Job (generated)" id="1365451053727-82">
         <addForeignKeyConstraint baseColumnNames="user_document_owner" baseTableName="documents" constraintName="FK383D52B8D0B0822F" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="users"/>
     </changeSet>
-    <changeSet author="Job (generated)" id="1363131074823-80">
+    <changeSet author="Job (generated)" id="1365451053727-83">
         <addForeignKeyConstraint baseColumnNames="financial_institutution_id" baseTableName="financial_service_doc" constraintName="FK3C84CDF857444DA7" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="financial_institution"/>
     </changeSet>
-    <changeSet author="Job (generated)" id="1363131074823-81">
+    <changeSet author="Job (generated)" id="1365451053727-84">
         <addForeignKeyConstraint baseColumnNames="publication_id" baseTableName="financial_service_doc" constraintName="FK3C84CDF86B3B4639" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="publications"/>
     </changeSet>
-    <changeSet author="Job (generated)" id="1363131074823-82">
+    <changeSet author="Job (generated)" id="1365451053727-85">
         <addForeignKeyConstraint baseColumnNames="crop_id" baseTableName="land_use" constraintName="FK9F9E9933B248849B" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="crop"/>
     </changeSet>
-    <changeSet author="Job (generated)" id="1363131074823-83">
+    <changeSet author="Job (generated)" id="1365451053727-86">
         <addForeignKeyConstraint baseColumnNames="producer_id" baseTableName="land_use" constraintName="FK9F9E99331AC06994" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="users"/>
     </changeSet>
-    <changeSet author="Job (generated)" id="1363131074823-84">
+    <changeSet author="Job (generated)" id="1365451053727-87">
         <addForeignKeyConstraint baseColumnNames="from" baseTableName="message" constraintName="FK38EB0007749EE056" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="users"/>
     </changeSet>
-    <changeSet author="Job (generated)" id="1363131074823-85">
+    <changeSet author="Job (generated)" id="1365451053727-88">
         <addForeignKeyConstraint baseColumnNames="to" baseTableName="message" constraintName="FK38EB0007746ED727" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="users"/>
     </changeSet>
-    <changeSet author="Job (generated)" id="1363131074823-86">
+    <changeSet author="Job (generated)" id="1365451053727-89">
         <addForeignKeyConstraint baseColumnNames="sub_county_id" baseTableName="parish" constraintName="FKC4AB183DEE32605A" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="sub_county"/>
     </changeSet>
-    <changeSet author="Job (generated)" id="1363131074823-87">
+    <changeSet author="Job (generated)" id="1365451053727-90">
         <addForeignKeyConstraint baseColumnNames="concept_id" baseTableName="place_selling_types" constraintName="FK6A50819236176439" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="concepts"/>
     </changeSet>
-    <changeSet author="Job (generated)" id="1363131074823-88">
+    <changeSet author="Job (generated)" id="1365451053727-91">
         <addForeignKeyConstraint baseColumnNames="selling_place_id" baseTableName="place_selling_types" constraintName="FK6A508192D7199ADA" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="selling_place"/>
     </changeSet>
-    <changeSet author="Job (generated)" id="1363131074823-89">
+    <changeSet author="Job (generated)" id="1365451053727-92">
         <addForeignKeyConstraint baseColumnNames="crop_id" baseTableName="post" constraintName="FK3498A0B248849B" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="crop"/>
     </changeSet>
-    <changeSet author="Job (generated)" id="1363131074823-90">
+    <changeSet author="Job (generated)" id="1365451053727-93">
         <addForeignKeyConstraint baseColumnNames="owner" baseTableName="post" constraintName="FK3498A07AC2BB5F" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="users"/>
     </changeSet>
-    <changeSet author="Job (generated)" id="1363131074823-91">
+    <changeSet author="Job (generated)" id="1365451053727-94">
         <addForeignKeyConstraint baseColumnNames="type_id" baseTableName="post" constraintName="FK3498A076A74627" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="concepts"/>
     </changeSet>
-    <changeSet author="Job (generated)" id="1363131074823-92">
+    <changeSet author="Job (generated)" id="1365451053727-95">
         <addForeignKeyConstraint baseColumnNames="crop_id" baseTableName="price" constraintName="FK65FB149B248849B" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="crop"/>
     </changeSet>
-    <changeSet author="Job (generated)" id="1363131074823-93">
+    <changeSet author="Job (generated)" id="1365451053727-96">
         <addForeignKeyConstraint baseColumnNames="selling_place_id" baseTableName="price" constraintName="FK65FB149D7199ADA" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="selling_place"/>
     </changeSet>
-    <changeSet author="Job (generated)" id="1363131074823-94">
+    <changeSet author="Job (generated)" id="1365451053727-97">
         <addForeignKeyConstraint baseColumnNames="selling_type" baseTableName="price" constraintName="FK65FB14983E010B0" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="concepts"/>
     </changeSet>
-    <changeSet author="Job (generated)" id="1363131074823-95">
+    <changeSet author="Job (generated)" id="1365451053727-98">
         <addForeignKeyConstraint baseColumnNames="unit_of_measure" baseTableName="price" constraintName="FK65FB1491CC91A78" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="concepts"/>
     </changeSet>
-    <changeSet author="Job (generated)" id="1363131074823-96">
+    <changeSet author="Job (generated)" id="1365451053727-99">
         <addForeignKeyConstraint baseColumnNames="district_id" baseTableName="producer_org" constraintName="FK23E294B7A1DA35B" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="district"/>
     </changeSet>
-    <changeSet author="Job (generated)" id="1363131074823-97">
+    <changeSet author="Job (generated)" id="1365451053727-100">
         <addForeignKeyConstraint baseColumnNames="sub_county_id" baseTableName="producer_org" constraintName="FK23E294B7EE32605A" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="sub_county"/>
     </changeSet>
-    <changeSet author="Job (generated)" id="1363131074823-98">
+    <changeSet author="Job (generated)" id="1365451053727-101">
         <addForeignKeyConstraint baseColumnNames="document_id" baseTableName="publication_documents" constraintName="FKC1E62865FADC9C3B" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="documents"/>
     </changeSet>
-    <changeSet author="Job (generated)" id="1363131074823-99">
+    <changeSet author="Job (generated)" id="1365451053727-102">
         <addForeignKeyConstraint baseColumnNames="publication_id" baseTableName="publication_documents" constraintName="FKC1E628656B3B4639" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="publications"/>
     </changeSet>
-    <changeSet author="Job (generated)" id="1363131074823-100">
+    <changeSet author="Job (generated)" id="1365451053727-103">
         <addForeignKeyConstraint baseColumnNames="publication_status" baseTableName="publications" constraintName="FK37B8A3C796BC074C" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="concepts"/>
     </changeSet>
-    <changeSet author="Job (generated)" id="1363131074823-101">
+    <changeSet author="Job (generated)" id="1365451053727-104">
         <addForeignKeyConstraint baseColumnNames="publication_type" baseTableName="publications" constraintName="FK37B8A3C748408754" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="concepts"/>
     </changeSet>
-    <changeSet author="Job (generated)" id="1363131074823-102">
+    <changeSet author="Job (generated)" id="1365451053727-105">
         <addForeignKeyConstraint baseColumnNames="permission_id" baseTableName="role_permissions" constraintName="FKEAD9D23B140A5B7B" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="permissions"/>
     </changeSet>
-    <changeSet author="Job (generated)" id="1363131074823-103">
+    <changeSet author="Job (generated)" id="1365451053727-106">
         <addForeignKeyConstraint baseColumnNames="role_id" baseTableName="role_permissions" constraintName="FKEAD9D23BC67EF2DB" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="roles"/>
     </changeSet>
-    <changeSet author="Job (generated)" id="1363131074823-104">
+    <changeSet author="Job (generated)" id="1365451053727-107">
         <addForeignKeyConstraint baseColumnNames="role_id" baseTableName="role_users" constraintName="FK6CF7C0FFC67EF2DB" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="roles"/>
     </changeSet>
-    <changeSet author="Job (generated)" id="1363131074823-105">
+    <changeSet author="Job (generated)" id="1365451053727-108">
         <addForeignKeyConstraint baseColumnNames="user_id" baseTableName="role_users" constraintName="FK6CF7C0FF6BA9B6BB" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="users"/>
     </changeSet>
-    <changeSet author="Job (generated)" id="1363131074823-106">
+    <changeSet author="Job (generated)" id="1365451053727-109">
         <addForeignKeyConstraint baseColumnNames="district_id" baseTableName="selling_place" constraintName="FK71572F58A1DA35B" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="district"/>
     </changeSet>
-    <changeSet author="Job (generated)" id="1363131074823-107">
+    <changeSet author="Job (generated)" id="1365451053727-110">
         <addForeignKeyConstraint baseColumnNames="postion_id" baseTableName="staff_member" constraintName="FK5470C8D95BA33ADC" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="position"/>
     </changeSet>
-    <changeSet author="Job (generated)" id="1363131074823-108">
+    <changeSet author="Job (generated)" id="1365451053727-111">
         <addForeignKeyConstraint baseColumnNames="producer_organisation_id" baseTableName="staff_member" constraintName="FK5470C8D97EF2A060" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="producer_org"/>
     </changeSet>
-    <changeSet author="Job (generated)" id="1363131074823-109">
+    <changeSet author="Job (generated)" id="1365451053727-112">
         <addForeignKeyConstraint baseColumnNames="user_id" baseTableName="staff_member" constraintName="FK5470C8D96BA9B6BB" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="users"/>
     </changeSet>
-    <changeSet author="Job (generated)" id="1363131074823-110">
+    <changeSet author="Job (generated)" id="1365451053727-113">
         <addForeignKeyConstraint baseColumnNames="district_id" baseTableName="sub_county" constraintName="FK952A8829A1DA35B" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="district"/>
     </changeSet>
-    <changeSet author="Job (generated)" id="1363131074823-111">
+    <changeSet author="Job (generated)" id="1365451053727-114">
         <addForeignKeyConstraint baseColumnNames="district_id" baseTableName="users" constraintName="FK6A68E08A1DA35B" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="district"/>
     </changeSet>
-    <changeSet author="Job (generated)" id="1363131074823-112">
+    <changeSet author="Job (generated)" id="1365451053727-115">
         <addForeignKeyConstraint baseColumnNames="gis_cordinates_id" baseTableName="users" constraintName="FK6A68E082AC304E7" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="gis_cordinate"/>
     </changeSet>
-    <changeSet author="Job (generated)" id="1363131074823-113">
+    <changeSet author="Job (generated)" id="1365451053727-116">
         <addForeignKeyConstraint baseColumnNames="parish_id" baseTableName="users" constraintName="FK6A68E088CDA553B" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="parish"/>
     </changeSet>
-    <changeSet author="Job (generated)" id="1363131074823-114">
+    <changeSet author="Job (generated)" id="1365451053727-117">
         <addForeignKeyConstraint baseColumnNames="producer_organisation_id" baseTableName="users" constraintName="FK6A68E087EF2A060" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="producer_org"/>
     </changeSet>
-    <changeSet author="Job (generated)" id="1363131074823-115">
+    <changeSet author="Job (generated)" id="1365451053727-118">
         <addForeignKeyConstraint baseColumnNames="subcounty_id" baseTableName="users" constraintName="FK6A68E08A3C8C159" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="sub_county"/>
     </changeSet>
-    <changeSet author="Job (generated)" id="1363131074823-116">
+    <changeSet author="Job (generated)" id="1365451053727-119">
         <addForeignKeyConstraint baseColumnNames="village_id" baseTableName="users" constraintName="FK6A68E08C5AE0DB9" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="village"/>
     </changeSet>
-    <changeSet author="Job (generated)" id="1363131074823-117">
+    <changeSet author="Job (generated)" id="1365451053727-120">
         <addForeignKeyConstraint baseColumnNames="parish_id" baseTableName="village" constraintName="FK1B70A4AC8CDA553B" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="parish"/>
     </changeSet>
-    <changeSet author="Job (generated)" id="1363131074823-118">
+    <changeSet author="Job (generated)" id="1365451053727-121">
         <dropForeignKeyConstraint baseTableName="comment" constraintName="FK38A5EE5F5D1B0A9B"/>
     </changeSet>
-    <changeSet author="Job (generated)" id="1363131074823-119">
+    <changeSet author="Job (generated)" id="1365451053727-122">
         <dropForeignKeyConstraint baseTableName="committee_member" constraintName="FK1792999C3406EC59"/>
     </changeSet>
-    <changeSet author="Job (generated)" id="1363131074823-120">
+    <changeSet author="Job (generated)" id="1365451053727-123">
         <dropForeignKeyConstraint baseTableName="concept_category_link" constraintName="FKD1B211043100D8AA"/>
     </changeSet>
-    <changeSet author="Job (generated)" id="1363131074823-121">
+    <changeSet author="Job (generated)" id="1365451053727-124">
         <dropForeignKeyConstraint baseTableName="financial_service_doc" constraintName="FK3C84CDF857444DA7"/>
     </changeSet>
-    <changeSet author="Job (generated)" id="1363131074823-122">
+    <changeSet author="Job (generated)" id="1365451053727-125">
         <dropForeignKeyConstraint baseTableName="price" constraintName="FK65FB149B248849B"/>
     </changeSet>
-    <changeSet author="Job (generated)" id="1363131074823-123">
+    <changeSet author="Job (generated)" id="1365451053727-126">
         <dropForeignKeyConstraint baseTableName="price" constraintName="FK65FB149D7199ADA"/>
     </changeSet>
-    <changeSet author="Job (generated)" id="1363131074823-124">
+    <changeSet author="Job (generated)" id="1365451053727-127">
         <dropForeignKeyConstraint baseTableName="publication_documents" constraintName="FKC1E62865FADC9C3B"/>
     </changeSet>
-    <changeSet author="Job (generated)" id="1363131074823-125">
+    <changeSet author="Job (generated)" id="1365451053727-128">
         <dropForeignKeyConstraint baseTableName="publication_documents" constraintName="FKC1E628656B3B4639"/>
     </changeSet>
-    <changeSet author="Job (generated)" id="1363131074823-126">
+    <changeSet author="Job (generated)" id="1365451053727-129">
         <dropForeignKeyConstraint baseTableName="publications" constraintName="FK37B8A3C796BC074C"/>
     </changeSet>
-    <changeSet author="Job (generated)" id="1363131074823-127">
+    <changeSet author="Job (generated)" id="1365451053727-130">
         <dropForeignKeyConstraint baseTableName="role_permissions" constraintName="FKEAD9D23B140A5B7B"/>
     </changeSet>
-    <changeSet author="Job (generated)" id="1363131074823-128">
+    <changeSet author="Job (generated)" id="1365451053727-131">
         <dropForeignKeyConstraint baseTableName="role_users" constraintName="FK6CF7C0FFC67EF2DB"/>
     </changeSet>
-    <changeSet author="Job (generated)" id="1363131074823-129">
+    <changeSet author="Job (generated)" id="1365451053727-132">
         <dropForeignKeyConstraint baseTableName="staff_member" constraintName="FK5470C8D95BA33ADC"/>
     </changeSet>
-    <changeSet author="Job (generated)" id="1363131074823-130">
+    <changeSet author="Job (generated)" id="1365451053727-133">
         <dropForeignKeyConstraint baseTableName="staff_member" constraintName="FK5470C8D96BA9B6BB"/>
     </changeSet>
-    <changeSet author="Job (generated)" id="1363131074823-131">
-        <dropForeignKeyConstraint baseTableName="sub_county" constraintName="FK952A8829A1DA35B"/>
+    <changeSet author="Job (generated)" id="1365451053727-134">
+        <dropForeignKeyConstraint baseTableName="users" constraintName="FK6A68E08A1DA35B"/>
     </changeSet>
-    <changeSet author="Job (generated)" id="1363131074823-132">
+    <changeSet author="Job (generated)" id="1365451053727-135">
         <dropForeignKeyConstraint baseTableName="users" constraintName="FK6A68E082AC304E7"/>
     </changeSet>
-    <changeSet author="Job (generated)" id="1363131074823-133">
+    <changeSet author="Job (generated)" id="1365451053727-136">
         <dropForeignKeyConstraint baseTableName="users" constraintName="FK6A68E087EF2A060"/>
     </changeSet>
-    <changeSet author="Job (generated)" id="1363131074823-134">
+    <changeSet author="Job (generated)" id="1365451053727-137">
         <dropForeignKeyConstraint baseTableName="users" constraintName="FK6A68E08A3C8C159"/>
     </changeSet>
-    <changeSet author="Job (generated)" id="1363131074823-135">
+    <changeSet author="Job (generated)" id="1365451053727-138">
         <dropForeignKeyConstraint baseTableName="users" constraintName="FK6A68E08C5AE0DB9"/>
     </changeSet>
-    <changeSet author="Job (generated)" id="1363131074823-136">
+    <changeSet author="Job (generated)" id="1365451053727-139">
         <dropForeignKeyConstraint baseTableName="village" constraintName="FK1B70A4AC8CDA553B"/>
     </changeSet>
+   
 </databaseChangeLog>

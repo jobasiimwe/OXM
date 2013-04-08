@@ -1,5 +1,8 @@
 package org.agric.oxm.model;
 
+import java.util.Date;
+
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -12,9 +15,13 @@ public class CommitteeMember extends BaseData implements
 
 	private Committee committee;
 
-	private User positionHolder;
+	private User user;
 
 	private Position position;
+
+	private Date fromDate;
+
+	private Date toDate;
 
 	public CommitteeMember() {
 		super();
@@ -41,13 +48,13 @@ public class CommitteeMember extends BaseData implements
 	}
 
 	@ManyToOne
-	@JoinColumn(name = "producer_id", nullable = false)
-	public User getPositionHolder() {
-		return positionHolder;
+	@JoinColumn(name = "user_id", nullable = false)
+	public User getUser() {
+		return user;
 	}
 
-	public void setPositionHolder(User positionHolder) {
-		this.positionHolder = positionHolder;
+	public void setUser(User user) {
+		this.user = user;
 	}
 
 	@ManyToOne
@@ -58,6 +65,24 @@ public class CommitteeMember extends BaseData implements
 
 	public void setPosition(Position position) {
 		this.position = position;
+	}
+
+	@Column(name = "from_date", nullable = true)
+	public Date getFromDate() {
+		return fromDate;
+	}
+
+	public void setFromDate(Date fromDate) {
+		this.fromDate = fromDate;
+	}
+
+	@Column(name = "to_date", nullable = true)
+	public Date getToDate() {
+		return toDate;
+	}
+
+	public void setToDate(Date toDate) {
+		this.toDate = toDate;
 	}
 
 	@Override

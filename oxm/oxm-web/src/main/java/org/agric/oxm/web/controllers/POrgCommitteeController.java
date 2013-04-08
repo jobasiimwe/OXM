@@ -231,7 +231,7 @@ public class POrgCommitteeController {
 		modelMap.put(WebConstants.CONTENT_HEADER, committeeMember
 				.getCommittee().getName()
 				+ " - Edit Member"
-				+ committeeMember.getPositionHolder().getName());
+				+ committeeMember.getUser().getName());
 
 		modelMap.put("positions", positionService.getPositions());
 
@@ -278,8 +278,10 @@ public class POrgCommitteeController {
 						.getCommitteeMemberById(committeeMember.getId());
 				existingCommitteeMember.setPosition(committeeMember
 						.getPosition());
-				existingCommitteeMember.setPositionHolder(committeeMember
-						.getPositionHolder());
+				existingCommitteeMember.setUser(committeeMember
+						.getUser());
+				existingCommitteeMember.setToDate(committeeMember.getToDate());
+				existingCommitteeMember.setToDate(committeeMember.getToDate());
 
 				committee.removemMember(existingCommitteeMember);
 				committee.addMember(existingCommitteeMember);

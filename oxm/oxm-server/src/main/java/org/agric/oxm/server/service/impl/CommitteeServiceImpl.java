@@ -108,7 +108,17 @@ public class CommitteeServiceImpl implements CommitteeService {
 		if (committeeMember.getPosition() == null)
 			throw new ValidationException("Position can not be null");
 
-		if (committeeMember.getPositionHolder() == null)
+		if (committeeMember.getUser() == null)
 			throw new ValidationException("Position-Holder can not be null");
+
+		if (committeeMember.getFromDate() == null)
+			throw new ValidationException("From (Date) can not be null");
+
+		if (committeeMember.getToDate() != null)
+			if (committeeMember.getToDate().before(
+					committeeMember.getFromDate()))
+				throw new ValidationException(
+						"To (Date) can not be BEFORE From (Date)");
+
 	}
 }

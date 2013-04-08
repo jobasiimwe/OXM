@@ -864,5 +864,45 @@
     <changeSet author="Job (generated)" id="1363131074823-111">
         <addForeignKeyConstraint baseColumnNames="district_id" baseTableName="users" constraintName="FK6A68E08A1DA35B" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="district"/>
     </changeSet>
+   
+    <changeSet author="Job (generated)" id="1365451053727-1">
+        <addColumn tableName="committee_member">
+            <column name="from_date" type="datetime"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="Job (generated)" id="1365451053727-2">
+        <addColumn tableName="committee_member">
+            <column name="to_date" type="datetime"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="Job (generated)" id="1365451053727-14">
+        <dropForeignKeyConstraint baseTableName="committee_member" constraintName="FK1792999C1AC06994" />
+    </changeSet>
+    <changeSet author="Job (generated)" id="1365451053727-3">
+        <renameColumn tableName="committee_member" oldColumnName="producer_id" newColumnName="user_id" columnDataType="varchar(255)"/>
+    </changeSet>
+   
+    <changeSet author="Job (generated)" id="1365451053727-67">
+        <addForeignKeyConstraint baseColumnNames="user_id" baseTableName="committee_member" constraintName="FK1792999C6BA9B6BB" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="users"/>
+    </changeSet>
+    <!--  <changeSet author="Job (Manual)" id="1365451053727-3">
+    	<createIndex tableName="committee_member" indexName="" unique="true"></createIndex>
+    </changeSet>
     
+    <changeSet author="Job (generated)" id="1365451053727-14">
+        <dropIndex indexName="FK1792999C1AC06994" tableName="committee_member"/>
+    </changeSet> 
+     <changeSet author="Job (generated)" id="1365451053727-140">
+        <dropColumn columnName="producer_id" tableName="committee_member"/>
+    </changeSet>
+    <changeSet author="Job (generated)" id="1365451053727-3">
+        <addColumn tableName="committee_member">
+            <column name="user_id" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+    </changeSet>
+    <changeSet author="Job (generated)" id="1365451053727-67">
+        <addForeignKeyConstraint baseColumnNames="user_id" baseTableName="committee_member" constraintName="FK1792999C6BA9B6BB" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="users"/>
+    </changeSet>-->
 </databaseChangeLog>

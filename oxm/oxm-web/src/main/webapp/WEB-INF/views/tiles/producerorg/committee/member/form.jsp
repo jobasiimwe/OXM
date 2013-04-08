@@ -60,18 +60,24 @@ form#concept input[type="text"] {
 								cssStyle="width: 400px;">
 							</form:select>
 						</td>
-						<td><label>From date <span class="required">*</span>
+					</tr>
+					<tr>
+						<td><label>From(Date)<span class="required">*</span>
 						</label></td>
-						<td>--</td>
-						<td><label>To Date <span class="required">*</span> </label></td>
-						<td>--</td>
+						<td><form:input path="fromDate" cssStyle="width: 100px;"
+								cssClass="uiTextbox uiDateTextbox" /></td>
+						<td><label>To (Date) <span class="required">*</span>
+						</label></td>
+						<td><form:input path="toDate" cssStyle="width: 100px;"
+								cssClass="uiTextbox uiDateTextbox" />
+						</td>
 					</tr>
 					<tr>
 						<td><label>Position Holder<span class="required">*</span>
 						</label></td>
-						<td><form:hidden id="txtPositionHolder" path="positionHolder" />
-							<c:if test="${not empty committeeMember.positionHolder }">
-								${committeeMember.positionHolder.name }
+						<td><form:hidden id="txtPositionHolder" path="user" />
+							<c:if test="${not empty committeeMember.user }">
+								${committeeMember.user.name }
 							</c:if></td>
 					</tr>
 				</table>

@@ -58,9 +58,9 @@
 							</td>
 							<td>${status.count }</td>
 							<td>${member.position.name }</td>
-							<td>${member.positionHolder.name }</td>
-							<td>${member.positionHolder.rolesString }</td>
-							<td>${member.positionHolder.address }</td>
+							<td>${member.user.name }</td>
+							<td>${member.user.rolesString }</td>
+							<td>${member.user.address }</td>
 						</tr>
 					</c:forEach>
 				</c:when>
