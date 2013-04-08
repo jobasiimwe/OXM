@@ -17,6 +17,7 @@ public class UserSearchParameters {
 	private Gender gender = null;
 	private Role role = null;
 
+	private String staffMemberId;
 	private String committeeId;
 	private String committeeMemberId;
 
@@ -72,6 +73,14 @@ public class UserSearchParameters {
 
 	public Role getRole() {
 		return role;
+	}
+
+	public String getStaffMemberId() {
+		return staffMemberId;
+	}
+
+	public void setStaffMemberId(String staffMemberId) {
+		this.staffMemberId = staffMemberId;
 	}
 
 	public String getCommitteeId() {

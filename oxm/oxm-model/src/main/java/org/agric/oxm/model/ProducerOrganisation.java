@@ -124,6 +124,16 @@ public class ProducerOrganisation extends BaseData implements
 		this.getStaffMembers().remove(staffMember);
 	}
 
+	public void removeStaffMembersByIds(String[] idzToDelete) {
+		for (String id : idzToDelete) {
+			StaffMember member = new StaffMember(id);
+
+			if (this.getStaffMembers().contains(member)) {
+				getStaffMembers().remove(member);
+			}
+		}
+	}
+
 	@OneToMany(mappedBy = "producerOrg", cascade = { CascadeType.ALL }, orphanRemoval = false)
 	public List<Committee> getCommittees() {
 		return committees;

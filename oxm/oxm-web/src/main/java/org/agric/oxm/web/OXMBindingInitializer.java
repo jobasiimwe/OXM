@@ -17,6 +17,7 @@ import org.agric.oxm.model.ProducerOrganisation;
 import org.agric.oxm.model.Publication;
 import org.agric.oxm.model.Role;
 import org.agric.oxm.model.SellingPlace;
+import org.agric.oxm.model.StaffMember;
 import org.agric.oxm.model.SubCounty;
 import org.agric.oxm.model.User;
 import org.agric.oxm.model.Village;
@@ -35,6 +36,7 @@ import org.agric.oxm.web.propertyeditors.ProducerOrgPropertyEditor;
 import org.agric.oxm.web.propertyeditors.PublicationPropertyEditor;
 import org.agric.oxm.web.propertyeditors.RolePropertyEditor;
 import org.agric.oxm.web.propertyeditors.SellingPlacePropertyEditor;
+import org.agric.oxm.web.propertyeditors.StaffMemberpropertyEditor;
 import org.agric.oxm.web.propertyeditors.SubCountyPropertyEditor;
 import org.agric.oxm.web.propertyeditors.UserPropertyEditor;
 import org.agric.oxm.web.propertyeditors.VillagePropertyEditor;
@@ -94,6 +96,9 @@ public class OXMBindingInitializer implements WebBindingInitializer {
 	@Autowired
 	private CommitteeMemberPropertyEditor committeeMemberPropertyEditor;
 
+	@Autowired
+	private StaffMemberpropertyEditor staffMemberPropertyEditor;
+
 	@Override
 	public void initBinder(WebDataBinder binder, WebRequest request) {
 		binder.registerCustomEditor(District.class, districtPropertyEditor);
@@ -120,5 +125,7 @@ public class OXMBindingInitializer implements WebBindingInitializer {
 		binder.registerCustomEditor(Committee.class, committeePropertyEditor);
 		binder.registerCustomEditor(CommitteeMember.class,
 				committeeMemberPropertyEditor);
+		binder.registerCustomEditor(StaffMember.class,
+				staffMemberPropertyEditor);
 	}
 }

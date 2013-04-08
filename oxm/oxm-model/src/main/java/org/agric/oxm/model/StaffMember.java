@@ -26,6 +26,14 @@ public class StaffMember extends BaseData implements Comparable<StaffMember> {
 
 	}
 
+	public StaffMember(String id) {
+		this.setId(id);
+	}
+
+	public StaffMember(ProducerOrganisation pOrg) {
+		this.setProducerOrg(pOrg);
+	}
+
 	@ManyToOne
 	@JoinColumn(name = "producer_organisation_id", nullable = false)
 	public ProducerOrganisation getProducerOrg() {
