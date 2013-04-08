@@ -54,13 +54,13 @@
 						varStatus="status">
 						<tr id="${member.id }">
 							<td><oxmTags:rowcheckbox
-									nameOfItemOnPage="${nameOfItemOnPage}" id="${committee.id }" />
+									nameOfItemOnPage="${nameOfItemOnPage}" id="${member.id }" />
 							</td>
 							<td>${status.count }</td>
 							<td>${member.position.name }</td>
-							<td>${member.name }</td>
-							<td>${member.rolesString }</td>
-							<td>${member.address }</td>
+							<td>${member.positionHolder.name }</td>
+							<td>${member.positionHolder.rolesString }</td>
+							<td>${member.positionHolder.address }</td>
 						</tr>
 					</c:forEach>
 				</c:when>

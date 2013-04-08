@@ -98,6 +98,32 @@ function singleItemAction(btnId, itemName) {
 }
 
 /**
+ * this method handles link/button clicks that require only one item in the
+ * record table to be selected
+ * 
+ * @param id
+ * @returns {Boolean}
+ */
+function getSingleSelectedItem(btnId, itemName) {
+	if (itemName == null || itemName == "")
+		itemName = "item";
+
+	if ($(":checked", "table.recordTable tbody tr").length > 0) {
+		var id = $("input[name=selected" + itemName + "]:checked").map(
+				function() {
+					return this.value;
+				}).get().join(",");
+		if (id.indexOf(",") != -1) {
+			return "multiple";
+		}
+
+		return id;
+		
+	} else return "none";
+
+}
+
+/**
  * this method handles link and button clicks that require a one or more items
  * in the record table to be selected
  * 

@@ -20,6 +20,11 @@ public class CommitteeMember extends BaseData implements
 		super();
 	}
 
+	public CommitteeMember(String id) {
+		super();
+		this.setId(id);
+	}
+
 	public CommitteeMember(Committee committee) {
 		super();
 		this.setCommittee(committee);
@@ -41,8 +46,8 @@ public class CommitteeMember extends BaseData implements
 		return positionHolder;
 	}
 
-	public void setPositionHolder(User holder) {
-		this.positionHolder = holder;
+	public void setPositionHolder(User positionHolder) {
+		this.positionHolder = positionHolder;
 	}
 
 	@ManyToOne

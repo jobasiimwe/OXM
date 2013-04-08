@@ -34,23 +34,10 @@ form#concept input[type="text"] {
 
 <div>
 	<div class="searchform group">
-
-		<c:choose>
-			<c:when test="${not empty committeeMember.id }">
-				<form:form
-					action="${baseUrl}/porg-committee/member/search/${committeeMember.id}"
-					commandName="usersearch">
-					<jsp:include page="/WEB-INF/views/tiles/users/searchfields.jsp"></jsp:include>
-				</form:form>
-			</c:when>
-			<c:otherwise>
-				<form:form action="${baseUrl}/porg-committee/member/search"
-					commandName="usersearch">
-					<jsp:include page="/WEB-INF/views/tiles/users/searchfields.jsp"></jsp:include>
-				</form:form>
-			</c:otherwise>
-		</c:choose>
-
+		<form:form action="${baseUrl}/porg-committee/member/search"
+			commandName="usersearch">
+			<jsp:include page="/WEB-INF/views/tiles/users/searchfields.jsp"></jsp:include>
+		</form:form>
 	</div>
 	<div style="clear: both"></div>
 </div>
@@ -83,13 +70,9 @@ form#concept input[type="text"] {
 						<td><label>Position Holder<span class="required">*</span>
 						</label></td>
 						<td><form:hidden id="txtPositionHolder" path="positionHolder" />
-							<label id="lblPositionHolder"></label>
-						</td>
-						<td><label>From date <span class="required">*</span>
-						</label></td>
-						<td>--</td>
-						<td><label>To Date <span class="required">*</span> </label></td>
-						<td>--</td>
+							<c:if test="${not empty committeeMember.positionHolder }">
+								${committeeMember.positionHolder.name }
+							</c:if></td>
 					</tr>
 				</table>
 			</div>

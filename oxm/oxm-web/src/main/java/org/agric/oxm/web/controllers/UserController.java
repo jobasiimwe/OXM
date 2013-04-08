@@ -56,9 +56,11 @@ public class UserController {
 	 * Search parameter field names
 	 */
 	public static final String NAME_OR_USERNAME = "name-or-username";
-	public static final String PRODUCER_ORG = "producerorg";
+	public static final String PRODUCER_ORG = "porg";
 	public static final String ROLE = "role";
 	public static final String GENDER = "gender";
+	public static final String COMMITTEE = "committee";
+	public static final String COMMITTEE_MEMBER = "committeemember";
 
 	private static final String COMMAND_NAME = "usersearch";
 
@@ -83,6 +85,16 @@ public class UserController {
 		if (null != params.getGender())
 			searchCommand.getPropertiesMap().put(GENDER,
 					new GenericCommandValue(params.getGender().getName()));
+
+		if (StringUtils.isNotBlank(params.getCommitteeMemberId())) {
+			searchCommand.getPropertiesMap().put(COMMITTEE_MEMBER,
+					new GenericCommandValue(params.getCommitteeMemberId()));
+		}
+
+		if (StringUtils.isNotBlank(params.getCommitteeId())) {
+			searchCommand.getPropertiesMap().put(COMMITTEE,
+					new GenericCommandValue(params.getCommitteeId()));
+		}
 
 		modelMap.put(COMMAND_NAME, searchCommand);
 
@@ -110,19 +122,19 @@ public class UserController {
 	public ModelAndView searchHandler(
 			@ModelAttribute(COMMAND_NAME) GenericCommand searchCommand,
 			@RequestParam(value = "pageNo", required = false) Integer pageNo,
-			ModelMap model) {
+			ModelMap modelMap) {
 
 		UserSearchParameters params = extractSearchParamsFromCommand(searchCommand);
 		if (pageNo == null || pageNo <= 0) {
 			pageNo = 1;
 		}
 
-		prepareSearchModel(params, true, true, pageNo, model);
+		prepareSearchModel(params, true, true, pageNo, modelMap);
 
-		return new ModelAndView("viewUser", model);
+		return new ModelAndView("viewUser", modelMap);
 	}
 
-	private UserSearchParameters extractSearchParamsFromCommand(
+	public UserSearchParameters extractSearchParamsFromCommand(
 			GenericCommand searchCommand) {
 		UserSearchParameters params = new UserSearchParameters();
 
@@ -134,6 +146,15 @@ public class UserController {
 			params.setProducerOrg(producerOrgService
 					.getProducerOrganisationById(searchCommand
 							.getValue(PRODUCER_ORG)));
+		}
+
+		if (StringUtils.isNotBlank(searchCommand.getValue(COMMITTEE))) {
+			params.setCommitteeId(searchCommand.getValue(COMMITTEE));
+		}
+
+		if (StringUtils.isNotBlank(searchCommand.getValue(COMMITTEE_MEMBER))) {
+			params.setCommitteeMemberId(searchCommand
+					.getValue(COMMITTEE_MEMBER));
 		}
 
 		if (StringUtils.isNotBlank(searchCommand.getValue(ROLE))) {
@@ -210,6 +231,16 @@ public class UserController {
 		if (params.getRole() != null) {
 			buffer.append("&").append(ROLE).append("=")
 					.append(params.getRole().getId());
+		}
+
+		if (StringUtils.isNotBlank(params.getCommitteeId())) {
+			buffer.append("&").append(COMMITTEE).append("=")
+					.append(params.getCommitteeId());
+		}
+
+		if (StringUtils.isNotBlank(params.getCommitteeMemberId())) {
+			buffer.append("&").append(COMMITTEE_MEMBER).append("=")
+					.append(params.getCommitteeMemberId());
 		}
 
 		if (params.getGender() != null) {

@@ -28,5 +28,8 @@ public interface CommitteeService {
 	void deleteCommitteesByIds(String[] ids);
 
 	CommitteeMember getCommitteeMemberById(String id);
+	
+	void validate(CommitteeMember committeeMember) throws ValidationException;
+
 
 }

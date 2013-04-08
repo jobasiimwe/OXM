@@ -96,4 +96,19 @@ public class CommitteeServiceImpl implements CommitteeService {
 		return committeeMemberDAO.searchUniqueByPropertyEqual("id", id);
 	}
 
+	@Secured({ PermissionConstants.VIEW_COMMITTEE__DETAILS })
+	@Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
+	@Override
+	public void validate(CommitteeMember committeeMember)
+			throws ValidationException {
+		if (committeeMember.getCommittee() == null)
+			throw new ValidationException(
+					"Ooops, Technical Error - Committee can not be null");
+
+		if (committeeMember.getPosition() == null)
+			throw new ValidationException("Position can not be null");
+
+		if (committeeMember.getPositionHolder() == null)
+			throw new ValidationException("Position-Holder can not be null");
+	}
 }

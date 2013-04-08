@@ -17,11 +17,27 @@ public class UserSearchParameters {
 	private Gender gender = null;
 	private Role role = null;
 
+	private String committeeId;
+	private String committeeMemberId;
+
 	public UserSearchParameters() {
 
 	}
 
 	public UserSearchParameters(ProducerOrganisation pOrg, Role role) {
+		this.setProducerOrg(pOrg);
+		this.setRole(role);
+	}
+
+	public UserSearchParameters(String committeeId, String committeeMemberId) {
+		this.setCommitteeId(committeeId);
+		this.setCommitteeMemberId(committeeMemberId);
+	}
+
+	public UserSearchParameters(ProducerOrganisation pOrg, Role role,
+			String committeeId, String committeeMemberId) {
+		this.setCommitteeId(committeeId);
+		this.setCommitteeMemberId(committeeMemberId);
 		this.setProducerOrg(pOrg);
 		this.setRole(role);
 	}
@@ -57,4 +73,21 @@ public class UserSearchParameters {
 	public Role getRole() {
 		return role;
 	}
+
+	public String getCommitteeId() {
+		return committeeId;
+	}
+
+	public void setCommitteeId(String committeeId) {
+		this.committeeId = committeeId;
+	}
+
+	public String getCommitteeMemberId() {
+		return committeeMemberId;
+	}
+
+	public void setCommitteeMemberId(String committeeMemberId) {
+		this.committeeMemberId = committeeMemberId;
+	}
+
 }

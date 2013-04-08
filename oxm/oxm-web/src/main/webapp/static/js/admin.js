@@ -19,7 +19,7 @@ $(document)
 									+ " #lnkEditfInstitution, #lnkEditSeason, #lnkEditCrop, "
 									+ " #lnkCropDetails, #lnkEditPrice, #lnkEditSellingPlace, "
 									+ " #lnkEditRole, #lnkEditUser, #lnkEditConcept, "
-									+ " #lnkEditPOrgCommittee, #lnkPOrgCommitteeMembers")
+									+ " #lnkEditPOrgCommittee, #lnkPOrgCommitteeMembers, #lnkEditPOrgCommitteeMember")
 							.click(
 									function() {
 										return singleItemAction($(this).attr(
@@ -36,7 +36,7 @@ $(document)
 									+ " #lnkDeleteSeason, #lnkDeleteCrop, #lnkDeletePrice, "
 									+ " #lnkDeleteSellingPlace, #lnkDeleteRole, #lnkDeleteUser, "
 									+ " #lnkDeleteConcept,"
-									+ " #lnkDeletePOrgCommittee, ").click(
+									+ " #lnkDeletePOrgCommittee, #lnkDeletePOrgCommitteeMember,").click(
 							function() {
 								return multipleItemAction($(this).attr('id'),
 										$("#nameOfItemOnPage").attr("value"));
@@ -82,6 +82,40 @@ $(document)
 					$('#btnSaveUser').live('click', function() {
 						return false;
 					});
+
+					$('#btnSavePOrgCommitteeMember')
+							.live(
+									'click',
+									function() {
+										var id = getSingleSelectedItem($(this)
+												.attr('id'), $(
+												"#nameOfItemOnPage").attr(
+												"value"));
+										var currentPositionHolder = $(
+												'#txtPositionHolder').attr(
+												'value');
+										if (id == "multiple") {
+											alert("Please select only one "
+													+ $("#nameOfItemOnPage")
+															.attr("value")
+													+ " and try again.");
+											return false;
+										}
+
+										if ((currentPositionHolder == "null" || currentPositionHolder == "")
+												&& id == "none") {
+											alert("Select a "
+													+ $("#nameOfItemOnPage")
+															.attr("value")
+													+ " and try again");
+											return false;
+										}
+
+										if (id != "none")
+											$('#txtPositionHolder').attr(
+													'value', id);
+										return true;
+									});
 
 					$('#btnCancelUserEdit')
 							.click(

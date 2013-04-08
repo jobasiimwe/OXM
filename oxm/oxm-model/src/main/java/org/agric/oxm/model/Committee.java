@@ -72,6 +72,16 @@ public class Committee extends BaseData implements Comparable<Committee> {
 		this.getMembers().remove(member);
 	}
 
+	public void removeMembersByIds(String[] idzToDelete) {
+		for (String id : idzToDelete) {
+			CommitteeMember member = new CommitteeMember(id);
+
+			if (this.getMembers().contains(member)) {
+				getMembers().remove(member);
+			}
+		}
+	}
+
 	@ManyToOne
 	@JoinColumn(name = "producer_organisation_id", nullable = false)
 	public ProducerOrganisation getProducerOrg() {
