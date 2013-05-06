@@ -29,6 +29,10 @@ public class Role extends BaseData implements Comparable<Role> {
 
 	}
 
+	public Role(String id) {
+		this.setId(id);
+	}
+
 	public Role(String name, String description, List<Permission> permissions,
 			List<User> users) {
 		super();

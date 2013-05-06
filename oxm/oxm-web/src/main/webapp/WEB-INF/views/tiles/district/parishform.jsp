@@ -33,7 +33,7 @@ form#district input[type="text"] {
 			<div class="box tabular">
 				<p>
 					<label>Name <span class="required">*</span> </label>
-					<form:input path="name" cssClass="uiTextbox" />
+					<form:input id="txtName" path="name" cssClass="uiTextbox" />
 				</p>
 			</div>
 		</div>

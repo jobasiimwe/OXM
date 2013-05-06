@@ -11,7 +11,7 @@ $(document)
 					$(
 							"#lnkEditPOrg, #lnkPOrgDetails, #lnkPOrgMembers, #lnkPOrgDocs, "// pOrg
 									+ " #lnkPOrgStaff, #lnkPOrgCommittee, "
-									+ " #lnkEditPOrgCommittee, lnkEditPOrgMember, "
+									+ " #lnkEditPOrgCommittee, #lnkEditPOrgMember, "
 									+ " #lnkEditDistrict, #lnkDistrictSubCounties, #lnkEditSubCounty, "// district
 									+ " #lnkSubCountyParishes,  #lnkEditParish, #lnkParishVillages, "
 									+ " #lnkEditVillage, "
@@ -19,13 +19,12 @@ $(document)
 									+ " #lnkEditfInstitution, #lnkEditSeason, #lnkEditCrop, "
 									+ " #lnkCropDetails, #lnkEditPrice, #lnkEditSellingPlace, "
 									+ " #lnkEditRole, #lnkEditUser, #lnkEditConcept, "
-									+ " #lnkEditPOrgCommittee, #lnkPOrgCommitteeMembers, #lnkEditPOrgCommitteeMember")
-							.click(
-									function() {
-										return singleItemAction($(this).attr(
-												'id'), $("#nameOfItemOnPage")
-												.attr("value"));
-									});
+									+ " #lnkEditPOrgCommittee, #lnkPOrgCommitteeMembers, #lnkEditPOrgCommitteeMember, "
+									+ " #lnkEditPOrgStaff, ").click(
+							function() {
+								return singleItemAction($(this).attr('id'), $(
+										"#nameOfItemOnPage").attr("value"));
+							});
 
 					$(
 							"#lnkDeletePOrg, #lnkDeletePOrgMember, #lnkDeletePOrgDocs, "
@@ -36,7 +35,8 @@ $(document)
 									+ " #lnkDeleteSeason, #lnkDeleteCrop, #lnkDeletePrice, "
 									+ " #lnkDeleteSellingPlace, #lnkDeleteRole, #lnkDeleteUser, "
 									+ " #lnkDeleteConcept,"
-									+ " #lnkDeletePOrgCommittee, #lnkDeletePOrgCommitteeMember,").click(
+									+ " #lnkDeletePOrgCommittee, #lnkDeletePOrgCommitteeMember,"
+									+ " #lnkDeletePOrgStaff, ").click(
 							function() {
 								return multipleItemAction($(this).attr('id'),
 										$("#nameOfItemOnPage").attr("value"));
@@ -142,5 +142,35 @@ $(document)
 											}
 										}
 									});
+
+					changeProducer();
+					function changeProducer() {
+
+						if ($('#userFormRoleList').length) {
+							var rolePdocucerId = "4836AFAB-3D62-482c-BA9A-D9D15839C68A";
+							var roleProducerChecked = false;
+
+							$('#userFormRoleList :checked').each(function() {
+								if ($(this).val() == rolePdocucerId) {
+									roleProducerChecked = true;
+								}
+							});
+
+							if (roleProducerChecked) {
+								$("#ddProducerOrg, #txtLandSize").removeAttr(
+										"disabled");
+
+							} else {
+								$("#ddProducerOrg, #txtLandSize").attr(
+										"disabled", "disabled");
+							}
+						}
+					}
+
+					$(function() {
+						$('#userFormRoleList input').click(function() {
+							changeProducer();
+						});
+					});
 
 				});

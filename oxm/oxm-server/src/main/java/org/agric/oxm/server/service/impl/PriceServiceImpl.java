@@ -102,7 +102,7 @@ public class PriceServiceImpl implements PriceService {
 		} else if (params.getFromDate() != null) {
 			search.addFilterGreaterOrEqual("date", params.getFromDate());
 		} else if (params.getToDate() != null) {
-			search.addFilterLessOrEqual("date", params.getFromDate());
+			search.addFilterLessOrEqual("date", params.getToDate());
 		}
 
 		return search;

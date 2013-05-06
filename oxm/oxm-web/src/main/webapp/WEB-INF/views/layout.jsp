@@ -17,13 +17,12 @@
 </title>
 <link type="text/css" rel="stylesheet" href="${baseUrl }/static/css/custom-theme/jquery-ui-1.8.15.custom.css" />
 <link type="text/css" rel="stylesheet" href="${baseUrl }/static/css/oxm.css" />
-<link rel="icon" type="image/png" href="${baseUrl }//static/images/oxm-footer-lg.png" />
-
+<link rel="icon" type="image/png" href="${baseUrl }/static/images/plant-ico.png" />
 <script type="text/javascript" src="${baseUrl }/static/js/jquery-1.6.2.min.js"></script>
 <script type="text/javascript" src="${baseUrl }/static/js/jquery-ui-1.8.15.custom.min.js"></script>
 <script type="text/javascript" src="${baseUrl }/static/js/jquery.getUrlParam.js"></script>
 <script type="text/javascript" src="${baseUrl }/static/js/oxm.js"></script>
-<script type="text/javascript" src="${baseUrl }/static/js/admin.js"></script>
+<script type="text/javascript" src="${baseUrl }/static/js/oxm-admin.js"></script>
 <script type="text/javascript" src="${baseUrl }/static/js/scrolltable.js"></script>
 
 <tiles:insertAttribute name="scripts" ignore="true" />

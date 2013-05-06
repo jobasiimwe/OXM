@@ -104,6 +104,20 @@ public class UserServiceImpl implements UserService {
 						+ "- with this username - " + user.getUsername()
 						+ " already exists");
 		}
+
+		if (user.getProducerOrg() == null
+				&& user.getRoles().contains(
+						new Role("4836AFAB-3D62-482c-BA9A-D9D15839C68A"))) {
+			throw new ValidationException(
+					"You must indicate Producer Organisation for users with ROLE-PRODUCER");
+		}
+		
+		if (user.getProducerOrg() != null
+				&& !user.getRoles().contains(
+						new Role("4836AFAB-3D62-482c-BA9A-D9D15839C68A"))) {
+			throw new ValidationException(
+					"User can not belong to a producer Organisation if he doesn't have ROLE-PRODUCER");
+		}
 	}
 
 	@Override

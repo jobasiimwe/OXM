@@ -18,12 +18,12 @@
 
 <div id="buttonStrip">
 	<div class="contextual" style="float: left;">
-		<a id="lnkAddPOrgStaffMember" class="uiButton"
-			href="${baseUrl }/porg-staffmember/add/${pOrg.id }">Add</a> <a
-			id="lnkEditPOrgStaffMember" class="uiButton"
-			href="${baseUrl }/porg-staffmember/edit/">Edit</a> <a
-			id="lnkDeletePOrgStaffMember" class="uiButton"
-			href="${baseUrl }/porg-staffmember/delete/${pOrg.id }/">Delete</a>
+		<a id="lnkAddPOrgStaff" class="uiButton"
+			href="${baseUrl }/porg-staff/add/${pOrg.id }">Add</a> <a
+			id="lnkEditPOrgStaff" class="uiButton"
+			href="${baseUrl }/porg-staff/edit/">Edit</a> <a
+			id="lnkDeletePOrgStaff" class="uiButton"
+			href="${baseUrl }/porg-staff/delete/${pOrg.id }/">Delete</a>
 	</div>
 	<div style="float: right;">
 		<%@ include file="/WEB-INF/views/navigation.jsp"%>
@@ -34,7 +34,7 @@
 
 	<oxmTags:name-of-item-on-page name="Staff-Member" />
 
-	<table class="recordTable" width="100%" cellpadding="0" cellspacing="0">
+	<table class="recordTable">
 		<thead>
 			<tr>
 				<th><input type="checkbox" name="cbxSelectAllItems"

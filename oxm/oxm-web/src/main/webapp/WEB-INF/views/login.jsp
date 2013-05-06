@@ -1,28 +1,21 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-	pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix='fn' uri='http://java.sun.com/jsp/jstl/functions'%>
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Oxfarm GB: E-System</title>
 <c:set var="baseUrl"
-	value="${fn:replace(pageContext.request.requestURL, pageContext.request.requestURI, pageContext.request.contextPath)}" />
-<link type="text/css" rel="stylesheet"
-	href="static/css/custom-theme/jquery-ui-1.8.15.custom.css" />
-<link type="text/css" rel="stylesheet"
-	href="${baseUrl}/static/css/oxm.css" />
-
+	value="${fn:replace(pageContext.request.requestURL, pageContext.request.requestURI, pageContext.request.contextPath)}"
+/>
+<link rel="icon" type="image/png" href="${baseUrl }/static/images/plant-ico.png" />
+<link type="text/css" rel="stylesheet" href="static/css/custom-theme/jquery-ui-1.8.15.custom.css" />
+<link type="text/css" rel="stylesheet" href="${baseUrl}/static/css/oxm.css" />
 <script type="text/javascript" src="static/js/jquery-1.6.2.min.js"></script>
-<script type="text/javascript"
-	src="static/js/jquery-ui-1.8.15.custom.min.js"></script>
+<script type="text/javascript" src="static/js/jquery-ui-1.8.15.custom.min.js"></script>
 <script type="text/javascript" src="static/js/oxm.js"></script>
-
-<link rel="icon" type="image/png"
-	href="/static/images/oxm-footer-lg.png" />
-
+<link rel="icon" type="image/png" href="/static/images/oxm-footer-lg.png" />
 </head>
 <body style="background: white;">
 	<div class="container-header bg">
@@ -34,13 +27,12 @@
 						<label class="uiLabel">Username:</label>
 					</div>
 					<div>
-						<input name="j_username" id="j_username" type="text"
-							class="uiTextbox" />
+						<input name="j_username" id="j_username" type="text" class="uiTextbox" />
 					</div>
 					<div style="display: none;">
-						<input name="rememberme" type="checkbox" class="uiCheckbox"
-							value="Remember Me" /> <label class="uiLabel">Keep me
-							logged in</label>
+						<input name="rememberme" type="checkbox" class="uiCheckbox" value="Remember Me" /> <label
+							class="uiLabel"
+						>Keep me logged in</label>
 					</div>
 				</div>
 				<div class="pwd-dv">
@@ -48,8 +40,7 @@
 						<label class="uiLabel">Password:</label>
 					</div>
 					<div>
-						<input name="j_password" id="j_password" type="password"
-							class="uiTextbox" />
+						<input name="j_password" id="j_password" type="password" class="uiTextbox" />
 					</div>
 					<div>
 						<div class="login-error">
@@ -61,30 +52,26 @@
 				</div>
 				<div class="btn-dv">
 					<div>
-						<input name="btnSubmit" id="btnSubmit" type="submit"
-							value="Sign In" class="uiButton" />
+						<input name="btnSubmit" id="btnSubmit" type="submit" value="Sign In" class="uiButton" />
 					</div>
 				</div>
 			</div>
 		</form>
 	</div>
-
-	<div class="login-signup-dv">
+	<div class="login-signup-dv" style="border-bottom: 1px solid #ccc; margin-bottom: 10px;">
 		<div class="left-side-dv"></div>
 		<div class="right-side-dv">
 			<div style="display: block; margin-top: 5px;">
 				<label class="sign-up-txt">Sign up for free. </label>
 				<div style="margin-top: 10px;">
-					<a href="${baseUrl}/annoymous/create" class="sign-up-button-dv">Create	Account</a>
+					<a href="${baseUrl}/annoymous/create" class="sign-up-button-dv">Create Account</a>
 				</div>
 			</div>
 		</div>
 	</div>
-	<div class="login-footer" style="display: none;">
-		<div class="oxm-item"></div>
-		<div class="oxm-copyright">
-			<label>© 2013</label>
-		</div>
+	<br>
+	<div>
+		<jsp:include page="/WEB-INF/views/tiles/footer.jsp"></jsp:include>
 	</div>
 </body>
 </html>

@@ -1,4 +1,4 @@
-package org.agric.oxm.web.controllers;
+package org.agric.oxm.web.controllers.settings;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -7,6 +7,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletResponse;
 
 import org.agric.oxm.model.Gender;
+import org.agric.oxm.model.ProducerOrganisation;
 import org.agric.oxm.model.Role;
 import org.agric.oxm.model.User;
 import org.agric.oxm.model.UserStatus;
@@ -292,7 +293,10 @@ public class UserController {
 		return new ModelAndView("formUser", modelMap);
 	}
 
-	private void prepareUserFormModel(ModelMap modelMap) {
+	public void prepareUserFormModel(ModelMap modelMap) {
+		List<ProducerOrganisation> producerOrgs = producerOrgService
+				.getProducerOrganisations();
+		modelMap.put("producerOrgs", producerOrgs);
 		List<Role> roles = userService.getRoles();
 		modelMap.put("roles", roles);
 		modelMap.put("userstatus", new UserStatus[] { UserStatus.ENABLED,
@@ -333,8 +337,11 @@ public class UserController {
 			ModelMap modelMap) throws IOException, SessionExpiredException {
 
 		User existingUser = user;
+		
 		try {
-
+			
+			userService.validate(user);
+			
 			if (userPic != null && userPic.getSize() > 0) {
 				validatePic(userPic);
 				existingUser.setProfilePicture(userPic.getBytes());
@@ -347,7 +354,6 @@ public class UserController {
 				existingUser.setId(null);
 			}
 
-			userService.validate(existingUser);
 			userService.saveUser(existingUser);
 		} catch (Exception e) {
 			modelMap.put(WebConstants.MODEL_ATTRIBUTE_ERROR_MESSAGE,
@@ -358,8 +364,17 @@ public class UserController {
 					"Retry - add/edit "
 							+ (StringUtils.isNotBlank(existingUser.getName()) ? existingUser
 									.getName() : "User"));
+			
+			WebConstants.loadLoggedInUserProfile(
+					OXMSecurityUtil.getLoggedInUser(), modelMap);
 
-			return editUserHandler(existingUser.getId(), qPage, modelMap);
+			prepareUserFormModel(modelMap);
+			modelMap.put("user", user);
+			modelMap.put("qUserPage", qPage);
+
+			modelMap.put(WebConstants.CONTENT_HEADER, "Edit " + user.getName());
+
+			return new ModelAndView("formUser", modelMap);
 		}
 
 		if (qPage.equals("0")) {
@@ -412,6 +427,7 @@ public class UserController {
 		existingUser.setUsername(user.getUsername());
 		existingUser.setStatus(user.getStatus());
 		existingUser.setRoles(user.getRoles());
+		existingUser.setProducerOrg(user.getProducerOrg());
 
 		if (StringUtils.isNotEmpty(user.getPassword())) {
 			existingUser.setSalt(user.getSalt());

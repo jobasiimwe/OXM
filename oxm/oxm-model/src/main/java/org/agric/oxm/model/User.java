@@ -115,24 +115,27 @@ public class User extends BaseData implements Comparable<User> {
 	@Transient
 	public String getRolesString() {
 		String str = "";
-		int i = 0;
-		for (Iterator<Role> rit = roles.iterator(); rit.hasNext();) {
-			Role role = rit.next();
-			String roleNameToDisplay = role.getName();
+		if (roles != null) {
+			int i = 0;
 
-			if (role.getName().toUpperCase().contains("ROLE_"))
-				roleNameToDisplay = role.getName().substring(5);
+			for (Iterator<Role> rit = roles.iterator(); rit.hasNext();) {
+				Role role = rit.next();
+				String roleNameToDisplay = role.getName();
 
-			if (StringUtils.isBlank(str))
-				str += roleNameToDisplay;
-			else
-				str += ", " + roleNameToDisplay;
-			i++;
-			if (i == 2)
-				break;
+				if (role.getName().toUpperCase().contains("ROLE_"))
+					roleNameToDisplay = role.getName().substring(5);
+
+				if (StringUtils.isBlank(str))
+					str += roleNameToDisplay;
+				else
+					str += ", " + roleNameToDisplay;
+				i++;
+				if (i == 2)
+					break;
+			}
+			if (roles.size() > 2)
+				str += ", and " + (roles.size() - 2) + " more";
 		}
-		if (roles.size() > 2)
-			str += ", and " + (roles.size() - 2) + " more";
 		return str;
 	}
 

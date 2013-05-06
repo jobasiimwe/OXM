@@ -23,14 +23,20 @@ public class ApplicationController {
 	@Autowired
 	private ConceptService conceptService;
 
+	@Autowired
+	private PriceController priceController;
+
 	private Logger log = LoggerFactory.getLogger(this.getClass());
 
 	@RequestMapping(value = { "/", "index.jsp" })
-	public ModelAndView welcomeHandler(ModelMap model)
+	public ModelAndView welcomeHandler(ModelMap modelMap)
 			throws SessionExpiredException {
 		WebConstants.loadLoggedInUserProfile(OXMSecurityUtil.getLoggedInUser(),
-				model);
-		return new ModelAndView("dashboard", model);
+				modelMap);
+
+		return priceController.viewPriceHandler(modelMap, 1, OXMSecurityUtil
+				.getLoggedInUser().hasAdministrativePrivileges());
+		// return new ModelAndView("dashboard", model);
 	}
 
 	@RequestMapping("/ServiceLogin")

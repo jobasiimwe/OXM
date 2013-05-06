@@ -36,7 +36,7 @@
 
 	<oxmTags:name-of-item-on-page name="Producer-Organisation-Member" />
 
-	<table class="recordTable" width="100%" cellpadding="0" cellspacing="0">
+	<table class="recordTable">
 		<thead>
 			<tr>
 				<th><input type="checkbox" name="cbxSelectAllItems"

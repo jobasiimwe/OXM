@@ -1,4 +1,4 @@
-package org.agric.oxm.web.controllers;
+package org.agric.oxm.web.controllers.settings;
 
 import java.util.List;
 

@@ -98,7 +98,7 @@ public class StaffMember extends BaseData implements Comparable<StaffMember> {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Position other = (Position) obj;
+		StaffMember other = (StaffMember) obj;
 		if (super.getId() == null) {
 			if (other.getId() != null)
 				return false;

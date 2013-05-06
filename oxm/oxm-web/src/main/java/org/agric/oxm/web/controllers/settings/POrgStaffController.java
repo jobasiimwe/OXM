@@ -1,4 +1,4 @@
-package org.agric.oxm.web.controllers;
+package org.agric.oxm.web.controllers.settings;
 
 import org.agric.oxm.model.StaffMember;
 import org.agric.oxm.model.ProducerOrganisation;
@@ -51,7 +51,7 @@ public class POrgStaffController {
 	}
 
 	@Secured({ PermissionConstants.VIEW_COMMITTEE__DETAILS })
-	@RequestMapping(value = "/add/{committeeId}", method = RequestMethod.GET)
+	@RequestMapping(value = "/add/{pOrgId}", method = RequestMethod.GET)
 	public ModelAndView addPOrgStaffMembers(
 			@PathVariable("pOrgId") String pOrgId, UserSearchParameters params,
 			ModelMap modelMap) {
@@ -70,7 +70,7 @@ public class POrgStaffController {
 
 		modelMap.put("positions", positionService.getPositions());
 
-		return new ModelAndView("pOrgStaffMemberForm", modelMap);
+		return new ModelAndView("pOrgStaffForm", modelMap);
 	}
 
 	private void prepareStaffFormModel(UserSearchParameters params,
@@ -107,7 +107,7 @@ public class POrgStaffController {
 
 		modelMap.put("positions", positionService.getPositions());
 
-		return new ModelAndView("pOrgStaffMemberForm", modelMap);
+		return new ModelAndView("pOrgStaffForm", modelMap);
 	}
 
 	@Secured({ PermissionConstants.VIEW_COMMITTEE__DETAILS })
@@ -133,7 +133,7 @@ public class POrgStaffController {
 
 	@Secured({ PermissionConstants.ADD_PROD_ORG,
 			PermissionConstants.EDIT_PROD_ORG })
-	@RequestMapping(method = RequestMethod.POST, value = "/member/save")
+	@RequestMapping(method = RequestMethod.POST, value = "/save")
 	public ModelAndView savePOrgStaffMemberHandler(
 			@ModelAttribute("staffMember") StaffMember staffMember,
 			ModelMap modelMap) throws SessionExpiredException {
@@ -182,7 +182,7 @@ public class POrgStaffController {
 	}
 
 	@Secured({ PermissionConstants.VIEW_COMMITTEE__DETAILS })
-	@RequestMapping(value = "/member/delete/{pOrgId}/{memberIds}", method = RequestMethod.GET)
+	@RequestMapping(value = "/delete/{pOrgId}/{memberIds}", method = RequestMethod.GET)
 	public ModelAndView deletePOrgStaffMembers(
 			@PathVariable("pOrgId") String pOrgId,
 			@PathVariable("memberIds") String ids, ModelMap modelMap) {

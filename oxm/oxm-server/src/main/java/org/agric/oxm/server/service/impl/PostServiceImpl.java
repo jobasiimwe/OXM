@@ -1,11 +1,13 @@
 package org.agric.oxm.server.service.impl;
 
+import java.util.Date;
 import java.util.List;
 
 import org.agric.oxm.model.Post;
 import org.agric.oxm.model.RecordStatus;
 import org.agric.oxm.model.exception.ValidationException;
 import org.agric.oxm.model.search.PostSearchParameters;
+import org.agric.oxm.server.OXMConstants;
 import org.agric.oxm.server.dao.PostDAO;
 import org.agric.oxm.server.security.PermissionConstants;
 import org.agric.oxm.server.service.PostService;
@@ -41,7 +43,14 @@ public class PostServiceImpl implements PostService {
 	@Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
 	@Override
 	public void validate(Post post) throws ValidationException {
+		if (post.getOwner() == null)
+			throw new ValidationException("Ooops post owner can not be null");
 
+		if (StringUtils.isBlank(post.getText()))
+			throw new ValidationException("Please write some text");
+
+		if (post.getDatePosted().after(new Date()))
+			throw new ValidationException("Date can't be future date");
 	}
 
 	@Secured({ PermissionConstants.VIEW_POST })
@@ -51,11 +60,9 @@ public class PostServiceImpl implements PostService {
 		return postDAO.searchByRecordStatus(RecordStatus.ACTIVE);
 	}
 
-	@Secured({ PermissionConstants.VIEW_POST })
-	@Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
-	@Override
-	public List<Post> getPostsWithParams(PostSearchParameters params) {
+	private Search preparePostSearch(PostSearchParameters params) {
 		Search search = new Search();
+
 		if (params.getPostType() != null) {
 			search.addFilterEqual("type", params.getPostType());
 		}
@@ -77,19 +84,55 @@ public class PostServiceImpl implements PostService {
 			search.addFilterEqual("owner", params.getOwner());
 		}
 
-		if (params.getCrops() != null)
-			if (params.getCrops().size() > 0) {
-				search.addFilterIn("crop", params.getCrops());
-			}
+		if (params.getCrop() != null) {
+			search.addFilterIn("crop", params.getCrop());
+		}
 
-		if (params.getAfter() != null)
-			search.addFilterGreaterOrEqual("datePosted", params.getAfter());
+		if (params.getFromDate() != null)
+			search.addFilterGreaterOrEqual("datePosted", params.getFromDate());
 
-		if (params.getBefore() != null)
-			search.addFilterLessOrEqual("datePosted", params.getBefore());
+		if (params.getToDate() != null)
+			search.addFilterLessOrEqual("datePosted", params.getToDate());
 
-		search.addSort("datePosted", false, true);
+		search.addSort("datePosted", true, true);
+
+		return search;
+	}
+
+	@Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
+	@Override
+	public long numberInSearch(PostSearchParameters params) {
+		Search search = preparePostSearch(params);
+		return postDAO.count(search);
+	}
+
+	@Secured({ PermissionConstants.VIEW_POST })
+	@Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
+	@Override
+	public List<Post> searchWithParams(PostSearchParameters params) {
+		Search search = preparePostSearch(params);
 		return postDAO.search(search);
+	}
+
+	@Secured({ PermissionConstants.VIEW_POST })
+	@Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
+	@Override
+	public List<Post> searchWithParams(PostSearchParameters params,
+			Integer pageNo) {
+		Search search = preparePostSearch(params);
+
+		search.setMaxResults(OXMConstants.MAX_NUM_PAGE_RECORD);
+
+		/*
+		 * if the page number is less than or equal to zero, no need for paging
+		 */
+		if (pageNo > 0) {
+			search.setPage(pageNo - 1);
+		} else {
+			search.setPage(0);
+		}
+		List<Post> posts = postDAO.search(search);
+		return posts;
 	}
 
 	@Secured({ PermissionConstants.VIEW_POST })

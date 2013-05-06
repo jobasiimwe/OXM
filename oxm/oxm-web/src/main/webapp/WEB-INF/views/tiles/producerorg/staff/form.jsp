@@ -44,11 +44,11 @@ form#concept input[type="text"] {
 
 <div>
 
-	<form:form action="${baseUrl }/porg-committee/member/save/"
-		commandName="committeeMember">
+	<form:form action="${baseUrl }/porg-staff/save/"
+		commandName="staffMember">
 
 		<form:hidden path="id" />
-		<form:hidden path="committee" />
+		<form:hidden path="producerOrg" />
 		<div class="splitcontentleft">
 			<div class="box tabular">
 				<table>
@@ -62,13 +62,13 @@ form#concept input[type="text"] {
 						</td>
 					</tr>
 					<tr>
-						<td><label>From(Date)<span class="required">*</span>
+						<td><label>Appointment Date<span class="required">*</span>
 						</label></td>
-						<td><form:input path="fromDate" cssStyle="width: 100px;"
+						<td><form:input path="appointmentDate" cssStyle="width: 100px;"
 								cssClass="uiTextbox uiDateTextbox" /></td>
-						<td><label>To (Date) <span class="required">*</span>
+						<td><label>Departure Date<span class="required">*</span>
 						</label></td>
-						<td><form:input path="toDate" cssStyle="width: 100px;"
+						<td><form:input path="dateLeft" cssStyle="width: 100px;"
 								cssClass="uiTextbox uiDateTextbox" />
 						</td>
 					</tr>

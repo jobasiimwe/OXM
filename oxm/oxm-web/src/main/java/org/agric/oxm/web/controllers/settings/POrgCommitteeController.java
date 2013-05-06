@@ -1,4 +1,4 @@
-package org.agric.oxm.web.controllers;
+package org.agric.oxm.web.controllers.settings;
 
 import org.agric.oxm.model.Committee;
 import org.agric.oxm.model.CommitteeMember;

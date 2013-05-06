@@ -1,7 +1,6 @@
 package org.agric.oxm.model.search;
 
 import java.util.Date;
-import java.util.List;
 
 import org.agric.oxm.model.Concept;
 import org.agric.oxm.model.Crop;
@@ -11,10 +10,10 @@ public class PostSearchParameters {
 
 	private String ownerName;
 	private User owner;
-	private List<Crop> crops;
+	private Crop crop;
 	private Concept postType;
-	private Date after;
-	private Date before;
+	private Date fromDate;
+	private Date toDate;
 
 	public PostSearchParameters() {
 
@@ -36,12 +35,12 @@ public class PostSearchParameters {
 		this.owner = owner;
 	}
 
-	public List<Crop> getCrops() {
-		return crops;
+	public Crop getCrop() {
+		return crop;
 	}
 
-	public void setCrops(List<Crop> crops) {
-		this.crops = crops;
+	public void setCrop(Crop crop) {
+		this.crop = crop;
 	}
 
 	public Concept getPostType() {
@@ -52,20 +51,20 @@ public class PostSearchParameters {
 		this.postType = postType;
 	}
 
-	public Date getAfter() {
-		return after;
+	public Date getFromDate() {
+		return fromDate;
 	}
 
-	public void setAfter(Date after) {
-		this.after = after;
+	public void setFromDate(Date fromDate) {
+		this.fromDate = fromDate;
 	}
 
-	public Date getBefore() {
-		return before;
+	public Date getToDate() {
+		return toDate;
 	}
 
-	public void setBefore(Date before) {
-		this.before = before;
+	public void setToDate(Date toDate) {
+		this.toDate = toDate;
 	}
 
 }

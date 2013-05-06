@@ -19,7 +19,7 @@ function someAreChecked(checkBoxesName, fieldName) {
 
 function singleDropDownItemAction(buttonId, dropDownId, itemName) {
 	var selectedId = $('#' + dropDownId).attr("value");
-	if (selectedId == null || selectedId == "") {
+	if (selectedId == null || selectedId == "" || selectedId == "none") {
 		alert("First select a " + itemName + " to perform this action");
 		return false;
 	} else {
@@ -118,8 +118,9 @@ function getSingleSelectedItem(btnId, itemName) {
 		}
 
 		return id;
-		
-	} else return "none";
+
+	} else
+		return "none";
 
 }
 
@@ -337,4 +338,20 @@ $(document).ready(
 				});
 			}
 
+			$("legend").click(function() {
+				legendClick($(this))
+			});
+
+			function legendClick(legend) {
+				$(legend).children("b").toggleClass("collapsed");
+				$(legend).nextAll("div").toggleClass("hide");
+				$(legend).parent().toggleClass("colapsed-fieldset");
+			}
+			
+			if ($('legend').length) {
+
+				$('legend').each(function() {
+					legendClick($(this))
+				});
+			}
 		});

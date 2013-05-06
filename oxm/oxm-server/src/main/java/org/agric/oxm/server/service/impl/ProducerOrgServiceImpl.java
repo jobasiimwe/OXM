@@ -64,7 +64,10 @@ public class ProducerOrgServiceImpl implements ProducerOrgService {
 	@Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
 	@Override
 	public List<ProducerOrganisation> getProducerOrganisations() {
-		return producerOrgDAO.searchByRecordStatus(RecordStatus.ACTIVE);
+		Search search = new Search();
+		search.addSort("name", false, true);
+		search.addFilterEqual("recordStatus", RecordStatus.ACTIVE);
+		return producerOrgDAO.search(search);
 	}
 
 	@Secured({ PermissionConstants.VIEW_PROD_ORG })

@@ -1,4 +1,4 @@
-package org.agric.oxm.web.controllers;
+package org.agric.oxm.web.controllers.settings;
 
 import java.util.List;
 
@@ -10,6 +10,7 @@ import org.agric.oxm.server.service.ConceptService;
 import org.agric.oxm.server.service.CropService;
 import org.agric.oxm.web.WebConstants;
 import org.agric.oxm.web.WebUtils;
+import org.agric.oxm.web.controllers.ApplicationController;
 import org.agric.oxm.web.forms.GenericCommand;
 import org.agric.oxm.web.forms.GenericCommandValue;
 import org.apache.commons.lang.StringUtils;

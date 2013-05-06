@@ -1,13 +1,10 @@
-package org.agric.oxm.web.controllers;
+package org.agric.oxm.web.controllers.settings;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.agric.oxm.model.District;
 import org.agric.oxm.model.ProducerOrganisation;
-import org.agric.oxm.model.Role;
 import org.agric.oxm.model.User;
-import org.agric.oxm.model.UserStatus;
 import org.agric.oxm.model.exception.SessionExpiredException;
 import org.agric.oxm.model.exception.ValidationException;
 import org.agric.oxm.server.security.PermissionConstants;
@@ -15,7 +12,6 @@ import org.agric.oxm.server.security.util.OXMSecurityUtil;
 import org.agric.oxm.server.service.Adminservice;
 import org.agric.oxm.server.service.ProducerOrgService;
 import org.agric.oxm.server.service.UserService;
-import org.agric.oxm.web.OXMUtil;
 import org.agric.oxm.web.WebConstants;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
@@ -211,22 +207,10 @@ public class POrgController {
 		modelMap.put(WebConstants.CONTENT_HEADER,
 				"Add Producer to " + pOrg.getName());
 
-		prepareUserFormModel(modelMap);
+		userController.prepareUserFormModel(modelMap);
 		return new ModelAndView("formPOrgProducer", modelMap);
 	}
 
-	private void prepareUserFormModel(ModelMap modelMap) {
-		// ROLE_PRODUCER id = 4836AFAB-3D62-482c-BA9A-D9D15839C68A
-		Role roleProducer = userService
-				.getRoleById("4836AFAB-3D62-482c-BA9A-D9D15839C68A");
-		List<Role> roles = new ArrayList<Role>();
-		roles = userService.getRoles();
-		// roles.add(roleProducer);
-		modelMap.put("roles", roles);
-		modelMap.put("userstatus", new UserStatus[] { UserStatus.ENABLED,
-				UserStatus.DISABLED });
-		modelMap.put("gender", OXMUtil.getGenderList());
-	}
 
 	@Secured({ PermissionConstants.ADD_PRODUCER })
 	@RequestMapping(value = "/producers/edit/{pOrgId}/{producerId}", method = RequestMethod.GET)
@@ -244,7 +228,7 @@ public class POrgController {
 				"Edit Producer " + producer.getName() + " in Producer org. "
 						+ pOrg.getName());
 
-		prepareUserFormModel(modelMap);
+		userController.prepareUserFormModel(modelMap);
 
 		return new ModelAndView("formPOrgProducer", modelMap);
 	}
@@ -253,7 +237,7 @@ public class POrgController {
 	public ModelAndView saveProducerOrgProducersHandler(
 			@ModelAttribute("producer") User producer,
 			@RequestParam(value = "userPic", required = false) MultipartFile userPic,
-			ModelMap modelMap) {
+			ModelMap modelMap) throws SessionExpiredException {
 
 		User existingProducer = producer;
 
@@ -292,11 +276,15 @@ public class POrgController {
 									.getName() : "") + " in Producer org. "
 							+ producer.getProducerOrg().getName());
 
-			prepareUserFormModel(modelMap);
+			userController.prepareUserFormModel(modelMap);
 			return new ModelAndView("formPOrgProducer", modelMap);
 		}
-		return viewProducerOrgMembersHandler(producer.getProducerOrg().getId(),
-				modelMap);
+
+		if (producer.getProducerOrg() != null)
+			return viewProducerOrgMembersHandler(producer.getProducerOrg()
+					.getId(), modelMap);
+		else
+			return viewProducerOrgHandler(modelMap);
 	}
 
 	@Secured({ PermissionConstants.VIEW_PROD_ORG })

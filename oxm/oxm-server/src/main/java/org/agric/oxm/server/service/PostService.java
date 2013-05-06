@@ -24,7 +24,11 @@ public interface PostService {
 
 	List<Post> getPosts();
 
-	List<Post> getPostsWithParams(PostSearchParameters params);
+	List<Post> searchWithParams(PostSearchParameters params);
+
+	long numberInSearch(PostSearchParameters params);
+
+	List<Post> searchWithParams(PostSearchParameters params, Integer pageNo);
 
 	Post getPostById(String id);
 
