@@ -1,12 +1,14 @@
 package org.agric.oxm.model;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -28,6 +30,8 @@ public class ProducerOrganisation extends BaseData implements
 	private List<StaffMember> staffMembers;
 
 	private List<Committee> committees;
+
+	private List<Document> documents = Collections.emptyList();
 
 	public ProducerOrganisation() {
 		super();
@@ -160,6 +164,16 @@ public class ProducerOrganisation extends BaseData implements
 			return;
 		}
 		this.getCommittees().remove(committee);
+	}
+
+	public void setDocuments(List<Document> documents) {
+		this.documents = documents;
+	}
+
+	@OneToMany
+	@JoinTable(name = "porg_documents", joinColumns = @JoinColumn(name = "porg_id"), inverseJoinColumns = @JoinColumn(name = "document_id"))
+	public List<Document> getDocuments() {
+		return this.documents;
 	}
 
 	@Override

@@ -107,7 +107,7 @@ public final class OXMSecurityUtil {
 				} else if (auth.getPrincipal() instanceof User) {
 					user = (User) auth.getPrincipal();
 				} else {
-					log.debug("Auth not an instance of MohrUserDetails - i.e. no logged in user. Auth="
+					log.debug("Auth not an instance of OXMUserDetails - i.e. no logged in user. Auth="
 							+ auth);
 					throw new SessionExpiredException(
 							"Could not find logged in user");

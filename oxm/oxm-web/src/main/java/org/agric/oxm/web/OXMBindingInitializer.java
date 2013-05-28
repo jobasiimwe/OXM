@@ -10,6 +10,7 @@ import org.agric.oxm.model.ConceptCategory;
 import org.agric.oxm.model.Crop;
 import org.agric.oxm.model.District;
 import org.agric.oxm.model.Document;
+import org.agric.oxm.model.FinancialInstitution;
 import org.agric.oxm.model.Parish;
 import org.agric.oxm.model.Permission;
 import org.agric.oxm.model.Position;
@@ -29,6 +30,7 @@ import org.agric.oxm.web.propertyeditors.CropPropertyEditor;
 import org.agric.oxm.web.propertyeditors.DatePropertyEditor;
 import org.agric.oxm.web.propertyeditors.DistrictPropertyEditor;
 import org.agric.oxm.web.propertyeditors.DocumentPropertyEditor;
+import org.agric.oxm.web.propertyeditors.FinancialInstitutionPropertyEditor;
 import org.agric.oxm.web.propertyeditors.ParishPropertyEditor;
 import org.agric.oxm.web.propertyeditors.PermissionPropertyEditor;
 import org.agric.oxm.web.propertyeditors.PositionPropertyEditor;
@@ -99,6 +101,9 @@ public class OXMBindingInitializer implements WebBindingInitializer {
 	@Autowired
 	private StaffMemberpropertyEditor staffMemberPropertyEditor;
 
+	@Autowired
+	private FinancialInstitutionPropertyEditor financialInstitutionPropertyEditor;
+
 	@Override
 	public void initBinder(WebDataBinder binder, WebRequest request) {
 		binder.registerCustomEditor(District.class, districtPropertyEditor);
@@ -127,5 +132,7 @@ public class OXMBindingInitializer implements WebBindingInitializer {
 				committeeMemberPropertyEditor);
 		binder.registerCustomEditor(StaffMember.class,
 				staffMemberPropertyEditor);
+		binder.registerCustomEditor(FinancialInstitution.class,
+				financialInstitutionPropertyEditor);
 	}
 }

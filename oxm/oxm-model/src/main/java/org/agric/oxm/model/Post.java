@@ -87,7 +87,7 @@ public class Post extends BaseData implements Comparable<Post> {
 						.get(Calendar.DAY_OF_MONTH)) {
 					Integer minutes = minuteDifference(caNow, calDatePosted);
 
-					if (minutes < 5)
+					if (minutes < 1)
 						return "Just Now";
 					if (minutes <= 50)
 						return minutes + " minutes ago";

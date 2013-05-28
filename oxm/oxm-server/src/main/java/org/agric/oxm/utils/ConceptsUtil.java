@@ -9,9 +9,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Mohr Utilities.
+ * OXM Utilities.
  * 
- * @author smuwanga
+ * @author Job
  * 
  */
 public final class ConceptsUtil {

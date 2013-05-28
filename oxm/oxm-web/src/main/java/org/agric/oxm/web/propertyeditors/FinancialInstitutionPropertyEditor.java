@@ -1,21 +1,21 @@
 package org.agric.oxm.web.propertyeditors;
 
-import org.agric.oxm.model.Concept;
-import org.agric.oxm.server.service.ConceptService;
+import org.agric.oxm.model.FinancialInstitution;
+import org.agric.oxm.server.service.FinancialInstitutionService;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-@Component("conceptPropertyEditor")
-public class ConceptPropertyEditor extends BasePropertyEditor {
+@Component("financialInstitutionPropertyEditor")
+public class FinancialInstitutionPropertyEditor extends BasePropertyEditor {
 
 	@Autowired
-	private ConceptService conceptService;
+	private FinancialInstitutionService financialInstitutionService;
 
 	@Override
 	public String getAsText() {
-		if (super.getValue() != null && super.getValue() instanceof Concept) {
-			return ((Concept) super.getValue()).getId();
+		if (super.getValue() != null && super.getValue() instanceof FinancialInstitution) {
+			return ((FinancialInstitution) super.getValue()).getId();
 		}
 
 		return super.getAsText();
@@ -27,11 +27,10 @@ public class ConceptPropertyEditor extends BasePropertyEditor {
 			if (StringUtils.equalsIgnoreCase("none", text)) {
 				super.setValue(null);
 			} else {
-				super.setValue(conceptService.getConceptById(text));
+				super.setValue(financialInstitutionService.getFinancialInstitutionById(text));
 			}
 		} else {
 			super.setAsText(text);
 		}
 	}
-
 }

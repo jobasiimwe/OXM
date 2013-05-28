@@ -37,6 +37,7 @@
 			user = OXMSecurityUtil.getLoggedInUser();
 			if (user != null) {
 			    pageContext.setAttribute("loggedInUser", user);
+			    session.setAttribute("loggedInUser", user);
 			}
 	    } catch (Exception ex) {
 	    }

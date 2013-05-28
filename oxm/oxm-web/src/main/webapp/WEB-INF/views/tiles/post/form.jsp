@@ -7,7 +7,7 @@
 
 	<fieldset>
 		<legend>
-			<b title="New Post">New Post</b>
+			<span title="New Post">New Post</span>
 		</legend>
 		<div>
 			<form:hidden path="owner" />

@@ -13,7 +13,7 @@
 
 
 <div>
-	<form:form action="${baseUrl }/fInstitution/save/"
+	<form:form action="${baseUrl }/finstitution/save/"
 		commandName="fInstitution">
 
 		<form:hidden path="id" />

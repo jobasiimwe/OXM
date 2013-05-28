@@ -50,7 +50,7 @@
 	</div>
 	<div class="menu">
 		<a class="menu-lnk" id="lnkfInstition" title="Financial Institution"
-			href="${baseUrl }/fInstitution/view/"> <span
+			href="${baseUrl }/finstitution/view/"> <span
 			class="panellink fInstitution-icon"></span><label
 			style="margin: 10px; font-size: 12px; font-weight: bold;">Financial
 				Institution</label> </a>

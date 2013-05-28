@@ -885,24 +885,69 @@
     <changeSet author="Job (generated)" id="1365451053727-67">
         <addForeignKeyConstraint baseColumnNames="user_id" baseTableName="committee_member" constraintName="FK1792999C6BA9B6BB" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="users"/>
     </changeSet>
-    <!--  <changeSet author="Job (Manual)" id="1365451053727-3">
-    	<createIndex tableName="committee_member" indexName="" unique="true"></createIndex>
-    </changeSet>
     
-    <changeSet author="Job (generated)" id="1365451053727-14">
-        <dropIndex indexName="FK1792999C1AC06994" tableName="committee_member"/>
-    </changeSet> 
-     <changeSet author="Job (generated)" id="1365451053727-140">
-        <dropColumn columnName="producer_id" tableName="committee_member"/>
-    </changeSet>
-    <changeSet author="Job (generated)" id="1365451053727-3">
-        <addColumn tableName="committee_member">
-            <column name="user_id" type="varchar(255)">
+
+	<!--  -->
+    <changeSet author="Job (generated)" id="1368481234001-1">
+        <createTable tableName="finstitution_documents">
+            <column name="finstitution_id" type="varchar(255)">
                 <constraints nullable="false"/>
             </column>
+            <column name="document_id" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="Job (generated)" id="1368481234001-2">
+        <createTable tableName="porg_documents">
+            <column name="porg_id" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="document_id" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="Job (generated)" id="1368481234001-3">
+        <addColumn tableName="documents">
+            <column name="finstitution_doc_owner" type="varchar(255)"/>
         </addColumn>
     </changeSet>
-    <changeSet author="Job (generated)" id="1365451053727-67">
-        <addForeignKeyConstraint baseColumnNames="user_id" baseTableName="committee_member" constraintName="FK1792999C6BA9B6BB" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="users"/>
-    </changeSet>-->
+    <changeSet author="Job (generated)" id="1368481234001-4">
+        <addColumn tableName="documents">
+            <column name="porg_doc_owner" type="varchar(255)"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="Job (generated)" id="1368481234001-5">
+        <addNotNullConstraint columnDataType="varchar(255)" columnName="user_id" defaultNullValue="" tableName="committee_member"/>
+    </changeSet>
+    <changeSet author="Job (generated)" id="1368481234001-6">
+        <addNotNullConstraint columnDataType="varchar(1000)" columnName="text" defaultNullValue="" tableName="post"/>
+    </changeSet>
+    
+    <changeSet author="Job (generated)" id="1368481234001-13">
+        <createIndex indexName="UK7A46884B1E3346BF" tableName="finstitution_documents">
+            <column name="document_id"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="Job (generated)" id="1368481234001-15">
+        <createIndex indexName="UK7075E4AD1E3346BF" tableName="porg_documents">
+            <column name="document_id"/>
+        </createIndex>
+    </changeSet>
+    
+    <changeSet author="Job (generated)" id="1368481234001-92">
+        <addForeignKeyConstraint baseColumnNames="document_id" baseTableName="finstitution_documents" constraintName="FK7A46884BFADC9C3B" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="documents"/>
+    </changeSet>
+    <changeSet author="Job (generated)" id="1368481234001-93">
+        <addForeignKeyConstraint baseColumnNames="finstitution_id" baseTableName="finstitution_documents" constraintName="FK7A46884BA1591338" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="financial_institution"/>
+    </changeSet>
+    <changeSet author="Job (generated)" id="1368481234001-101">
+        <addForeignKeyConstraint baseColumnNames="document_id" baseTableName="porg_documents" constraintName="FK7075E4ADFADC9C3B" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="documents"/>
+    </changeSet>
+    <changeSet author="Job (generated)" id="1368481234001-102">
+        <addForeignKeyConstraint baseColumnNames="porg_id" baseTableName="porg_documents" constraintName="FK7075E4AD7ABE933" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="producer_org"/>
+    </changeSet>
+ 
+
 </databaseChangeLog>

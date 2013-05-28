@@ -77,13 +77,13 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 	this.userDAO = userDAO;
     }
 
-    public OXMUserDetailsService getMohrUserDetailsService() {
+    public OXMUserDetailsService getOXMUserDetailsService() {
 	return oXMUserDetailsService;
     }
 
-    public void setMohrUserDetailsService(
-	    OXMUserDetailsService mohrUserDetailsService) {
-	this.oXMUserDetailsService = mohrUserDetailsService;
+    public void setOXMUserDetailsService(
+	    OXMUserDetailsService oxmUserDetailsService) {
+	this.oXMUserDetailsService = oxmUserDetailsService;
     }
 
     @Override

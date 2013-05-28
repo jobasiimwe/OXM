@@ -6,7 +6,7 @@ $(document)
 				function() {
 
 					/**
-					 * producerOrg
+					 * single item functions
 					 */
 					$(
 							"#lnkEditPOrg, #lnkPOrgDetails, #lnkPOrgMembers, #lnkPOrgDocs, "// pOrg
@@ -16,22 +16,28 @@ $(document)
 									+ " #lnkSubCountyParishes,  #lnkEditParish, #lnkParishVillages, "
 									+ " #lnkEditVillage, "
 									+ " #lnkEditPosition, #lnkPositionHolders,"
-									+ " #lnkEditfInstitution, #lnkEditSeason, #lnkEditCrop, "
+									+ " #lnkEditfInstitution, #lnkfInstitutionDocuments, "
+									+ " #lnkEditFInstitutionDoc, "
+									+ " #lnkEditSeason, #lnkEditCrop, "
 									+ " #lnkCropDetails, #lnkEditPrice, #lnkEditSellingPlace, "
 									+ " #lnkEditRole, #lnkEditUser, #lnkEditConcept, "
-									+ " #lnkEditPOrgCommittee, #lnkPOrgCommitteeMembers, #lnkEditPOrgCommitteeMember, "
+									+ " #lnkEditPOrgCommittee, #lnkPOrgCommittees, #lnkEditPOrgCommitteeMember, "
 									+ " #lnkEditPOrgStaff, ").click(
 							function() {
 								return singleItemAction($(this).attr('id'), $(
 										"#nameOfItemOnPage").attr("value"));
 							});
 
+					/**
+					 * multiple item functions
+					 */
 					$(
 							"#lnkDeletePOrg, #lnkDeletePOrgMember, #lnkDeletePOrgDocs, "
 									+ " #lnkDeletePOrgStaff, #lnkDeletePOrgCommittee, "
 									+ " #lnkDeleteDistrict, #lnkDeleteSubCounty," // district
 									+ " #lnkDeleteParish, #lnkDeleteVillage, "
-									+ " #lnkDeletePOrg, #lnkDeletePosition, #lnkDeletefInstitution, "
+									+ " #lnkDeletePOrg, #lnkDeletePosition, "
+									+ " #lnkDeletefInstitution, #lnkDeleteFInstitutionDoc, "
 									+ " #lnkDeleteSeason, #lnkDeleteCrop, #lnkDeletePrice, "
 									+ " #lnkDeleteSellingPlace, #lnkDeleteRole, #lnkDeleteUser, "
 									+ " #lnkDeleteConcept,"

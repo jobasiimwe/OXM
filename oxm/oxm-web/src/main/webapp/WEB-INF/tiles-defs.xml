@@ -254,4 +254,13 @@
 		<put-attribute name="body" type="template" value="/WEB-INF/views/tiles/post/form.jsp" />
 	</definition>
 	
+	<!--===== Financial Institution Documents ====== -->
+	<definition name="fInstitutionDocView" extends="layout">
+		<put-attribute name="body" type="template" value="/WEB-INF/views/tiles/finstitution/docs.jsp" />
+	</definition>
+	
+	<definition name="fInstitutionDocForm" extends="layout">
+		<put-attribute name="body" type="template" value="/WEB-INF/views/tiles/finstitution/docform.jsp" />
+	</definition>
+	
 </tiles-definitions>

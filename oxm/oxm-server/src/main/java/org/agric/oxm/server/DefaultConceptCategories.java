@@ -70,7 +70,8 @@ public final class DefaultConceptCategories {
 	 * array of the default concept categories
 	 */
 	public static final String[] DEFAULT_CONCEPT_CATEGORIES = new String[] {
-			UNITS_OF_MEASURE, SELLING_TYPE, FORUM_POST_TYPE };
+			UNITS_OF_MEASURE, SELLING_TYPE, FORUM_POST_TYPE, CROP_INPUTS,
+			SEED_VARIETIES, PLOUGHING_METHODS, INTER_CROPING_TYPES };
 
 	/**
 	 * gets the id of the field in this class representing the given concept

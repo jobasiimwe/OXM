@@ -1,7 +1,14 @@
 package org.agric.oxm.model;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -12,6 +19,8 @@ public class FinancialInstitution extends BaseData implements
 	private String name;
 
 	private String address;
+
+	private List<Document> documents = Collections.emptyList();
 
 	public FinancialInstitution() {
 		super();
@@ -33,6 +42,48 @@ public class FinancialInstitution extends BaseData implements
 
 	public void setAddress(String address) {
 		this.address = address;
+	}
+
+	public void setDocuments(List<Document> documents) {
+		this.documents = documents;
+	}
+
+	public void addDocument(Document member) {
+		if (member == null) {
+			return;
+		}
+
+		if (this.getDocuments() == null) {
+			this.setDocuments(new ArrayList<Document>());
+		}
+
+		this.getDocuments().add(member);
+	}
+
+	public void removemDocument(Document member) {
+		if (member == null || this.getDocuments() == null) {
+			return;
+		}
+
+		this.getDocuments().remove(member);
+	}
+
+	public void removeDocumentsByIds(String[] idzToDelete) {
+		for (String id : idzToDelete) {
+			Document member = new Document(id);
+
+			if (this.getDocuments().contains(member)) {
+				getDocuments().remove(member);
+			}
+		}
+	}
+	@OneToMany
+	@JoinTable(name = "finstitution_documents", joinColumns = @JoinColumn(name = "finstitution_id"), inverseJoinColumns = @JoinColumn(name = "document_id"))
+	public List<Document> getDocuments() {
+		//if (this.documents == null)
+		//	return new ArrayList<Document>();
+
+		return this.documents;
 	}
 
 	@Override
