@@ -6,7 +6,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 import org.agric.oxm.model.BaseData;
-import org.agric.oxm.model.RecordStatus;
+import org.agric.oxm.model.enums.RecordStatus;
 import org.agric.oxm.server.dao.BaseDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 

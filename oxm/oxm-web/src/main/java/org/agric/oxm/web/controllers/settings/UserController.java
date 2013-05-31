@@ -6,11 +6,11 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
 
-import org.agric.oxm.model.Gender;
 import org.agric.oxm.model.ProducerOrganisation;
 import org.agric.oxm.model.Role;
 import org.agric.oxm.model.User;
-import org.agric.oxm.model.UserStatus;
+import org.agric.oxm.model.enums.Gender;
+import org.agric.oxm.model.enums.UserStatus;
 import org.agric.oxm.model.exception.SessionExpiredException;
 import org.agric.oxm.model.exception.ValidationException;
 import org.agric.oxm.model.search.UserSearchParameters;

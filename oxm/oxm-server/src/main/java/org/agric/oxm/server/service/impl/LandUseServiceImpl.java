@@ -3,8 +3,8 @@ package org.agric.oxm.server.service.impl;
 import java.util.List;
 
 import org.agric.oxm.model.LandUse;
-import org.agric.oxm.model.RecordStatus;
 import org.agric.oxm.model.User;
+import org.agric.oxm.model.enums.RecordStatus;
 import org.agric.oxm.model.exception.ValidationException;
 import org.agric.oxm.server.dao.LandUseDAO;
 import org.agric.oxm.server.security.PermissionConstants;

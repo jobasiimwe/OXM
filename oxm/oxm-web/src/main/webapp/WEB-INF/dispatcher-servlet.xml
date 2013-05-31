@@ -41,8 +41,15 @@
 	</mvc:interceptors>
 
 	<bean id="tilesConfigurer"
-		class="org.springframework.web.servlet.view.tiles2.TilesConfigurer"
-		p:definitions="/WEB-INF/tiles-defs.xml" />
+		class="org.springframework.web.servlet.view.tiles2.TilesConfigurer">
+		<property name="definitions">
+			<list>
+				<value>/WEB-INF/tile-defs/tiles-defs.xml</value>
+				<value>/WEB-INF/tile-defs/district-tiles-defs.xml</value>
+				<value>/WEB-INF/tile-defs/porg-tiles-defs.xml</value>
+			</list>
+		</property>
+	</bean>
 
 
 	<!--======= FILE UPLOAD WITH SPRING ========= -->

@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.agric.oxm.model.Committee;
 import org.agric.oxm.model.CommitteeMember;
-import org.agric.oxm.model.RecordStatus;
+import org.agric.oxm.model.enums.RecordStatus;
 import org.agric.oxm.model.exception.ValidationException;
 import org.agric.oxm.server.dao.CommitteeDAO;
 import org.agric.oxm.server.dao.CommitteeMemberDAO;

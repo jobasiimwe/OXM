@@ -86,7 +86,7 @@
 
 
 	<!-- role producer -->
-	<changeSet author="Job (Manual)" id="a1">
+	<changeSet author="Job (Manual)" id="9E00E7C6-6EAC-49b8-8F9A-276FD2807A9C">
 		<preConditions onFail="MARK_RAN" onError="HALT">
 			<tableExists tableName="roles" />
 			<and>
@@ -106,7 +106,7 @@
 	</changeSet>
 
 	<!-- role exporter -->
-	<changeSet author="Job (Manual)" id="a2">
+	<changeSet author="Job (Manual)" id="1B278F16-2057-4d88-9275-3CFC0C4A038F">
 		<preConditions onFail="MARK_RAN" onError="HALT">
 			<tableExists tableName="roles" />
 			<and>
@@ -127,7 +127,7 @@
 
 
 	<!-- role importer -->
-	<changeSet author="Job (Manual)" id="a3">
+	<changeSet author="Job (Manual)" id="2DA78081-D647-4e26-B556-1C6C6D916F64">
 		<preConditions onFail="MARK_RAN" onError="HALT">
 			<tableExists tableName="roles" />
 			<and>
@@ -147,7 +147,7 @@
 	</changeSet>
 
 	<!-- role Super market -->
-	<changeSet author="Job (Manual)" id="a4">
+	<changeSet author="Job (Manual)" id="0107A440-E6E9-4d43-AF8E-80F4DE665C46">
 		<preConditions onFail="MARK_RAN" onError="HALT">
 			<tableExists tableName="roles" />
 			<and>
@@ -167,7 +167,7 @@
 	</changeSet>
 
 	<!-- role Agro-Processors -->
-	<changeSet author="Job (Manual)" id="a5">
+	<changeSet author="Job (Manual)" id="CFD51F56-95C4-44e6-9BBE-BDB206A08038">
 		<preConditions onFail="MARK_RAN" onError="HALT">
 			<tableExists tableName="roles" />
 			<and>
@@ -187,7 +187,7 @@
 	</changeSet>
 
 	<!-- role Hotels and restaurants -->
-	<changeSet author="Job (Manual)" id="a6">
+	<changeSet author="Job (Manual)" id="75AD8BF8-0804-4b86-8036-196168CC7D75">
 		<preConditions onFail="MARK_RAN" onError="HALT">
 			<tableExists tableName="roles" />
 			<and>
@@ -208,7 +208,7 @@
 	</changeSet>
 
 	<!-- role Oxfam Staff -->
-	<changeSet author="Job (Manual)" id="a7">
+	<changeSet author="Job (Manual)" id="6DFD75BB-03BC-4bc4-8EF1-8AC8179B1849">
 		<preConditions onFail="MARK_RAN" onError="HALT">
 			<tableExists tableName="roles" />
 			<and>
@@ -228,7 +228,7 @@
 	</changeSet>
 
 	<!-- role Producer Organization Staff -->
-	<changeSet author="Job (Manual)" id="a8">
+	<changeSet author="Job (Manual)" id="4701899B-5695-4bf6-B391-A1238A4BB89B">
 		<preConditions onFail="MARK_RAN" onError="HALT">
 			<tableExists tableName="roles" />
 			<and>
@@ -248,7 +248,7 @@
 	</changeSet>
 
 	<!-- role development organisations and government workers -->
-	<changeSet author="Job (Manual)" id="a9">
+	<changeSet author="Job (Manual)" id="9A48950C-2465-471f-B31F-8D55E6122D7B">
 		<preConditions onFail="MARK_RAN" onError="HALT">
 			<tableExists tableName="roles" />
 			<and>

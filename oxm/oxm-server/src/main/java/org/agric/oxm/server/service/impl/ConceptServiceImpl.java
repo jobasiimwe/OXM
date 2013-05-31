@@ -6,7 +6,7 @@ import java.util.List;
 
 import org.agric.oxm.model.Concept;
 import org.agric.oxm.model.ConceptCategory;
-import org.agric.oxm.model.RecordStatus;
+import org.agric.oxm.model.enums.RecordStatus;
 import org.agric.oxm.model.exception.ValidationException;
 import org.agric.oxm.model.search.SingleStringSearchParameters;
 import org.agric.oxm.model.search.ConceptSearchParameters;

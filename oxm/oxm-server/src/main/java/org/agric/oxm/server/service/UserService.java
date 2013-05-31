@@ -40,6 +40,8 @@ public interface UserService {
 
 	void validate(User user) throws ValidationException;
 
+	Boolean usernameExists(String username);
+
 	void deleteUser(User user) throws OperationFailedException;
 
 	void deleteUserById(String id) throws OperationFailedException;

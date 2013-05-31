@@ -4,8 +4,8 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-import org.agric.oxm.model.RecordStatus;
 import org.agric.oxm.model.Season;
+import org.agric.oxm.model.enums.RecordStatus;
 import org.agric.oxm.model.exception.ValidationException;
 import org.agric.oxm.server.dao.SeasonDAO;
 import org.agric.oxm.server.security.PermissionConstants;

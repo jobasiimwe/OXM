@@ -4,22 +4,14 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix='fn' uri='http://java.sun.com/jsp/jstl/functions'%>
 
-<%@ taglib prefix="oxmBreadcrambs"
-	tagdir="/WEB-INF/tags/breadcramblinks"%>
-<%@ taglib prefix="oxmDistrictBreadcrambs"
-	tagdir="/WEB-INF/tags/breadcramblinks/districts"%>
+<%@ taglib prefix="oxmBreadcrambs" tagdir="/WEB-INF/tags/breadcramblinks"%>
+<%@ taglib prefix="oxmDistrictBreadcrambs" tagdir="/WEB-INF/tags/breadcramblinks/districts"%>
 
 <div style="margin: 5px; width: 100%;">
 	<oxmBreadcrambs:cpanel startingBreadcramb="true" />
 	<oxmDistrictBreadcrambs:districts />
 	form
 </div>
-
-<style>
-form#district input[type="text"] {
-	width: 70%;
-}
-</style>
 
 <div>
 	<form:form action="${baseUrl }/district/save/" commandName="district">

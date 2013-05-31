@@ -7,6 +7,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 
+import org.agric.oxm.model.enums.RecordStatus;
 import org.hibernate.annotations.GenericGenerator;
 
 @MappedSuperclass

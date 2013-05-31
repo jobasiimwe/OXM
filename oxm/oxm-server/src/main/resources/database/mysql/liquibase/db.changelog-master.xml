@@ -20,5 +20,7 @@
 	</changeSet>
 	
 	<include file="database/mysql/liquibase/db.changelog-1.0.xml" />
+	<include file="database/mysql/liquibase/db.changelog-1.0.1.xml" />
+
 	<include file="database/mysql/liquibase/db.changelog.data-1.0.xml" />
 </databaseChangeLog>

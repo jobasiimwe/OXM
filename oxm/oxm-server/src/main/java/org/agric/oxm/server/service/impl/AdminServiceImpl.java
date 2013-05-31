@@ -4,9 +4,9 @@ import java.util.List;
 
 import org.agric.oxm.model.District;
 import org.agric.oxm.model.Parish;
-import org.agric.oxm.model.RecordStatus;
 import org.agric.oxm.model.SubCounty;
 import org.agric.oxm.model.Village;
+import org.agric.oxm.model.enums.RecordStatus;
 import org.agric.oxm.model.exception.ValidationException;
 import org.agric.oxm.server.dao.DistrictDAO;
 import org.agric.oxm.server.dao.ParishDAO;

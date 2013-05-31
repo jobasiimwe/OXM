@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN" "http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
+<tiles-definitions>
+<!-- ======= FORM for Production Organization ========== -->
+	<definition name="viewProducerOrg" extends="layout">
+	    <put-attribute name="scripts" type="template" value="/WEB-INF/views/tiles/producerorg/scripts.jsp" />
+		<put-attribute name="body" type="template" value="/WEB-INF/views/tiles/producerorg/view.jsp" />
+	</definition>
+	
+	<definition name="formProducerOrg" extends="viewProducerOrg">
+		<put-attribute name="body" type="template" value="/WEB-INF/views/tiles/producerorg/form.jsp" />
+	</definition>
+	
+	<definition name="viewPOrgProducers" extends="viewProducerOrg">
+		<put-attribute name="body" type="template" value="/WEB-INF/views/tiles/producerorg/members/view.jsp" />
+	</definition>
+	
+	<definition name="formPOrgProducer" extends="viewProducerOrg">
+		<put-attribute name="body" type="template" value="/WEB-INF/views/tiles/producerorg/members/form.jsp" />
+	</definition>
+	
+	<definition name="viewPOrgDetails" extends="viewProducerOrg">
+		<put-attribute name="body" type="template" value="/WEB-INF/views/tiles/producerorg/details.jsp" />
+	</definition>
+	
+	<definition name="pOrgCommitteeView" extends="viewProducerOrg">
+		<put-attribute name="body" type="template" value="/WEB-INF/views/tiles/producerorg/committee/view.jsp" />
+	</definition>
+	
+	<definition name="pOrgCommitteeForm" extends="viewProducerOrg">
+		<put-attribute name="body" type="template" value="/WEB-INF/views/tiles/producerorg/committee/form.jsp" />
+	</definition>
+	
+	<definition name="pOrgCommitteeMemberView" extends="viewProducerOrg">
+		<put-attribute name="body" type="template" value="/WEB-INF/views/tiles/producerorg/committee/member/view.jsp" />
+	</definition>
+	
+	<definition name="pOrgCommitteeMemberForm" extends="viewProducerOrg">
+		<put-attribute name="body" type="template" value="/WEB-INF/views/tiles/producerorg/committee/member/form.jsp" />
+	</definition>
+	
+	<definition name="pOrgDocumentView" extends="viewProducerOrg">
+		<put-attribute name="body" type="template" value="/WEB-INF/views/tiles/producerorg/document/view.jsp" />
+	</definition>
+	
+	<definition name="pOrgDocumentForm" extends="viewProducerOrg">
+		<put-attribute name="body" type="template" value="/WEB-INF/views/tiles/producerorg/document/form.jsp" />
+	</definition>
+	
+	<definition name="pOrgStaffView" extends="viewProducerOrg">
+		<put-attribute name="body" type="template" value="/WEB-INF/views/tiles/producerorg/staff/view.jsp" />
+	</definition>
+	
+	<definition name="pOrgStaffForm" extends="viewProducerOrg">
+		<put-attribute name="body" type="template" value="/WEB-INF/views/tiles/producerorg/staff/form.jsp" />
+	</definition>
+
+</tiles-definitions>

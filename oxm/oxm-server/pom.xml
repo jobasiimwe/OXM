@@ -187,12 +187,7 @@
 			<scope>test</scope>
 		</dependency>
 
-		<!-- ========= Apache poi ======== -->
-		<dependency>
-			<groupId>org.apache.poi</groupId>
-			<artifactId>poi</artifactId>
-			<version>3.7</version>
-		</dependency>
+		
 	</dependencies>
 
 	<build>
@@ -215,7 +210,7 @@
 							<classpath refid="maven.compile.classpath" />
 						</taskdef>
 						<diffDatabaseToChangeLog driver="com.mysql.jdbc.Driver"
-							url="jdbc:mysql://localhost:3306/oxm" username="test" password="test"
+							url="jdbc:mysql://localhost:3306/oxm-db" username="oxmadmin" password="qas1234s"
 							baseUrl="hibernate:hibernate.cfg.xml" outputFile="${basedir}/src/main/resources/oXMChangelog.xml"
 							classpathref="maven.compile.classpath">
 						</diffDatabaseToChangeLog>

@@ -13,7 +13,7 @@ import liquibase.exception.InvalidChangeDefinitionException;
 import liquibase.exception.SetupException;
 import liquibase.exception.UnsupportedChangeException;
 
-import org.agric.oxm.model.RecordStatus;
+import org.agric.oxm.model.enums.RecordStatus;
 import org.agric.oxm.server.security.PermissionAnnotation;
 import org.agric.oxm.server.security.PermissionConstants;
 import org.slf4j.Logger;

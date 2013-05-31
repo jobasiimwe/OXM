@@ -2,7 +2,7 @@ package org.agric.oxm.web;
 
 import java.lang.reflect.Field;
 
-import org.agric.oxm.model.Gender;
+import org.agric.oxm.model.enums.Gender;
 import org.agric.oxm.server.ConceptAnnotation;
 import org.agric.oxm.server.ConceptCategoryAnnotation;
 import org.apache.commons.lang.StringUtils;

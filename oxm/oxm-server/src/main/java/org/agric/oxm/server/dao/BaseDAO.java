@@ -2,7 +2,7 @@ package org.agric.oxm.server.dao;
 
 import java.util.List;
 
-import org.agric.oxm.model.RecordStatus;
+import org.agric.oxm.model.enums.RecordStatus;
 
 import com.googlecode.genericdao.dao.jpa.GenericDAO;
 

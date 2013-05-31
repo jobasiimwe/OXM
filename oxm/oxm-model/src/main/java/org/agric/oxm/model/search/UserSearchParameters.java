@@ -3,9 +3,9 @@
  */
 package org.agric.oxm.model.search;
 
-import org.agric.oxm.model.Gender;
 import org.agric.oxm.model.ProducerOrganisation;
 import org.agric.oxm.model.Role;
+import org.agric.oxm.model.enums.Gender;
 
 /**
  * @author Job

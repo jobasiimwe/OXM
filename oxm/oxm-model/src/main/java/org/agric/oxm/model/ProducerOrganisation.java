@@ -25,6 +25,10 @@ public class ProducerOrganisation extends BaseData implements
 
 	private SubCounty subCounty;
 
+	private Parish parish;
+
+	private Village village;
+
 	private List<User> producers;
 
 	private List<StaffMember> staffMembers;
@@ -34,7 +38,19 @@ public class ProducerOrganisation extends BaseData implements
 	private List<Document> documents = Collections.emptyList();
 
 	public ProducerOrganisation() {
-		super();
+	}
+
+	public ProducerOrganisation(String id) {
+		this.setId(id);
+	}
+
+	public ProducerOrganisation(String name, District district,
+			SubCounty subCounty, Parish parish, Village village) {
+		this.setName(name);
+		this.setDistrict(district);
+		this.setSubCounty(subCounty);
+		this.setParish(parish);
+		this.setVillage(village);
 	}
 
 	@Column(name = "name", nullable = false)
@@ -70,6 +86,26 @@ public class ProducerOrganisation extends BaseData implements
 
 	public void setSubCounty(SubCounty subCounty) {
 		this.subCounty = subCounty;
+	}
+
+	@ManyToOne
+	@JoinColumn(name = "parish_id", nullable = false)
+	public Parish getParish() {
+		return parish;
+	}
+
+	public void setParish(Parish parish) {
+		this.parish = parish;
+	}
+
+	@ManyToOne
+	@JoinColumn(name = "village_id", nullable = false)
+	public Village getVillage() {
+		return village;
+	}
+
+	public void setVillage(Village village) {
+		this.village = village;
 	}
 
 	@OneToMany(mappedBy = "producerOrg", cascade = { CascadeType.ALL }, orphanRemoval = false)

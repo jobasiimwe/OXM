@@ -1,13 +1,16 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix='fn' uri='http://java.sun.com/jsp/jstl/functions'%>
+
 <%@ taglib prefix="oxmTags" tagdir="/WEB-INF/tags"%>
 <%@ taglib prefix="oxmBreadcrambs" tagdir="/WEB-INF/tags/breadcramblinks"%>
 <%@ taglib prefix="oxmDistrictBreadcrambs" tagdir="/WEB-INF/tags/breadcramblinks/districts"%>
+
 <div style="margin: 5px; width: 100%;">
 	<oxmBreadcrambs:cpanel startingBreadcramb="true" />
 	<oxmDistrictBreadcrambs:districts />
 </div>
+
 <div id="buttonStrip">
 	<div class="contextual">
 		<a id="lnkAddDistrict" class="uiButton" href="${baseUrl }/district/add/">Add</a>
@@ -15,6 +18,8 @@
 		<a id="lnkDeleteDistrict" class="uiButton" href="${baseUrl }/district/delete/">Delete</a>
 		<a id="lnkDistrictSubCounties" class="uiButton" href="${baseUrl }/subcounty/view/">Sub
 			Counties</a>
+		<a id="lnkImportDistricts" class="uiButton" href="${baseUrl }/import">Import
+			Districts</a>
 	</div>
 	<div style="float: right">
 		<form method="post" action="${baseUrl }/district/search/" style="display: inline-block">

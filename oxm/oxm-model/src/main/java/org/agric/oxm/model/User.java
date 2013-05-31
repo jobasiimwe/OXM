@@ -25,6 +25,10 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 
+import org.agric.oxm.model.enums.CategoryOfHouseHold;
+import org.agric.oxm.model.enums.Gender;
+import org.agric.oxm.model.enums.MaritalStatus;
+import org.agric.oxm.model.enums.UserStatus;
 import org.apache.commons.lang.StringUtils;
 
 @Entity
@@ -32,29 +36,19 @@ import org.apache.commons.lang.StringUtils;
 @Inheritance(strategy = InheritanceType.JOINED)
 public class User extends BaseData implements Comparable<User> {
 
-	private String username;
-
-	private String password;
+	private String name, username, password, salt, clearTextPassword;
+	private String address, phone1, phone2;
 
 	private Set<Role> roles;
 
 	private UserStatus status;
-
-	private String clearTextPassword;
-
-	private String salt;
-
-	private String name;
-
 	private Gender gender;
+	private Date dateOfBirth, dateOfJoining, dateCreated;
+	private Integer age, yearOfJoining;
+	private MaritalStatus maritalStatus;
+	private CategoryOfHouseHold categoryOfHouseHold;
 
-	private Date dateOfBirth;
-
-	private String address;
-
-	private String phone1;
-
-	private String phone2;
+	private User createdBy;
 
 	private District district;
 	private SubCounty subCounty;
@@ -74,7 +68,20 @@ public class User extends BaseData implements Comparable<User> {
 	public User(ProducerOrganisation pOrg) {
 		super();
 		this.setProducerOrg(pOrg);
+		this.setDistrict(pOrg.getDistrict());
 		this.setSubCounty(pOrg.getSubCounty());
+		this.setParish(pOrg.getParish());
+		this.setVillage(pOrg.getVillage());
+	}
+
+	public User(ProducerOrganisation pOrg, String name) {
+		super();
+		this.setProducerOrg(pOrg);
+		this.setDistrict(pOrg.getDistrict());
+		this.setSubCounty(pOrg.getSubCounty());
+		this.setParish(pOrg.getParish());
+		this.setVillage(pOrg.getVillage());
+		this.setName(name);
 	}
 
 	@Transient
@@ -369,6 +376,72 @@ public class User extends BaseData implements Comparable<User> {
 
 	public void setProducerOrg(ProducerOrganisation producerOrg) {
 		this.producerOrg = producerOrg;
+	}
+
+	@Column(name = "date_of_joining", nullable = true)
+	public Date getDateOfJoining() {
+		return dateOfJoining;
+	}
+
+	public void setDateOfJoining(Date dateOfJoining) {
+		this.dateOfJoining = dateOfJoining;
+	}
+
+	@Column(name = "date_created", nullable = true)
+	public Date getDateCreated() {
+		return dateCreated;
+	}
+
+	public void setDateCreated(Date dateCreated) {
+		this.dateCreated = dateCreated;
+	}
+
+	@Column(name = "age", nullable = true)
+	public Integer getAge() {
+		return age;
+	}
+
+	public void setAge(Integer age) {
+		this.age = age;
+	}
+
+	@Column(name = "year_of_joining", nullable = true)
+	public Integer getYearOfJoining() {
+		return yearOfJoining;
+	}
+
+	public void setYearOfJoining(Integer yearOfJoining) {
+		this.yearOfJoining = yearOfJoining;
+	}
+
+	@Enumerated(EnumType.ORDINAL)
+	@Column(name = "marital_status", nullable = true)
+	public MaritalStatus getMaritalStatus() {
+		return maritalStatus;
+	}
+
+	public void setMaritalStatus(MaritalStatus maritalStatus) {
+		this.maritalStatus = maritalStatus;
+	}
+
+	@Enumerated(EnumType.ORDINAL)
+	@Column(name = "category_of_house_hold", nullable = true)
+	public CategoryOfHouseHold getCategoryOfHouseHold() {
+		return categoryOfHouseHold;
+	}
+
+	public void setCategoryOfHouseHold(CategoryOfHouseHold categoryOfHouseHold) {
+		this.categoryOfHouseHold = categoryOfHouseHold;
+	}
+
+	@ManyToOne
+	@JoinColumn(name = "uesr_id", nullable = true)
+	public User getCreatedBy() {
+		return createdBy;
+	}
+
+	public void setCreatedBy(User createdBy) {
+		this.createdBy = createdBy;
 	}
 
 	public boolean hasNewPassword() {

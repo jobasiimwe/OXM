@@ -5,9 +5,9 @@ import java.util.List;
 
 import org.agric.oxm.model.Concept;
 import org.agric.oxm.model.Permission;
-import org.agric.oxm.model.RecordStatus;
 import org.agric.oxm.model.Role;
 import org.agric.oxm.model.User;
+import org.agric.oxm.model.enums.RecordStatus;
 import org.agric.oxm.model.exception.OperationFailedException;
 import org.agric.oxm.model.exception.ValidationException;
 import org.agric.oxm.model.search.UserSearchParameters;
@@ -111,13 +111,25 @@ public class UserServiceImpl implements UserService {
 			throw new ValidationException(
 					"You must indicate Producer Organisation for users with ROLE-PRODUCER");
 		}
-		
+
 		if (user.getProducerOrg() != null
 				&& !user.getRoles().contains(
 						new Role("4836AFAB-3D62-482c-BA9A-D9D15839C68A"))) {
 			throw new ValidationException(
 					"User can not belong to a producer Organisation if he doesn't have ROLE-PRODUCER");
 		}
+	}
+
+	@Override
+	@Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
+	public Boolean usernameExists(String username) {
+
+		User existingUserWithSimilarUsername = getUserByUserName(username);
+
+		if (existingUserWithSimilarUsername != null) {
+			return true;
+		}
+		return false;
 	}
 
 	@Override

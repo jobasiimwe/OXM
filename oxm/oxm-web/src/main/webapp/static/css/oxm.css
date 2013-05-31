@@ -584,6 +584,14 @@ span.supportedby-icon {
 	background-image: url("../images/supportedby-ico.png");
 }
 
+span.import-icon {
+	background-image: url("../images/import-ico.png");
+}
+
+span.export-icon {
+	background-image: url("../images/export-ico.png");
+}
+
 span.footericon {
 	/*background-size: contain;*/
 	background-position: 0 50%;
