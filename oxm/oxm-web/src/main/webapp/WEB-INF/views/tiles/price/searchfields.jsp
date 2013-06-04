@@ -8,7 +8,7 @@
 	<form:form action="${baseUrl}/price/search" commandName="pricesearch">
 		<fieldset>
 			<legend>
-				<span title="Search Prioces">Search Prices</span>
+				<span title="Search Prices">Search Prices</span>
 			</legend>
 
 			<form:hidden path="propertiesMap['adminview'].booleanValue" />

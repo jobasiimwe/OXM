@@ -21,4 +21,5 @@ public enum MaritalStatus {
 	public String getName() {
 		return this.name;
 	}
+	
 };

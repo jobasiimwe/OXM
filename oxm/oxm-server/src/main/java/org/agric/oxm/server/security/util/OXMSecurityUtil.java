@@ -143,10 +143,11 @@ public final class OXMSecurityUtil {
 		}
 	}
 
-	public static String generateUserName(User user) {
+	public static String generateUserName(User user,
+			boolean generateDefaultUsername) {
 		String username = "";
 
-		if (StringUtils.isEmpty(user.getUsername()))
+		if (generateDefaultUsername || StringUtils.isEmpty(user.getUsername()))
 			username = user.getName().toLowerCase().trim().replace(" ", ".");
 		else
 			username = user.getUsername().toLowerCase().trim()

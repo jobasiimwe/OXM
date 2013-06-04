@@ -26,9 +26,8 @@
 
 <fieldset>
 	<legend>
-		<a id="search-collapser" href="javascript:void(0)"
-			title="Search Panel">Search Panel</a>
-	</legend>
+				<span title="Search Users">Search Users</span>
+			</legend>
 
 	<form:hidden path="propertiesMap['committee'].value" />
 	<form:hidden path="propertiesMap['committeemember'].value" />

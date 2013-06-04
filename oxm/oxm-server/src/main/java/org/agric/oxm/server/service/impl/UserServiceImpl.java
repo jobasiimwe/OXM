@@ -502,6 +502,10 @@ public class UserServiceImpl implements UserService {
 			search.addFilterEqual("roles.name", params.getRole().getName());
 		}
 
+		if (params.getProducerOrg() != null) {
+			search.addFilterEqual("producerOrg", params.getProducerOrg());
+		}
+
 		search.addSort("name", false, true);
 
 		search.addFilterEqual("recordStatus", RecordStatus.ACTIVE);

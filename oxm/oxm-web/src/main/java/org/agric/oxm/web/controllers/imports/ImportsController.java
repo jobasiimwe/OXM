@@ -1,6 +1,11 @@
 package org.agric.oxm.web.controllers.imports;
 
 import java.io.InputStream;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
@@ -22,6 +27,7 @@ import org.agric.oxm.model.enums.CategoryOfHouseHold;
 import org.agric.oxm.model.enums.Gender;
 import org.agric.oxm.model.enums.ImportItem;
 import org.agric.oxm.model.enums.MaritalStatus;
+import org.agric.oxm.model.enums.UserStatus;
 import org.agric.oxm.model.exception.OperationFailedException;
 import org.agric.oxm.model.exception.SessionExpiredException;
 import org.agric.oxm.model.exception.ValidationException;
@@ -31,18 +37,19 @@ import org.agric.oxm.server.security.util.OXMSecurityUtil;
 import org.agric.oxm.server.service.Adminservice;
 import org.agric.oxm.server.service.ProducerOrgService;
 import org.agric.oxm.server.service.UserService;
+import org.agric.oxm.utils.DateUtil;
 import org.agric.oxm.utils.StringUtil;
 import org.agric.oxm.web.WebConstants;
 import org.agric.oxm.web.controllers.settings.DistrictController;
 import org.agric.oxm.web.controllers.settings.POrgController;
 import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang.time.DateUtils;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.openxml4j.opc.OPCPackage;
 import org.apache.poi.poifs.filesystem.POIFSFileSystem;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import org.pojava.datetime.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -668,218 +675,275 @@ public class ImportsController {
 	 * @param wb2003
 	 * @param wb2007
 	 * @return
-	 * @throws SessionExpiredException
-	 * @throws ValidationException
+	 * @throws Exception
 	 */
 	private String saveProducers(HSSFWorkbook wb2003, XSSFWorkbook wb2007)
-			throws SessionExpiredException, ValidationException {
+			throws Exception {
 
-		List<ProducerOrganisation> porgs = producerOrgService
-				.getProducerOrganisations();
-		List<District> districts = adminService.getDistricts();
+		try {
+			List<ProducerOrganisation> porgs = producerOrgService
+					.getProducerOrganisations();
+			List<District> districts = adminService.getDistricts();
 
-		Role roleProducer = userService
-				.getRoleById("4836AFAB-3D62-482c-BA9A-D9D15839C68A");
+			Role roleProducer = userService
+					.getRoleById("4836AFAB-3D62-482c-BA9A-D9D15839C68A");
 
-		// counters
-		int newProducers = 0;
-		int updatedProducers = 0;
+			Connection con = getPostGradMysqlDBConnection();
 
-		Iterator<Row> rit = null;
-		if (wb2007 != null)
-			rit = wb2007.getSheetAt(0).rowIterator();
-		else if (wb2003 != null)
-			rit = wb2003.getSheetAt(0).rowIterator();
+			// counters
+			int newProducers = 0;
+			int updatedProducers = 0;
 
-		int rowIndex = 0;
-		for (; rit.hasNext();) {
+			Iterator<Row> rit = null;
+			if (wb2007 != null)
+				rit = wb2007.getSheetAt(0).rowIterator();
+			else if (wb2003 != null)
+				rit = wb2003.getSheetAt(0).rowIterator();
 
-			if (rowIndex < DistrictProducerImportData.rowToBeginCheckingAt) {
-				rowIndex++;
-				rit.next();
-				continue;
-			}
-			Row row = rit.next();
+			int rowIndex = 0;
+			for (; rit.hasNext();) {
 
-			// private String name, username, password, salt, clearTextPassword;
-			// private String address, phone1, phone2;
-			//
-			// private Set<Role> roles;
-			// private UserStatus status;
-
-			// private Date dateOfBirth, dateCreated;
-
-			// private MaritalStatus maritalStatus;
-			// private CategoryOfHouseHold categoryOfHouseHold;
-			//
-			// private User createdBy;
-			//
-
-			String porgName = row.getCell(
-					DistrictProducerImportData.porgNameColumnIndex)
-					.getStringCellValue();
-			String districtName = cleanDistrictUnitName(row
-					.getCell(DistrictProducerImportData.districtColumnIndex)
-					.getStringCellValue().toUpperCase());
-
-			String subCountyName = row.getCell(
-					DistrictProducerImportData.subcountyColumnIndex)
-					.getStringCellValue();
-			String parishName = row.getCell(
-					DistrictProducerImportData.parishColumnIndex)
-					.getStringCellValue();
-			String villageName = row.getCell(
-					DistrictProducerImportData.villageColumnIndex)
-					.getStringCellValue();
-
-			districtName = cleanDistrictUnitName(districtName.toUpperCase());
-			subCountyName = cleanDistrictUnitName(subCountyName.toUpperCase());
-			parishName = cleanDistrictUnitName(parishName.toUpperCase());
-			villageName = cleanDistrictUnitName(villageName.toUpperCase());
-
-			String producerName = row.getCell(
-					DistrictProducerImportData.farmerNameColumnIndex)
-					.getStringCellValue();
-			String producerGenderStr = row.getCell(
-					DistrictProducerImportData.genderColumnIndex)
-					.getStringCellValue();
-			Gender producerGender = producerGenderStr.equalsIgnoreCase("M") ? Gender.MALE
-					: producerGenderStr.equalsIgnoreCase("F") ? Gender.FEMALE
-							: null;
-			Integer age = (row.getCell(
-					DistrictProducerImportData.ageColumnIndex).getCellType() == Cell.CELL_TYPE_NUMERIC) ? (int) row
-					.getCell(DistrictProducerImportData.ageColumnIndex)
-					.getNumericCellValue() : null;
-
-			String producerDateOfJoiningStr = row.getCell(
-					DistrictProducerImportData.dateOfJoiningColumnIndex)
-					.getStringCellValue();
-			Integer yearOfJoining = null;
-			Date producerDateOfJoining = null;
-
-			if (StringUtils.isNotBlank(producerDateOfJoiningStr)) {
-				try {
-					yearOfJoining = Integer.parseInt(producerDateOfJoiningStr);
-				} catch (Exception ex) {
-					org.pojava.datetime.DateTime dateTime = DateTime
-							.parse(producerDateOfJoiningStr);
-					producerDateOfJoining = dateTime.toDate();
+				if (rowIndex < DistrictProducerImportData.rowToBeginCheckingAt) {
+					rowIndex++;
+					rit.next();
+					continue;
 				}
-			}
+				Row row = rit.next();
 
-			String maritalStatusStr = row.getCell(
-					DistrictProducerImportData.maritalStatusColumnIndex)
-					.getStringCellValue();
-			MaritalStatus maritalStatus = (StringUtils
-					.isNotBlank(maritalStatusStr)) ? MaritalStatus
-					.valueOf(maritalStatusStr) : MaritalStatus.BLANK;
+				String porgName = row.getCell(
+						DistrictProducerImportData.porgNameColumnIndex)
+						.getStringCellValue();
+				String districtName = cleanDistrictUnitName(row
+						.getCell(DistrictProducerImportData.districtColumnIndex)
+						.getStringCellValue().toUpperCase());
 
-			String categoryStr = row.getCell(
-					DistrictProducerImportData.categoryOfHHColumnIndex)
-					.getStringCellValue();
-			CategoryOfHouseHold categoryOfHouseHold = (StringUtils
-					.isNotBlank(categoryStr)) ? CategoryOfHouseHold
-					.valueOf(categoryStr) : CategoryOfHouseHold.BLANK;
+				String subCountyName = row.getCell(
+						DistrictProducerImportData.subcountyColumnIndex)
+						.getStringCellValue();
+				String parishName = row.getCell(
+						DistrictProducerImportData.parishColumnIndex)
+						.getStringCellValue();
+				String villageName = row.getCell(
+						DistrictProducerImportData.villageColumnIndex)
+						.getStringCellValue();
 
-			String missingItem = "";
-			District district = null;
-			SubCounty subCounty = null;
-			Parish parish = null;
-			Village village = null;
+				districtName = cleanDistrictUnitName(districtName.toUpperCase());
+				subCountyName = cleanDistrictUnitName(subCountyName
+						.toUpperCase());
+				parishName = cleanDistrictUnitName(parishName.toUpperCase());
+				villageName = cleanDistrictUnitName(villageName.toUpperCase());
 
-			ProducerOrganisation porg = getProducerOrgWithName(porgName, porgs);
-			if (porg == null) {
-				missingItem = porgName + " Producer Group ";
-			} else {
-				district = getDistrictWithName(districtName, districts);
-				if (district == null) {
-					missingItem = districtName + " district ";
+				String producerName = row.getCell(
+						DistrictProducerImportData.farmerNameColumnIndex)
+						.getStringCellValue();
+				String producerGenderStr = row.getCell(
+						DistrictProducerImportData.genderColumnIndex)
+						.getStringCellValue();
+				Gender producerGender = producerGenderStr.equalsIgnoreCase("M") ? Gender.MALE
+						: producerGenderStr.equalsIgnoreCase("F") ? Gender.FEMALE
+								: null;
+				Integer age = (row.getCell(
+						DistrictProducerImportData.ageColumnIndex)
+						.getCellType() == Cell.CELL_TYPE_NUMERIC) ? (int) row
+						.getCell(DistrictProducerImportData.ageColumnIndex)
+						.getNumericCellValue() : null;
+
+				String producerDateOfJoiningStr = "";
+				Integer yearOfJoining = null;
+				Date producerDateOfJoining = null;
+				if (row.getCell(
+						DistrictProducerImportData.dateOfJoiningColumnIndex)
+						.getCellType() == Cell.CELL_TYPE_NUMERIC)
+					yearOfJoining = (int) row
+							.getCell(
+									DistrictProducerImportData.dateOfJoiningColumnIndex)
+							.getNumericCellValue();
+				else if (row.getCell(
+						DistrictProducerImportData.dateOfJoiningColumnIndex)
+						.getCellType() == Cell.CELL_TYPE_STRING)
+					producerDateOfJoiningStr = row
+							.getCell(
+									DistrictProducerImportData.dateOfJoiningColumnIndex)
+							.getStringCellValue();
+
+				// use dateStringLength greater than 5 at list 1/1/12
+				if (StringUtils.isNotBlank(producerDateOfJoiningStr)
+						&& producerDateOfJoiningStr.trim() != "-"
+						&& producerDateOfJoiningStr.length() > 5) {
+					try {
+						producerDateOfJoining = DateUtils.parseDate(
+								producerDateOfJoiningStr,
+								DateUtil.DEFAULT_INPUT_FORMATS);
+					} catch (Exception e) {
+						log.error("Error Parsing date", e);
+					}
+				}
+
+				String maritalStatusStr = row.getCell(
+						DistrictProducerImportData.maritalStatusColumnIndex)
+						.getStringCellValue();
+				MaritalStatus maritalStatus = MaritalStatus.BLANK;
+
+				if (StringUtils.isNotBlank(maritalStatusStr)) {
+					switch (StringUtil.capitalizeFirstLetters(maritalStatusStr)
+							.trim()) {
+					case "Married":
+						maritalStatus = MaritalStatus.MARRIED;
+						break;
+					case "Single":
+						maritalStatus = MaritalStatus.SINGLE;
+						break;
+					case "Widow":
+						maritalStatus = MaritalStatus.WIDOW;
+						break;
+					case "Widower":
+						maritalStatus = MaritalStatus.WIDOWER;
+						break;
+					default:
+						maritalStatus = MaritalStatus.BLANK;
+
+					}
+				}
+
+				String categoryStr = row.getCell(
+						DistrictProducerImportData.categoryOfHHColumnIndex)
+						.getStringCellValue();
+
+				CategoryOfHouseHold categoryOfHouseHold = CategoryOfHouseHold.BLANK;
+
+				if (StringUtils.isNotBlank(categoryStr))
+					switch (StringUtil.capitalizeFirstLetters(categoryStr)
+							.trim()) {
+					case "Mhh":
+						categoryOfHouseHold = CategoryOfHouseHold.MHH;
+						break;
+					case "Fhh":
+						categoryOfHouseHold = CategoryOfHouseHold.FHH;
+						break;
+					default:
+						categoryOfHouseHold = CategoryOfHouseHold.BLANK;
+					}
+
+				String missingItem = "";
+				District district = null;
+				SubCounty subCounty = null;
+				Parish parish = null;
+				Village village = null;
+
+				ProducerOrganisation porg = getProducerOrgWithName(porgName,
+						porgs);
+				if (porg == null) {
+					missingItem = porgName + " Producer Group ";
 				} else {
-					subCounty = getSubCountyWithName(subCountyName, district);
-					if (null == subCounty) {
-						missingItem = subCountyName + " sub-county ";
+					district = getDistrictWithName(districtName, districts);
+					if (district == null) {
+						missingItem = districtName + " district ";
 					} else {
-						parish = getParishWithName(parishName, subCounty);
-						if (null == parish) {
-							missingItem = parishName + " parish ";
+						subCounty = getSubCountyWithName(subCountyName,
+								district);
+						if (null == subCounty) {
+							missingItem = subCountyName + " sub-county ";
 						} else {
-							village = getVillageWithName(villageName, parish);
-							if (null == village) {
-								missingItem = villageName + " village ";
+							parish = getParishWithName(parishName, subCounty);
+							if (null == parish) {
+								missingItem = parishName + " parish ";
+							} else {
+								village = getVillageWithName(villageName,
+										parish);
+								if (null == village) {
+									missingItem = villageName + " village ";
+								}
 							}
 						}
 					}
 				}
-			}
 
-			if (StringUtils.isNotEmpty(missingItem)) {
-				throw new ValidationException(
-						"Ooops cant save Producer group - "
-								+ porgName
-								+ "."
-								+ missingItem
-								+ " is missing in the database."
-								+ (StringUtils
-										.isNotEmpty(getProducersFeedBackString(
-												updatedProducers, newProducers)) ? " sofar: "
-										+ getProducersFeedBackString(
-												updatedProducers, newProducers)
-										: ""));
-			} else {
-				User producer = getProducerWithName(porgName, porg);
-				if (producer == null) {
-					// save new producer
-					producer = new User(porg, producerName);
-
-					producer.setGender(producerGender);
-					producer.setAge(age);
-					if (yearOfJoining != null)
-						producer.setYearOfJoining(yearOfJoining);
-					if (producerDateOfJoining != null)
-						producer.setDateOfJoining(producerDateOfJoining);
-
-					producer.setMaritalStatus(maritalStatus);
-					producer.setCategoryOfHouseHold(categoryOfHouseHold);
-
-					producer.addRole(roleProducer);
-					
-					producer.setClearTextPassword("pass");
-					producer.setUsername(OXMSecurityUtil
-							.generateUserName(producer));
-					while (userService.usernameExists(producer.getUsername())) {
-						producer.setUsername(OXMSecurityUtil
-								.generateUserName(producer));
-					}
-
-					userService.validate(producer);
-					userService.saveUser(producer);
-					porgs = producerOrgService.getProducerOrganisations();
-					newProducers++;
-
+				if (StringUtils.isNotEmpty(missingItem)) {
+					throw new ValidationException(
+							"Ooops cant save Producer group - "
+									+ porgName
+									+ "."
+									+ missingItem
+									+ " is missing in the database."
+									+ (StringUtils
+											.isNotEmpty(getProducersFeedBackString(
+													updatedProducers,
+													newProducers)) ? " sofar: "
+											+ getProducersFeedBackString(
+													updatedProducers,
+													newProducers) : ""));
 				} else {
+					User producer = getProducerWithName(producerName, porg);
+					if (producer == null) {
+						// save new producer
+						producer = new User(porg, producerName);
 
-					if (!producer.getProducerOrg().equals(porg)
-							|| !producer.getDistrict().equals(district)
-							|| !producer.getSubCounty().equals(subCounty)
-							|| !producer.getParish().equals(parish)
-							|| !producer.getVillage().equals(village)) {
-						log.error("Found samilar producer - " + porgName
-								+ " in different place - " + districtName
-								+ ", " + subCountyName + ", " + parishName
-								+ ", " + villageName);
+						producer.setGender(producerGender);
+						producer.setAge(age);
+						if (yearOfJoining != null)
+							producer.setYearOfJoining(yearOfJoining);
+						if (producerDateOfJoining != null)
+							producer.setDateOfJoining(producerDateOfJoining);
 
-						// producerOrgService.save(porg);
-						// updatedProducers++;
-						// porgs =
-						// producerOrgService.getProducerOrganisations();
+						producer.setMaritalStatus(maritalStatus);
+						producer.setCategoryOfHouseHold(categoryOfHouseHold);
 
+						producer.addRole(roleProducer);
+						producer.setStatus(UserStatus.ENABLED);
+
+						producer.setClearTextPassword("pass");
+						OXMSecurityUtil.prepUserCredentials(producer);
+
+						producer.setProfilePicture(null);
+
+						ResultSet rs = null;
+						boolean generateDefaultUserName = true;
+						do {
+							producer.setUsername(OXMSecurityUtil
+									.generateUserName(producer,
+											generateDefaultUserName));
+							generateDefaultUserName = false;
+							String SQL = "Select * from users where username=\'"
+									+ producer.getUsername() + "\'";
+							Statement stmt = con.createStatement();
+							rs = stmt.executeQuery(SQL);
+
+						} while (rs.next());
+
+						userService.validate(producer);
+						userService.saveUser(producer);
+						porgs = producerOrgService.getProducerOrganisations();
+						newProducers++;
+
+					} else {
+
+						if (!producer.getProducerOrg().equals(porg)
+								|| !producer.getDistrict().equals(district)
+								|| !producer.getSubCounty().equals(subCounty)
+								|| !producer.getParish().equals(parish)
+								|| !producer.getVillage().equals(village)) {
+							log.error("Found samilar producer - " + porgName
+									+ " in different place - " + districtName
+									+ ", " + subCountyName + ", " + parishName
+									+ ", " + villageName);
+
+							// producerOrgService.save(porg);
+							// updatedProducers++;
+							// porgs =
+							// producerOrgService.getProducerOrganisations();
+
+						}
 					}
+
 				}
-
 			}
-		}
 
-		return getProducersFeedBackString(updatedProducers, newProducers);
+			return getProducersFeedBackString(updatedProducers, newProducers);
+
+		} catch (Exception e) {
+			log.error("Error", e);
+			throw e;
+		}
 	}
 
 	private String getProducersFeedBackString(int updatedProducers,
@@ -896,4 +960,20 @@ public class ImportsController {
 		return str2return;
 
 	}
+
+	public Connection getPostGradMysqlDBConnection() throws SQLException,
+			ClassNotFoundException {
+		// Load the SQLServerDriver class, build the
+		// connection string, and get a connection
+		Class.forName("com.mysql.jdbc.Driver");
+		String username = "oxmadmin";
+		String pass = "qas1234s";
+		String connectionUrl = "jdbc:mysql://localhost:3306/oxm-db";
+
+		Connection con = DriverManager.getConnection(connectionUrl, username,
+				pass);
+		System.out.println("Connected to Oxfam MYSQL db, oxm-db.");
+		return con;
+	}
+
 }
