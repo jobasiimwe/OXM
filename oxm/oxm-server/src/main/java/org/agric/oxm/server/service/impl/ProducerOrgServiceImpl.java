@@ -2,7 +2,7 @@ package org.agric.oxm.server.service.impl;
 
 import java.util.List;
 
-import org.agric.oxm.model.ProducerOrganisation;
+import org.agric.oxm.model.ProducerOrg;
 import org.agric.oxm.model.StaffMember;
 import org.agric.oxm.model.enums.RecordStatus;
 import org.agric.oxm.model.exception.ValidationException;
@@ -38,32 +38,36 @@ public class ProducerOrgServiceImpl implements ProducerOrgService {
 			PermissionConstants.EDIT_PROD_ORG })
 	@Transactional(propagation = Propagation.REQUIRED)
 	@Override
-	public void save(ProducerOrganisation productionOrganisation) {
+	public void save(ProducerOrg productionOrganisation) {
 		producerOrgDAO.save(productionOrganisation);
 	}
 
 	@Secured({ PermissionConstants.VIEW_PROD_ORG })
 	@Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
 	@Override
-	public void validate(ProducerOrganisation productionOrganisation)
+	public void validate(ProducerOrg productionOrg)
 			throws ValidationException {
-		if (StringUtils.isEmpty(productionOrganisation.getName()))
+		if (StringUtils.isEmpty(productionOrg.getName()))
 			throw new ValidationException(
-					"Supplied Production Org missing name");
-
-		if (productionOrganisation.getDistrict() == null)
-			throw new ValidationException(
-					"Supplid Production Org missing district");
-
-		if (productionOrganisation.getSubCounty() == null)
+					"Supplied Production Org. missing name");
+		
+		if (productionOrg.getSubCounty() == null)
 			throw new ValidationException(
 					"Supplied Production Org missing subCountry");
+
+		if (productionOrg.getParish() == null)
+			throw new ValidationException(
+					"Supplied Production Org missing parish");
+
+		if (productionOrg.getVillage() == null)
+			throw new ValidationException(
+					"Supplied Production Org missing village");
 	}
 
 	@Secured({ PermissionConstants.VIEW_PROD_ORG })
 	@Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
 	@Override
-	public List<ProducerOrganisation> getProducerOrganisations() {
+	public List<ProducerOrg> getProducerOrganisations() {
 		Search search = new Search();
 		search.addSort("name", false, true);
 		search.addFilterEqual("recordStatus", RecordStatus.ACTIVE);
@@ -73,7 +77,7 @@ public class ProducerOrgServiceImpl implements ProducerOrgService {
 	@Secured({ PermissionConstants.VIEW_PROD_ORG })
 	@Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
 	@Override
-	public List<ProducerOrganisation> getProducerOrgsWithParams(
+	public List<ProducerOrg> getProducerOrgsWithParams(
 			ProducerOrgSearchParameters params) {
 		Search search = new Search();
 
@@ -91,7 +95,7 @@ public class ProducerOrgServiceImpl implements ProducerOrgService {
 	@Secured({ PermissionConstants.VIEW_PROD_ORG })
 	@Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
 	@Override
-	public ProducerOrganisation getProducerOrganisationById(String id) {
+	public ProducerOrg getProducerOrganisationById(String id) {
 		return producerOrgDAO.searchUniqueByPropertyEqual("id", id);
 	}
 

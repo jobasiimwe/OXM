@@ -3,7 +3,7 @@ package org.agric.oxm.web.controllers.settings;
 import java.util.List;
 
 import org.agric.oxm.model.District;
-import org.agric.oxm.model.ProducerOrganisation;
+import org.agric.oxm.model.ProducerOrg;
 import org.agric.oxm.model.User;
 import org.agric.oxm.model.exception.SessionExpiredException;
 import org.agric.oxm.model.exception.ValidationException;
@@ -65,7 +65,7 @@ public class POrgController {
 			throws SessionExpiredException {
 		WebConstants.loadLoggedInUserProfile(OXMSecurityUtil.getLoggedInUser(),
 				modelMap);
-		modelMap.put("pOrganization", new ProducerOrganisation());
+		modelMap.put("pOrganization", new ProducerOrg());
 		modelMap.put(WebConstants.CONTENT_HEADER,
 				"Add new Producer Organisation");
 		prepareProducerOrgFormModel(modelMap);
@@ -92,7 +92,7 @@ public class POrgController {
 				modelMap);
 
 		if (!modelMap.containsAttribute("pOrganization")) {
-			ProducerOrganisation pOrg = producerOrgService
+			ProducerOrg pOrg = producerOrgService
 					.getProducerOrganisationById(pOrgId);
 
 			if (pOrg != null) {
@@ -133,10 +133,10 @@ public class POrgController {
 			PermissionConstants.EDIT_PROD_ORG })
 	@RequestMapping(method = RequestMethod.POST, value = "/save")
 	public ModelAndView saveProducerOrgHandler(
-			@ModelAttribute("pOrganization") ProducerOrganisation pOrganization,
+			@ModelAttribute("pOrganization") ProducerOrg pOrganization,
 			ModelMap modelMap) throws SessionExpiredException {
 
-		ProducerOrganisation existingPOrganization = pOrganization;
+		ProducerOrg existingPOrganization = pOrganization;
 
 		if (StringUtils.isNotEmpty(pOrganization.getId())) {
 			existingPOrganization = producerOrgService
@@ -184,7 +184,7 @@ public class POrgController {
 	public ModelAndView viewProducerOrgMembersHandler(
 			@PathVariable("pOrgId") String pOrgId, ModelMap modelMap) {
 
-		ProducerOrganisation pOrg = producerOrgService
+		ProducerOrg pOrg = producerOrgService
 				.getProducerOrganisationById(pOrgId);
 		modelMap.put("pOrg", pOrg);
 
@@ -199,7 +199,7 @@ public class POrgController {
 	public ModelAndView addProducerOrgProducersHandler(
 			@PathVariable("pOrgId") String pOrgId, ModelMap modelMap) {
 
-		ProducerOrganisation pOrg = producerOrgService
+		ProducerOrg pOrg = producerOrgService
 				.getProducerOrganisationById(pOrgId);
 		modelMap.put("pOrg", pOrg);
 
@@ -219,7 +219,7 @@ public class POrgController {
 			@PathVariable("pOrgId") String pOrgId,
 			@PathVariable("producerId") String producerId, ModelMap modelMap) {
 
-		ProducerOrganisation pOrg = producerOrgService
+		ProducerOrg pOrg = producerOrgService
 				.getProducerOrganisationById(pOrgId);
 		modelMap.put("pOrg", pOrg);
 		User producer = userService.getUserById(producerId);
@@ -306,7 +306,7 @@ public class POrgController {
 	 */
 	public void prepareProducerOrgViewsModel(String pOrgId,
 			String contentHeaderString, ModelMap modelMap) {
-		ProducerOrganisation pOrg = producerOrgService
+		ProducerOrg pOrg = producerOrgService
 				.getProducerOrganisationById(pOrgId);
 		modelMap.put("pOrg", pOrg);
 

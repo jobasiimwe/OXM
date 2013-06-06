@@ -5,6 +5,7 @@ package org.agric.oxm.server.service;
 
 import java.util.List;
 
+import org.agric.oxm.model.County;
 import org.agric.oxm.model.District;
 import org.agric.oxm.model.Parish;
 import org.agric.oxm.model.SubCounty;
@@ -36,6 +37,20 @@ public interface Adminservice {
 	void deleteDistrictsByIds(String[] ids);
 
 	List<District> searchDistrict(String query);
+
+	// ---------------------
+
+	void save(County County) throws ValidationException;
+
+	void validate(County County) throws ValidationException;
+
+	County getCountyById(String id);
+
+	void deleteCounty(String id);
+
+	void deleteCountiesByIds(String[] ids);
+
+	// ------------------------
 
 	// ---------------------
 

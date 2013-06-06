@@ -12,7 +12,7 @@ $(document)
 							"#lnkEditPOrg, #lnkPOrgDetails, #lnkPOrgMembers, #lnkPOrgDocs, "// pOrg
 									+ " #lnkPOrgStaff, #lnkPOrgCommittee, "
 									+ " #lnkEditPOrgCommittee, #lnkEditPOrgMember, "
-									+ " #lnkEditDistrict, #lnkDistrictSubCounties, #lnkEditSubCounty, "// district
+									+ " #lnkEditDistrict, #lnkDistrictCounties, #lnkEditSubCounty, "// district
 									+ " #lnkSubCountyParishes,  #lnkEditParish, #lnkParishVillages, "
 									+ " #lnkEditVillage, "
 									+ " #lnkEditPosition, #lnkPositionHolders,"

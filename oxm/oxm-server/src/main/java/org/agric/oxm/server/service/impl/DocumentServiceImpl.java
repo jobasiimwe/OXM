@@ -11,7 +11,7 @@ import java.util.Map;
 
 import org.agric.oxm.model.Document;
 import org.agric.oxm.model.FinancialInstitution;
-import org.agric.oxm.model.ProducerOrganisation;
+import org.agric.oxm.model.ProducerOrg;
 import org.agric.oxm.model.User;
 import org.agric.oxm.model.exception.ValidationException;
 import org.agric.oxm.server.OXMConstants;
@@ -448,7 +448,7 @@ public class DocumentServiceImpl implements DocumentService {
 
 	@Override
 	@Transactional(readOnly = true)
-	public List<Document> getDocuments(ProducerOrganisation pOrg) {
+	public List<Document> getDocuments(ProducerOrg pOrg) {
 
 		List<Document> documents = documentDao.searchByPropertyEqual(
 				"pOrgDocumentOwner", pOrg);

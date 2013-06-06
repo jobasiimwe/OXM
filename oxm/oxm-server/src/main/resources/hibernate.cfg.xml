@@ -13,6 +13,7 @@
   <mapping class="org.agric.oxm.model.CommitteeMember"/>
   <mapping class="org.agric.oxm.model.Concept"/>
   <mapping class="org.agric.oxm.model.ConceptCategory"/>
+  <mapping class="org.agric.oxm.model.County"/>
   <mapping class="org.agric.oxm.model.Crop"/>
   <mapping class="org.agric.oxm.model.District"/>
   <mapping class="org.agric.oxm.model.Document"/>
@@ -26,7 +27,7 @@
   <mapping class="org.agric.oxm.model.Position"/>
   <mapping class="org.agric.oxm.model.Post"/>
   <mapping class="org.agric.oxm.model.Price"/>
-  <mapping class="org.agric.oxm.model.ProducerOrganisation"/>
+  <mapping class="org.agric.oxm.model.ProducerOrg"/>
   <mapping class="org.agric.oxm.model.Publication"/>
   <mapping class="org.agric.oxm.model.Role"/>
   <mapping class="org.agric.oxm.model.Season"/>

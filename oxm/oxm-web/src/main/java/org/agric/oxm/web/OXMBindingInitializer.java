@@ -14,7 +14,7 @@ import org.agric.oxm.model.FinancialInstitution;
 import org.agric.oxm.model.Parish;
 import org.agric.oxm.model.Permission;
 import org.agric.oxm.model.Position;
-import org.agric.oxm.model.ProducerOrganisation;
+import org.agric.oxm.model.ProducerOrg;
 import org.agric.oxm.model.Publication;
 import org.agric.oxm.model.Role;
 import org.agric.oxm.model.SellingPlace;
@@ -124,7 +124,7 @@ public class OXMBindingInitializer implements WebBindingInitializer {
 		binder.registerCustomEditor(SellingPlace.class,
 				sellingPlacePropertyEditor);
 		binder.registerCustomEditor(Crop.class, cropPropertyEditor);
-		binder.registerCustomEditor(ProducerOrganisation.class,
+		binder.registerCustomEditor(ProducerOrg.class,
 				producerOrgPropertyEditor);
 		binder.registerCustomEditor(Position.class, positionPropertyEditor);
 		binder.registerCustomEditor(Committee.class, committeePropertyEditor);

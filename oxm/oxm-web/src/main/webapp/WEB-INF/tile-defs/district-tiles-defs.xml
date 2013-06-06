@@ -13,6 +13,16 @@
 		<put-attribute name="body" type="template" value="/WEB-INF/views/tiles/district/districtform.jsp" />
 	</definition>
 	
+	<!-- ======= FORM for county ========== -->
+	<definition name="countyView" extends="viewDistrict">
+		<put-attribute name="body" type="template" value="/WEB-INF/views/tiles/district/countyview.jsp" />
+	</definition>
+
+	<definition name="countyForm" extends="viewDistrict">
+		<put-attribute name="body" type="template" value="/WEB-INF/views/tiles/district/countyform.jsp" />
+	</definition>
+	
+	
 	<!-- ======= FORM for subcounty ========== -->
 	<definition name="viewSubCounty" extends="viewDistrict">
 		<put-attribute name="body" type="template" value="/WEB-INF/views/tiles/district/subcountyView.jsp" />

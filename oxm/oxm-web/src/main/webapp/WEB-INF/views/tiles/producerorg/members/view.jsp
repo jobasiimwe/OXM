@@ -46,6 +46,8 @@
 				<th>Gender</th>
 				<th>DateOfBirth</th>
 				<th>Sub county</th>
+				<th>Parish</th>
+				<th>Village</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -64,6 +66,8 @@
 							</td>
 
 							<td>${producer.subCounty.name }</td>
+							<td>${producer.parish.name }</td>
+							<td>${producer.village.name }</td>
 						</tr>
 					</c:forEach>
 				</c:when>

@@ -2,7 +2,7 @@ package org.agric.oxm.web.controllers.settings;
 
 import org.agric.oxm.model.Committee;
 import org.agric.oxm.model.CommitteeMember;
-import org.agric.oxm.model.ProducerOrganisation;
+import org.agric.oxm.model.ProducerOrg;
 import org.agric.oxm.model.exception.SessionExpiredException;
 import org.agric.oxm.model.exception.ValidationException;
 import org.agric.oxm.model.search.UserSearchParameters;
@@ -60,7 +60,7 @@ public class POrgCommitteeController {
 	public ModelAndView addPOrgCommitteeHandler(
 			@PathVariable("pOrgId") String pOrgId, ModelMap modelMap) {
 
-		ProducerOrganisation pOrg = producerOrgService
+		ProducerOrg pOrg = producerOrgService
 				.getProducerOrganisationById(pOrgId);
 		modelMap.put("pOrg", pOrg);
 

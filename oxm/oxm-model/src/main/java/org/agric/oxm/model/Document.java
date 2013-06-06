@@ -38,7 +38,7 @@ public class Document extends BaseData implements Comparable<Document> {
 
 	private FinancialInstitution fInstitutionDocumentOwner;
 
-	private ProducerOrganisation pOrgDocumentOwner;
+	private ProducerOrg pOrgDocumentOwner;
 
 	private InputStream documentStream;
 
@@ -143,11 +143,11 @@ public class Document extends BaseData implements Comparable<Document> {
 
 	@ManyToOne
 	@JoinColumn(name = "porg_doc_owner", nullable = true)
-	public ProducerOrganisation getpOrgDocumentOwner() {
+	public ProducerOrg getpOrgDocumentOwner() {
 		return pOrgDocumentOwner;
 	}
 
-	public void setpOrgDocumentOwner(ProducerOrganisation pOrgDocumentOwner) {
+	public void setpOrgDocumentOwner(ProducerOrg pOrgDocumentOwner) {
 		this.pOrgDocumentOwner = pOrgDocumentOwner;
 	}
 

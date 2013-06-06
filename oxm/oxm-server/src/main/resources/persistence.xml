@@ -16,6 +16,7 @@
 		<class>org.agric.oxm.model.CommitteeMember</class>
 		<class>org.agric.oxm.model.Concept</class>
 		<class>org.agric.oxm.model.ConceptCategory</class>
+		<class>org.agric.oxm.model.County</class>
 		<class>org.agric.oxm.model.Crop</class>
 		<class>org.agric.oxm.model.District</class>
 		<class>org.agric.oxm.model.Document</class>
@@ -30,7 +31,7 @@
 		<class>org.agric.oxm.model.Post</class>
 		<class>org.agric.oxm.model.Price</class>
 		<class>org.agric.oxm.model.ProductionLevel</class>
-		<class>org.agric.oxm.model.ProducerOrganisation</class>
+		<class>org.agric.oxm.model.ProducerOrg</class>
 		<class>org.agric.oxm.model.Publication</class>
 		<class>org.agric.oxm.model.Role</class>
 		<class>org.agric.oxm.model.Season</class>

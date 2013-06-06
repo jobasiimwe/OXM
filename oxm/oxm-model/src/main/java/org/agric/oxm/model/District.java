@@ -17,7 +17,7 @@ import org.apache.commons.lang.StringUtils;
 public class District extends BaseData implements Comparable<District> {
 
 	private String name;
-	private List<SubCounty> subCounties;
+	private List<County> counties;
 
 	public District() {
 		super();
@@ -38,24 +38,24 @@ public class District extends BaseData implements Comparable<District> {
 	}
 
 	@OneToMany(mappedBy = "district", cascade = { CascadeType.ALL }, orphanRemoval = true)
-	public List<SubCounty> getSubCounties() {
-		return subCounties;
+	public List<County> getCounties() {
+		return counties;
 	}
 
 	@Transient
-	public String getSubCountiesString() {
+	public String getCountiesString() {
 		String returnString = "";
 
-		if (subCounties != null) {
-			if (subCounties.size() > 0) {
-				for (int i = 0; i < subCounties.size() && i < 3; i++) {
+		if (counties != null) {
+			if (counties.size() > 0) {
+				for (int i = 0; i < counties.size() && i < 3; i++) {
 					if (StringUtils.isBlank(returnString))
-						returnString += subCounties.get(i).getName();
+						returnString += counties.get(i).getName();
 					else
-						returnString += ", " + subCounties.get(i).getName();
+						returnString += ", " + counties.get(i).getName();
 				}
-				if (subCounties.size() > 3) {
-					int x = subCounties.size() - 3;
+				if (counties.size() > 3) {
+					int x = counties.size() - 3;
 					returnString += ", and " + x + " more";
 				}
 			}
@@ -66,28 +66,37 @@ public class District extends BaseData implements Comparable<District> {
 		return returnString;
 	}
 
-	public void setSubCounties(List<SubCounty> subCounties) {
-		this.subCounties = subCounties;
+	public void setCounties(List<County> counties) {
+		this.counties = counties;
 	}
 
-	public void addSubCounty(SubCounty subCounty) {
-		if (subCounty == null) {
+	public void addCounty(County county) {
+		if (county == null) {
 			return;
 		}
 
-		if (this.getSubCounties() == null) {
-			this.setSubCounties(new ArrayList<SubCounty>());
+		if (this.getCounties() == null) {
+			this.setCounties(new ArrayList<County>());
 		}
 
-		this.getSubCounties().add(subCounty);
+		this.getCounties().add(county);
 	}
 
-	public void removeSubCounty(SubCounty subCounty) {
-		if (subCounty == null || this.getSubCounties() == null) {
+	public void removeCounty(County county) {
+		if (county == null || this.getCounties() == null) {
 			return;
 		}
 
-		this.getSubCounties().remove(subCounty);
+		this.getCounties().remove(county);
+	}
+
+	public void removeCountiesByIds(String[] countyIdzToDelete) {
+		for (String id : countyIdzToDelete) {
+
+			County county = new County(id);
+			if (this.getCounties().contains(county))
+				this.getCounties().remove(county);
+		}
 	}
 
 	@Override

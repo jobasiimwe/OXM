@@ -1,7 +1,7 @@
 package org.agric.oxm.web.controllers.settings;
 
 import org.agric.oxm.model.StaffMember;
-import org.agric.oxm.model.ProducerOrganisation;
+import org.agric.oxm.model.ProducerOrg;
 import org.agric.oxm.model.exception.SessionExpiredException;
 import org.agric.oxm.model.exception.ValidationException;
 import org.agric.oxm.model.search.UserSearchParameters;
@@ -55,7 +55,7 @@ public class POrgStaffController {
 	public ModelAndView addPOrgStaffMembers(
 			@PathVariable("pOrgId") String pOrgId, UserSearchParameters params,
 			ModelMap modelMap) {
-		ProducerOrganisation pOrg = producerOrgService
+		ProducerOrg pOrg = producerOrgService
 				.getProducerOrganisationById(pOrgId);
 		modelMap.put("pOrg", pOrg);
 
@@ -74,7 +74,7 @@ public class POrgStaffController {
 	}
 
 	private void prepareStaffFormModel(UserSearchParameters params,
-			ProducerOrganisation porg, ModelMap modelMap) {
+			ProducerOrg porg, ModelMap modelMap) {
 		// Role roleProducer = userService
 		// .getRoleById("4836AFAB-3D62-482c-BA9A-D9D15839C68A");
 		// UserSearchParameters params = new UserSearchParameters(
@@ -142,7 +142,7 @@ public class POrgStaffController {
 
 		try {
 
-			ProducerOrganisation pOrg = staffMember.getProducerOrg();
+			ProducerOrg pOrg = staffMember.getProducerOrg();
 			producerOrgService.validate(existingStaffMember);
 
 			if (StringUtils.isNotEmpty(staffMember.getId())) {
@@ -189,7 +189,7 @@ public class POrgStaffController {
 
 		try {
 			String[] idzToDelete = ids.split(",");
-			ProducerOrganisation pOrg = producerOrgService
+			ProducerOrg pOrg = producerOrgService
 					.getProducerOrganisationById(pOrgId);
 			pOrg.removeStaffMembersByIds(idzToDelete);
 

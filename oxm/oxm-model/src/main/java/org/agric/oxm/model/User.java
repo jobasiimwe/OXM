@@ -50,14 +50,13 @@ public class User extends BaseData implements Comparable<User> {
 
 	private User createdBy;
 
-	private District district;
 	private SubCounty subCounty;
 	private Parish parish;
 	private Village village;
 	private GisCordinate gisCordinates;
 	private Double landSize;
 	private List<LandUse> landUses;
-	private ProducerOrganisation producerOrg;
+	private ProducerOrg producerOrg;
 
 	private byte[] profilePicture = new byte[1];
 
@@ -65,19 +64,17 @@ public class User extends BaseData implements Comparable<User> {
 		super();
 	}
 
-	public User(ProducerOrganisation pOrg) {
+	public User(ProducerOrg pOrg) {
 		super();
 		this.setProducerOrg(pOrg);
-		this.setDistrict(pOrg.getDistrict());
 		this.setSubCounty(pOrg.getSubCounty());
 		this.setParish(pOrg.getParish());
 		this.setVillage(pOrg.getVillage());
 	}
 
-	public User(ProducerOrganisation pOrg, String name) {
+	public User(ProducerOrg pOrg, String name) {
 		super();
 		this.setProducerOrg(pOrg);
-		this.setDistrict(pOrg.getDistrict());
 		this.setSubCounty(pOrg.getSubCounty());
 		this.setParish(pOrg.getParish());
 		this.setVillage(pOrg.getVillage());
@@ -246,8 +243,7 @@ public class User extends BaseData implements Comparable<User> {
 			return parish.getFullName();
 		if (subCounty != null)
 			return subCounty.getFullName();
-		if (district != null)
-			return district.getName();
+
 		return "";
 	}
 
@@ -287,16 +283,6 @@ public class User extends BaseData implements Comparable<User> {
 
 	public void setGisCordinates(GisCordinate gisCordinates) {
 		this.gisCordinates = gisCordinates;
-	}
-
-	@ManyToOne
-	@JoinColumn(name = "district_id", nullable = true)
-	public District getDistrict() {
-		return district;
-	}
-
-	public void setDistrict(District district) {
-		this.district = district;
 	}
 
 	@ManyToOne
@@ -370,11 +356,11 @@ public class User extends BaseData implements Comparable<User> {
 
 	@ManyToOne
 	@JoinColumn(name = "producer_organisation_id", nullable = true)
-	public ProducerOrganisation getProducerOrg() {
+	public ProducerOrg getProducerOrg() {
 		return producerOrg;
 	}
 
-	public void setProducerOrg(ProducerOrganisation producerOrg) {
+	public void setProducerOrg(ProducerOrg producerOrg) {
 		this.producerOrg = producerOrg;
 	}
 

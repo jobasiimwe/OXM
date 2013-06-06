@@ -5,7 +5,7 @@ import java.util.List;
 
 import org.agric.oxm.model.Document;
 import org.agric.oxm.model.FinancialInstitution;
-import org.agric.oxm.model.ProducerOrganisation;
+import org.agric.oxm.model.ProducerOrg;
 import org.agric.oxm.model.User;
 import org.agric.oxm.model.exception.ValidationException;
 
@@ -28,7 +28,7 @@ public interface DocumentService {
 
 	List<Document> getDocuments(User user);
 
-	List<Document> getDocuments(ProducerOrganisation pOrg);
+	List<Document> getDocuments(ProducerOrg pOrg);
 
 	List<Document> getDocuments(FinancialInstitution financialInstitution);
 

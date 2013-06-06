@@ -2,12 +2,14 @@ package org.agric.oxm.server.service.impl;
 
 import java.util.List;
 
+import org.agric.oxm.model.County;
 import org.agric.oxm.model.District;
 import org.agric.oxm.model.Parish;
 import org.agric.oxm.model.SubCounty;
 import org.agric.oxm.model.Village;
 import org.agric.oxm.model.enums.RecordStatus;
 import org.agric.oxm.model.exception.ValidationException;
+import org.agric.oxm.server.dao.CountyDAO;
 import org.agric.oxm.server.dao.DistrictDAO;
 import org.agric.oxm.server.dao.ParishDAO;
 import org.agric.oxm.server.dao.SubCountyDAO;
@@ -34,6 +36,9 @@ public class AdminServiceImpl implements Adminservice {
 
 	@Autowired
 	private DistrictDAO districtDAO;
+
+	@Autowired
+	private CountyDAO countyDAO;
 
 	@Autowired
 	private SubCountyDAO subCountyDAO;
@@ -107,6 +112,55 @@ public class AdminServiceImpl implements Adminservice {
 		districtDAO.removeByIds(ids);
 	}
 
+	// =====================================
+	@Secured({ PermissionConstants.ADD_DISTRICT_DETAILS,
+			PermissionConstants.EDIT_DISTRICT_DETAILS })
+	@Transactional(propagation = Propagation.REQUIRED)
+	@Override
+	public void save(County county) throws ValidationException {
+		countyDAO.save(county);
+	}
+
+	@Secured({ PermissionConstants.VIEW_DISTRICT_DETAILS })
+	@Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
+	@Override
+	public void validate(County county) throws ValidationException {
+		if (StringUtils.isBlank(county.getName()))
+			throw new ValidationException("Name can not be blank");
+
+		District district = getDistrictById(county.getDistrict().getId());
+
+		for (County s : district.getCounties()) {
+			if (s.getName().equalsIgnoreCase(county.getName())) {
+				if (StringUtils.isEmpty(county.getId())
+						|| (StringUtils.isNotEmpty(county.getId()) && !county
+								.equals(s)))
+					throw new ValidationException("County " + county.getName()
+							+ " already saved in district "
+							+ district.getName());
+			}
+		}
+	}
+
+	@Transactional(readOnly = true)
+	@Override
+	public County getCountyById(String id) {
+		return countyDAO.searchUniqueByPropertyEqual("id", id);
+	}
+
+	@Secured({ PermissionConstants.DELETE_DISTRICT_DETAILS })
+	@Transactional(propagation = Propagation.REQUIRED)
+	@Override
+	public void deleteCounty(String id) {
+		countyDAO.removeById(id);
+	}
+
+	@Secured({ PermissionConstants.DELETE_DISTRICT_DETAILS })
+	@Transactional(propagation = Propagation.REQUIRED)
+	public void deleteCountiesByIds(String[] ids) {
+		countyDAO.removeByIds(ids);
+	}
+
 	// ---------------------------------
 
 	@Secured({ PermissionConstants.ADD_DISTRICT_DETAILS,
@@ -124,17 +178,16 @@ public class AdminServiceImpl implements Adminservice {
 		if (StringUtils.isBlank(subCounty.getName()))
 			throw new ValidationException("Name can not be blank");
 
-		District district = getDistrictById(subCounty.getDistrict().getId());
+		County county = getCountyById(subCounty.getCounty().getId());
 
-		for (SubCounty s : district.getSubCounties()) {
+		for (SubCounty s : county.getSubCounties()) {
 			if (s.getName().equalsIgnoreCase(subCounty.getName())) {
 				if (StringUtils.isEmpty(subCounty.getId())
 						|| (StringUtils.isNotEmpty(subCounty.getId()) && !subCounty
 								.equals(s)))
 					throw new ValidationException("Sub-county "
-							+ subCounty.getName()
-							+ " already saved in district "
-							+ district.getName());
+							+ subCounty.getName() + " already saved in county "
+							+ county.getName());
 			}
 		}
 	}

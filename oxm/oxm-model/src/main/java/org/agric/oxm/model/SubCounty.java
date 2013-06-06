@@ -23,7 +23,7 @@ public class SubCounty extends BaseData implements Comparable<SubCounty> {
 
 	private String name;
 
-	private District district;
+	private County county;
 
 	private List<Parish> parishes;
 
@@ -34,13 +34,17 @@ public class SubCounty extends BaseData implements Comparable<SubCounty> {
 
 	}
 
+	public SubCounty(String id) {
+		this.setId(id);
+	}
+
 	/**
 	 * Creates a new object for this entity.
 	 */
-	public SubCounty(String name, District district) {
+	public SubCounty(String name, County county) {
 		super();
 		this.setName(name);
-		this.setDistrict(district);
+		this.setCounty(county);
 	}
 
 	/**
@@ -60,19 +64,20 @@ public class SubCounty extends BaseData implements Comparable<SubCounty> {
 	public String getFullName() {
 		String fullName = this.getName();
 
-		fullName += ", " + this.getDistrict().getName();
+		fullName += ", " + this.getCounty().getName();
+		fullName += ", " + this.getCounty().getDistrict().getName();
 		return fullName;
 
 	}
 
 	@ManyToOne
-	@JoinColumn(name = "district_id", nullable = false)
-	public District getDistrict() {
-		return district;
+	@JoinColumn(name = "county_id", nullable = false)
+	public County getCounty() {
+		return county;
 	}
 
-	public void setDistrict(District district) {
-		this.district = district;
+	public void setCounty(County county) {
+		this.county = county;
 	}
 
 	/**
@@ -119,7 +124,7 @@ public class SubCounty extends BaseData implements Comparable<SubCounty> {
 	/**
 	 * adds a given parish
 	 * 
-	 * @param district
+	 * @param county
 	 */
 	public void addParish(Parish parish) {
 		if (parish == null) {
@@ -137,7 +142,7 @@ public class SubCounty extends BaseData implements Comparable<SubCounty> {
 	/**
 	 * removes the given parish
 	 * 
-	 * @param district
+	 * @param county
 	 */
 	public void removeParish(Parish parish) {
 		if (parish == null || this.getParishes() == null) {
@@ -145,6 +150,41 @@ public class SubCounty extends BaseData implements Comparable<SubCounty> {
 		}
 
 		this.getParishes().remove(parish);
+	}
+
+	public void removeParishesByIds(String[] parishIdzToDelete) {
+		for (String id : parishIdzToDelete) {
+
+			Parish parish = new Parish(id);
+			if (this.getParishes().contains(parish)) {
+				getParishes().remove(parish);
+			}
+		}
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((getId() == null) ? 0 : getId().hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		SubCounty other = (SubCounty) obj;
+		if (super.getId() == null) {
+			if (other.getId() != null)
+				return false;
+		} else if (!super.getId().equals(other.getId()))
+			return false;
+		return true;
 	}
 
 	@Override

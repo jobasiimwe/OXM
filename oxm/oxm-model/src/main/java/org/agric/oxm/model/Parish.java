@@ -28,6 +28,10 @@ public class Parish extends BaseData implements Comparable<Parish> {
 		super();
 	}
 
+	public Parish(String id) {
+		this.setId(id);
+	}
+
 	public Parish(String name, SubCounty subCounty) {
 		super();
 		this.setName(name);
@@ -48,7 +52,9 @@ public class Parish extends BaseData implements Comparable<Parish> {
 		String fullName = this.getName();
 
 		fullName += ", " + this.getSubCounty().getName();
-		fullName += ", " + this.getSubCounty().getDistrict().getName();
+		fullName += ", " + this.getSubCounty().getCounty().getName();
+		fullName += ", "
+				+ this.getSubCounty().getCounty().getDistrict().getName();
 		return fullName;
 	}
 
@@ -114,6 +120,16 @@ public class Parish extends BaseData implements Comparable<Parish> {
 		}
 
 		this.getVillages().remove(village);
+	}
+
+	public void removeVillagesByIds(String[] villageIdzToDelete) {
+		for (String id : villageIdzToDelete) {
+
+			Village village = new Village(id);
+			if (this.getVillages().contains(village)) {
+				getVillages().remove(village);
+			}
+		}
 	}
 
 	@Override

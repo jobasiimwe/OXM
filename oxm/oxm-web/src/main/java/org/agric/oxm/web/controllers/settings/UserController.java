@@ -6,7 +6,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
 
-import org.agric.oxm.model.ProducerOrganisation;
+import org.agric.oxm.model.ProducerOrg;
 import org.agric.oxm.model.Role;
 import org.agric.oxm.model.User;
 import org.agric.oxm.model.enums.Gender;
@@ -192,13 +192,16 @@ public class UserController {
 
 		prepareSearchCommand(model, params);
 
-		if (newSearch)
-			model.put(
-					WebConstants.MODEL_ATTRIBUTE_SYSTEM_MESSAGE,
-					String.format("search completed with: %s result(s)",
-							String.valueOf(users.size())));
-		if (searching) {
-			model.put(WebConstants.CONTENT_HEADER, "Users - search results ");
+		if (!model
+				.containsAttribute(WebConstants.MODEL_ATTRIBUTE_SYSTEM_MESSAGE)) {
+			if (newSearch)
+				model.put(WebConstants.MODEL_ATTRIBUTE_SYSTEM_MESSAGE, String
+						.format("search completed with: %s result(s)",
+								String.valueOf(users.size())));
+			if (searching) {
+				model.put(WebConstants.CONTENT_HEADER,
+						"Users - search results ");
+			}
 
 			// set a variable searching to true
 			// this variable is used in determining what navigation file to use
@@ -294,7 +297,7 @@ public class UserController {
 	}
 
 	public void prepareUserFormModel(ModelMap modelMap) {
-		List<ProducerOrganisation> producerOrgs = producerOrgService
+		List<ProducerOrg> producerOrgs = producerOrgService
 				.getProducerOrganisations();
 		modelMap.put("producerOrgs", producerOrgs);
 		List<Role> roles = userService.getRoles();
@@ -337,11 +340,11 @@ public class UserController {
 			ModelMap modelMap) throws IOException, SessionExpiredException {
 
 		User existingUser = user;
-		
+
 		try {
-			
+
 			userService.validate(user);
-			
+
 			if (userPic != null && userPic.getSize() > 0) {
 				validatePic(userPic);
 				existingUser.setProfilePicture(userPic.getBytes());
@@ -364,7 +367,7 @@ public class UserController {
 					"Retry - add/edit "
 							+ (StringUtils.isNotBlank(existingUser.getName()) ? existingUser
 									.getName() : "User"));
-			
+
 			WebConstants.loadLoggedInUserProfile(
 					OXMSecurityUtil.getLoggedInUser(), modelMap);
 

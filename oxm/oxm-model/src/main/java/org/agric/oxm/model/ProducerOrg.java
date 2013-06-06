@@ -20,12 +20,10 @@ import org.hibernate.annotations.FetchMode;
 
 @Entity
 @Table(name = "producer_org")
-public class ProducerOrganisation extends BaseData implements
-		Comparable<ProducerOrganisation> {
+public class ProducerOrg extends BaseData implements
+		Comparable<ProducerOrg> {
 
 	private String name;
-
-	private District district;
 
 	private SubCounty subCounty;
 
@@ -41,17 +39,16 @@ public class ProducerOrganisation extends BaseData implements
 
 	private List<Document> documents = Collections.emptyList();
 
-	public ProducerOrganisation() {
+	public ProducerOrg() {
 	}
 
-	public ProducerOrganisation(String id) {
+	public ProducerOrg(String id) {
 		this.setId(id);
 	}
 
-	public ProducerOrganisation(String name, District district,
+	public ProducerOrg(String name,
 			SubCounty subCounty, Parish parish, Village village) {
 		this.setName(name);
-		this.setDistrict(district);
 		this.setSubCounty(subCounty);
 		this.setParish(parish);
 		this.setVillage(village);
@@ -70,16 +67,6 @@ public class ProducerOrganisation extends BaseData implements
 	public String getNameAndSubCounty() {
 		String str = getName() + "(" + getSubCounty().getName() + ")";
 		return str;
-	}
-
-	@ManyToOne
-	@JoinColumn(name = "district_id", nullable = false)
-	public District getDistrict() {
-		return district;
-	}
-
-	public void setDistrict(District district) {
-		this.district = district;
 	}
 
 	@ManyToOne
@@ -233,7 +220,7 @@ public class ProducerOrganisation extends BaseData implements
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		ProducerOrganisation other = (ProducerOrganisation) obj;
+		ProducerOrg other = (ProducerOrg) obj;
 		if (super.getId() == null) {
 			if (other.getId() != null)
 				return false;
@@ -243,7 +230,7 @@ public class ProducerOrganisation extends BaseData implements
 	}
 
 	@Override
-	public int compareTo(ProducerOrganisation o) {
+	public int compareTo(ProducerOrg o) {
 		return this.getName().compareTo(o.getName());
 	}
 

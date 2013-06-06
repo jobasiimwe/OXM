@@ -3,7 +3,7 @@
  */
 package org.agric.oxm.model.search;
 
-import org.agric.oxm.model.ProducerOrganisation;
+import org.agric.oxm.model.ProducerOrg;
 import org.agric.oxm.model.Role;
 import org.agric.oxm.model.enums.Gender;
 
@@ -13,7 +13,7 @@ import org.agric.oxm.model.enums.Gender;
  */
 public class UserSearchParameters {
 	private String nameOrUserName = null;
-	private ProducerOrganisation producerOrg;
+	private ProducerOrg producerOrg;
 	private Gender gender = null;
 	private Role role = null;
 
@@ -25,7 +25,7 @@ public class UserSearchParameters {
 
 	}
 
-	public UserSearchParameters(ProducerOrganisation pOrg, Role role) {
+	public UserSearchParameters(ProducerOrg pOrg, Role role) {
 		this.setProducerOrg(pOrg);
 		this.setRole(role);
 	}
@@ -35,7 +35,7 @@ public class UserSearchParameters {
 		this.setCommitteeMemberId(committeeMemberId);
 	}
 
-	public UserSearchParameters(ProducerOrganisation pOrg, Role role,
+	public UserSearchParameters(ProducerOrg pOrg, Role role,
 			String committeeId, String committeeMemberId) {
 		this.setCommitteeId(committeeId);
 		this.setCommitteeMemberId(committeeMemberId);
@@ -51,11 +51,11 @@ public class UserSearchParameters {
 		this.nameOrUserName = nameOrUserName;
 	}
 
-	public ProducerOrganisation getProducerOrg() {
+	public ProducerOrg getProducerOrg() {
 		return producerOrg;
 	}
 
-	public void setProducerOrg(ProducerOrganisation producerOrg) {
+	public void setProducerOrg(ProducerOrg producerOrg) {
 		this.producerOrg = producerOrg;
 	}
 

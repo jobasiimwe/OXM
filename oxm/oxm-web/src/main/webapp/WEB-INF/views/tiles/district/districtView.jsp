@@ -16,9 +16,9 @@
 		<a id="lnkAddDistrict" class="uiButton" href="${baseUrl }/district/add/">Add</a>
 		<a id="lnkEditDistrict" class="uiButton" href="${baseUrl }/district/edit/">Edit</a>
 		<a id="lnkDeleteDistrict" class="uiButton" href="${baseUrl }/district/delete/">Delete</a>
-		<a id="lnkDistrictSubCounties" class="uiButton" href="${baseUrl }/subcounty/view/">Sub
+		<a id="lnkDistrictCounties" class="uiButton" href="${baseUrl }/county/view/">Sub
 			Counties</a>
-		<a id="lnkImportDistricts" class="uiButton" href="${baseUrl }/import">Import
+		<a id="lnkImportDistricts" class="uiButton spacedElement" href="${baseUrl }/import/districts">Import
 			Districts</a>
 	</div>
 	<div style="float: right">
@@ -31,8 +31,8 @@
 	<div style="clear: both"></div>
 </div>
 <div>
-	<oxmTags:name-of-item-on-page name="Position" />
-	<table class="recordTable list" width="100%" cellpadding="0" cellspacing="0">
+	<oxmTags:name-of-item-on-page name="District" />
+	<table class="recordTable list">
 		<thead>
 			<tr>
 				<th><input type="checkbox" name="cbxSelectAllItems" id="cbxSelectAllItems" /></th>
@@ -50,7 +50,7 @@
 							</td>
 							<td>${status.count }</td>
 							<td>${district.name }</td>
-							<td>${district.subCountiesString }</td>
+							<td>${district.countiesString }</td>
 						</tr>
 					</c:forEach>
 				</c:when>

@@ -1,6 +1,6 @@
 package org.agric.oxm.web.propertyeditors;
 
-import org.agric.oxm.model.ProducerOrganisation;
+import org.agric.oxm.model.ProducerOrg;
 import org.agric.oxm.server.service.ProducerOrgService;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,8 +15,8 @@ public class ProducerOrgPropertyEditor extends BasePropertyEditor {
 	@Override
 	public String getAsText() {
 		if (super.getValue() != null
-				&& super.getValue() instanceof ProducerOrganisation) {
-			return ((ProducerOrganisation) super.getValue()).getId();
+				&& super.getValue() instanceof ProducerOrg) {
+			return ((ProducerOrg) super.getValue()).getId();
 		}
 
 		return super.getAsText();

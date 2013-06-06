@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
 
+import org.agric.oxm.model.County;
 import org.agric.oxm.model.District;
 import org.agric.oxm.model.Parish;
 import org.agric.oxm.model.SubCounty;
@@ -69,8 +70,8 @@ public class JsonController {
 	 * @param districtId
 	 * @param response
 	 */
-	@RequestMapping(method = RequestMethod.GET, value = "/subcounties/{districtid}")
-	public void getJSONSubCountiesForDistrict(
+	@RequestMapping(method = RequestMethod.GET, value = "/counties/{districtid}")
+	public void getJSONCountiesForDistrict(
 			@PathVariable("districtid") String districtId,
 			HttpServletResponse response) {
 
@@ -78,10 +79,48 @@ public class JsonController {
 			if (StringUtils.isNotBlank(districtId)) {
 				District district = adminService.getDistrictById(districtId);
 
-				if (district != null && district.getSubCounties() != null) {
+				if (district != null && district.getCounties() != null) {
 					ArrayList<Object> subCounties = new ArrayList<Object>();
 
-					for (SubCounty subcounty : district.getSubCounties()) {
+					for (County county : district.getCounties()) {
+						HashMap<String, String> map = new HashMap<String, String>();
+						map.put("value", county.getId());
+						map.put("text", county.getName());
+						subCounties.add(map);
+					}
+
+					MappingJacksonHttpMessageConverter converter = new MappingJacksonHttpMessageConverter();
+					HttpOutputMessage message = new ServletServerHttpResponse(
+							response);
+
+					converter.write(subCounties, MediaType.APPLICATION_JSON,
+							message);
+				}
+			}
+		} catch (Exception e) {
+			response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+		}
+	}
+
+	/**
+	 * gets a jazonized list of subCounties in a given county
+	 * 
+	 * @param districtId
+	 * @param response
+	 */
+	@RequestMapping(method = RequestMethod.GET, value = "/subcounties/{countyid}")
+	public void getJSONSubCountiesForCounty(
+			@PathVariable("countyid") String countyId,
+			HttpServletResponse response) {
+
+		try {
+			if (StringUtils.isNotBlank(countyId)) {
+				County county = adminService.getCountyById(countyId);
+
+				if (county != null && county.getSubCounties() != null) {
+					ArrayList<Object> subCounties = new ArrayList<Object>();
+
+					for (SubCounty subcounty : county.getSubCounties()) {
 						HashMap<String, String> map = new HashMap<String, String>();
 						map.put("value", subcounty.getId());
 						map.put("text", subcounty.getName());

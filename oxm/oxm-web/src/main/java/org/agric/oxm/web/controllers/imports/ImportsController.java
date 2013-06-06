@@ -16,9 +16,10 @@ import org.agric.oxm.excelimport.MsExcelProcessesor;
 import org.agric.oxm.excelimport.MsExcellTemplate;
 import org.agric.oxm.excelimport.model.ColumnStrings;
 import org.agric.oxm.excelimport.model.MsExcelCell;
+import org.agric.oxm.model.County;
 import org.agric.oxm.model.District;
 import org.agric.oxm.model.Parish;
-import org.agric.oxm.model.ProducerOrganisation;
+import org.agric.oxm.model.ProducerOrg;
 import org.agric.oxm.model.Role;
 import org.agric.oxm.model.SubCounty;
 import org.agric.oxm.model.User;
@@ -42,6 +43,7 @@ import org.agric.oxm.utils.StringUtil;
 import org.agric.oxm.web.WebConstants;
 import org.agric.oxm.web.controllers.settings.DistrictController;
 import org.agric.oxm.web.controllers.settings.POrgController;
+import org.agric.oxm.web.controllers.settings.UserController;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.time.DateUtils;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
@@ -84,6 +86,9 @@ public class ImportsController {
 	@Autowired
 	private UserService userService;
 
+	@Autowired
+	private UserController userController;
+
 	/**
 	 * 
 	 * @param modelMap
@@ -103,7 +108,7 @@ public class ImportsController {
 	@Secured({ PermissionConstants.ADD_DISTRICT_DETAILS })
 	@RequestMapping(value = "/districts", method = RequestMethod.GET)
 	public ModelAndView getImportDistrictsForm(ModelMap modelMap) {
-		return prepareImportModel(ImportItem.PRODUCER_ORGz, modelMap);
+		return prepareImportModel(ImportItem.DISTRICT_DETAILS, modelMap);
 	}
 
 	/**
@@ -114,7 +119,7 @@ public class ImportsController {
 	@Secured({ PermissionConstants.ADD_DISTRICT_DETAILS })
 	@RequestMapping(value = "/producers", method = RequestMethod.GET)
 	public ModelAndView getImportProducersForm(ModelMap modelMap) {
-		return prepareImportModel(ImportItem.PRODUCER_ORGz, modelMap);
+		return prepareImportModel(ImportItem.PRODUCERS, modelMap);
 	}
 
 	/**
@@ -235,17 +240,17 @@ public class ImportsController {
 			if (districtProducerImportData.getImportItem().equals(
 					ImportItem.PRODUCER_ORGz))
 				return pOrgController.viewProducerOrgHandler(modelMap);
-			else
-				return prepareImportModel(
-						districtProducerImportData.getImportItem(), modelMap);
+			if (districtProducerImportData.getImportItem().equals(
+					ImportItem.PRODUCERS))
+				return userController.viewUsersHandler(1, modelMap);
 
 		} catch (Exception e) {
 			log.error("Failed!", e);
 			modelMap.put(WebConstants.MODEL_ATTRIBUTE_ERROR_MESSAGE,
 					e.getMessage());
-			return prepareImportModel(
-					districtProducerImportData.getImportItem(), modelMap);
 		}
+		return prepareImportModel(districtProducerImportData.getImportItem(),
+				modelMap);
 
 	}
 
@@ -323,8 +328,7 @@ public class ImportsController {
 	private String saveProducerOrgs(HSSFWorkbook wb2003, XSSFWorkbook wb2007)
 			throws SessionExpiredException, ValidationException {
 
-		List<ProducerOrganisation> porgs = producerOrgService
-				.getProducerOrganisations();
+		List<ProducerOrg> porgs = producerOrgService.getProducerOrganisations();
 		List<District> districts = adminService.getDistricts();
 		// counters
 		int newPorgs = 0;
@@ -353,6 +357,9 @@ public class ImportsController {
 			String districtName = row.getCell(
 					DistrictProducerImportData.districtColumnIndex)
 					.getStringCellValue();
+			String countyName = row.getCell(
+					DistrictProducerImportData.countyColumnIndex)
+					.getStringCellValue();
 			String subCountyName = row.getCell(
 					DistrictProducerImportData.subcountyColumnIndex)
 					.getStringCellValue();
@@ -364,11 +371,13 @@ public class ImportsController {
 					.getStringCellValue();
 
 			districtName = cleanDistrictUnitName(districtName.toUpperCase());
+			countyName = cleanDistrictUnitName(countyName.toUpperCase());
 			subCountyName = cleanDistrictUnitName(subCountyName.toUpperCase());
 			parishName = cleanDistrictUnitName(parishName.toUpperCase());
 			villageName = cleanDistrictUnitName(villageName.toUpperCase());
 
 			String missingItem = "";
+			County county = null;
 			SubCounty subCounty = null;
 			Parish parish = null;
 			Village village = null;
@@ -378,17 +387,22 @@ public class ImportsController {
 			if (district == null) {
 				missingItem = districtName + " district ";
 			} else {
-				subCounty = getSubCountyWithName(subCountyName, district);
-				if (null == subCounty) {
-					missingItem = subCountyName + " sub-county ";
+				county = getCountyWithName(countyName, district);
+				if (null == county) {
+					missingItem = countyName + " county ";
 				} else {
-					parish = getParishWithName(parishName, subCounty);
-					if (null == parish) {
-						missingItem = parishName + " parish ";
+					subCounty = getSubCountyWithName(subCountyName, county);
+					if (null == subCounty) {
+						missingItem = subCountyName + " sub-county ";
 					} else {
-						village = getVillageWithName(villageName, parish);
-						if (null == village) {
-							missingItem = villageName + " village ";
+						parish = getParishWithName(parishName, subCounty);
+						if (null == parish) {
+							missingItem = parishName + " parish ";
+						} else {
+							village = getVillageWithName(villageName, parish);
+							if (null == village) {
+								missingItem = villageName + " village ";
+							}
 						}
 					}
 				}
@@ -408,19 +422,16 @@ public class ImportsController {
 												updatedPorgs, newPorgs)
 										: ""));
 			} else {
-				ProducerOrganisation porg = getProducerOrgWithName(porgName,
-						porgs);
+				ProducerOrg porg = getProducerOrgWithName(porgName, porgs);
 				if (porg == null) {
 					// save new producer org
-					porg = new ProducerOrganisation(porgName, district,
-							subCounty, parish, village);
+					porg = new ProducerOrg(porgName, subCounty, parish, village);
 					producerOrgService.save(porg);
 					porgs = producerOrgService.getProducerOrganisations();
 					newPorgs++;
 				} else {
 					// foundPorgs++;
-					if (!porg.getDistrict().equals(district)
-							|| !porg.getSubCounty().equals(subCounty)
+					if (!porg.getSubCounty().equals(subCounty)
 							|| !porg.getParish().equals(parish)
 							|| !porg.getVillage().equals(village)) {
 						log.error("Found samilar producer Org - " + porgName
@@ -450,11 +461,11 @@ public class ImportsController {
 		String str2return = "";
 		if (updatedPorgs > 0)
 			str2return = str2return
-					+ String.format("\nEdited Progucer org(s)=%d,   ",
+					+ String.format("\n%d Producer org(s) Edited,   ",
 							updatedPorgs);
-		if (newPorgs > 0)
-			str2return = str2return
-					+ String.format("\nNew Producer org(s)= %d,   ", newPorgs);
+
+		str2return = str2return
+				+ String.format("\n%d Producer org(s) Added  ", newPorgs);
 		return str2return;
 
 	}
@@ -473,7 +484,7 @@ public class ImportsController {
 		List<District> districts = adminService.getDistricts();
 		// counters
 		int newDistricts = 0;
-		// int newCounties = 0;
+		int newCounties = 0;
 		int newSubCounties = 0;
 		int newParishes = 0;
 		int newVillages = 0;
@@ -510,15 +521,31 @@ public class ImportsController {
 
 			}
 
+			String countyName = row.getCell(
+					DistrictProducerImportData.countyColumnIndex)
+					.getStringCellValue();
+			countyName = cleanDistrictUnitName(countyName.toUpperCase());
+
+			County county = getCountyWithName(countyName, district);
+			if (null == county) {
+				county = new County(countyName, district);
+				district.addCounty(county);
+				adminService.save(district);
+				districts = adminService.getDistricts();
+				newCounties++;
+				// continue;
+
+			}
+
 			String subCountyName = row.getCell(
 					DistrictProducerImportData.subcountyColumnIndex)
 					.getStringCellValue();
 			subCountyName = cleanDistrictUnitName(subCountyName.toUpperCase());
 
-			SubCounty subCounty = getSubCountyWithName(subCountyName, district);
+			SubCounty subCounty = getSubCountyWithName(subCountyName, county);
 			if (null == subCounty) {
-				subCounty = new SubCounty(subCountyName, district);
-				district.addSubCounty(subCounty);
+				subCounty = new SubCounty(subCountyName, county);
+				county.addSubCounty(subCounty);
 				adminService.save(district);
 				districts = adminService.getDistricts();
 				newSubCounties++;
@@ -562,9 +589,9 @@ public class ImportsController {
 		if (newDistricts > 0)
 			str2return = str2return
 					+ String.format("\nNew District(s)= %d,   ", newDistricts);
-		// if (newCounties > 0)
-		// str2return = str2return
-		// + String.format("\nNew County(ies)=%d,   ", newCounties);
+		if (newCounties > 0)
+			str2return = str2return
+					+ String.format("\nNew County(ies)=%d,   ", newCounties);
 		if (newSubCounties > 0)
 			str2return = str2return
 					+ String.format("\nNew SubCounty(ies)=%d,   ",
@@ -580,11 +607,11 @@ public class ImportsController {
 		return str2return;
 	}
 
-	public static ProducerOrganisation getProducerOrgWithName(String name,
-			List<ProducerOrganisation> porgs) {
+	public static ProducerOrg getProducerOrgWithName(String name,
+			List<ProducerOrg> porgs) {
 		if (porgs == null)
 			return null;
-		for (ProducerOrganisation porg : porgs) {
+		for (ProducerOrg porg : porgs) {
 			if (porg.getName().equalsIgnoreCase(name))
 				return porg;
 		}
@@ -602,18 +629,27 @@ public class ImportsController {
 		return null;
 	}
 
-	public static SubCounty getSubCountyWithName(String name, District district) {
-		if (district.getSubCounties() == null)
+	public static County getCountyWithName(String name, District district) {
+		if (district.getCounties() == null)
 			return null;
-		for (SubCounty subCounty : district.getSubCounties()) {
+		for (County county : district.getCounties()) {
+			if (county.getName().equalsIgnoreCase(name))
+				return county;
+		}
+		return null;
+	}
+
+	public static SubCounty getSubCountyWithName(String name, County county) {
+		if (county.getSubCounties() == null)
+			return null;
+		for (SubCounty subCounty : county.getSubCounties()) {
 			if (subCounty.getName().equalsIgnoreCase(name))
 				return subCounty;
 		}
 		return null;
 	}
 
-	public static User getProducerWithName(String producerName,
-			ProducerOrganisation porg) {
+	public static User getProducerWithName(String producerName, ProducerOrg porg) {
 		if (porg.getProducers() == null)
 			return null;
 		for (User user : porg.getProducers()) {
@@ -681,7 +717,7 @@ public class ImportsController {
 			throws Exception {
 
 		try {
-			List<ProducerOrganisation> porgs = producerOrgService
+			List<ProducerOrg> porgs = producerOrgService
 					.getProducerOrganisations();
 			List<District> districts = adminService.getDistricts();
 
@@ -716,7 +752,9 @@ public class ImportsController {
 				String districtName = cleanDistrictUnitName(row
 						.getCell(DistrictProducerImportData.districtColumnIndex)
 						.getStringCellValue().toUpperCase());
-
+				String countyName = row.getCell(
+						DistrictProducerImportData.countyColumnIndex)
+						.getStringCellValue();
 				String subCountyName = row.getCell(
 						DistrictProducerImportData.subcountyColumnIndex)
 						.getStringCellValue();
@@ -799,6 +837,9 @@ public class ImportsController {
 					case "Widower":
 						maritalStatus = MaritalStatus.WIDOWER;
 						break;
+					case "Separated":
+						maritalStatus = MaritalStatus.SEPARATED;
+						break;
 					default:
 						maritalStatus = MaritalStatus.BLANK;
 
@@ -827,11 +868,11 @@ public class ImportsController {
 				String missingItem = "";
 				District district = null;
 				SubCounty subCounty = null;
+				County county = null;
 				Parish parish = null;
 				Village village = null;
 
-				ProducerOrganisation porg = getProducerOrgWithName(porgName,
-						porgs);
+				ProducerOrg porg = getProducerOrgWithName(porgName, porgs);
 				if (porg == null) {
 					missingItem = porgName + " Producer Group ";
 				} else {
@@ -839,19 +880,25 @@ public class ImportsController {
 					if (district == null) {
 						missingItem = districtName + " district ";
 					} else {
-						subCounty = getSubCountyWithName(subCountyName,
-								district);
-						if (null == subCounty) {
-							missingItem = subCountyName + " sub-county ";
+						county = getCountyWithName(countyName, district);
+						if (null == county) {
+							missingItem = countyName + " county ";
 						} else {
-							parish = getParishWithName(parishName, subCounty);
-							if (null == parish) {
-								missingItem = parishName + " parish ";
+							subCounty = getSubCountyWithName(subCountyName,
+									county);
+							if (null == subCounty) {
+								missingItem = subCountyName + " sub-county ";
 							} else {
-								village = getVillageWithName(villageName,
-										parish);
-								if (null == village) {
-									missingItem = villageName + " village ";
+								parish = getParishWithName(parishName,
+										subCounty);
+								if (null == parish) {
+									missingItem = parishName + " parish ";
+								} else {
+									village = getVillageWithName(villageName,
+											parish);
+									if (null == village) {
+										missingItem = villageName + " village ";
+									}
 								}
 							}
 						}
@@ -918,7 +965,6 @@ public class ImportsController {
 					} else {
 
 						if (!producer.getProducerOrg().equals(porg)
-								|| !producer.getDistrict().equals(district)
 								|| !producer.getSubCounty().equals(subCounty)
 								|| !producer.getParish().equals(parish)
 								|| !producer.getVillage().equals(village)) {
@@ -951,12 +997,11 @@ public class ImportsController {
 		String str2return = "";
 		if (updatedProducers > 0)
 			str2return = str2return
-					+ String.format("\nEdited Progucer org(s)=%d,   ",
+					+ String.format("\n%d Progucer(s) Edited,   ",
 							updatedProducers);
-		if (newProducers > 0)
-			str2return = str2return
-					+ String.format("\nNew Producer org(s)= %d,   ",
-							newProducers);
+
+		str2return = str2return
+				+ String.format("\n%d Producer(s) Added,   ", newProducers);
 		return str2return;
 
 	}

@@ -19,6 +19,10 @@ public class Village extends BaseData implements Comparable<Village> {
 		super();
 	}
 
+	public Village(String id) {
+		this.setId(id);
+	}
+
 	public Village(String name, Parish parish) {
 		super();
 		this.setName(name);
@@ -41,7 +45,10 @@ public class Village extends BaseData implements Comparable<Village> {
 		fullName += ", " + this.getParish().getName();
 		fullName += ", " + this.getParish().getSubCounty().getName();
 		fullName += ", "
-				+ this.getParish().getSubCounty().getDistrict().getName();
+				+ this.getParish().getSubCounty().getCounty().getName();
+		fullName += ", "
+				+ this.getParish().getSubCounty().getCounty().getDistrict()
+						.getName();
 		return fullName;
 	}
 

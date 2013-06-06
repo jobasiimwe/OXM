@@ -1,6 +1,6 @@
 <%@ tag body-content="empty"%>
 
-<%@ attribute type="org.agric.oxm.model.ProducerOrganisation" name="producerOrg" rtexprvalue="true"
+<%@ attribute type="org.agric.oxm.model.ProducerOrg" name="producerOrg" rtexprvalue="true"
 	required="true"
 %>
 

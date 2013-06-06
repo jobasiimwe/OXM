@@ -24,13 +24,13 @@ public class Committee extends BaseData implements Comparable<Committee> {
 
 	private List<CommitteeMember> members;
 
-	private ProducerOrganisation producerOrg;
+	private ProducerOrg producerOrg;
 
 	public Committee() {
 
 	}
 
-	public Committee(ProducerOrganisation producerOrg) {
+	public Committee(ProducerOrg producerOrg) {
 		this.setProducerOrg(producerOrg);
 	}
 
@@ -84,11 +84,11 @@ public class Committee extends BaseData implements Comparable<Committee> {
 
 	@ManyToOne
 	@JoinColumn(name = "producer_organisation_id", nullable = false)
-	public ProducerOrganisation getProducerOrg() {
+	public ProducerOrg getProducerOrg() {
 		return producerOrg;
 	}
 
-	public void setProducerOrg(ProducerOrganisation producerOrg) {
+	public void setProducerOrg(ProducerOrg producerOrg) {
 		this.producerOrg = producerOrg;
 	}
 

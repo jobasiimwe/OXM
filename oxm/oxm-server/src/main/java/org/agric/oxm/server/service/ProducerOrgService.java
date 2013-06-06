@@ -5,7 +5,7 @@ package org.agric.oxm.server.service;
 
 import java.util.List;
 
-import org.agric.oxm.model.ProducerOrganisation;
+import org.agric.oxm.model.ProducerOrg;
 import org.agric.oxm.model.StaffMember;
 import org.agric.oxm.model.exception.ValidationException;
 import org.agric.oxm.model.search.ProducerOrgSearchParameters;
@@ -16,15 +16,15 @@ import org.agric.oxm.model.search.ProducerOrgSearchParameters;
  */
 public interface ProducerOrgService {
 
-	void save(ProducerOrganisation producerOrganisation);
+	void save(ProducerOrg producerOrganisation);
 
-	void validate(ProducerOrganisation producerOrganisation) throws ValidationException;
+	void validate(ProducerOrg producerOrganisation) throws ValidationException;
 
-	List<ProducerOrganisation> getProducerOrganisations();
+	List<ProducerOrg> getProducerOrganisations();
 
-	List<ProducerOrganisation> getProducerOrgsWithParams(ProducerOrgSearchParameters params);
+	List<ProducerOrg> getProducerOrgsWithParams(ProducerOrgSearchParameters params);
 
-	ProducerOrganisation getProducerOrganisationById(String id);
+	ProducerOrg getProducerOrganisationById(String id);
 
 	void deleteProducerOrganisationsByIds(String[] ids);
 	
