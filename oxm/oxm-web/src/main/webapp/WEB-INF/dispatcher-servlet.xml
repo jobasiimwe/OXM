@@ -28,7 +28,14 @@
 
 	<bean id="viewResolver"
 		class="org.springframework.web.servlet.view.ResourceBundleViewResolver">
-		<property name="basename" value="views" />
+		<property name="basenames">
+			<list>
+				<value>views</value>
+				<value>views-prelogin</value>
+				<value>views-district</value>
+				<value>views-porg</value>
+			</list>
+		</property>
 	</bean>
 
 	<mvc:interceptors>
@@ -44,6 +51,7 @@
 		class="org.springframework.web.servlet.view.tiles2.TilesConfigurer">
 		<property name="definitions">
 			<list>
+				<value>/WEB-INF/tile-defs/prelogin-tiles-defs.xml</value>
 				<value>/WEB-INF/tile-defs/tiles-defs.xml</value>
 				<value>/WEB-INF/tile-defs/district-tiles-defs.xml</value>
 				<value>/WEB-INF/tile-defs/porg-tiles-defs.xml</value>

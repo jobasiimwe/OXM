@@ -4,7 +4,7 @@
 <%@ taglib prefix='fn' uri='http://java.sun.com/jsp/jstl/functions'%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 
-<%@ taglib prefix="oxmTags" tagdir="/WEB-INF/tags"%>
+<%@ taglib prefix="sysTags" tagdir="/WEB-INF/tags"%>
 <%@ taglib prefix="oxmBreadcrambs"
 	tagdir="/WEB-INF/tags/breadcramblinks"%>
 
@@ -31,7 +31,7 @@
 </div>
 <div>
 
-	<oxmTags:name-of-item-on-page name="District" />
+	<sysTags:name-of-item-on-page name="District" />
 
 	<table class="recordTable">
 		<thead>
@@ -47,7 +47,7 @@
 				<c:when test="${not empty positions  && fn:length(positions) > 0}">
 					<c:forEach var="position" items="${positions }">
 						<tr id="${position.id }">
-							<td><oxmTags:rowcheckbox
+							<td><sysTags:rowcheckbox
 									nameOfItemOnPage="${nameOfItemOnPage}" id="${position.id }" />
 							</td>
 							<td>${position.index }</td>

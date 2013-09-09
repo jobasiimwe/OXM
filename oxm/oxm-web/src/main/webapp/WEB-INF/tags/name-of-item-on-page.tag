@@ -7,6 +7,6 @@
 <%@ variable declare="true" variable-class="java.lang.String"
 	name-given="nameOfItemOnPage" scope="AT_END"%>
 
-<c:set var="nameOfItemOnPage" scope="page" value="${name }"></c:set>
+<c:set var="nameOfItemOnPage" scope="request" value="${name }"></c:set>
 <input id="nameOfItemOnPage" type="hidden" value="${name }">
 

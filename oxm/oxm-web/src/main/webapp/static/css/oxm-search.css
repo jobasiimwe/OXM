@@ -1,0 +1,39 @@
+@CHARSET "UTF-8";
+
+.searchDiv {
+	width: auto;
+	border-radius: 5px;
+}
+
+.searchDiv ul {
+	text-decoration: none;
+	padding-top: 0px;
+}
+
+.searchDiv ul li {
+	display: inline-table;
+	width: 10px;
+	text-align: left !important;
+}
+
+.searchDiv .button-li {
+	vertical-align: bottom;
+}
+
+fieldset {
+	border-color: #ff9b43;
+	border-radius: 25px;
+}
+
+.colapsed-fieldset {
+	width: 200px;
+}
+
+legend b,legend span {
+	color: #ff9b43;
+	border-color: #ff9b43;
+	padding-left: 5px;
+	text-decoration: underline;
+	font-weight: bold;
+	cursor: pointer;
+}

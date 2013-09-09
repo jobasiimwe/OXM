@@ -12,14 +12,15 @@ $(document)
 							"#lnkEditPOrg, #lnkPOrgDetails, #lnkPOrgMembers, #lnkPOrgDocs, "// pOrg
 									+ " #lnkPOrgStaff, #lnkPOrgCommittee, "
 									+ " #lnkEditPOrgCommittee, #lnkEditPOrgMember, "
-									+ " #lnkEditDistrict, #lnkDistrictCounties, #lnkEditSubCounty, "// district
-									+ " #lnkSubCountyParishes,  #lnkEditParish, #lnkParishVillages, "
-									+ " #lnkEditVillage, "
+									+ " #lnkEditDistrict, #lnkDistrictCounties,"// district
+									+ " #lnkEditCounty,#lnkCountySubCounties,#lnkEditSubCounty,#lnkSubCountyParishes,"// county-subCounty
+									+ "  #lnkEditParish, #lnkParishVillages, #lnkEditVillage,"// parish-village
 									+ " #lnkEditPosition, #lnkPositionHolders,"
 									+ " #lnkEditfInstitution, #lnkfInstitutionDocuments, "
 									+ " #lnkEditFInstitutionDoc, "
-									+ " #lnkEditSeason, #lnkEditCrop, "
-									+ " #lnkCropDetails, #lnkEditPrice, #lnkEditSellingPlace, "
+									+ " #lnkEditSeason,  #lnkEditSellingPlace,  "
+									+ " #lnkEditCrop, #lnkCropDetails, #lnkEditPrice, "
+									+ " #lnkEditProduct,"
 									+ " #lnkEditRole, #lnkEditUser, #lnkEditConcept, "
 									+ " #lnkEditPOrgCommittee, #lnkPOrgCommittees, #lnkEditPOrgCommitteeMember, "
 									+ " #lnkEditPOrgStaff, ").click(
@@ -38,7 +39,8 @@ $(document)
 									+ " #lnkDeleteParish, #lnkDeleteVillage, "
 									+ " #lnkDeletePOrg, #lnkDeletePosition, "
 									+ " #lnkDeletefInstitution, #lnkDeleteFInstitutionDoc, "
-									+ " #lnkDeleteSeason, #lnkDeleteCrop, #lnkDeletePrice, "
+									+ " #lnkDeleteSeason, #lnkDeleteCrop, #lnkDeleteProduct,"
+									+ " #lnkDeletePrice, "
 									+ " #lnkDeleteSellingPlace, #lnkDeleteRole, #lnkDeleteUser, "
 									+ " #lnkDeleteConcept,"
 									+ " #lnkDeletePOrgCommittee, #lnkDeletePOrgCommitteeMember,"
@@ -52,7 +54,7 @@ $(document)
 					 * these forms contain txtName
 					 */
 					$(
-							"#btnSaveDistrict, #btnSaveSubCounty, #btnSaveParish, "
+							"#btnSaveDistrict, #btnSaveCounty, #btnSaveSubCounty, #btnSaveParish, "
 									+ "	#btnSaveVillage, #btnSavefInstitution, #btnSavePOrgCommittee")
 							.click(function() {
 								return hasText('txtName', "Name");
@@ -64,7 +66,7 @@ $(document)
 					$('#lnkAddPrice').click(
 							function() {
 								return singleDropDownItemAction('lnkAddPrice',
-										'ddCrops', 'crop');
+										'ddProducts', 'Product');
 							});
 
 					$('#btnSaveSellingPlace').click(function() {
@@ -179,4 +181,75 @@ $(document)
 						});
 					});
 
+					/**
+					 * multiple item functions
+					 */
+					$("input[id^='multiBtnForm'],").click(
+							function() {
+								var url = getMultiButtonFormUrl("multiBtnForm",
+										$(this).attr("id"));
+								$("#multiBtnForm").attr("action", url);
+								return true;
+
+							});
+
+					function getMultiButtonFormUrl(formId, btnId) {
+						var url = $("#" + formId).attr("firstAction");
+
+						if (isSystemBlank(url))
+							url = $("#" + formId).attr("action");
+
+						var task = $("#" + btnId).attr("task");
+
+						if (task == "print")
+							$("#multiBtnForm").attr("target", "_blank");
+						else
+							$("#multiBtnForm").attr("target", "");
+
+						url = url + task;
+						return url;
+					}
+
+					function checkLimitedLengthField(id) {
+
+						var characters = $("#" + id).attr("maxlength");
+						if (isSystemBlank(characters))
+							characters = 200;
+
+						var item = $("#" + id).attr("itemName");
+						if (isSystemBlank(item))
+							item = "This Field"
+
+						if ($("#" + id).val().length > characters) {
+							alert(item + " can not exceed " + characters);
+							$("#" + id).val(
+									$("#" + id).val().substr(0, characters));
+						}
+						var remaining = characters - $("#" + id).val().length;
+						$("#counter").html(
+								"(<strong>" + remaining + "</strong>)");
+						if (remaining <= 10) {
+							$("#counter").css("color", "red");
+						} else {
+							$("#counter").css("color", "black");
+						}
+
+					}
+
+					pre_checkLimitedLengthField();
+
+					function pre_checkLimitedLengthField() {
+						var limitedlengthFields = $("*").find(
+								'textarea[id^="limitedLength"]');
+
+						limitedlengthFields.each(function() {
+							var id = $(this).attr('id');
+							checkLimitedLengthField(id)
+						});
+					}
+
+					$('textarea[id^="limitedLength"]').keyup(function() {
+						var id = $(this).attr('id');
+						checkLimitedLengthField(id)
+					});
 				});

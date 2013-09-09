@@ -4,52 +4,59 @@
 <%@page language="java" isELIgnored="false" contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 
-<div class="searchform group">
-	<form:form action="${baseUrl}/price/search" commandName="pricesearch">
-		<fieldset>
-			<legend>
-				<span title="Search Prices">Search Prices</span>
-			</legend>
+<form:form action="${baseUrl}/price/search" commandName="pricesearch">
+	<fieldset>
+		<legend>
+			<span title="Search Prices">Search Prices</span>
+		</legend>
 
-			<form:hidden path="propertiesMap['adminview'].booleanValue" />
-			<div style="float: left;">
-				<table>
-					<tr>
-						<td>Crop <form:select id="ddCrops" cssStyle="width: 100px;" cssClass="uiDropdown"
-								path="propertiesMap['cropid'].value"
-							>
-								<form:option value=""></form:option>
-								<form:options items="${crops }" itemLabel="name" itemValue="id" />
-							</form:select>
-						</td>
-						<td>Place <form:select id="ddSellingPlace" cssStyle="width: 100px;" cssClass="uiDropdown"
-								path="propertiesMap['sellingplaceid'].value"
-							>
-								<form:option value=""></form:option>
-								<form:options items="${sellingPlaces }" itemLabel="name" itemValue="id" />
-							</form:select>
-						</td>
-						<td>Sell-Type <form:select id="ddSellType" cssStyle="width: 100px;" cssClass="uiDropdown"
-								path="propertiesMap['selltypeid'].value"
-							>
-								<form:option value=""></form:option>
-								<form:options items="${selltypes }" itemLabel="name" itemValue="id" />
-							</form:select>
-						</td>
+		<form:hidden path="propertiesMap['adminview'].booleanValue" />
+		<div class="searchDiv">
+			<ul>
+				<li>
+					<label>Product</label>
+					<form:select id="ddProducts" cssStyle="width: 100px;" cssClass="uiDropdown"
+						path="propertiesMap['product'].value"
+					>
+						<form:option value=""></form:option>
+						<form:options items="${products }" itemLabel="name" itemValue="id" />
+					</form:select>
+				</li>
+				<li>
+					<label>Place</label>
+					<form:select id="ddSellingPlace" cssStyle="width: 100px;" cssClass="uiDropdown"
+						path="propertiesMap['sellingplaceid'].value"
+					>
+						<form:option value=""></form:option>
+						<form:options items="${sellingPlaces }" itemLabel="name" itemValue="id" />
+					</form:select>
+				</li>
+				<li>
+					<label>Sell-Type</label>
+					<form:select id="ddSellType" cssStyle="width: 100px;" cssClass="uiDropdown"
+						path="propertiesMap['selltypeid'].value"
+					>
+						<form:option value=""></form:option>
+						<form:options items="${selltypes }" itemLabel="name" itemValue="id" />
+					</form:select>
+				</li>
 
-						<td>From <form:input id="fromdate" cssStyle="width: 100px;"
-								cssClass="uiTextbox uiDateTextbox" path="propertiesMap['fromdate'].value"
-							/>
-						</td>
-						<td>To <form:input id="todate" cssStyle="width: 100px;"
-								cssClass="uiTextbox uiDateTextbox" path="propertiesMap['todate'].value"
-							/>
-						</td>
-						<td><input id="filter" type="submit" value="Search" name="btnFilter" /></td>
-					</tr>
-				</table>
-			</div>
+				<li>
+					<label>From</label>
+					<form:input id="fromdate" cssStyle="width: 100px;" cssClass="uiTextbox uiDateTextbox"
+						path="propertiesMap['fromdate'].value"
+					/>
+				</li>
+				<li>
+					<label>To</label>
+					<form:input id="todate" cssStyle="width: 100px;" cssClass="uiTextbox uiDateTextbox"
+						path="propertiesMap['todate'].value"
+					/>
+				</li>
+				<li class="button-li">
+					<input id="filter" type="submit" value="Search" name="btnFilter" />
+				</li>
+		</div>
 
-		</fieldset>
-	</form:form>
-</div>
+	</fieldset>
+</form:form>

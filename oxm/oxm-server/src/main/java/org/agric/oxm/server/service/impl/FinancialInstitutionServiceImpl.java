@@ -5,6 +5,7 @@ import java.util.List;
 import org.agric.oxm.model.FinancialInstitution;
 import org.agric.oxm.model.enums.RecordStatus;
 import org.agric.oxm.model.exception.ValidationException;
+import org.agric.oxm.server.OXMConstants;
 import org.agric.oxm.server.dao.FinancialInstitutionDAO;
 import org.agric.oxm.server.security.PermissionConstants;
 import org.agric.oxm.server.service.FinancialInstitutionService;
@@ -14,6 +15,8 @@ import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+
+import com.googlecode.genericdao.search.Search;
 
 @Service("financialInstitutionService")
 @Transactional
@@ -82,4 +85,16 @@ public class FinancialInstitutionServiceImpl implements
 		financialInstitutionDAO.removeByIds(ids);
 	}
 
+	@Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
+	@Override
+	public List<FinancialInstitution> getAnnonymouslyViewableFInstitutions() {
+		Search search = new Search();
+		search.setMaxResults(OXMConstants.MAX_NUM_PRE_LOGIN_PAGE_RECORD);
+
+		search.addSort("name", false, true);
+		search.setPage(0);
+
+		List<FinancialInstitution> financialInstitutions = financialInstitutionDAO.search(search);
+		return financialInstitutions;
+	}
 }

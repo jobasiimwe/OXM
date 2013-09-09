@@ -77,10 +77,14 @@
 
 
 		<!-- ======= Mysql ========== -->
+		<!-- <dependency> <groupId>mysql</groupId> <artifactId>mysql-connector-java</artifactId> 
+			<version>5.1.12</version> </dependency> -->
+
+		<!-- PostgreSQL CONNECTOR -->
 		<dependency>
-			<groupId>mysql</groupId>
-			<artifactId>mysql-connector-java</artifactId>
-			<version>5.1.12</version>
+			<groupId>postgresql</groupId>
+			<artifactId>postgresql</artifactId>
+			<version>8.4-702.jdbc4</version>
 		</dependency>
 
 		<!-- ======= Hiberante Caching support ====== -->
@@ -187,7 +191,7 @@
 			<scope>test</scope>
 		</dependency>
 
-		
+
 	</dependencies>
 
 	<build>
@@ -209,11 +213,18 @@
 						<taskdef resource="liquibasetasks.properties">
 							<classpath refid="maven.compile.classpath" />
 						</taskdef>
-						<diffDatabaseToChangeLog driver="com.mysql.jdbc.Driver"
-							url="jdbc:mysql://localhost:3306/oxm-db" username="oxmadmin" password="qas1234s"
-							baseUrl="hibernate:hibernate.cfg.xml" outputFile="${basedir}/src/main/resources/oXMChangelog.xml"
+
+						<diffDatabaseToChangeLog driver="org.postgresql.Driver"
+							url="jdbc:postgresql://localhost:5432/oxm-db" username="oxmadmin"
+							password="qas1234s" baseUrl="hibernate:hibernate.cfg.xml"
+							outputFile="${basedir}/src/main/resources/OXM-Generated-Changelog.xml"
 							classpathref="maven.compile.classpath">
 						</diffDatabaseToChangeLog>
+
+						<!-- <diffDatabaseToChangeLog driver="com.mysql.jdbc.Driver" url="jdbc:mysql://localhost:3306/oxm-db" 
+							username="oxmadmin" password="qas1234s" baseUrl="hibernate:hibernate.cfg.xml" 
+							outputFile="${basedir}/src/main/resources/OXM-Generated-Changelog.xml" classpathref="maven.compile.classpath"> 
+							</diffDatabaseToChangeLog> -->
 					</target>
 				</configuration>
 			</plugin>

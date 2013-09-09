@@ -396,13 +396,52 @@ public final class PermissionConstants {
 	 */
 	@PermissionAnnotation(id = "B4A66B4D-BB9D-4e4a-8797-35DB9C8C9A77", description = "Ability to delete a prod organisation")
 	public static final String DELETE_PROD_ORG = "delete_prod_org";
-	
+
 	@PermissionAnnotation(id = "B000IIIK44-BB9D-4e4a-8797-567UUUUHG", description = "Ability to perform CRUD operations on season")
 	public static final String MANAGE_SEASONS = "manage_season";
-	
+
 	@PermissionAnnotation(id = "56555IIjGWRW-BB9D-4e4a-8797-00USDSD4", description = "Ability to view seasons")
 	public static final String VIEW_SEASONS = "view_season";
-	
+
 	@PermissionAnnotation(id = "5PSQQQH-458e-BB9D-4e4a-8797-00USDSD4", description = "Ability to save annoymous user")
 	public static final String ANNONYMOUS_USER = "annonymous_user";
+
+	// ===========================================================================================
+
+	/**
+	 * permission to add a product
+	 */
+	@PermissionAnnotation(id = "240136B8-B344-49e5-8ED5-86381F35B62D", description = "Ability to add a product")
+	public static final String ADD_PRODUCT = "add_product";
+
+	/**
+	 * permission to view a product
+	 */
+	@PermissionAnnotation(id = "180A96C0-D107-4f5a-8A07-929669EB3389", description = "Ability to view a product")
+	public static final String VIEW_PRODUCT = "view_product";
+
+	/**
+	 * permission to edit products
+	 */
+	@PermissionAnnotation(id = "C161A7A8-16BD-4bb8-BD3D-4FC23A2AEC2F", description = "Ability to edit a product")
+	public static final String EDIT_PRODUCT = "edit_product";
+
+	/**
+	 * permission to delete a product
+	 */
+	@PermissionAnnotation(id = "09B5700D-EEC4-4476-A03E-F302A9790F34", description = "Ability to delete a product")
+	public static final String DELETE_PRODUCT = "delete_product";
+
+	/**
+	 * permission to export to excel
+	 */
+	@PermissionAnnotation(id = "23E4456B-C8CD-4cc8-BDF8-48944551AC34", description = "Ability to export to excell")
+	public static final String EXPORT_TO_EXCELL = "export_to_excell";
+	
+	/**
+	 * permission to export to excel
+	 */
+	@PermissionAnnotation(id = "export_to_pdf_id", description = "Ability to export to pdf")
+	public static final String EXPORT_TO_PDF = "export_to_pdf";
+
 }

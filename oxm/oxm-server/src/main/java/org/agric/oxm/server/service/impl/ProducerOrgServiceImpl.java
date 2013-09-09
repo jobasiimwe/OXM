@@ -7,6 +7,7 @@ import org.agric.oxm.model.StaffMember;
 import org.agric.oxm.model.enums.RecordStatus;
 import org.agric.oxm.model.exception.ValidationException;
 import org.agric.oxm.model.search.ProducerOrgSearchParameters;
+import org.agric.oxm.server.OXMConstants;
 import org.agric.oxm.server.dao.ProducerOrgDAO;
 import org.agric.oxm.server.dao.StaffMemberDAO;
 import org.agric.oxm.server.security.PermissionConstants;
@@ -18,7 +19,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.googlecode.genericdao.search.Filter;
 import com.googlecode.genericdao.search.Search;
 
 /**
@@ -45,23 +45,24 @@ public class ProducerOrgServiceImpl implements ProducerOrgService {
 	@Secured({ PermissionConstants.VIEW_PROD_ORG })
 	@Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
 	@Override
-	public void validate(ProducerOrg productionOrg)
-			throws ValidationException {
-		if (StringUtils.isEmpty(productionOrg.getName()))
-			throw new ValidationException(
-					"Supplied Production Org. missing name");
-		
-		if (productionOrg.getSubCounty() == null)
-			throw new ValidationException(
-					"Supplied Production Org missing subCountry");
+	public void validate(ProducerOrg pOrg) throws ValidationException {
+		if (StringUtils.isEmpty(pOrg.getName()))
+			throw new ValidationException("Name can not be blank");
 
-		if (productionOrg.getParish() == null)
-			throw new ValidationException(
-					"Supplied Production Org missing parish");
+		if (pOrg.getDistrict() == null)
+			throw new ValidationException("District can not be blank");
 
-		if (productionOrg.getVillage() == null)
-			throw new ValidationException(
-					"Supplied Production Org missing village");
+		if (pOrg.getCounty() == null)
+			throw new ValidationException("Country can not be blank");
+
+		if (pOrg.getSubCounty() == null)
+			throw new ValidationException("SubCountry can not be blank");
+
+		if (pOrg.getParish() == null)
+			throw new ValidationException("Parish can not be blank");
+
+		if (pOrg.getVillage() == null)
+			throw new ValidationException("Village can not be blank");
 	}
 
 	@Secured({ PermissionConstants.VIEW_PROD_ORG })
@@ -71,24 +72,6 @@ public class ProducerOrgServiceImpl implements ProducerOrgService {
 		Search search = new Search();
 		search.addSort("name", false, true);
 		search.addFilterEqual("recordStatus", RecordStatus.ACTIVE);
-		return producerOrgDAO.search(search);
-	}
-
-	@Secured({ PermissionConstants.VIEW_PROD_ORG })
-	@Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
-	@Override
-	public List<ProducerOrg> getProducerOrgsWithParams(
-			ProducerOrgSearchParameters params) {
-		Search search = new Search();
-
-		if (StringUtils.isNotEmpty(params.getName())) {
-			Filter nameFilter = new Filter("name",
-					"%" + params.getName() + "%", Filter.OP_ILIKE);
-
-			search.addFilterOr(nameFilter);
-		}
-
-		search.addSort("name", false, true);
 		return producerOrgDAO.search(search);
 	}
 
@@ -127,4 +110,70 @@ public class ProducerOrgServiceImpl implements ProducerOrgService {
 	public StaffMember getStaffMemberById(String id) {
 		return staffMemberDAO.searchUniqueByPropertyEqual("id", id);
 	}
+
+	@Secured({ PermissionConstants.VIEW_PROD_ORG })
+	@Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
+	@Override
+	public List<ProducerOrg> searchWithParams(
+			ProducerOrgSearchParameters params, Integer pageNo) {
+		Search search = preparePOrgSearch(params);
+
+		search.setMaxResults(OXMConstants.MAX_NUM_PAGE_RECORD);
+
+		/*
+		 * if the page number is less than or equal to zero, no need for paging
+		 */
+		if (pageNo > 0) {
+			search.setPage(pageNo - 1);
+		} else {
+			search.setPage(0);
+		}
+
+		return producerOrgDAO.search(search);
+	}
+
+	@Secured({ PermissionConstants.VIEW_PROD_ORG })
+	@Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
+	@Override
+	public List<ProducerOrg> searchWithParams(ProducerOrgSearchParameters params) {
+		Search search = preparePOrgSearch(params);
+		return producerOrgDAO.search(search);
+	}
+
+	private Search preparePOrgSearch(ProducerOrgSearchParameters params) {
+		Search search = new Search();
+
+		search.addSort("name", false, true);
+		if (StringUtils.isNotBlank(params.getName())) {
+			search.addFilterILike("name", "%" + params.getName() + "%");
+		}
+
+		if (params.getDistrict() != null) {
+			search.addFilterEqual("district", params.getDistrict());
+		}
+		if (params.getCounty() != null) {
+			search.addFilterEqual("county", params.getCounty());
+		}
+		if (params.getSubCounty() != null) {
+			search.addFilterEqual("subCounty", params.getSubCounty());
+		}
+		if (params.getParish() != null) {
+			search.addFilterEqual("parish", params.getParish());
+		}
+		if (params.getVillage() != null) {
+			search.addFilterEqual("village", params.getVillage());
+		}
+		if (params.getVillage() != null) {
+			search.addFilterEqual("village", params.getVillage());
+		}
+		return search;
+	}
+
+	@Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
+	@Override
+	public long numberInSearch(ProducerOrgSearchParameters params) {
+		Search search = preparePOrgSearch(params);
+		return producerOrgDAO.count(search);
+	}
+
 }

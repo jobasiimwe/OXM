@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog/1.9"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog/1.9 http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-1.9.xsd">
+
+	<changeSet author="jompango@gmail.com" id="92a5192e-bdb3-11e0-b20f-002655bc695f">
+		<comment>Renamed liquibase path for changelog files.</comment>
+		<update tableName="DATABASECHANGELOG">
+			<column name="FILENAME" value="database/postgresql/liquibase/db.changelog-1.0.xml"></column>
+			<where>filename='database/liquibase/db.changelog-1.0.xml'</where>
+		</update>
+	</changeSet>
+
+	<changeSet author="jompango@gmail.com" id="375e8d9c-bdb4-11e0-ae9b-002655bc695f">
+		<comment>Renamed liquibase path for changelog files.</comment>
+		<update tableName="DATABASECHANGELOG">
+			<column name="FILENAME" value="database/postgresql/liquibase/db.changelog.data-1.0.xml"></column>
+			<where>filename='database/liquibase/db.changelog.data-1.0.xml'</where>
+		</update>
+	</changeSet>
+	
+	<include file="database/postgresql/liquibase/db.changelog-1.0.xml" />
+	<!-- <include file="database/postgresql/liquibase/db.changelog-1.0.1.xml" /> -->
+
+	<include file="database/postgresql/liquibase/db.changelog.data-1.0.xml" />
+</databaseChangeLog>

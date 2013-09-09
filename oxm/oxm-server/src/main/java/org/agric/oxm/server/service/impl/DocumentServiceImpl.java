@@ -45,6 +45,7 @@ import com.googlecode.genericdao.search.Search;
  * 
  */
 @Service("documentService")
+@Transactional
 public class DocumentServiceImpl implements DocumentService {
 
 	private Logger log = LoggerFactory.getLogger(this.getClass());

@@ -2,7 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix='fn' uri='http://java.sun.com/jsp/jstl/functions'%>
 
-<%@ taglib prefix="oxmTags" tagdir="/WEB-INF/tags"%>
+<%@ taglib prefix="sysTags" tagdir="/WEB-INF/tags"%>
 <%@ taglib prefix="oxmBreadcrambs" tagdir="/WEB-INF/tags/breadcramblinks"%>
 <%@ taglib prefix="oxmDistrictBreadcrambs" tagdir="/WEB-INF/tags/breadcramblinks/districts"%>
 
@@ -15,23 +15,23 @@
 	<div class="contextual">
 		<a id="lnkAddDistrict" class="uiButton" href="${baseUrl }/district/add/">Add</a>
 		<a id="lnkEditDistrict" class="uiButton" href="${baseUrl }/district/edit/">Edit</a>
-		<a id="lnkDeleteDistrict" class="uiButton" href="${baseUrl }/district/delete/">Delete</a>
-		<a id="lnkDistrictCounties" class="uiButton" href="${baseUrl }/county/view/">Sub
-			Counties</a>
+		<a id="lnkDeleteDistrict" class="redText uiButton" href="${baseUrl }/district/delete/">Delete</a>
+		<a id="lnkDistrictCounties" class="uiButton" href="${baseUrl }/county/view/">Counties</a>
 		<a id="lnkImportDistricts" class="uiButton spacedElement" href="${baseUrl }/import/districts">Import
 			Districts</a>
+		<a id="lnkImportDistricts" class="uiButton" href="${baseUrl }/import/producerorgs">Import
+			Producer Orgs.</a>
 	</div>
-	<div style="float: right">
+	<div style="float: right; display: none;">
 		<form method="post" action="${baseUrl }/district/search/" style="display: inline-block">
-			<input type="text" class="uiTextbox" id="txtSearch" size="30" name="query" /> <input
-				type="submit" class="uiButton" id="btnSearchSubmit" value="Search"
-			/>
+			<input type="text" class="uiTextbox" id="txtSearch" size="30" name="query" />
+			<input type="submit" class="uiButton" id="btnSearchSubmit" value="Search" />
 		</form>
 	</div>
 	<div style="clear: both"></div>
 </div>
 <div>
-	<oxmTags:name-of-item-on-page name="District" />
+	<sysTags:name-of-item-on-page name="District" />
 	<table class="recordTable list">
 		<thead>
 			<tr>
@@ -46,7 +46,7 @@
 				<c:when test="${not empty districts  && fn:length(districts) > 0}">
 					<c:forEach var="district" items="${districts }" varStatus="status">
 						<tr id="${district.id }">
-							<td><oxmTags:rowcheckbox nameOfItemOnPage="${nameOfItemOnPage}" id="${district.id }" />
+							<td><sysTags:rowcheckbox nameOfItemOnPage="${nameOfItemOnPage}" id="${district.id }" />
 							</td>
 							<td>${status.count }</td>
 							<td>${district.name }</td>

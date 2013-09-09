@@ -4,7 +4,7 @@
 <%@ taglib prefix='fn' uri='http://java.sun.com/jsp/jstl/functions'%>
 
 
-<%@ taglib prefix="oxmTags" tagdir="/WEB-INF/tags"%>
+<%@ taglib prefix="sysTags" tagdir="/WEB-INF/tags"%>
 <%@ taglib prefix="oxmBreadcrambs"
 	tagdir="/WEB-INF/tags/breadcramblinks"%>
 <%@ taglib prefix="oxmDistrictBreadcrambs"
@@ -25,7 +25,7 @@
 </div>
 <div>
 
-	<oxmTags:name-of-item-on-page name="Role" />
+	<sysTags:name-of-item-on-page name="Role" />
 
 	<table class="recordTable list" width="100%" cellpadding="0"
 		cellspacing="0">
@@ -44,7 +44,7 @@
 			<c:if test="${not empty roles  && fn:length(roles) > 0}">
 				<c:forEach var="role" items="${roles }" varStatus="status">
 					<tr>
-						<td><oxmTags:rowcheckbox
+						<td><sysTags:rowcheckbox
 								nameOfItemOnPage="${nameOfItemOnPage }" id="${role.id }" /></td>
 						<td>${status.count }</td>
 						<td>${role.name }</td>

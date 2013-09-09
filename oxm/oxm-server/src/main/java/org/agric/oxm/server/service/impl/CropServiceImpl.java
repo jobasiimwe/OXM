@@ -6,12 +6,12 @@ import org.agric.oxm.model.Crop;
 import org.agric.oxm.model.enums.RecordStatus;
 import org.agric.oxm.model.exception.ValidationException;
 import org.agric.oxm.model.search.CropSearchParameters;
+import org.agric.oxm.server.OXMConstants;
 import org.agric.oxm.server.dao.CropDAO;
-import org.agric.oxm.server.security.PermissionConstants;
 import org.agric.oxm.server.service.CropService;
+import org.agric.oxm.utils.MyValidate;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -31,19 +31,16 @@ public class CropServiceImpl implements CropService {
 	@Autowired
 	private CropDAO cropDAO;
 
-	@Secured({ PermissionConstants.ADD_CROP, PermissionConstants.EDIT_CROP })
 	@Transactional(propagation = Propagation.REQUIRED)
 	@Override
 	public void save(Crop crop) {
 		cropDAO.save(crop);
 	}
 
-	@Secured({ PermissionConstants.VIEW_CROP })
 	@Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
 	@Override
 	public void validate(Crop crop) throws ValidationException {
-		if (StringUtils.isBlank(crop.getName()))
-			throw new ValidationException("Crop name can not be blank");
+		MyValidate.isNotBlank(crop.getName(), "Name");
 
 		Crop cropWithSimilarName = getCropByName(crop.getName());
 		if (cropWithSimilarName != null) {
@@ -52,30 +49,30 @@ public class CropServiceImpl implements CropService {
 				throw new ValidationException("Another crop with name - "
 						+ cropWithSimilarName.getName() + " already exists");
 		}
+		
+		if (crop.getUnitsOfMeasure() == null
+				|| crop.getUnitsOfMeasure().size() == 0)
+			throw new ValidationException("Units Of Measure can not be empty");
 	}
 
-	@Secured({ PermissionConstants.VIEW_CROP })
 	@Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
 	@Override
 	public List<Crop> getCrops() {
 		return cropDAO.searchByRecordStatus(RecordStatus.ACTIVE);
 	}
 
-	@Secured({ PermissionConstants.VIEW_CROP })
 	@Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
 	@Override
 	public Crop getCropById(String id) {
 		return cropDAO.searchUniqueByPropertyEqual("id", id);
 	}
 
-	@Secured({ PermissionConstants.VIEW_CROP })
 	@Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
 	@Override
 	public Crop getCropByName(String name) {
 		return cropDAO.searchUniqueByPropertyEqual("name", name);
 	}
 
-	@Secured({ PermissionConstants.DELETE_CROP })
 	@Transactional(propagation = Propagation.REQUIRED)
 	@Override
 	public void deleteCropsByIds(String[] ids) {
@@ -134,6 +131,19 @@ public class CropServiceImpl implements CropService {
 	public int numberOfCropsWithSearchParams(CropSearchParameters params) {
 		Search search = prepareCropSearch(params);
 		return cropDAO.count(search);
+	}
+
+	@Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
+	@Override
+	public List<Crop> getAnnonymouslyViewableCrops() {
+		Search search = new Search();
+		search.setMaxResults(OXMConstants.MAX_NUM_PRE_LOGIN_PAGE_RECORD);
+
+		search.addSort("name", false, true);
+		search.setPage(0);
+
+		List<Crop> crops = cropDAO.search(search);
+		return crops;
 	}
 
 }

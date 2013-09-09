@@ -14,7 +14,7 @@ import javax.persistence.Table;
 @Table(name = "price")
 public class Price extends BaseData implements Comparable<Price> {
 
-	private Crop crop;
+	private Product product;
 
 	private SellingPlace sellingPlace;
 
@@ -32,19 +32,19 @@ public class Price extends BaseData implements Comparable<Price> {
 		super();
 	}
 
-	public Price(Crop crop) {
+	public Price(Product product) {
 		super();
-		this.setCrop(crop);
+		this.setProduct(product);
 	}
 
 	@OneToOne
-	@JoinColumn(name = "crop_id", nullable = false)
-	public Crop getCrop() {
-		return crop;
+	@JoinColumn(name = "product_id", nullable = false)
+	public Product getProduct() {
+		return product;
 	}
 
-	public void setCrop(Crop crop) {
-		this.crop = crop;
+	public void setProduct(Product product) {
+		this.product = product;
 	}
 
 	@ManyToOne

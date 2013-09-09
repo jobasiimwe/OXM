@@ -1,3 +1,12 @@
+
+function isSystemBlank(str) {
+	if (str == null || str == "" || str == "none")
+		return true;
+
+	return false;
+}
+
+
 function hasText(id, fieldName) {
 	var value = $.trim($("#" + id).val());
 	if (value == null || value == "") {
@@ -19,7 +28,7 @@ function someAreChecked(checkBoxesName, fieldName) {
 
 function singleDropDownItemAction(buttonId, dropDownId, itemName) {
 	var selectedId = $('#' + dropDownId).attr("value");
-	if (selectedId == null || selectedId == "" || selectedId == "none") {
+	if (isSystemBlank(selectedId)) {
 		alert("First select a " + itemName + " to perform this action");
 		return false;
 	} else {
@@ -222,34 +231,6 @@ $(document).ready(
 			 */
 			$(".uiButton").button();
 
-			/**
-			 * intialize tabs globally
-			 */
-			$("#tabs").tabs();
-
-			/*
-			 * selecting a tab using a url parameter
-			 */
-			var param = $(document).getUrlParam('selectedTab');
-			$('#tabs').tabs('select', parseFloat(param));
-
-			/*
-			 * handling the cancel button within the tab
-			 */
-
-			$(".tabCancel", ".tab").live('click', function() {
-				var $tabs = $('#tabs');// .tabs();
-				var selected = $tabs.tabs('option', 'selected');
-				$tabs.tabs('load', selected);
-			});
-
-			/*
-			 * vertial styling of the tabs
-			 */
-			$("#tabs").tabs().addClass('ui-tabs-vertical ui-helper-clearfix');
-			$("#tabs li").removeClass('ui-corner-top').addClass(
-					'ui-corner-left');
-
 			/*
 			 * every time the record table row is clicked, we trigger the radio
 			 * button in the row to be clicked
@@ -321,11 +302,6 @@ $(document).ready(
 			addZebraStripe(tbl);
 			addMouseOver(tbl);
 
-			$("table.scrollableTable").createScrollableTable({
-				width : '1000px',
-				height : '400px'
-			});
-
 			function addZebraStripe(table) {
 				table.find("tbody tr:odd").addClass("alt");
 			}
@@ -347,11 +323,13 @@ $(document).ready(
 				$(legend).nextAll("div").toggleClass("hide");
 				$(legend).parent().toggleClass("colapsed-fieldset");
 			}
-			
-			if ($('legend').length) {
 
-				$('legend').each(function() {
-					legendClick($(this))
-				});
+			if ($('legend').length) {
+				if (!$('#navigation').length) {
+					$('legend').each(function() {
+						legendClick($(this))
+					});
+				}
 			}
+
 		});

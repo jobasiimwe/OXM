@@ -3,7 +3,7 @@
 <%@ taglib prefix='fn' uri='http://java.sun.com/jsp/jstl/functions'%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
-<%@ taglib prefix="oxmTags" tagdir="/WEB-INF/tags"%>
+<%@ taglib prefix="sysTags" tagdir="/WEB-INF/tags"%>
 <%@ taglib prefix="oxmBreadcrambs" tagdir="/WEB-INF/tags/breadcramblinks"%>
 
 <div style="margin: 5px; width: 100%;">
@@ -27,7 +27,7 @@
 </div>
 <div>
 
-	<oxmTags:name-of-item-on-page name="Financial-Institution" />
+	<sysTags:name-of-item-on-page name="Financial-Institution" />
 
 	<table class="recordTable">
 		<thead>
@@ -39,19 +39,8 @@
 				<th>Available-Documents</th>
 			</tr>
 		</thead>
-		<tbody>
-			<c:if test="${not empty fInstitutions  && fn:length(fInstitutions) > 0}">
-				<c:forEach var="fInstitution" items="${fInstitutions }" varStatus="status">
-					<tr id="${fInstitution.id }">
-						<td><oxmTags:rowcheckbox nameOfItemOnPage="${nameOfItemOnPage}" id="${fInstitution.id }" />
-						</td>
-						<td>${status.count }</td>
-						<td>${fInstitution.name }</td>
-						<td>${fInstitution.address }</td>
-						<td>${fn:length(fInstitution.documents) } documents</td>
-					</tr>
-				</c:forEach>
-			</c:if>
-		</tbody>
+
+		<jsp:include page="/WEB-INF/views/tiles/finstitution/tablerows.jsp"></jsp:include>
+
 	</table>
 </div>

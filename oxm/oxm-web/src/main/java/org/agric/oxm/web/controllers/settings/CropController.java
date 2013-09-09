@@ -3,11 +3,14 @@ package org.agric.oxm.web.controllers.settings;
 import java.util.List;
 
 import org.agric.oxm.model.Crop;
+import org.agric.oxm.model.Product;
+import org.agric.oxm.model.exception.ValidationException;
 import org.agric.oxm.model.search.CropSearchParameters;
 import org.agric.oxm.server.DefaultConceptCategories;
 import org.agric.oxm.server.security.PermissionConstants;
 import org.agric.oxm.server.service.ConceptService;
 import org.agric.oxm.server.service.CropService;
+import org.agric.oxm.server.service.ProductService;
 import org.agric.oxm.web.WebConstants;
 import org.agric.oxm.web.WebUtils;
 import org.agric.oxm.web.controllers.ApplicationController;
@@ -35,6 +38,9 @@ public class CropController {
 	private CropService cropService;
 
 	@Autowired
+	private ProductService productService;
+
+	@Autowired
 	private ConceptService conceptService;
 
 	@Autowired
@@ -42,11 +48,11 @@ public class CropController {
 
 	private Logger log = LoggerFactory.getLogger(this.getClass());
 
-	public static final String PARAM_NAME = "name";
-	public static final String PARAM_INPUT = "input";
-	public static final String PARAM_SEED_VARIATION = "seedvariation";
-	public static final String PARAM_PLOUGHING_METHOD = "ploughingmethod";
-	public static final String PARAM_INTER_CROPING_TYPE = "intercropingtype";
+	public static final String NAME = "name";
+	public static final String INPUT = "input";
+	public static final String SEED_VARIATION = "seedvariation";
+	public static final String PLOUGHING_METHOD = "ploughingmethod";
+	public static final String INTER_CROPING_TYPE = "intercropingtype";
 
 	private static final String COMMAND_NAME = "cropsearch";
 
@@ -55,29 +61,28 @@ public class CropController {
 		GenericCommand searchCommand = new GenericCommand();
 
 		if (StringUtils.isNotEmpty(params.getName()))
-			searchCommand.getPropertiesMap().put(CropController.PARAM_NAME,
+			searchCommand.getPropertiesMap().put(NAME,
 					new GenericCommandValue(params.getName()));
 
 		if (params.getInput() != null) {
-			searchCommand.getPropertiesMap().put(CropController.PARAM_INPUT,
+			searchCommand.getPropertiesMap().put(INPUT,
 					new GenericCommandValue(params.getInput().getId()));
 		}
 
 		if (params.getSeedVariation() != null) {
-			searchCommand.getPropertiesMap().put(
-					CropController.PARAM_SEED_VARIATION,
+			searchCommand.getPropertiesMap().put(SEED_VARIATION,
 					new GenericCommandValue(params.getSeedVariation().getId()));
 		}
 
 		if (null != params.getPloughingMethod())
 			searchCommand.getPropertiesMap()
-					.put(CropController.PARAM_PLOUGHING_METHOD,
+					.put(PLOUGHING_METHOD,
 							new GenericCommandValue(params.getPloughingMethod()
 									.getId()));
 
 		if (params.getInterCropingType() != null) {
 			searchCommand.getPropertiesMap().put(
-					CropController.PARAM_INTER_CROPING_TYPE,
+					INTER_CROPING_TYPE,
 					new GenericCommandValue(params.getInterCropingType()
 							.getId()));
 		}
@@ -111,18 +116,17 @@ public class CropController {
 	 * @param modelMap
 	 * @return
 	 */
-	@Secured({ PermissionConstants.PERM_VIEW_ADMINISTRATION })
-	@RequestMapping(value = { "/view/page/{pageNo}" }, method = RequestMethod.GET)
-	public ModelAndView viewCropsHandler(
-			@PathVariable(value = "pageNo") Integer pageNo, ModelMap model) {
-		prepareCropSearchModel(new CropSearchParameters(), false, false,
-				pageNo, model);
+	@Secured({ PermissionConstants.VIEW_CROP })
+	@RequestMapping(value = { "/view" }, method = RequestMethod.GET)
+	public ModelAndView view(ModelMap model) {
+		prepareCropSearchModel(new CropSearchParameters(), false, false, 1,
+				model);
 		model.put(WebConstants.CONTENT_HEADER, "Crops");
 
 		return new ModelAndView("viewCrop", model);
 	}
 
-	@Secured({ PermissionConstants.PERM_VIEW_ADMINISTRATION })
+	@Secured({ PermissionConstants.VIEW_CROP })
 	@RequestMapping(value = "/search", method = RequestMethod.POST)
 	public ModelAndView searchHandler(
 			@ModelAttribute(COMMAND_NAME) GenericCommand searchCommand,
@@ -191,22 +195,22 @@ public class CropController {
 		buffer.append("/crop?action=search");
 
 		if (StringUtils.isNotBlank(params.getName())) {
-			buffer.append("&").append(PARAM_NAME).append("=")
+			buffer.append("&").append(NAME).append("=")
 					.append(params.getName());
 		}
 
 		if (params.getInput() != null) {
-			buffer.append("&").append(PARAM_INPUT).append("=")
+			buffer.append("&").append(INPUT).append("=")
 					.append(params.getInput().getId());
 		}
 
 		if (params.getPloughingMethod() != null) {
-			buffer.append("&").append(PARAM_PLOUGHING_METHOD).append("=")
+			buffer.append("&").append(PLOUGHING_METHOD).append("=")
 					.append(params.getPloughingMethod().getId());
 		}
 
 		if (params.getInterCropingType() != null) {
-			buffer.append("&").append(PARAM_INTER_CROPING_TYPE).append("=")
+			buffer.append("&").append(INTER_CROPING_TYPE).append("=")
 					.append(params.getInterCropingType().getId());
 		}
 
@@ -216,26 +220,24 @@ public class CropController {
 	@Secured({ PermissionConstants.VIEW_CROP })
 	@RequestMapping(method = RequestMethod.GET, params = { "action=search" })
 	public ModelAndView userSearchNavigationHandler(
-			@RequestParam(value = CropController.PARAM_NAME, required = false) String name,
-			@RequestParam(value = CropController.PARAM_INPUT, required = false) String inputId,
-			@RequestParam(value = CropController.PARAM_SEED_VARIATION, required = false) String seedVariationId,
-			@RequestParam(value = CropController.PARAM_PLOUGHING_METHOD, required = false) String ploughingMethodId,
-			@RequestParam(value = CropController.PARAM_INTER_CROPING_TYPE, required = false) String interCropingTypeId,
+			@RequestParam(value = NAME, required = false) String name,
+			@RequestParam(value = INPUT, required = false) String inputId,
+			@RequestParam(value = SEED_VARIATION, required = false) String seedVariationId,
+			@RequestParam(value = PLOUGHING_METHOD, required = false) String ploughingMethodId,
+			@RequestParam(value = INTER_CROPING_TYPE, required = false) String interCropingTypeId,
 			@RequestParam(value = "pageNo", required = false) Integer pageNo,
 			ModelMap model) {
 
 		GenericCommand command = new GenericCommand();
 
-		command.getPropertiesMap().put(CropController.PARAM_NAME,
-				new GenericCommandValue(name));
-		command.getPropertiesMap().put(CropController.PARAM_INPUT,
-				new GenericCommandValue(inputId));
-		command.getPropertiesMap().put(CropController.PARAM_SEED_VARIATION,
+		command.getPropertiesMap().put(NAME, new GenericCommandValue(name));
+		command.getPropertiesMap().put(INPUT, new GenericCommandValue(inputId));
+		command.getPropertiesMap().put(SEED_VARIATION,
 				new GenericCommandValue(seedVariationId));
-		command.getPropertiesMap().put(CropController.PARAM_PLOUGHING_METHOD,
+		command.getPropertiesMap().put(PLOUGHING_METHOD,
 				new GenericCommandValue(ploughingMethodId));
 
-		command.getPropertiesMap().put(CropController.PARAM_INTER_CROPING_TYPE,
+		command.getPropertiesMap().put(INTER_CROPING_TYPE,
 				new GenericCommandValue(interCropingTypeId));
 
 		prepareCropSearchModel(extractCropSearchParamsFromCommand(command),
@@ -248,54 +250,49 @@ public class CropController {
 			GenericCommand searchCommand) {
 		CropSearchParameters params = new CropSearchParameters();
 
-		if (StringUtils.isNotBlank(searchCommand.getValue(PARAM_NAME))) {
-			params.setName(searchCommand.getValue(PARAM_NAME));
+		if (StringUtils.isNotBlank(searchCommand.getValue(NAME))) {
+			params.setName(searchCommand.getValue(NAME));
 		}
 
-		if (StringUtils.isNotBlank(searchCommand.getValue(PARAM_INPUT))) {
+		if (StringUtils.isNotBlank(searchCommand.getValue(INPUT))) {
 			params.setInput(conceptService.getConceptById(searchCommand
-					.getValue(PARAM_INPUT)));
+					.getValue(INPUT)));
 		}
 
-		if (StringUtils
-				.isNotBlank(searchCommand.getValue(PARAM_SEED_VARIATION))) {
+		if (StringUtils.isNotBlank(searchCommand.getValue(SEED_VARIATION))) {
 			params.setInput(conceptService.getConceptById(searchCommand
-					.getValue(PARAM_SEED_VARIATION)));
+					.getValue(SEED_VARIATION)));
 		}
 
-		if (StringUtils.isNotBlank(searchCommand
-				.getValue(PARAM_PLOUGHING_METHOD))) {
+		if (StringUtils.isNotBlank(searchCommand.getValue(PLOUGHING_METHOD))) {
 			params.setInput(conceptService.getConceptById(searchCommand
-					.getValue(PARAM_PLOUGHING_METHOD)));
+					.getValue(PLOUGHING_METHOD)));
 		}
 
-		if (StringUtils.isNotBlank(searchCommand
-				.getValue(PARAM_INTER_CROPING_TYPE))) {
+		if (StringUtils.isNotBlank(searchCommand.getValue(INTER_CROPING_TYPE))) {
 			params.setInput(conceptService.getConceptById(searchCommand
-					.getValue(PARAM_INTER_CROPING_TYPE)));
+					.getValue(INTER_CROPING_TYPE)));
 		}
 		return params;
 	}
 
 	@Secured({ PermissionConstants.VIEW_CROP })
 	@RequestMapping(value = "/details/{cropid}", method = RequestMethod.GET)
-	public ModelAndView viewCropDetailsHandler(
-			@PathVariable("cropid") String cropid, ModelMap model) {
+	public ModelAndView details(@PathVariable("cropid") String cropid,
+			ModelMap model) {
 
-		if (!model.containsAttribute("crop")) {
-			Crop crop = cropService.getCropById(cropid);
-			model.put("crop", crop);
-			model.put(WebConstants.CONTENT_HEADER, crop.getName() + " Details");
-		}
+		Crop crop = cropService.getCropById(cropid);
+		model.put("crop", crop);
 
-		prepareCropModel(model);
+		String header = "Details of " + crop.getName();
+		model.put("contentHeader", header);
 
-		return new ModelAndView("cropDetails", model);
+		return new ModelAndView("viewCropDetails", model);
 	}
 
-	@Secured({ PermissionConstants.ADD_CROP })
+	@Secured({ PermissionConstants.EDIT_CROP })
 	@RequestMapping(value = "/edit/{cropid}", method = RequestMethod.GET)
-	public ModelAndView editCropHandler(@PathVariable("cropid") String cropid,
+	public ModelAndView edit(@PathVariable("cropid") String cropid,
 			ModelMap model) {
 
 		if (!model.containsAttribute("crop")) {
@@ -311,8 +308,7 @@ public class CropController {
 
 	@Secured({ PermissionConstants.EDIT_CROP, PermissionConstants.ADD_CROP })
 	@RequestMapping(method = RequestMethod.POST, value = "/save")
-	public ModelAndView saveCropHandler(@ModelAttribute("crop") Crop crop,
-			ModelMap model) {
+	public ModelAndView save(@ModelAttribute("crop") Crop crop, ModelMap model) {
 
 		try {
 
@@ -336,9 +332,12 @@ public class CropController {
 			}
 
 			cropService.save(exisitingCrop);
+
+			saveDefaultProduct(exisitingCrop);
+
 			model.put(WebConstants.MODEL_ATTRIBUTE_SYSTEM_MESSAGE,
 					"Crop changes are saved successful");
-			return viewCropsHandler(1, model);
+			return view(model);
 		} catch (Exception e) {
 			log.error("Error", e);
 
@@ -346,15 +345,26 @@ public class CropController {
 					"Error " + e.getMessage());
 			model.put("crop", crop);
 			model.put(WebConstants.CONTENT_HEADER, "Edit " + crop.getName());
-			return editCropHandler(crop.getId(), model);
+			return edit(crop.getId(), model);
 
 		}
 
 	}
 
+	private void saveDefaultProduct(Crop crop) throws ValidationException {
+		List<Product> products = productService.getBy(crop);
+		if (products == null || products.size() == 0) {
+			Product product = new Product();
+			product.generateDefaultProduct(crop);
+			
+			productService.validate(product);
+			productService.save(product);
+		}
+	}
+
 	@Secured({ PermissionConstants.ADD_CROP })
 	@RequestMapping(value = "/add", method = RequestMethod.GET)
-	public ModelAndView addCropHandler(ModelMap model) {
+	public ModelAndView add(ModelMap model) {
 
 		Crop crop = new Crop();
 		model.put("crop", crop);
@@ -373,36 +383,22 @@ public class CropController {
 	 */
 	@Secured({ PermissionConstants.DELETE_CROP })
 	@RequestMapping(method = RequestMethod.GET, value = "/delete/{cropIds}")
-	public ModelAndView deleteCropHandler(
-			@PathVariable("cropIds") String cropIds, ModelMap model) {
+	public ModelAndView delete(@PathVariable("cropIds") String cropIds,
+			ModelMap model) {
 		String[] cropIdzToDelete = cropIds.split(",");
 
 		try {
 			cropService.deleteCropsByIds(cropIdzToDelete);
 			model.put(WebConstants.MODEL_ATTRIBUTE_SYSTEM_MESSAGE,
 					"Crop  deleted successfully");
-			return viewCropsHandler(1, model);
+			return view(model);
 
 		} catch (Exception e) {
 			log.error("Error", e);
 			model.put(WebConstants.MODEL_ATTRIBUTE_ERROR_MESSAGE,
 					"Error " + e.getMessage());
-			return viewCropsHandler(1, model);
+			return view(model);
 		}
 	}
 
-	@Secured({ PermissionConstants.PERM_VIEW_ADMINISTRATION })
-	@RequestMapping(value = "/crop/details/view/{cropId}", method = RequestMethod.GET)
-	public ModelAndView viewCropDetailHandler(
-			@PathVariable("cropId") String cropId, ModelMap model) {
-
-		Crop crop = cropService.getCropById(cropId);
-		model.put("crop", crop);
-
-		String header = "Details of " + crop.getName();
-		model.put("contentHeader", header);
-
-		return new ModelAndView("viewCropDetails", model);
-
-	}
 }

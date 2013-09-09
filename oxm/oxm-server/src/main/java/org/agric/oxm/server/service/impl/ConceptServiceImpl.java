@@ -42,16 +42,11 @@ public class ConceptServiceImpl implements ConceptService {
 	@Autowired
 	private ConceptCategoryDAO conceptCategoryDAO;
 
-	@Override
-	@Secured({ PermissionConstants.ADD_CONCEPT_DETAILS,
-			PermissionConstants.EDIT_CONCEPT_DETAILS })
 	@Transactional(propagation = Propagation.REQUIRED)
 	public void save(Concept concept) {
 		conceptDAO.save(concept);
 	}
 
-	@Secured({ PermissionConstants.ADD_CONCEPT_DETAILS,
-			PermissionConstants.EDIT_CONCEPT_DETAILS })
 	@Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
 	@Override
 	public void validate(Concept concept) throws ValidationException {
@@ -63,14 +58,12 @@ public class ConceptServiceImpl implements ConceptService {
 		}
 	}
 
-	@Secured({ PermissionConstants.DELETE_CONCEPT_DETAILS })
 	@Transactional(propagation = Propagation.REQUIRED)
 	@Override
 	public void deleteConceptsByIds(String[] ids) {
 		conceptDAO.removeByIds(ids);
 	}
 
-	@Secured({ PermissionConstants.VIEW_CONCEPT_DETAILS })
 	@Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
 	@Override
 	public Concept getConceptById(String id) {
@@ -78,14 +71,12 @@ public class ConceptServiceImpl implements ConceptService {
 	}
 
 	@Override
-	@Secured({ PermissionConstants.VIEW_CONCEPT_DETAILS })
 	@Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
 	public List<Concept> getConcepts() {
 		return conceptDAO.searchByRecordStatus(RecordStatus.ACTIVE);
 	}
 
 	@Override
-	@Secured({ PermissionConstants.VIEW_CONCEPT_DETAILS })
 	@Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
 	public List<Concept> getConcepts(Integer pageNo) {
 		Search search = new Search();
@@ -104,7 +95,6 @@ public class ConceptServiceImpl implements ConceptService {
 	}
 
 	@Override
-	@Secured({ PermissionConstants.VIEW_CONCEPT_DETAILS })
 	@Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
 	public List<Concept> getConceptsByCategory(ConceptCategory conceptCategory) {
 		Search search = new Search();
@@ -117,7 +107,6 @@ public class ConceptServiceImpl implements ConceptService {
 	}
 
 	@Override
-	@Secured({ PermissionConstants.VIEW_CONCEPT_DETAILS })
 	@Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
 	public List<Concept> getConceptsByCategories(
 			List<ConceptCategory> conceptCategories) {
@@ -136,7 +125,6 @@ public class ConceptServiceImpl implements ConceptService {
 	}
 
 	@Override
-	@Secured({ PermissionConstants.VIEW_CONCEPT_DETAILS })
 	@Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
 	public List<Concept> getConceptsByCategoryAnnotation(
 			ConceptCategoryAnnotation conceptCategoryAnnotation)
@@ -148,7 +136,6 @@ public class ConceptServiceImpl implements ConceptService {
 	}
 
 	@Override
-	@Secured({ PermissionConstants.VIEW_CONCEPT_DETAILS })
 	@Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
 	public List<Concept> searchWithParams(ConceptSearchParameters params,
 			int pageNo) {
@@ -195,8 +182,6 @@ public class ConceptServiceImpl implements ConceptService {
 	}
 
 	@Override
-	@Secured({ PermissionConstants.ADD_CONCEPT_DETAILS,
-			PermissionConstants.EDIT_CONCEPT_DETAILS })
 	@Transactional(propagation = Propagation.REQUIRED)
 	public void save(ConceptCategory conceptCategory) {
 		conceptCategoryDAO.save(conceptCategory);
@@ -215,7 +200,6 @@ public class ConceptServiceImpl implements ConceptService {
 	}
 
 	@Override
-	@Secured({ PermissionConstants.VIEW_CONCEPT_DETAILS })
 	@Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
 	public ConceptCategory getConceptCategoryById(String id) {
 		return conceptCategoryDAO.searchUniqueByPropertyEqual("id", id);
@@ -229,7 +213,6 @@ public class ConceptServiceImpl implements ConceptService {
 	}
 
 	@Override
-	@Secured({ PermissionConstants.VIEW_CONCEPT_DETAILS })
 	@Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
 	public List<ConceptCategory> getConceptCategoriesWithParams(
 			SingleStringSearchParameters params, int pageNo) {
@@ -266,7 +249,6 @@ public class ConceptServiceImpl implements ConceptService {
 	}
 
 	@Override
-	@Secured({ PermissionConstants.VIEW_CONCEPT_DETAILS })
 	@Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
 	public int getNumberOfConceptsCategoriesInSearch(
 			SingleStringSearchParameters params) {

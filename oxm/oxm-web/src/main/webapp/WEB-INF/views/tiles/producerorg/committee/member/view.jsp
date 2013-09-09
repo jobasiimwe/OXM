@@ -3,7 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix='fn' uri='http://java.sun.com/jsp/jstl/functions'%>
 
-<%@ taglib prefix="oxmTags" tagdir="/WEB-INF/tags"%>
+<%@ taglib prefix="sysTags" tagdir="/WEB-INF/tags"%>
 <%@ taglib prefix="oxmBreadcrambs"
 	tagdir="/WEB-INF/tags/breadcramblinks"%>
 <%@ taglib prefix="oxmProducerOrgBreadcrambs"
@@ -33,7 +33,7 @@
 </div>
 <div>
 
-	<oxmTags:name-of-item-on-page name="Committee-Member" />
+	<sysTags:name-of-item-on-page name="Committee-Member" />
 
 	<table class="recordTable">
 		<thead>
@@ -53,7 +53,7 @@
 					<c:forEach var="member" items="${committee.members }"
 						varStatus="status">
 						<tr id="${member.id }">
-							<td><oxmTags:rowcheckbox
+							<td><sysTags:rowcheckbox
 									nameOfItemOnPage="${nameOfItemOnPage}" id="${member.id }" />
 							</td>
 							<td>${status.count }</td>

@@ -2,14 +2,14 @@ package org.agric.oxm.web.controllers;
 
 import java.util.List;
 
-import org.agric.oxm.model.Crop;
+import org.agric.oxm.model.Product;
 import org.agric.oxm.model.Price;
 import org.agric.oxm.model.exception.ValidationException;
-import org.agric.oxm.model.search.PriceSearchParameters;
+import org.agric.oxm.model.search.PriceSearchParams;
 import org.agric.oxm.server.DefaultConceptCategories;
 import org.agric.oxm.server.security.PermissionConstants;
 import org.agric.oxm.server.service.ConceptService;
-import org.agric.oxm.server.service.CropService;
+import org.agric.oxm.server.service.ProductService;
 import org.agric.oxm.server.service.PriceService;
 import org.agric.oxm.server.service.SellingPlaceService;
 import org.agric.oxm.web.WebConstants;
@@ -31,13 +31,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
+@RequestMapping("price")
 public class PriceController {
 
 	@Autowired
 	private PriceService priceService;
 
 	@Autowired
-	private CropService cropService;
+	private ProductService productService;
 
 	@Autowired
 	private ConceptService conceptService;
@@ -48,7 +49,7 @@ public class PriceController {
 	@Autowired
 	private ApplicationController applicationController;
 
-	public static final String CROP = "cropid";
+	public static final String PRODUCT = "product";
 	public static final String SELLING_PLACE = "sellingplaceid";
 	public static final String SELL_TYPE = "selltypeid";
 	public static final String FROM_DATE = "fromdate";
@@ -59,10 +60,11 @@ public class PriceController {
 
 	private Logger log = LoggerFactory.getLogger(this.getClass());
 
-	private PriceSearchParameters extractParams(GenericCommand searchCommand) {
-		PriceSearchParameters params = new PriceSearchParameters();
-		if (StringUtils.isNotBlank(searchCommand.getValue(CROP))) {
-			params.setCrop(cropService.getCropById(searchCommand.getValue(CROP)));
+	private PriceSearchParams extractParams(GenericCommand searchCommand) {
+		PriceSearchParams params = new PriceSearchParams();
+		if (StringUtils.isNotBlank(searchCommand.getValue(PRODUCT))) {
+			params.setProduct(productService.getById(searchCommand
+					.getValue(PRODUCT)));
 		}
 
 		if (StringUtils.isNotBlank(searchCommand.getValue(SELLING_PLACE))) {
@@ -87,10 +89,10 @@ public class PriceController {
 		return params;
 	}
 
-	@Secured({ PermissionConstants.PERM_VIEW_ADMINISTRATION })
-	@RequestMapping(method = RequestMethod.GET, value = "/price", params = { "action=search" })
-	public ModelAndView searchNavigationHandler(
-			@RequestParam(value = CROP, required = false) String cropId,
+	@Secured({ PermissionConstants.VIEW_PRICE })
+	@RequestMapping(method = RequestMethod.GET, value = "price", params = { "action=search" })
+	public ModelAndView navigate(
+			@RequestParam(value = PRODUCT, required = false) String productId,
 			@RequestParam(value = SELLING_PLACE, required = false) String sellingPlaceId,
 			@RequestParam(value = SELL_TYPE, required = false) String selltypeid,
 			@RequestParam(value = FROM_DATE, required = false) String fromDate,
@@ -101,7 +103,8 @@ public class PriceController {
 
 		GenericCommand command = new GenericCommand();
 
-		command.getPropertiesMap().put(CROP, new GenericCommandValue(cropId));
+		command.getPropertiesMap().put(PRODUCT,
+				new GenericCommandValue(productId));
 		command.getPropertiesMap().put(SELLING_PLACE,
 				new GenericCommandValue(sellingPlaceId));
 		command.getPropertiesMap().put(SELL_TYPE,
@@ -118,29 +121,30 @@ public class PriceController {
 		return searchHandler(command, pageNo, modelMap);
 	}
 
-	@RequestMapping(value = "/price/search", method = RequestMethod.POST)
+	@Secured({ PermissionConstants.VIEW_PRICE })
+	@RequestMapping(value = "search", method = RequestMethod.POST)
 	public ModelAndView searchHandler(
-			@ModelAttribute("pricesearch") GenericCommand searchCommand,
+			@ModelAttribute(COMMAND_NAME) GenericCommand searchCommand,
 			@RequestParam(value = "pageNo", required = false) Integer pageNo,
 			ModelMap model) {
-		PriceSearchParameters params = extractParams(searchCommand);
+		PriceSearchParams params = extractParams(searchCommand);
 		if (pageNo == null || pageNo <= 0) {
 			pageNo = 1;
 		}
 
 		prepareSearchModel(params, pageNo, model);
 
-		return new ModelAndView("viewPrice", model);
+		return new ModelAndView("priceView", model);
 	}
 
 	private void prepareSearchCommand(ModelMap modelMap,
-			PriceSearchParameters params) {
+			PriceSearchParams params) {
 
 		GenericCommand searchCommand = new GenericCommand();
 
-		if (params.getCrop() != null) {
-			searchCommand.getPropertiesMap().put(CROP,
-					new GenericCommandValue(params.getCrop().getId()));
+		if (params.getProduct() != null) {
+			searchCommand.getPropertiesMap().put(PRODUCT,
+					new GenericCommandValue(params.getProduct().getId()));
 		}
 
 		if (params.getSellingPlace() != null) {
@@ -179,22 +183,11 @@ public class PriceController {
 
 		modelMap.put(COMMAND_NAME, searchCommand);
 
-		modelMap.put("crops", cropService.getCrops());
-		modelMap.put("sellingPlaces", sellingPlaceService.getSellingPlaces());
-
-		applicationController.addConceptsToModelMap(modelMap,
-				DefaultConceptCategories.SELLING_TYPE, "selltypes");
+		preparePriceModel(modelMap);
 	}
 
-	/**
-	 * prepares the concept model for a search operation
-	 * 
-	 * @param params
-	 * @param pageNo
-	 * @param modelMap
-	 */
-	private void prepareSearchModel(PriceSearchParameters params,
-			Integer pageNo, ModelMap modelMap) {
+	private void prepareSearchModel(PriceSearchParams params, Integer pageNo,
+			ModelMap modelMap) {
 
 		if (pageNo == null || (pageNo != null && pageNo <= 0)) {
 			pageNo = 1;
@@ -220,20 +213,13 @@ public class PriceController {
 		modelMap.put("searching", true);
 	}
 
-	/**
-	 * builds a search navigation url based on the given concept search
-	 * parameter object.
-	 * 
-	 * @param params
-	 * @return
-	 */
-	private String buildSearchNavigationUrl(PriceSearchParameters params) {
+	private String buildSearchNavigationUrl(PriceSearchParams params) {
 		StringBuffer buffer = new StringBuffer();
 		buffer.append("/price?action=search");
 
-		if (params.getCrop() != null) {
-			buffer.append("&").append(CROP).append("=")
-					.append(params.getCrop().getId());
+		if (params.getProduct() != null) {
+			buffer.append("&").append(PRODUCT).append("=")
+					.append(params.getProduct().getId());
 		}
 
 		if (params.getSellingPlace() != null) {
@@ -254,76 +240,76 @@ public class PriceController {
 		return buffer.toString();
 	}
 
-	@Secured({ PermissionConstants.PERM_VIEW_ADMINISTRATION })
-	@RequestMapping(value = { "/price/view/admin/{adminview}/page/{pageNo}" }, method = RequestMethod.GET)
-	public ModelAndView viewPriceHandler(ModelMap modelMap,
-			@PathVariable(value = "pageNo") Integer pageNo,
+	@Secured({ PermissionConstants.VIEW_PRICE })
+	@RequestMapping(value = { "view/admin/{adminview}" }, method = RequestMethod.GET)
+	public ModelAndView view(ModelMap modelMap,
 			@PathVariable(value = "adminview") Boolean adminView) {
 
-		PriceSearchParameters params = new PriceSearchParameters(adminView);
-		prepareSearchModel(params, pageNo, modelMap);
+		PriceSearchParams params = new PriceSearchParams(adminView);
+		prepareSearchModel(params, 1, modelMap);
 
-		return new ModelAndView("viewPrice", modelMap);
+		return new ModelAndView("priceView", modelMap);
 	}
 
-	// ================================
+	// =============== ================= ================ ===============
 
-	@Secured({ PermissionConstants.PERM_VIEW_ADMINISTRATION })
-	@RequestMapping(value = { "/price/add/" }, method = RequestMethod.GET)
-	public ModelAndView addPriceHandler(ModelMap modelMap) {
+	@Secured({ PermissionConstants.ADD_PRICE })
+	@RequestMapping(value = { "add" }, method = RequestMethod.GET)
+	public ModelAndView add(ModelMap modelMap) {
 
-		List<Crop> crops = cropService.getCrops();
-		if (crops != null && crops.size() > 0) {
-			modelMap.put("crops", crops);
-			modelMap.put(WebConstants.CONTENT_HEADER, "Add price ");
-		} else {
+		List<Product> products = productService.getAll();
+		if (products == null || products.size() == 0) {
 			modelMap.put(WebConstants.MODEL_ATTRIBUTE_ERROR_MESSAGE,
-					"No Crops found in the database");
-			return viewPriceHandler(modelMap, 1, true);
+					"No Products found in the database");
+			return view(modelMap, true);
 		}
 
-		return new ModelAndView("formPrice", modelMap);
+		preparePriceModel(modelMap);
+
+		return new ModelAndView("priceForm", modelMap);
 	}
 
-	@Secured({ PermissionConstants.PERM_VIEW_ADMINISTRATION })
-	@RequestMapping(value = { "/price/add/{cropid}" }, method = RequestMethod.GET)
-	public ModelAndView addPriceHandler2(@PathVariable("cropid") String cropid,
+	@Secured({ PermissionConstants.ADD_PRICE })
+	@RequestMapping(value = { "add/{productid}" }, method = RequestMethod.GET)
+	public ModelAndView add2(@PathVariable("productid") String productid,
 			ModelMap modelMap) {
-		if (StringUtils.isNotBlank(cropid)) {
-			Crop crop = cropService.getCropById(cropid);
+		if (StringUtils.isNotBlank(productid)) {
+			Product product = productService.getById(productid);
 
-			if (crop.getUnitsOfMeasure() == null
-					|| crop.getUnitsOfMeasure().size() == 0) {
+			if (product.getUnitsOfMeasure() == null
+					|| product.getUnitsOfMeasure().size() == 0) {
 				modelMap.put(
 						WebConstants.MODEL_ATTRIBUTE_ERROR_MESSAGE,
-						"No Units of measure found for Crop - "
-								+ crop.getName());
-				List<Crop> crops = cropService.getCrops();
-				modelMap.put("crops", crops);
+						"No Units of measure found for Product - "
+								+ product.getName());
+
+				preparePriceModel(modelMap);
+
 			} else {
-				Price price = new Price(crop);
+				Price price = new Price(product);
 				preparePriceModel(price, modelMap);
 				modelMap.put(WebConstants.CONTENT_HEADER, "Add price of "
-						+ crop.getName());
+						+ product.getName());
 			}
 		} else {
 			modelMap.put(WebConstants.MODEL_ATTRIBUTE_ERROR_MESSAGE,
-					"No Crop selected");
-			List<Crop> crops = cropService.getCrops();
-			modelMap.put("crops", crops);
+					"No Product selected");
+			List<Product> products = productService.getAll();
+			modelMap.put("products", products);
 		}
 
-		return new ModelAndView("formPrice", modelMap);
+		return new ModelAndView("priceForm", modelMap);
 	}
 
-	private void preparePriceModel(Price price, ModelMap modelMap) {
+	// =============== ================= ================ ===============
 
-		Crop crop = price.getCrop();
-		List<Crop> crops = cropService.getCrops();
-		modelMap.put("crops", crops);
+	private void preparePriceModel(ModelMap modelMap) {
+		List<Product> products = productService.getAll();
 
-		modelMap.put("price", price);
-		modelMap.put("unitOfMeasures", crop.getUnitsOfMeasure());
+		if (products == null || products.size() == 0)
+			modelMap.put(WebConstants.MODEL_ATTRIBUTE_ERROR_MESSAGE,
+					"Ooops No Products found");
+		modelMap.put("products", products);
 
 		modelMap.put("sellingPlaces", sellingPlaceService.getSellingPlaces());
 
@@ -331,9 +317,20 @@ public class PriceController {
 				DefaultConceptCategories.SELLING_TYPE, "selltypes");
 	}
 
-	@Secured({ PermissionConstants.PERM_VIEW_ADMINISTRATION })
-	@RequestMapping(value = { "/price/edit/{pid}" }, method = RequestMethod.GET)
-	public ModelAndView editPriceHandler(@PathVariable("pid") String priceId,
+	private void preparePriceModel(Price price, ModelMap modelMap) {
+		modelMap.put("price", price);
+
+		Product product = price.getProduct();
+		modelMap.put("unitOfMeasures", product.getUnitsOfMeasure());
+
+		preparePriceModel(modelMap);
+	}
+
+	// =============== ================= ================ ===============
+
+	@Secured({ PermissionConstants.EDIT_PRICE })
+	@RequestMapping(value = { "edit/{pid}" }, method = RequestMethod.GET)
+	public ModelAndView edit(@PathVariable("pid") String priceId,
 			ModelMap modelMap) {
 
 		Price price = priceService.getPriceById(priceId);
@@ -341,19 +338,19 @@ public class PriceController {
 		if (price != null) {
 			preparePriceModel(price, modelMap);
 			modelMap.put(WebConstants.CONTENT_HEADER, "Edit price of "
-					+ price.getCrop().getName() + " in "
+					+ price.getProduct().getName() + " in "
 					+ price.getSellingPlace().getName());
 			return new ModelAndView("formPrice", modelMap);
 		}
 
 		modelMap.put(WebConstants.MODEL_ATTRIBUTE_ERROR_MESSAGE,
 				"Invalid price id supplied");
-		return viewPriceHandler(modelMap, 1, true);
+		return view(modelMap, true);
 	}
 
-	@Secured({ PermissionConstants.PERM_VIEW_ADMINISTRATION })
-	@RequestMapping(method = RequestMethod.GET, value = "/price/delete/{ids}")
-	public ModelAndView deletePriceHandler(@PathVariable("ids") String ids,
+	@Secured({ PermissionConstants.DELETE_PRICE })
+	@RequestMapping(method = RequestMethod.GET, value = "delete/{ids}")
+	public ModelAndView delete(@PathVariable("ids") String ids,
 			ModelMap modelMap) {
 
 		String[] priceIdzToDelete = ids.split(",");
@@ -367,18 +364,18 @@ public class PriceController {
 					+ e.getMessage());
 		}
 
-		return viewPriceHandler(modelMap, null, true);
+		return view(modelMap, true);
 	}
 
-	@Secured({ PermissionConstants.PERM_VIEW_ADMINISTRATION })
-	@RequestMapping(method = RequestMethod.POST, value = "/price/save/")
-	public ModelAndView savePriceHandler(@ModelAttribute("price") Price price,
+	@Secured({ PermissionConstants.ADD_PRICE, PermissionConstants.EDIT_PRICE })
+	@RequestMapping(method = RequestMethod.POST, value = "save")
+	public ModelAndView save(@ModelAttribute("price") Price price,
 			ModelMap modelMap) {
 		Price existingPrice = price;
 
 		if (StringUtils.isNotEmpty(price.getId())) {
 			existingPrice = priceService.getPriceById(price.getId());
-			existingPrice.setCrop(price.getCrop());
+			existingPrice.setProduct(price.getProduct());
 			existingPrice.setSellingPlace(price.getSellingPlace());
 			existingPrice.setSellType(price.getSellType());
 			existingPrice.setPrice(price.getPrice());
@@ -398,6 +395,6 @@ public class PriceController {
 			preparePriceModel(price, modelMap);
 			return new ModelAndView("formPrice", modelMap);
 		}
-		return viewPriceHandler(modelMap, 1, true);
+		return view(modelMap, true);
 	}
 }

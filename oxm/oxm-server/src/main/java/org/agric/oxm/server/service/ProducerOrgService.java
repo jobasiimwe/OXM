@@ -22,14 +22,20 @@ public interface ProducerOrgService {
 
 	List<ProducerOrg> getProducerOrganisations();
 
-	List<ProducerOrg> getProducerOrgsWithParams(ProducerOrgSearchParameters params);
-
 	ProducerOrg getProducerOrganisationById(String id);
 
 	void deleteProducerOrganisationsByIds(String[] ids);
-	
+
 	void validate(StaffMember staffMember) throws ValidationException;
-	
+
 	StaffMember getStaffMemberById(String id);
 
+	// ============================================================================
+
+	List<ProducerOrg> searchWithParams(ProducerOrgSearchParameters params,
+			Integer pageNo);
+
+	List<ProducerOrg> searchWithParams(ProducerOrgSearchParameters params);
+
+	long numberInSearch(ProducerOrgSearchParameters params);
 }

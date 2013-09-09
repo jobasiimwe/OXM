@@ -8,7 +8,7 @@ import java.util.List;
 import org.agric.oxm.model.Price;
 import org.agric.oxm.model.enums.RecordStatus;
 import org.agric.oxm.model.exception.ValidationException;
-import org.agric.oxm.model.search.PriceSearchParameters;
+import org.agric.oxm.model.search.PriceSearchParams;
 import org.agric.oxm.server.OXMConstants;
 import org.agric.oxm.server.dao.PriceDAO;
 import org.agric.oxm.server.security.PermissionConstants;
@@ -33,21 +33,19 @@ public class PriceServiceImpl implements PriceService {
 	@Autowired
 	private PriceDAO priceDAO;
 
-	@Secured({ PermissionConstants.ADD_PRICE, PermissionConstants.EDIT_PRICE })
 	@Transactional(propagation = Propagation.REQUIRED)
 	@Override
 	public void save(Price price) {
 		priceDAO.save(price);
 	}
 
-	@Secured({ PermissionConstants.VIEW_PRICE })
+	
 	@Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
 	@Override
 	public void validate(Price price) throws ValidationException {
 
 	}
 
-	@Secured({ PermissionConstants.VIEW_PRICE })
 	@Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
 	@Override
 	public List<Price> getPrices() {
@@ -56,7 +54,7 @@ public class PriceServiceImpl implements PriceService {
 
 	@Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
 	@Override
-	public List<Price> searchWithParams(PriceSearchParameters params,
+	public List<Price> searchWithParams(PriceSearchParams params,
 			Integer pageNo) {
 		Search search = preparePriceSearch(params);
 		search.setMaxResults(OXMConstants.MAX_NUM_PAGE_RECORD);
@@ -73,12 +71,12 @@ public class PriceServiceImpl implements PriceService {
 		return prices;
 	}
 
-	private Search preparePriceSearch(PriceSearchParameters params) {
+	private Search preparePriceSearch(PriceSearchParams params) {
 		Search search = new Search();
 
 		search.addSort("date", false, true);
-		if (params.getCrop() != null) {
-			search.addFilterEqual("crop", params.getCrop());
+		if (params.getProduct() != null) {
+			search.addFilterEqual("product", params.getProduct());
 		}
 
 		if (params.getSellingPlace() != null) {
@@ -110,12 +108,12 @@ public class PriceServiceImpl implements PriceService {
 
 	@Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
 	@Override
-	public long numberInSearch(PriceSearchParameters params) {
+	public long numberInSearch(PriceSearchParams params) {
 		Search search = preparePriceSearch(params);
 		return priceDAO.count(search);
 	}
 
-	@Secured({ PermissionConstants.VIEW_PRICE })
+	
 	@Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
 	@Override
 	public Price getPriceById(String id) {
@@ -127,6 +125,19 @@ public class PriceServiceImpl implements PriceService {
 	@Override
 	public void deletePricesByIds(String[] ids) {
 		priceDAO.removeByIds(ids);
+	}
+
+	@Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
+	@Override
+	public List<Price> getAnnonymouslyViewablePrices() {
+		Search search = new Search();
+		search.setMaxResults(OXMConstants.MAX_NUM_PRE_LOGIN_PAGE_RECORD);
+
+		search.addSort("date", false, true);
+		search.setPage(0);
+
+		List<Price> prices = priceDAO.search(search);
+		return prices;
 	}
 
 }

@@ -4,7 +4,7 @@
 <%@ taglib prefix='fn' uri='http://java.sun.com/jsp/jstl/functions'%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 
-<%@ taglib prefix="oxmTags" tagdir="/WEB-INF/tags"%>
+<%@ taglib prefix="sysTags" tagdir="/WEB-INF/tags"%>
 <%@ taglib prefix="oxmBreadcrambs" tagdir="/WEB-INF/tags/breadcramblinks"%>
 
 <div style="margin: 5px; width: 100%;">
@@ -15,7 +15,7 @@
 <div id="buttonStrip"></div>
 <div>
 	<div class="searchform group">
-		<form:form action="${baseUrl}/user/search" commandName="usersearch">
+		<form:form id="multiBtnForm" action="${baseUrl}/user/search/" firstAction="${baseUrl}/user/search/" commandName="usersearch">
 			<jsp:include page="/WEB-INF/views/tiles/users/searchfields.jsp"></jsp:include>
 		</form:form>
 	</div>

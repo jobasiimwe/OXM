@@ -47,19 +47,19 @@ public class ApplicationController {
 		WebConstants.loadLoggedInUserProfile(OXMSecurityUtil.getLoggedInUser(),
 				modelMap);
 
-		return priceController.viewPriceHandler(modelMap, 1, OXMSecurityUtil
-				.getLoggedInUser().hasAdministrativePrivileges());
+		return priceController.view(modelMap, OXMSecurityUtil.getLoggedInUser()
+				.hasAdministrativePrivileges());
 		// return new ModelAndView("dashboard", model);
 	}
 
 	@RequestMapping("/ServiceLogin")
-	public String loginHandler() {
-		return "login";
+	public ModelAndView loginHandler(ModelMap modelMap) {
+		return new ModelAndView("login");
 	}
 
 	@RequestMapping("/ServiceLoginFailure")
 	public ModelAndView loginFailureHander(ModelMap model) {
-		model.put("errorMessage", "username OR password is incorrect");
+		model.put("loginErrorMessage", "username OR password is incorrect");
 		return new ModelAndView("login", model);
 	}
 
@@ -125,8 +125,62 @@ public class ApplicationController {
 					response.setContentType(document.getContentType());
 
 					response.addHeader("Content-Disposition", String.format(
-							"attachment; filename=%1s.%2s", document.getName().replace(" ", "_"),
-							document.getDocumentExtension()));
+							"attachment; filename=%1s.%2s", document.getName()
+									.replace(" ", "_"), document
+									.getDocumentExtension()));
+
+					IOUtils.copy(
+							document.getDocumentInputStreamFromDocumentUrl(),
+							response.getOutputStream());
+					response.getOutputStream().flush();
+					response.getOutputStream().close();
+					response.setStatus(HttpServletResponse.SC_OK);
+				}
+			} catch (IOException ex) {
+				log.error(null, ex);
+				response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+			} finally {
+				response.getOutputStream().close();
+			}
+		}
+	}
+
+	/**
+	 * handles request to download a document with the given id
+	 * 
+	 * @param documentId
+	 *            id of the document to download.
+	 * @param response
+	 * @throws Exception
+	 */
+	@RequestMapping(method = RequestMethod.GET, value = "prelogin/download/document/{id}")
+	public void preLoginDownloadDocumentHandler(
+			@PathVariable("id") String documentId, HttpServletResponse response)
+			throws Exception {
+		if (StringUtils.isNotBlank(documentId)) {
+
+			try {
+				Document document = documentService.getDocumentById(documentId);
+				if (document != null) {
+					// Set to expire far in the past.
+					response.setDateHeader("Expires", 0);
+					// Set standard HTTP/1.1 no-cache headers.
+					response.setHeader("Cache-Control",
+							"no-store, no-cache, must-revalidate");
+					// Set IE extended HTTP/1.1 no-cache headers (use
+					// addHeader).
+					response.addHeader("Cache-Control",
+							"post-check=0, pre-check=0");
+					// Set standard HTTP/1.0 no-cache header.
+					response.setHeader("Pragma", "no-cache");
+
+					// return a the content type
+					response.setContentType(document.getContentType());
+
+					response.addHeader("Content-Disposition", String.format(
+							"attachment; filename=%1s.%2s", document.getName()
+									.replace(" ", "_"), document
+									.getDocumentExtension()));
 
 					IOUtils.copy(
 							document.getDocumentInputStreamFromDocumentUrl(),

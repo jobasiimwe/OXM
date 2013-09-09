@@ -20,15 +20,14 @@ import org.hibernate.annotations.FetchMode;
 
 @Entity
 @Table(name = "producer_org")
-public class ProducerOrg extends BaseData implements
-		Comparable<ProducerOrg> {
+public class ProducerOrg extends BaseData implements Comparable<ProducerOrg> {
 
 	private String name;
 
+	private District district;
+	private County county;
 	private SubCounty subCounty;
-
 	private Parish parish;
-
 	private Village village;
 
 	private List<User> producers;
@@ -46,9 +45,11 @@ public class ProducerOrg extends BaseData implements
 		this.setId(id);
 	}
 
-	public ProducerOrg(String name,
+	public ProducerOrg(String name, District district, County county,
 			SubCounty subCounty, Parish parish, Village village) {
 		this.setName(name);
+		this.setDistrict(district);
+		this.setCounty(county);
 		this.setSubCounty(subCounty);
 		this.setParish(parish);
 		this.setVillage(village);
@@ -63,10 +64,48 @@ public class ProducerOrg extends BaseData implements
 		this.name = name;
 	}
 
+	// =======================================================================
+
 	@Transient
 	public String getNameAndSubCounty() {
 		String str = getName() + "(" + getSubCounty().getName() + ")";
 		return str;
+	}
+
+	@Transient
+	public String getDistrictString() {
+		String str = "";
+
+		if (village != null)
+			return village.getFullName();
+		if (parish != null)
+			return parish.getFullName();
+		if (subCounty != null)
+			return subCounty.getFullName();
+
+		return str;
+	}
+
+	// ========================================================================
+
+	@ManyToOne
+	@JoinColumn(name = "district_id", nullable = false)
+	public District getDistrict() {
+		return district;
+	}
+
+	public void setDistrict(District district) {
+		this.district = district;
+	}
+
+	@ManyToOne
+	@JoinColumn(name = "county_id", nullable = false)
+	public County getCounty() {
+		return county;
+	}
+
+	public void setCounty(County county) {
+		this.county = county;
 	}
 
 	@ManyToOne
@@ -98,6 +137,8 @@ public class ProducerOrg extends BaseData implements
 	public void setVillage(Village village) {
 		this.village = village;
 	}
+
+	// =============================================================================
 
 	@OneToMany(mappedBy = "producerOrg", cascade = { CascadeType.ALL }, orphanRemoval = false, fetch = FetchType.LAZY)
 	@Fetch(FetchMode.SUBSELECT)

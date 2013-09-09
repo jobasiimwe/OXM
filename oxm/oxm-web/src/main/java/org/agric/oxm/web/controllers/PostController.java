@@ -81,8 +81,8 @@ public class PostController {
 		return params;
 	}
 
-	@Secured({ PermissionConstants.PERM_VIEW_ADMINISTRATION })
-	@RequestMapping(method = RequestMethod.GET, value = "/price", params = { "action=search" })
+	@Secured({ PermissionConstants.VIEW_POST })
+	@RequestMapping(method = RequestMethod.GET, params = { "action=search" })
 	public ModelAndView searchNavigationHandler(
 			@RequestParam(value = CROP, required = false) String cropId,
 			@RequestParam(value = POST_TYPE, required = false) String posttypeid,
@@ -105,7 +105,7 @@ public class PostController {
 		return searchHandler(command, pageNo, modelMap);
 	}
 
-	@RequestMapping(value = "/price/search", method = RequestMethod.POST)
+	@RequestMapping(value = "/search", method = RequestMethod.POST)
 	public ModelAndView searchHandler(
 			@ModelAttribute("pricesearch") GenericCommand searchCommand,
 			@RequestParam(value = "pageNo", required = false) Integer pageNo,
@@ -257,7 +257,7 @@ public class PostController {
 		modelMap.put("post", post);
 	}
 
-	@Secured({ PermissionConstants.VIEW_POST })
+	@Secured({ PermissionConstants.ADD_POST })
 	@RequestMapping(value = "/add", method = RequestMethod.GET)
 	public ModelAndView addPostHandler(ModelMap modelMap)
 			throws SessionExpiredException {

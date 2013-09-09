@@ -16,11 +16,11 @@
 </div>
 
 <p>
-	<label>Crop <span class="required">*</span> </label> <select
-		id="ddCrops">
-		<c:if test="${not empty crops  && fn:length(crops) > 0}">
-			<c:forEach var="crop" items="${crops }">
-				<option value="${crop.id }">${crop.name }</option>
+	<label>Product <span class="required">*</span> </label> <select
+		id="ddProducts">
+		<c:if test="${not empty products  && fn:length(products) > 0}">
+			<c:forEach var="product" items="${products }">
+				<option value="${product.id }">${product.name }</option>
 			</c:forEach>
 		</c:if>
 
@@ -34,8 +34,8 @@
 			<form:hidden path="id" />
 			<div class="splitcontentleft">
 				<div class="box ">
-					<h3>Adding Price of ${price.crop.name }</h3>
-					<form:hidden path="crop" />
+					<h3>Adding Price of ${price.product.name }</h3>
+					<form:hidden path="product" />
 					<table>
 						<tr>
 							<td><label>Selling Place <span class="required">*</span>
@@ -63,7 +63,7 @@
 						<tr>
 							<td><label>Price</label></td>
 							<td><form:input path="price" cssStyle="width: 100px;"
-									cssClass="uiTextbox" /></td>
+									cssClass="uiTextbox" />(UGX)</td>
 						</tr>
 					</table>
 				</div>

@@ -134,7 +134,8 @@ public class SellingPlaceController {
 		}
 	}
 
-	@Secured({ PermissionConstants.EDIT_SELLING_PLACE })
+	@Secured({ PermissionConstants.ADD_SELLING_PLACE,
+			PermissionConstants.EDIT_SELLING_PLACE })
 	@RequestMapping(method = RequestMethod.POST, value = "/sellingplace/save/")
 	public ModelAndView saveSellingPlaceHandler(
 			@ModelAttribute("sellingplace") SellingPlace sellingPlace,

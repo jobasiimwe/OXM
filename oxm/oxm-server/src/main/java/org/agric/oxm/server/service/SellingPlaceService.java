@@ -24,4 +24,5 @@ public interface SellingPlaceService {
 
 	void deleteSellingPlacesByIds(String[] ids);
 
+	List<SellingPlace> getAnnonymouslyViewableSellingPlaces();
 }

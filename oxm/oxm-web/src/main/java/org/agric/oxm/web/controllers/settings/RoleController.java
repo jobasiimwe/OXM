@@ -7,7 +7,7 @@ import org.agric.oxm.model.exception.SessionExpiredException;
 import org.agric.oxm.model.exception.ValidationException;
 import org.agric.oxm.server.security.PermissionConstants;
 import org.agric.oxm.server.security.util.OXMSecurityUtil;
-import org.agric.oxm.server.service.UserService;
+import org.agric.oxm.server.service.RoleService;
 import org.agric.oxm.web.WebConstants;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
@@ -25,8 +25,9 @@ import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 public class RoleController {
+
 	@Autowired
-	private UserService userService;
+	private RoleService roleService;
 
 	private Logger log = LoggerFactory.getLogger(this.getClass());
 
@@ -41,7 +42,7 @@ public class RoleController {
 
 		WebConstants.loadLoggedInUserProfile(OXMSecurityUtil.getLoggedInUser(),
 				model);
-		List<Role> roles = userService.getRolesByPage(pageNo);
+		List<Role> roles = roleService.getRolesByPage(pageNo);
 		model.put("roles", roles);
 		return new ModelAndView("viewRole", model);
 	}
@@ -52,7 +53,7 @@ public class RoleController {
 			ModelMap modelMap) throws SessionExpiredException {
 		String[] idz2Delete = roleIds.split(",");
 		try {
-			userService.deleteRolesByIds(idz2Delete);
+			roleService.deleteRolesByIds(idz2Delete);
 			modelMap.put(WebConstants.MODEL_ATTRIBUTE_SYSTEM_MESSAGE,
 					"Role(s)  deleted successfully");
 		} catch (Exception e) {
@@ -83,7 +84,7 @@ public class RoleController {
 				model);
 		prepareRoleFormModel(model);
 
-		Role role = userService.getRoleById(roleId);
+		Role role = roleService.getRoleById(roleId);
 		model.put("role", role);
 		model.put(WebConstants.CONTENT_HEADER, "Edit Role: " + role.getName());
 		return new ModelAndView("formRole", model);
@@ -96,7 +97,7 @@ public class RoleController {
 		Role existingRole = role;
 
 		if (StringUtils.isNotEmpty(role.getId())) {
-			existingRole = userService.getRoleById(role.getId());
+			existingRole = roleService.getRoleById(role.getId());
 			if (existingRole.getName().equals("ROLE_ANNOYMOUS_USER")) {
 				if (!existingRole.getName().equalsIgnoreCase(role.getName())) {
 					WebConstants.loadLoggedInUserProfile(
@@ -114,8 +115,8 @@ public class RoleController {
 		}
 
 		try {
-			userService.validate(existingRole);
-			userService.saveRole(existingRole);
+			roleService.validate(existingRole);
+			roleService.save(existingRole);
 			model.put(WebConstants.MODEL_ATTRIBUTE_SYSTEM_MESSAGE,
 					"Role saved sucessfully");
 			return viewRoleHandler(null, model);
@@ -142,6 +143,6 @@ public class RoleController {
 
 	private void prepareRoleFormModel(ModelMap model) {
 
-		model.put("permissions", userService.getPermissions());
+		model.put("permissions", roleService.getPermissions());
 	}
 }

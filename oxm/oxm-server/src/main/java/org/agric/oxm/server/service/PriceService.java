@@ -7,7 +7,7 @@ import java.util.List;
 
 import org.agric.oxm.model.Price;
 import org.agric.oxm.model.exception.ValidationException;
-import org.agric.oxm.model.search.PriceSearchParameters;
+import org.agric.oxm.model.search.PriceSearchParams;
 
 /**
  * @author Job
@@ -21,12 +21,13 @@ public interface PriceService {
 
 	List<Price> getPrices();
 
-	List<Price> searchWithParams(PriceSearchParameters params, Integer pageNo);
+	List<Price> searchWithParams(PriceSearchParams params, Integer pageNo);
 
-	long numberInSearch(PriceSearchParameters params);
+	long numberInSearch(PriceSearchParams params);
 
 	Price getPriceById(String id);
 
 	void deletePricesByIds(String[] ids);
 
+	List<Price> getAnnonymouslyViewablePrices();
 }

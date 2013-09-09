@@ -1,6 +1,6 @@
 package org.agric.oxm.web.propertyeditors;
 
-import org.agric.oxm.server.service.UserService;
+import org.agric.oxm.server.service.RoleService;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -14,7 +14,7 @@ import org.springframework.stereotype.Component;
 public class PermissionPropertyEditor extends BasePropertyEditor {
 
     @Autowired
-    private UserService userService;
+    private RoleService roleService;
 
     @Override
     public void setAsText(String text) throws IllegalArgumentException {
@@ -22,7 +22,7 @@ public class PermissionPropertyEditor extends BasePropertyEditor {
 	    if (StringUtils.equalsIgnoreCase("none", text)) {
 		super.setValue(null);
 	    } else {
-		super.setValue(userService.getPermissionById(text));
+		super.setValue(roleService.getPermissionById(text));
 	    }
 	} else {
 	    super.setAsText(text);

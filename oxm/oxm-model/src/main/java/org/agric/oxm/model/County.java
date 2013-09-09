@@ -63,9 +63,9 @@ public class County extends BaseData implements Comparable<County> {
 
 	@Transient
 	public String getFullName() {
-		String fullName = this.getName();
+		String fullName = this.getDistrict().getName();
 
-		fullName += ", " + this.getDistrict().getName();
+		fullName += ", " + this.getName();
 		return fullName;
 
 	}
@@ -132,7 +132,7 @@ public class County extends BaseData implements Comparable<County> {
 
 		this.getSubCounties().remove(subCounty);
 	}
-	
+
 	public void removeSubCountiesByIds(String[] subCountyIdzToDelete) {
 		for (String id : subCountyIdzToDelete) {
 
@@ -142,7 +142,7 @@ public class County extends BaseData implements Comparable<County> {
 			}
 		}
 	}
-	
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -167,7 +167,6 @@ public class County extends BaseData implements Comparable<County> {
 			return false;
 		return true;
 	}
-
 
 	@Override
 	public int compareTo(County o) {

@@ -4,7 +4,7 @@
 <%@ taglib prefix='fn' uri='http://java.sun.com/jsp/jstl/functions'%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
-<%@ taglib prefix="oxmTags" tagdir="/WEB-INF/tags"%>
+<%@ taglib prefix="sysTags" tagdir="/WEB-INF/tags"%>
 <%@ taglib prefix="oxmBreadcrambs"
 	tagdir="/WEB-INF/tags/breadcramblinks"%>
 <%@ taglib prefix="oxmProducerOrgBreadcrambs"
@@ -34,7 +34,7 @@
 </div>
 <div>
 
-	<oxmTags:name-of-item-on-page name="Producer-Organisation-Member" />
+	<sysTags:name-of-item-on-page name="Producer-Organisation-Member" />
 
 	<table class="recordTable">
 		<thead>
@@ -56,7 +56,7 @@
 					test="${not empty pOrg.producers  && fn:length(pOrg.producers) > 0}">
 					<c:forEach var="producer" items="${pOrg.producers }">
 						<tr id="${producer.id }">
-							<td><oxmTags:rowcheckbox
+							<td><sysTags:rowcheckbox
 									nameOfItemOnPage="${nameOfItemOnPage }" id="${producer.id }" />
 							</td>
 							<td>${producer.name }</td>

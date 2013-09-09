@@ -40,15 +40,14 @@ public class Village extends BaseData implements Comparable<Village> {
 
 	@Transient
 	public String getFullName() {
-		String fullName = this.getName();
+		String fullName = this.getParish().getSubCounty().getCounty()
+				.getDistrict().getName();
 
-		fullName += ", " + this.getParish().getName();
-		fullName += ", " + this.getParish().getSubCounty().getName();
 		fullName += ", "
 				+ this.getParish().getSubCounty().getCounty().getName();
-		fullName += ", "
-				+ this.getParish().getSubCounty().getCounty().getDistrict()
-						.getName();
+		fullName += ", " + this.getParish().getSubCounty().getName();
+		fullName += ", " + this.getParish().getName();
+		fullName += ", " + this.getName();
 		return fullName;
 	}
 

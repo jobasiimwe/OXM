@@ -7,7 +7,7 @@
 <%@ taglib prefix='fn' uri='http://java.sun.com/jsp/jstl/functions'%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
-<%@ taglib prefix="oxmTags" tagdir="/WEB-INF/tags"%>
+<%@ taglib prefix="sysTags" tagdir="/WEB-INF/tags"%>
 <%@ taglib prefix="oxmBreadcrambs" tagdir="/WEB-INF/tags/breadcramblinks"%>
 
 <div style="margin: 5px; width: 100%;">
@@ -33,7 +33,7 @@
 	<div style="clear: both"></div>
 </div>
 
-<oxmTags:name-of-item-on-page name="Document" />
+<sysTags:name-of-item-on-page name="Document" />
 
 
 <jsp:include page="/WEB-INF/views/tiles/docs/list.jsp"></jsp:include>

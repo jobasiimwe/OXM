@@ -3,31 +3,35 @@
 
 <div class="cpanel">
 	<div class="menu">
-		<a id="lnkUsers" title="Users" href="${baseUrl }/user/view/page/1">
+		<a id="lnkUsers" title="Users" href="${baseUrl }/user/view">
 			<span class="panellink user-icon"></span>
-			<span style="margin: 10px; font-size: 12px; font-weight: bold;">Users</span>
+			<span class="linktext">Users</span>
 		</a>
 	</div>
 	<div class="menu">
-		<a class="menu-lnk" id="lnkCrops" title="Crops" href="${baseUrl }/crop/view/page/1">
+		<a class="menu-lnk" id="lnkCrops" title="Crops" href="${baseUrl }/crop/view">
 			<span class="panellink crop-icon"></span>
-			<label style="margin: 10px; font-size: 12px; font-weight: bold;">Crops</label>
+			<label class="linktext">Crops</label>
 		</a>
 	</div>
+
 	<div class="menu">
-		<a class="menu-lnk" id="lnkSellingPlace" title="Selling Place"
-			href="${baseUrl }/sellingplace/view/"
-		>
+		<a class="menu-lnk" id="lnkProducts" title="Products" href="${baseUrl }/product/view">
+			<span class="panellink product-icon"></span>
+			<label class="linktext">Product</label>
+		</a>
+	</div>
+
+	<div class="menu">
+		<a class="menu-lnk" id="lnkSellingPlace" title="Selling Place" href="${baseUrl }/sellingplace/view/">
 			<span class="panellink sellingplace-icon"></span>
-			<label style="margin: 10px; font-size: 12px; font-weight: bold;">Selling Place</label>
+			<label class="linktext">Selling Place</label>
 		</a>
 	</div>
 	<div class="menu">
-		<a class="menu-lnk" id="lnkProductionOrg" title="Production Organization"
-			href="${baseUrl }/porg/view/"
-		>
+		<a class="menu-lnk" id="lnkProductionOrg" title="Production Organization" href="${baseUrl }/porg/view">
 			<span class="panellink porganization-icon"></span>
-			<label style="margin: 10px; font-size: 12px; font-weight: bold;">Production Org</label>
+			<label class="linktext">Producer Organisation</label>
 		</a>
 	</div>
 </div>
@@ -36,29 +40,33 @@
 <br>
 <div class="cpanel">
 	<div class="menu">
-		<a class="menu-lnk" id="lnkPrice" title="Price" href="${baseUrl }/price/view/admin/true/page/1">
+		<a class="menu-lnk" id="lnkPrice" title="Price" href="${baseUrl }/price/view/admin/true">
 			<span class="panellink price-icon"></span>
-			<label style="margin: 10px; font-size: 12px; font-weight: bold;">Prices</label>
+			<label class="linktext">Prices</label>
 		</a>
 	</div>
 	<div class="menu">
 		<a class="menu-lnk" id="lnkSeason" title="Season" href="${baseUrl }/season/view/">
 			<span class="panellink season-icon"></span>
-			<label style="margin: 10px; font-size: 12px; font-weight: bold;">Season</label>
+			<label class="linktext">Season</label>
 		</a>
 	</div>
 	<div class="menu">
-		<a class="menu-lnk" id="lnkfInstition" title="Financial Institution"
-			href="${baseUrl }/finstitution/view/"
-		>
+		<a class="menu-lnk" id="lnkfInstition" title="Financial Institution" href="${baseUrl }/finstitution/view/">
 			<span class="panellink fInstitution-icon"></span>
-			<label style="margin: 10px; font-size: 12px; font-weight: bold;">Financial Institution</label>
+			<label class="linktext">Financial Institution</label>
 		</a>
 	</div>
 	<div class="menu">
 		<a class="menu-lnk" id="lnkPosition" title="Positions" href="${baseUrl }/position/view/page/1">
 			<span class="panellink position-icon"></span>
-			<label style="margin: 10px; font-size: 12px; font-weight: bold;">Positions</label>
+			<label class="linktext">Positions</label>
+		</a>
+	</div>
+	<div class="menu">
+		<a class="menu-lnk" id="lnkSms" title="Send SMS" href="${baseUrl }/user/sms">
+			<span class="panellink sms-icon"></span>
+			<label class="linktext">Send SMS</label>
 		</a>
 	</div>
 </div>
@@ -71,33 +79,31 @@
 	<div class="menu">
 		<a class="menu-lnk" id="lnkRoles" title="Roles & Permissions" href="${baseUrl }/role/view">
 			<span class="panellink role-icon"></span>
-			<label style="margin: 10px; font-size: 12px; font-weight: bold;">Roles & Permissions</label>
+			<label class="linktext">Roles & Permissions</label>
 		</a>
 	</div>
 	<div class="menu">
 		<a class="menu-lnk" id="lnkCountries" title="District" href="${baseUrl }/district/view/">
 			<span class="panellink country-icon"></span>
-			<label style="margin: 10px; font-size: 12px; font-weight: bold;">Districts</label>
+			<label class="linktext">Districts</label>
 		</a>
 	</div>
 	<div class="menu">
 		<a class="menu-lnk" id="lnkConcepts" title="Concepts" href="${baseUrl }/concept/view/page/1">
 			<span class="panellink concept-icon"></span>
-			<label style="margin: 10px; font-size: 12px; font-weight: bold;">Concept</label>
+			<label class="linktext">Concept</label>
 		</a>
 	</div>
 	<div class="menu">
-		<a class="menu-lnk" id="lnkConceptCategories" title="Concept Categories"
-			href="${baseUrl }/category/view/"
-		>
+		<a class="menu-lnk" id="lnkConceptCategories" title="Concept Categories" href="${baseUrl }/category/view/">
 			<span class="panellink conceptCategory-icon"></span>
-			<label style="margin: 10px; font-size: 12px; font-weight: bold;">Concept Category</label>
+			<label class="linktext">Concept Category</label>
 		</a>
 	</div>
 	<div class="menu">
-		<a class="menu-lnk" id="lnkImports" title="Import" href="${baseUrl }/import">
+		<a class="menu-lnk" id="lnkImports" title="Import" href="${baseUrl }/import/all">
 			<span class="panellink import-icon"></span>
-			<label style="margin: 10px; font-size: 12px; font-weight: bold;">Import</label>
+			<label class="linktext">Import</label>
 		</a>
 	</div>
 </div>

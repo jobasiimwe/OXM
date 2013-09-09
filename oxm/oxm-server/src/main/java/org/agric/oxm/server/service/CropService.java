@@ -30,4 +30,6 @@ public interface CropService {
 	List<Crop> searchWithParams(CropSearchParameters params, int pageNo);
 
 	int numberOfCropsWithSearchParams(CropSearchParameters params);
+
+	List<Crop> getAnnonymouslyViewableCrops();
 }

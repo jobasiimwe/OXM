@@ -243,7 +243,7 @@ public class DistrictController {
 			}
 		}
 
-		return new ModelAndView("countyform", modelMap);
+		return new ModelAndView("countyForm", modelMap);
 	}
 
 	@Secured({ PermissionConstants.PERM_VIEW_ADMINISTRATION })
@@ -336,7 +336,7 @@ public class DistrictController {
 			return new ModelAndView("viewSubCounty", modelMap);
 		} else {
 			modelMap.put(WebConstants.MODEL_ATTRIBUTE_ERROR_MESSAGE,
-					"supplied district does not exist");
+					"supplied County id does not exist");
 			return viewDistrictHandler(modelMap);
 		}
 
@@ -386,10 +386,9 @@ public class DistrictController {
 	}
 
 	@Secured({ PermissionConstants.PERM_VIEW_ADMINISTRATION })
-	@RequestMapping(method = RequestMethod.POST, value = "/subcounty/save/{cid}")
+	@RequestMapping(method = RequestMethod.POST, value = "/subcounty/save")
 	public ModelAndView saveSubCountyHandler(
-			@ModelAttribute("subCounty") SubCounty subCounty,
-			@PathVariable("cid") String districtId, ModelMap modelMap)
+			@ModelAttribute("subCounty") SubCounty subCounty, ModelMap modelMap)
 			throws SessionExpiredException {
 
 		try {
@@ -527,10 +526,9 @@ public class DistrictController {
 	}
 
 	@Secured({ PermissionConstants.PERM_VIEW_ADMINISTRATION })
-	@RequestMapping(method = RequestMethod.POST, value = "/parish/save/{scid}")
+	@RequestMapping(method = RequestMethod.POST, value = "/parish/save")
 	public ModelAndView saveParishHandler(
-			@ModelAttribute("parish") Parish parish,
-			@PathVariable("scid") String subCountyId, ModelMap modelMap)
+			@ModelAttribute("parish") Parish parish, ModelMap modelMap)
 			throws SessionExpiredException {
 
 		try {
@@ -663,10 +661,9 @@ public class DistrictController {
 	}
 
 	@Secured({ PermissionConstants.PERM_VIEW_ADMINISTRATION })
-	@RequestMapping(method = RequestMethod.POST, value = "/village/save/{pid}")
+	@RequestMapping(method = RequestMethod.POST, value = "/village/save")
 	public ModelAndView saveVillageHandler(
-			@ModelAttribute("village") Village village,
-			@PathVariable("pid") String parishId, ModelMap modelMap)
+			@ModelAttribute("village") Village village, ModelMap modelMap)
 			throws SessionExpiredException {
 
 		try {

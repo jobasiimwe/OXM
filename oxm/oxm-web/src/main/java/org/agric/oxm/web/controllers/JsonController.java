@@ -80,20 +80,20 @@ public class JsonController {
 				District district = adminService.getDistrictById(districtId);
 
 				if (district != null && district.getCounties() != null) {
-					ArrayList<Object> subCounties = new ArrayList<Object>();
+					ArrayList<Object> counties = new ArrayList<Object>();
 
 					for (County county : district.getCounties()) {
 						HashMap<String, String> map = new HashMap<String, String>();
 						map.put("value", county.getId());
 						map.put("text", county.getName());
-						subCounties.add(map);
+						counties.add(map);
 					}
 
 					MappingJacksonHttpMessageConverter converter = new MappingJacksonHttpMessageConverter();
 					HttpOutputMessage message = new ServletServerHttpResponse(
 							response);
 
-					converter.write(subCounties, MediaType.APPLICATION_JSON,
+					converter.write(counties, MediaType.APPLICATION_JSON,
 							message);
 				}
 			}

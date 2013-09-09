@@ -40,7 +40,7 @@ public class ConceptController {
 
 	private Logger log = LoggerFactory.getLogger(this.getClass());
 
-	@Secured({ PermissionConstants.PERM_VIEW_ADMINISTRATION })
+	@Secured({ PermissionConstants.VIEW_CONCEPT_DETAILS })
 	@RequestMapping(value = "/concept/search", method = RequestMethod.POST)
 	public ModelAndView conceptSearchHandler(
 			@ModelAttribute("conceptsearch") GenericCommand searchCommand,
@@ -131,7 +131,7 @@ public class ConceptController {
 		return params;
 	}
 
-	@Secured({ PermissionConstants.PERM_VIEW_ADMINISTRATION })
+	@Secured({ PermissionConstants.VIEW_CONCEPT_DETAILS })
 	@RequestMapping(method = RequestMethod.GET, value = "/concept", params = { "action=search" })
 	public ModelAndView searchNavigationHandler(
 			@RequestParam(value = PARAM_NAME, required = false) String name,
@@ -173,7 +173,7 @@ public class ConceptController {
 		return buffer.toString();
 	}
 
-	@Secured({ PermissionConstants.PERM_VIEW_ADMINISTRATION })
+	@Secured({ PermissionConstants.VIEW_CONCEPT_DETAILS })
 	@RequestMapping(value = "/concept/view/page/{pageNo}", method = RequestMethod.GET)
 	public ModelAndView viewConceptHandler(ModelMap modelMap,
 			@PathVariable("pageNo") Integer pageNo)
@@ -188,7 +188,7 @@ public class ConceptController {
 		return new ModelAndView("viewConcept", modelMap);
 	}
 
-	@Secured({ PermissionConstants.PERM_VIEW_ADMINISTRATION })
+	@Secured({ PermissionConstants.ADD_CONCEPT_DETAILS })
 	@RequestMapping(value = "/concept/add/", method = RequestMethod.GET)
 	public ModelAndView addConceptHandler(ModelMap modelMap)
 			throws SessionExpiredException {
@@ -206,7 +206,8 @@ public class ConceptController {
 		modelMap.put("conceptcategories", conceptCategories);
 	}
 
-	@Secured({ PermissionConstants.PERM_VIEW_ADMINISTRATION })
+	@Secured({ PermissionConstants.ADD_CONCEPT_DETAILS,
+			PermissionConstants.EDIT_CONCEPT_DETAILS })
 	@RequestMapping(value = "/concept/save/", method = RequestMethod.POST)
 	public ModelAndView saveConceptHandler(
 			@ModelAttribute("concept") Concept concept, ModelMap modelMap)
@@ -242,7 +243,7 @@ public class ConceptController {
 		exitingConcept.setCategories(concept.getCategories());
 	}
 
-	@Secured({ PermissionConstants.PERM_VIEW_ADMINISTRATION })
+	@Secured({ PermissionConstants.EDIT_CONCEPT_DETAILS })
 	@RequestMapping(value = "/concept/edit/{id}", method = RequestMethod.GET)
 	public ModelAndView editConcept(@PathVariable("id") String conceptId,
 			ModelMap modelMap) throws SessionExpiredException {
@@ -264,7 +265,7 @@ public class ConceptController {
 		return viewConceptHandler(modelMap, null);
 	}
 
-	@Secured({ PermissionConstants.PERM_VIEW_ADMINISTRATION })
+	@Secured({ PermissionConstants.DELETE_CONCEPT_DETAILS })
 	@RequestMapping(method = RequestMethod.GET, value = "/concept/delete/{ids}")
 	public ModelAndView deleteConceptHandler(@PathVariable("ids") String ids,
 			ModelMap modelMapMap) throws SessionExpiredException {
@@ -283,7 +284,7 @@ public class ConceptController {
 		return viewConceptHandler(modelMapMap, 1);
 	}
 
-	@Secured({ PermissionConstants.PERM_VIEW_ADMINISTRATION })
+	@Secured({ PermissionConstants.VIEW_CONCEPT_DETAILS })
 	@RequestMapping(value = "/category/view/", method = RequestMethod.GET)
 	public ModelAndView viewConceptCategoryHandler(ModelMap modelMap)
 			throws SessionExpiredException {
@@ -304,7 +305,7 @@ public class ConceptController {
 		return new ModelAndView("formConceptCategory", modelMap);
 	}
 
-	@Secured({ PermissionConstants.PERM_VIEW_ADMINISTRATION })
+	@Secured({ PermissionConstants.EDIT_CONCEPT_DETAILS })
 	@RequestMapping(method = RequestMethod.GET, value = "/category/edit/{id}")
 	public ModelAndView editConceptCategoryHandler(
 			@PathVariable("id") String conceptCategoryId, ModelMap modelMap)
@@ -324,7 +325,8 @@ public class ConceptController {
 		}
 	}
 
-	@Secured({ PermissionConstants.PERM_VIEW_ADMINISTRATION })
+	@Secured({ PermissionConstants.ADD_CONCEPT_DETAILS,
+			PermissionConstants.EDIT_CONCEPT_DETAILS })
 	@RequestMapping(method = RequestMethod.POST, value = "/category/save/")
 	public ModelAndView saveConceptCategoryHandler(
 			@ModelAttribute("conceptcategory") ConceptCategory conceptCategory,
@@ -366,7 +368,7 @@ public class ConceptController {
 		existingConceptCategory.setName(conceptCategory.getName());
 	}
 
-	@Secured({ PermissionConstants.PERM_VIEW_ADMINISTRATION })
+	@Secured({ PermissionConstants.DELETE_CONCEPT_DETAILS })
 	@RequestMapping(method = RequestMethod.GET, value = "/category/delete/{id}")
 	public ModelAndView deleteConceptCategoryHandler(
 			@PathVariable("id") String conceptCategoryId, ModelMap modelMap)

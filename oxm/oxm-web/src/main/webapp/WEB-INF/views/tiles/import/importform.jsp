@@ -25,7 +25,6 @@
 		<p>Browse for a file containing Items to import!!</p>
 		<p>
 			<label>File:</label>
-			<!-- student_file -->
 			<input type="file" id="file" name="file" /> <input type="submit" id="upload" value="Import" />
 		</p>
 

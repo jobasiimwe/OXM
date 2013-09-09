@@ -49,12 +49,12 @@ public class Parish extends BaseData implements Comparable<Parish> {
 
 	@Transient
 	public String getFullName() {
-		String fullName = this.getName();
+		String fullName = this.getSubCounty().getCounty().getDistrict()
+				.getName();
 
-		fullName += ", " + this.getSubCounty().getName();
 		fullName += ", " + this.getSubCounty().getCounty().getName();
-		fullName += ", "
-				+ this.getSubCounty().getCounty().getDistrict().getName();
+		fullName += ", " + this.getSubCounty().getName();
+		fullName += ", " + this.getName();
 		return fullName;
 	}
 

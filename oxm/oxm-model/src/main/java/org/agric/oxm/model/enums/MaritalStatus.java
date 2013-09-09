@@ -10,8 +10,6 @@ public enum MaritalStatus {
 
 	WIDOWER("Widower"), // ordinal 3
 
-	BLANK("Blank"),// ordinal 4
-
 	SEPARATED("Separated");// ordinal 4
 
 	MaritalStatus(String name) {

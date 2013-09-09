@@ -26,4 +26,6 @@ public interface FinancialInstitutionService {
 	FinancialInstitution getFinancialInstitutionByName(String name);
 
 	void deleteFinancialInstitutionsByIds(String[] ids);
+
+	List<FinancialInstitution> getAnnonymouslyViewableFInstitutions();
 }

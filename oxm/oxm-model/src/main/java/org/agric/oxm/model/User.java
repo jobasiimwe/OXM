@@ -25,40 +25,49 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 
-import org.agric.oxm.model.enums.CategoryOfHouseHold;
+import org.agric.oxm.model.enums.HouseHoldCategory;
 import org.agric.oxm.model.enums.Gender;
 import org.agric.oxm.model.enums.MaritalStatus;
 import org.agric.oxm.model.enums.UserStatus;
 import org.apache.commons.lang.StringUtils;
+import org.hibernate.annotations.Type;
 
 @Entity
 @Table(name = "users")
 @Inheritance(strategy = InheritanceType.JOINED)
 public class User extends BaseData implements Comparable<User> {
 
-	private String name, username, password, salt, clearTextPassword;
-	private String address, phone1, phone2;
+	// user account
+	private String username, password, salt, clearTextPassword;
+	private UserStatus status;
 
 	private Set<Role> roles;
 
-	private UserStatus status;
+	// address
+	private String address, phone1, phone2;
+
+	// personal information
+	private String name;
 	private Gender gender;
-	private Date dateOfBirth, dateOfJoining, dateCreated;
-	private Integer age, yearOfJoining;
-	private MaritalStatus maritalStatus;
-	private CategoryOfHouseHold categoryOfHouseHold;
+	private Date dateOfBirth;
+	private Integer age;
+	private byte[] profilePicture = new byte[1];
 
-	private User createdBy;
+	// producer information
+	private ProducerOrg producerOrg;
+	private Date dateOfJoining;
+	private Integer yearOfJoining;
 
-	private SubCounty subCounty;
-	private Parish parish;
-	private Village village;
-	private GisCordinate gisCordinates;
 	private Double landSize;
 	private List<LandUse> landUses;
-	private ProducerOrg producerOrg;
+	private GisCordinate gisCordinates;
 
-	private byte[] profilePicture = new byte[1];
+	private MaritalStatus maritalStatus;
+	private HouseHoldCategory houseHoldCategory;
+
+	// general hidden
+	private User createdBy;
+	private Date dateCreated;
 
 	public User() {
 		super();
@@ -67,28 +76,24 @@ public class User extends BaseData implements Comparable<User> {
 	public User(ProducerOrg pOrg) {
 		super();
 		this.setProducerOrg(pOrg);
-		this.setSubCounty(pOrg.getSubCounty());
-		this.setParish(pOrg.getParish());
-		this.setVillage(pOrg.getVillage());
+		// this.setSubCounty(pOrg.getSubCounty());
+		// this.setParish(pOrg.getParish());
+		// this.setVillage(pOrg.getVillage());
 	}
 
-	public User(ProducerOrg pOrg, String name) {
+	public User(ProducerOrg pOrg, String name, Gender gender, Integer age,
+			MaritalStatus maritalStatus, HouseHoldCategory categoryOfHouseHold) {
 		super();
 		this.setProducerOrg(pOrg);
-		this.setSubCounty(pOrg.getSubCounty());
-		this.setParish(pOrg.getParish());
-		this.setVillage(pOrg.getVillage());
 		this.setName(name);
+		this.setGender(gender);
+		this.setAge(age);
+		this.setMaritalStatus(maritalStatus);
+		this.setHouseHoldCategory(categoryOfHouseHold);
+
 	}
 
-	@Transient
-	public String getClearTextPassword() {
-		return clearTextPassword;
-	}
-
-	public void setClearTextPassword(String clearTextPassword) {
-		this.clearTextPassword = clearTextPassword;
-	}
+	// ===================================================================================
 
 	@Column(name = "username", nullable = false, unique = true)
 	public String getUsername() {
@@ -107,6 +112,40 @@ public class User extends BaseData implements Comparable<User> {
 	public void setPassword(String password) {
 		this.password = password;
 	}
+
+	@Column(name = "salt", nullable = false)
+	public String getSalt() {
+		return salt;
+	}
+
+	public void setSalt(String salt) {
+		this.salt = salt;
+	}
+
+	public boolean hasNewPassword() {
+		return (clearTextPassword != null && clearTextPassword.trim().length() > 0);
+	}
+
+	@Transient
+	public String getClearTextPassword() {
+		return clearTextPassword;
+	}
+
+	public void setClearTextPassword(String clearTextPassword) {
+		this.clearTextPassword = clearTextPassword;
+	}
+
+	@Enumerated(EnumType.ORDINAL)
+	@Column(name = "user_status", nullable = false)
+	public UserStatus getStatus() {
+		return status;
+	}
+
+	public void setStatus(UserStatus status) {
+		this.status = status;
+	}
+
+	// ===================================================================================
 
 	@ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
 	@JoinTable(name = "role_users", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
@@ -175,24 +214,36 @@ public class User extends BaseData implements Comparable<User> {
 		}
 	}
 
-	@Enumerated(EnumType.ORDINAL)
-	@Column(name = "user_status", nullable = false)
-	public UserStatus getStatus() {
-		return status;
+	// ===================================================================================
+
+	@Column(name = "address", nullable = true)
+	public String getAddress() {
+		return address;
 	}
 
-	public void setStatus(UserStatus status) {
-		this.status = status;
+	public void setAddress(String address) {
+		this.address = address;
 	}
 
-	@Column(name = "salt", nullable = false)
-	public String getSalt() {
-		return salt;
+	@Column(name = "phone1", nullable = true)
+	public String getPhone1() {
+		return phone1;
 	}
 
-	public void setSalt(String salt) {
-		this.salt = salt;
+	public void setPhone1(String phone1) {
+		this.phone1 = phone1;
 	}
+
+	@Column(name = "phone2", nullable = true)
+	public String getPhone2() {
+		return phone2;
+	}
+
+	public void setPhone2(String phone2) {
+		this.phone2 = phone2;
+	}
+
+	// ===================================================================================
 
 	@Column(name = "name", nullable = false)
 	public String getName() {
@@ -223,49 +274,17 @@ public class User extends BaseData implements Comparable<User> {
 		this.dateOfBirth = dateOfBirth;
 	}
 
-	@Column(name = "address", nullable = true)
-	public String getAddress() {
-		return address;
+	@Column(name = "age", nullable = true)
+	public Integer getAge() {
+		return age;
 	}
 
-	public void setAddress(String address) {
-		this.address = address;
-	}
-
-	@Transient
-	public String getAddressString() {
-		if (StringUtils.isNotBlank(address))
-			return address;
-
-		if (village != null)
-			return village.getFullName();
-		if (parish != null)
-			return parish.getFullName();
-		if (subCounty != null)
-			return subCounty.getFullName();
-
-		return "";
-	}
-
-	@Column(name = "phone1", nullable = true)
-	public String getPhone1() {
-		return phone1;
-	}
-
-	public void setPhone1(String phone1) {
-		this.phone1 = phone1;
-	}
-
-	@Column(name = "phone2", nullable = true)
-	public String getPhone2() {
-		return phone2;
-	}
-
-	public void setPhone2(String phone2) {
-		this.phone2 = phone2;
+	public void setAge(Integer age) {
+		this.age = age;
 	}
 
 	@Lob()
+	@Type(type = "org.hibernate.type.BinaryType")
 	@Column(name = "picture", nullable = true)
 	public byte[] getProfilePicture() {
 		return profilePicture;
@@ -275,45 +294,37 @@ public class User extends BaseData implements Comparable<User> {
 		this.profilePicture = profilePicture;
 	}
 
-	@ManyToOne
-	@JoinColumn(name = "gis_cordinates_id", nullable = true)
-	public GisCordinate getGisCordinates() {
-		return gisCordinates;
-	}
-
-	public void setGisCordinates(GisCordinate gisCordinates) {
-		this.gisCordinates = gisCordinates;
-	}
+	// =========================================================================================
 
 	@ManyToOne
-	@JoinColumn(name = "subcounty_id", nullable = true)
-	public SubCounty getSubCounty() {
-		return subCounty;
+	@JoinColumn(name = "producer_organisation_id", nullable = true)
+	public ProducerOrg getProducerOrg() {
+		return producerOrg;
 	}
 
-	public void setSubCounty(SubCounty subCounty) {
-		this.subCounty = subCounty;
+	public void setProducerOrg(ProducerOrg producerOrg) {
+		this.producerOrg = producerOrg;
 	}
 
-	@ManyToOne
-	@JoinColumn(name = "parish_id", nullable = true)
-	public Parish getParish() {
-		return parish;
+	@Column(name = "date_of_joining", nullable = true)
+	public Date getDateOfJoining() {
+		return dateOfJoining;
 	}
 
-	public void setParish(Parish parish) {
-		this.parish = parish;
+	public void setDateOfJoining(Date dateOfJoining) {
+		this.dateOfJoining = dateOfJoining;
 	}
 
-	@ManyToOne
-	@JoinColumn(name = "village_id", nullable = true)
-	public Village getVillage() {
-		return village;
+	@Column(name = "year_of_joining", nullable = true)
+	public Integer getYearOfJoining() {
+		return yearOfJoining;
 	}
 
-	public void setVillage(Village village) {
-		this.village = village;
+	public void setYearOfJoining(Integer yearOfJoining) {
+		this.yearOfJoining = yearOfJoining;
 	}
+
+	// =========================================================================================
 
 	@Column(name = "land_size", nullable = true)
 	public Double getLandSize() {
@@ -354,51 +365,7 @@ public class User extends BaseData implements Comparable<User> {
 		this.landUses = landUses;
 	}
 
-	@ManyToOne
-	@JoinColumn(name = "producer_organisation_id", nullable = true)
-	public ProducerOrg getProducerOrg() {
-		return producerOrg;
-	}
-
-	public void setProducerOrg(ProducerOrg producerOrg) {
-		this.producerOrg = producerOrg;
-	}
-
-	@Column(name = "date_of_joining", nullable = true)
-	public Date getDateOfJoining() {
-		return dateOfJoining;
-	}
-
-	public void setDateOfJoining(Date dateOfJoining) {
-		this.dateOfJoining = dateOfJoining;
-	}
-
-	@Column(name = "date_created", nullable = true)
-	public Date getDateCreated() {
-		return dateCreated;
-	}
-
-	public void setDateCreated(Date dateCreated) {
-		this.dateCreated = dateCreated;
-	}
-
-	@Column(name = "age", nullable = true)
-	public Integer getAge() {
-		return age;
-	}
-
-	public void setAge(Integer age) {
-		this.age = age;
-	}
-
-	@Column(name = "year_of_joining", nullable = true)
-	public Integer getYearOfJoining() {
-		return yearOfJoining;
-	}
-
-	public void setYearOfJoining(Integer yearOfJoining) {
-		this.yearOfJoining = yearOfJoining;
-	}
+	// =================
 
 	@Enumerated(EnumType.ORDINAL)
 	@Column(name = "marital_status", nullable = true)
@@ -411,17 +378,38 @@ public class User extends BaseData implements Comparable<User> {
 	}
 
 	@Enumerated(EnumType.ORDINAL)
-	@Column(name = "category_of_house_hold", nullable = true)
-	public CategoryOfHouseHold getCategoryOfHouseHold() {
-		return categoryOfHouseHold;
+	@Column(name = "house_hold_category", nullable = true)
+	public HouseHoldCategory getHouseHoldCategory() {
+		return houseHoldCategory;
 	}
 
-	public void setCategoryOfHouseHold(CategoryOfHouseHold categoryOfHouseHold) {
-		this.categoryOfHouseHold = categoryOfHouseHold;
+	public void setHouseHoldCategory(HouseHoldCategory houseHoldCategory) {
+		this.houseHoldCategory = houseHoldCategory;
 	}
 
 	@ManyToOne
-	@JoinColumn(name = "uesr_id", nullable = true)
+	@JoinColumn(name = "gis_cordinates_id", nullable = true)
+	public GisCordinate getGisCordinates() {
+		return gisCordinates;
+	}
+
+	public void setGisCordinates(GisCordinate gisCordinates) {
+		this.gisCordinates = gisCordinates;
+	}
+
+	// ============================================================================================
+
+	@Column(name = "date_created", nullable = true)
+	public Date getDateCreated() {
+		return dateCreated;
+	}
+
+	public void setDateCreated(Date dateCreated) {
+		this.dateCreated = dateCreated;
+	}
+
+	@ManyToOne
+	@JoinColumn(name = "created_by", nullable = true)
 	public User getCreatedBy() {
 		return createdBy;
 	}
@@ -430,9 +418,7 @@ public class User extends BaseData implements Comparable<User> {
 		this.createdBy = createdBy;
 	}
 
-	public boolean hasNewPassword() {
-		return (clearTextPassword != null && clearTextPassword.trim().length() > 0);
-	}
+	// ============================================================================================
 
 	public List<Permission> findPermissions() {
 		List<Permission> permissions = null;
@@ -461,10 +447,15 @@ public class User extends BaseData implements Comparable<User> {
 		return false;
 	}
 
+	// ==============================================================================================
+
 	@Override
 	public int compareTo(User o) {
-		if (this.getUsername() == null || o.getUsername() == null)
-			return 0;
+		if (StringUtils.isNotBlank(this.getName())
+				&& StringUtils.isNotBlank(o.getName()))
+			return this.getName().compareToIgnoreCase(o.getName());
+		else
+			;
 		return this.username.compareToIgnoreCase(o.username);
 	}
 
@@ -484,5 +475,80 @@ public class User extends BaseData implements Comparable<User> {
 			return false;
 		return true;
 	}
+
+	// ==============================================================================================
+
+	@Transient
+	public String getAddressString() {
+		if (StringUtils.isNotBlank(address))
+			return address;
+
+		if (producerOrg != null)
+			return producerOrg.getDistrictString();
+
+		return "";
+	}
+
+	// ===================================================================
+
+	// @Transient
+	// public District getDistrict() {
+	// if (null != district)
+	// return district;
+	//
+	// if (subCounty != null)
+	// return subCounty.getCounty().getDistrict();
+	//
+	// return null;
+	// }
+	//
+	// public void setDistrict(District district) {
+	// this.setDistrict(district);
+	// }
+	//
+	// @Transient
+	// public County getCounty() {
+	// if (null != county)
+	// return county;
+	//
+	// if (subCounty != null)
+	// return subCounty.getCounty();
+	//
+	// return null;
+	// }
+	//
+	// public void setCounty(County county) {
+	// this.setCounty(county);
+	// }
+	//
+	// @ManyToOne
+	// @JoinColumn(name = "subcounty_id", nullable = true)
+	// public SubCounty getSubCounty() {
+	// return subCounty;
+	// }
+	//
+	// public void setSubCounty(SubCounty subCounty) {
+	// this.subCounty = subCounty;
+	// }
+	//
+	// @ManyToOne
+	// @JoinColumn(name = "parish_id", nullable = true)
+	// public Parish getParish() {
+	// return parish;
+	// }
+	//
+	// public void setParish(Parish parish) {
+	// this.parish = parish;
+	// }
+	//
+	// @ManyToOne
+	// @JoinColumn(name = "village_id", nullable = true)
+	// public Village getVillage() {
+	// return village;
+	// }
+	//
+	// public void setVillage(Village village) {
+	// this.village = village;
+	// }
 
 }

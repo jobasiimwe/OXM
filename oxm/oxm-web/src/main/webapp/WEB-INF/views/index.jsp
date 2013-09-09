@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Welcome to Oxfam E Agric System</title>
+<title>Welcome to Acholi Farmers System</title>
 </head>
 <body>
 	

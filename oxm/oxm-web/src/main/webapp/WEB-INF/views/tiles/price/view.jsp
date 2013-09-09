@@ -3,7 +3,7 @@
 <%@ taglib prefix='fn' uri='http://java.sun.com/jsp/jstl/functions'%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
-<%@ taglib prefix="oxmTags" tagdir="/WEB-INF/tags"%>
+<%@ taglib prefix="sysTags" tagdir="/WEB-INF/tags"%>
 <%@ taglib prefix="oxmBreadcrambs" tagdir="/WEB-INF/tags/breadcramblinks"%>
 
 <c:if test="${not empty adminview and adminview }">
@@ -29,7 +29,7 @@
 </div>
 <div>
 
-	<oxmTags:name-of-item-on-page name="Price" />
+	<sysTags:name-of-item-on-page name="Price" />
 
 	<table class="recordTable">
 		<thead>
@@ -37,11 +37,12 @@
 				<c:if test="${not empty adminview and adminview }">
 					<th><input type="checkbox" name="cbxSelectAllItems" id="cbxSelectAllItems" /></th>
 				</c:if>
-				<th>Crop</th>
+				<th>No.</th>
+				<th>Item</th>
 				<th>Selling Place</th>
 				<th>Type</th>
 				<th>Quantity/Unit</th>
-				<th>Price</th>
+				<th>Price (UGX)</th>
 				<th>Date</th>
 
 			</tr>
@@ -49,16 +50,17 @@
 		<tbody>
 			<c:choose>
 				<c:when test="${not empty prices  && fn:length(prices) > 0}">
-					<c:forEach var="price" items="${prices }">
+					<c:forEach var="price" items="${prices }" varStatus="status">
 						<tr id="${price.id }">
 							<c:if test="${not empty adminview and adminview }">
-								<td><oxmTags:rowcheckbox nameOfItemOnPage="${nameOfItemOnPage}" id="${price.id }" /></td>
+								<td><sysTags:rowcheckbox nameOfItemOnPage="${nameOfItemOnPage}" id="${price.id }" /></td>
 							</c:if>
-							<td>${price.crop.name }</td>
+							<td>${status.count }</td>
+							<td>${price.product.name }</td>
 							<td>${price.sellingPlace.name }</td>
 							<td>${price.sellType.name }</td>
 							<td>${price.quantity }(${price.unitOfMeasure.name })</td>
-							<td>${price.price }</td>
+							<td><fmt:formatNumber value="${price.price }" pattern="#0" /></td>
 							<td><fmt:formatDate value="${price.date}" pattern="dd/MM/yyyy" /></td>
 						</tr>
 					</c:forEach>

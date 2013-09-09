@@ -1,7 +1,7 @@
 package org.agric.oxm.model.enums;
 
 public enum ImportItem {
-	DISTRICT_DETAILS("District Details"), PRODUCER_ORGz("Producer Orgs"), PRODUCERS(
+	ALL("All"),DISTRICT_DETAILS("District Details"), PRODUCER_ORGz("Producer Orgs"), PRODUCERS(
 			"Producers");
 
 	ImportItem(String name) {

@@ -62,10 +62,10 @@ public class SubCounty extends BaseData implements Comparable<SubCounty> {
 
 	@Transient
 	public String getFullName() {
-		String fullName = this.getName();
+		String fullName = this.getCounty().getDistrict().getName();
 
 		fullName += ", " + this.getCounty().getName();
-		fullName += ", " + this.getCounty().getDistrict().getName();
+		fullName += ", " +this.getName() ;
 		return fullName;
 
 	}

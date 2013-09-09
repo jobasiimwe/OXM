@@ -14,6 +14,7 @@
         <security:filter-chain-map path-type="ant">
             <security:filter-chain pattern="/static/**" filters="none" />
             <security:filter-chain pattern="/annoymous/**" filters="none" />
+            <security:filter-chain pattern="/prelogin/**" filters="none" />
             <security:filter-chain pattern="/ServiceLogin" filters="none" />
             <security:filter-chain pattern="/ServiceLoginFailure" filters="none" />
             <security:filter-chain pattern="/**" filters="securityContextPersistenceFilterWithASCTrue,

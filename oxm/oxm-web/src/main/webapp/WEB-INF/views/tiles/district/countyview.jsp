@@ -2,14 +2,14 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix='fn' uri='http://java.sun.com/jsp/jstl/functions'%>
 
-<%@ taglib prefix="oxmTags" tagdir="/WEB-INF/tags"%>
+<%@ taglib prefix="sysTags" tagdir="/WEB-INF/tags"%>
 <%@ taglib prefix="oxmBreadcrambs" tagdir="/WEB-INF/tags/breadcramblinks"%>
 <%@ taglib prefix="oxmDistrictBreadcrambs" tagdir="/WEB-INF/tags/breadcramblinks/districts"%>
 
 <div style="margin: 5px; width: 100%;">
 	<oxmBreadcrambs:cpanel startingBreadcramb="true" />
 	<oxmDistrictBreadcrambs:districts />
-	<oxmDistrictBreadcrambs:subcounty district="${district }" />
+	<oxmDistrictBreadcrambs:counties district="${district }" />
 	Sub Counties
 </div>
 
@@ -18,14 +18,14 @@
 		<a id="lnkAddCounty" class="uiButton" href="${baseUrl }/county/add/${district.id }">Add</a>
 		<a id="lnkEditCounty" class="uiButton" href="${baseUrl }/county/edit/">Edit</a>
 		<a id="lnkDeleteCounty" class="uiButton" href="${baseUrl }/county/delete/${district.id }/">Delete</a>
-		<a id="lnkCountySubCounties" class="uiButton" href="${baseUrl }/">Sub-County</a>
+		<a id="lnkCountySubCounties" class="uiButton" href="${baseUrl }/subcounty/view/">Sub-Counties</a>
 	</div>
 	<div style="clear: both"></div>
 </div>
 
 <div>
 
-	<oxmTags:name-of-item-on-page name="County" />
+	<sysTags:name-of-item-on-page name="County" />
 
 	<table class="recordTable list">
 		<thead>
@@ -40,7 +40,7 @@
 			<c:if test="${not empty counties  && fn:length(counties) > 0}">
 				<c:forEach var="county" items="${counties }" varStatus="status">
 					<tr id="${county.id }">
-						<td><oxmTags:rowcheckbox nameOfItemOnPage="${nameOfItemOnPage}" id="${county.id }" /></td>
+						<td><sysTags:rowcheckbox nameOfItemOnPage="${nameOfItemOnPage}" id="${county.id }" /></td>
 						<td>${status.count }</td>
 						<td>${county.name }</td>
 						<td>${county.subCountiesString }</td>
