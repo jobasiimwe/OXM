@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN" "http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
+<tiles-definitions>
+	<definition name="layout" template="/WEB-INF/views/layout.jsp">
+		<put-attribute name="pageTitle" type="template" value="/WEB-INF/views/tiles/contentheader.jsp" />
+		<put-attribute name="title" type="string" value="Acholi Farmers Portal" />
+		<put-attribute name="header" type="template" value="/WEB-INF/views/tiles/header.jsp" />
+		<put-attribute name="sidebarleft" type="template" value="/WEB-INF/views/tiles/menu.jsp" />
+		<put-attribute name="body" type="template" value="/WEB-INF/views/tiles/body.jsp" />
+		<put-attribute name="footer" type="template" value="/WEB-INF/views/tiles/footer.jsp" />
+	</definition>
+	
+	<definition name="index" extends="layout" />
+	
+	<!-- === Error page === -->
+	<definition name="errorPage" extends="layout">
+		<put-attribute name="body" type="template" value="/WEB-INF/views/tiles/error/error.jsp"/>
+	</definition>
+
+	<!-- ================== Dashboard ================== -->
+	<definition name="dashboard" extends="layout">
+		<put-attribute name="scripts" type="template" value="/WEB-INF/views/tiles/dashboard/scripts.jsp" />
+		<put-attribute name="body" type="template" value="/WEB-INF/views/tiles/dashboard/view.jsp" />
+	</definition>
+
+	<!--===== FORM to form a new user ====== -->
+	<definition name="viewUser" extends="layout">
+		<put-attribute name="body" type="template" value="/WEB-INF/views/tiles/users/view.jsp" />
+	</definition>
+	
+	<definition name="formUser" extends="layout">
+		<put-attribute name="body" type="template" value="/WEB-INF/views/tiles/users/form/form.jsp" />
+	</definition>
+	
+	<definition name="smsForm" extends="layout">
+		<put-attribute name="body" type="template" value="/WEB-INF/views/tiles/sms/form.jsp" />
+	</definition>
+	
+	<!--===== Roles form ====== -->
+	<definition name="viewRole" extends="layout">
+		<put-attribute name="body" type="template" value="/WEB-INF/views/tiles/role/view.jsp" />
+	</definition>
+
+	<definition name="formRole" extends="viewRole">
+		<put-attribute name="body" type="template" value="/WEB-INF/views/tiles/role/form.jsp" />
+	</definition>
+
+	<!-- ========= FORM to add a concept ========= -->
+	<definition name="viewConcept" extends="layout">
+		<put-attribute name="body" type="template" value="/WEB-INF/views/tiles/concept/view.jsp" />
+	</definition>
+
+	<definition name="formConcept" extends="layout">
+		<put-attribute name="body" type="template" value="/WEB-INF/views/tiles/concept/form.jsp" />
+	</definition>
+
+	<!-- ======= FORM to add conceptCategory ========== -->
+	<definition name="viewConceptCategory" extends="layout">
+		<put-attribute name="scripts" type="template" value="/WEB-INF/views/tiles/concept/scripts.jsp" />
+		<put-attribute name="pageTitle" type="string" value="View Concept-Categories" />
+		<put-attribute name="body" type="template" value="/WEB-INF/views/tiles/concept/categoryView.jsp" />
+	</definition>
+
+	<definition name="formConceptCategory" extends="layout">
+		<put-attribute name="scripts" type="template" value="/WEB-INF/views/tiles/concept/scripts.jsp" />
+		<put-attribute name="pageTitle" type="string" value="Add/Edit Concept Category" />
+		<put-attribute name="body" type="template" value="/WEB-INF/views/tiles/concept/categoryform.jsp" />
+	</definition>
+	
+	<!-- ======= FORM for CROP ========== -->
+	<definition name="viewCrop" extends="layout">
+		<put-attribute name="scripts" type="template" value="/WEB-INF/views/tiles/crop/scripts.jsp" />
+		<put-attribute name="pageTitle" type="template" value="/WEB-INF/views/tiles/contentheader.jsp" />
+		<put-attribute name="body" type="template" value="/WEB-INF/views/tiles/crop/view.jsp" />
+	</definition>
+	
+	<definition name="cropForm" extends="viewCrop">
+		<put-attribute name="body" type="template" value="/WEB-INF/views/tiles/crop/form.jsp" />
+	</definition>
+	
+	<definition name="cropDetails" extends="viewCrop">
+		<put-attribute name="body" type="template" value="/WEB-INF/views/tiles/crop/details.jsp" />
+	</definition>
+	
+	<!-- ======= FORM for CPanel ========== -->
+	<definition name="cpanel" extends="layout">
+		<put-attribute name="pageTitle" type="string" value="C panel" />
+		<put-attribute name="body" type="template" value="/WEB-INF/views/tiles/cpanel.jsp" />
+	</definition>
+	
+	<!-- ======= FORM for Selling Place ========== -->
+	<definition name="viewSellingPlace" extends="layout">
+		<put-attribute name="body" type="template" value="/WEB-INF/views/tiles/sellingplace/view.jsp" />
+	</definition>
+	
+	<definition name="formSellingPlace" extends="viewSellingPlace">
+		<put-attribute name="body" type="template" value="/WEB-INF/views/tiles/sellingplace/form.jsp" />
+	</definition>
+	
+		
+	<!-- ======= FORM for Price ========== -->
+	<definition name="priceView" extends="layout">
+		<put-attribute name="body" type="template" value="/WEB-INF/views/tiles/price/view.jsp" />
+	</definition>
+	
+	<definition name="priceForm" extends="priceView">
+		<put-attribute name="body" type="template" value="/WEB-INF/views/tiles/price/form.jsp" />
+	</definition>
+	
+	<!-- ======= Position tile definitions ========== -->
+	<definition name="viewPosition" extends="layout">
+		<put-attribute name="body" type="template" value="/WEB-INF/views/tiles/position/view.jsp" />
+	</definition>
+	
+	<definition name="formPosition" extends="viewPosition">
+		<put-attribute name="body" type="template" value="/WEB-INF/views/tiles/position/form.jsp" />
+	</definition>
+	
+	<!-- ======= FORM for SEASON ========== -->
+	<definition name="viewSeason" extends="layout">
+		<put-attribute name="body" type="template" value="/WEB-INF/views/tiles/season/view.jsp" />
+	</definition>
+	
+	<definition name="formSeason" extends="layout">
+		<put-attribute name="body" type="template" value="/WEB-INF/views/tiles/season/form.jsp" />
+	</definition>
+	
+	<!-- ======= FORM for Financial Institution ========== -->
+	<definition name="viewFinancialInstitution" extends="layout">
+		<put-attribute name="body" type="template" value="/WEB-INF/views/tiles/finstitution/view.jsp" />
+	</definition>
+	
+	<definition name="formFinancialInstitution" extends="layout">
+		<put-attribute name="body" type="template" value="/WEB-INF/views/tiles/finstitution/form.jsp" />
+	</definition>
+		
+	<!--===== POST in the forum ====== -->
+	<definition name="postView" extends="layout">
+		<put-attribute name="body" type="template" value="/WEB-INF/views/tiles/post/view.jsp" />
+	</definition>
+	
+	<definition name="postForm" extends="layout">
+		<put-attribute name="body" type="template" value="/WEB-INF/views/tiles/post/form.jsp" />
+	</definition>
+	
+	<!--===== Financial Institution Documents ====== -->
+	<definition name="fInstitutionDocView" extends="layout">
+		<put-attribute name="body" type="template" value="/WEB-INF/views/tiles/finstitution/docs.jsp" />
+	</definition>
+	
+	<definition name="fInstitutionDocForm" extends="layout">
+		<put-attribute name="body" type="template" value="/WEB-INF/views/tiles/finstitution/docform.jsp" />
+	</definition>
+	
+	<!--===== Products ====== -->
+	<definition name="productView" extends="layout">
+		<put-attribute name="body" type="template" value="/WEB-INF/views/tiles/product/view.jsp" />
+	</definition>
+	
+	<definition name="productForm" extends="layout">
+		<put-attribute name="body" type="template" value="/WEB-INF/views/tiles/product/form.jsp" />
+	</definition>
+	
+	<!--===== IMPORTs ====== -->
+	<definition name="generalImportForm" extends="layout">
+		<put-attribute name="body" type="template" value="/WEB-INF/views/tiles/import/importform.jsp" />
+	</definition>
+	
+	<!--===== blogs ====== -->
+	<definition name="blogView" extends="layout">
+		<put-attribute name="body" type="template" value="/WEB-INF/views/tiles/blog/view.jsp" />
+	</definition>
+	
+	<definition name="blogForm" extends="layout">
+		<put-attribute name="body" type="template" value="/WEB-INF/views/tiles/blog/form.jsp" />
+	</definition>
+	
+</tiles-definitions>

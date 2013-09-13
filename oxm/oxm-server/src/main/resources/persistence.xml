@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="1.0"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/persistence
+     http://java.sun.com/xml/ns/persistence/persistence_1_0.xsd
+     http://java.sun.com/xml/ns/persistence/orm
+     http://java.sun.com/xml/ns/persistence/orm_1_0.xsd"
+	xmlns:orm="http://java.sun.com/xml/ns/persistence/orm" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://java.sun.com/xml/ns/persistence">
+	<persistence-unit name="org.oxm.entities"
+		transaction-type="RESOURCE_LOCAL">
+		<provider>org.hibernate.ejb.HibernatePersistence</provider>
+		<mapping-file>META-INF/orm.xml</mapping-file>
+
+		<class>org.agric.oxm.model.Blog</class>
+		<class>org.agric.oxm.model.BlogComment</class>
+		<class>org.agric.oxm.model.Comment</class>
+		<class>org.agric.oxm.model.Committee</class>
+		<class>org.agric.oxm.model.CommitteeMember</class>
+		<class>org.agric.oxm.model.Concept</class>
+		<class>org.agric.oxm.model.ConceptCategory</class>
+		<class>org.agric.oxm.model.County</class>
+		<class>org.agric.oxm.model.Crop</class>
+		<class>org.agric.oxm.model.District</class>
+		<class>org.agric.oxm.model.Document</class>
+		<class>org.agric.oxm.model.FinancialInstitution</class>
+		<class>org.agric.oxm.model.FinancialServiceDoc</class>
+		<class>org.agric.oxm.model.GisCordinate</class>
+		<class>org.agric.oxm.model.LandUse</class>
+		<class>org.agric.oxm.model.Message</class>
+		<class>org.agric.oxm.model.Parish</class>
+		<class>org.agric.oxm.model.Permission</class>
+		<class>org.agric.oxm.model.Position</class>
+		<class>org.agric.oxm.model.Post</class>
+		<class>org.agric.oxm.model.Price</class>
+		<class>org.agric.oxm.model.ProductionLevel</class>
+		<class>org.agric.oxm.model.ProducerOrg</class>
+		<class>org.agric.oxm.model.Product</class>
+		<class>org.agric.oxm.model.Publication</class>
+		<class>org.agric.oxm.model.Role</class>
+		<class>org.agric.oxm.model.Season</class>
+		<class>org.agric.oxm.model.SellingPlace</class>
+		<class>org.agric.oxm.model.StaffMember</class>
+		<class>org.agric.oxm.model.SubCounty</class>
+		<class>org.agric.oxm.model.User</class>
+		<class>org.agric.oxm.model.Village</class>
+
+		<exclude-unlisted-classes />
+	</persistence-unit>
+</persistence>

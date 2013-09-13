@@ -1,0 +1,204 @@
+/**
+* The PreLogin css file.
+*/
+.prelogin-header-sub-container {
+	margin: auto;
+	width: 67%;
+}
+
+/** Login CSS */
+.login-body-dv {
+	margin: auto;
+	width: 67%;
+	background: white;
+	min-height: 400px;
+	margin-bottom: 10px;
+	padding-top: 20px;
+	overflow: hidden;
+}
+
+.small-big-container {
+	width: 100%;
+	margin: auto;
+}
+
+.login-body-dv .big-dv {
+	border: 1px solid #E5E5E5;
+	float: left;
+	min-height: 360px;
+	margin-bottom: 10px;
+	width: 74%;
+}
+
+.login-body-dv .small-dv {
+	border: 1px solid #E5E5E5;
+	width: 25%;
+	margin-right: 5px !important;
+	margin-bottom: 10px;
+	min-height: 360px;
+	min-height: 10px;
+	float: left;
+	display: inline;
+}
+
+.login-form {
+	
+}
+
+.login-form .login-box {
+	float: right;
+}
+
+.login-form .login-box .uiTextbox {
+	height: inherit;
+	width: 70px;
+	height: 20px;
+	padding: 0px;
+	overflow: hidden;
+}
+
+.login-form .login-box .uiButton {
+	height: 27px;
+}
+
+.login-box label {
+	font-weight: bold;
+	margin-right: 10px;
+	display: inline-block;
+}
+
+.login-box .username-dv {
+	display: inline-block;
+	margin-bottom: 5px;
+}
+
+.login-box .pwd-dv {
+	display: inline-block;
+}
+
+.login-box .btn-dv {
+	margin: 10px 0px 0px 0px;
+	display: inline-block;
+	/*float: left;*/
+}
+
+.login-box .uiLabel {
+	width: auto;
+}
+
+.login-error {
+	color: #BB0000;
+	font-family: Arial;
+	font-size: 100%;
+	text-align: left;
+}
+
+.login-box .uiTextbox {
+	padding: 5px 10px;
+	height: 12px;
+	font-family: Segoe UI, Tahoma, Verdana, Arial;
+	width: 150px;
+	font-size: 12px;
+	border: solid 1px #57665B;
+	color: #000;
+}
+
+.sign-up-div {
+	margin-top: 20px;
+}
+
+.sign-up-txt {
+	color: blue;
+	font-size: 14px;
+	font-family: "Skolar Regular", "Times New Roman", serif;
+}
+
+.prelogin-panel {
+	margin-bottom: 25px;
+	height: auto;
+	padding: 5px;
+	display: inline-block;
+	margin-right: 50px;
+	text-align: center;
+	width: 100%;
+}
+
+.prelogin-panel .menu {
+	margin: 5px;
+	margin-right: 50px;
+	height: auto;
+	border: 1px solid rgb(185, 185, 185);
+	border-radius: 15px;
+	padding: 5px;
+	float: left;
+	padding: 5px;
+}
+
+.prelogin-panel .menu a {
+	color: black;
+	float: left;
+	text-decoration: none;
+}
+
+.prelogin-panel span.panellink {
+	width: 120px;
+	height: 60px;
+	background-size: 30%;
+	background-position: 50%;
+	background-repeat: no-repeat;
+	margin-right: 5px;
+	display: block;
+	margin: auto;
+}
+
+#slider {
+	width: 100% !important;
+	height: 300px !important;
+	border: 1px solid #ccc !important;
+	margin-bottom: 5px !important;
+}
+
+/*==================================================================*/
+.menu_div ul {
+	padding: 0px;
+	margin: 0px;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	color: #FFF;
+	list-style: none;
+	text-indent: 15px;
+}
+
+.menu_div ul li {
+	background: #fff;
+	height: 20px;
+	border-bottom: 1px solid #E5E5E5;
+}
+
+.menu_div li span {
+	background-repeat: no-repeat;
+	background-size: contain;
+	clear: both;
+	display: block;
+	float: left;
+	height: 18px;
+	padding-right: 10px;
+	width: 6px;
+}
+
+.menu_div ul li a {
+	text-decoration: none;
+	color: #000;
+	height: 18px;
+	border: 1px solid #fff;
+	display: block;
+}
+
+.menu_div ul li a:hover {
+	background: #E5E5E5;
+	border: 1px solid #fff;
+}
+
+.menu_div ul li#active {
+	background: #E5E5E5;
+}

@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN" "http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
+<tiles-definitions>
+	
+	<definition name="preloginlayout" template="/WEB-INF/views/preloginlayout.jsp">
+		<put-attribute name="pageTitle" type="template" value="/WEB-INF/views/tiles/contentheader.jsp" />
+		<put-attribute name="title" type="string" value="Acholi Farmers Portal" />
+		<put-attribute name="body" type="template" value="/WEB-INF/views/tiles/prelogin/blog.jsp" />
+		<put-attribute name="footer" type="template" value="/WEB-INF/views/tiles/footer.jsp" />
+	</definition>
+	
+		
+	<definition name="preloginlayout2" template="/WEB-INF/views/preloginlayout.jsp">
+		<put-attribute name="pageTitle" type="template" value="/WEB-INF/views/tiles/contentheader.jsp" />
+		<put-attribute name="title" type="string" value="Acholi Farmers Portal" />
+		<put-attribute name="body" type="template" value="/WEB-INF/views/tiles/prelogin/body.jsp" />
+		<put-attribute name="footer" type="template" value="/WEB-INF/views/tiles/footer.jsp" />
+	</definition>
+	
+	<definition name="login" extends="preloginlayout" />
+
+	<definition name="preloginPriceView" extends="preloginlayout" >
+		<put-attribute name="body" type="template" value="/WEB-INF/views/tiles/prelogin/price.jsp" />
+	</definition>
+	
+	<definition name="preloginSellingPlaceView" extends="preloginlayout" >
+		<put-attribute name="body" type="template" value="/WEB-INF/views/tiles/prelogin/sellingplace.jsp" />
+	</definition>
+	
+	<definition name="preloginCropView" extends="preloginlayout" >
+		<put-attribute name="body" type="template" value="/WEB-INF/views/tiles/prelogin/crop.jsp" />
+	</definition>
+	
+	<definition name="preloginfInstitutionView" extends="preloginlayout" >
+		<put-attribute name="body" type="template" value="/WEB-INF/views/tiles/prelogin/finstitution.jsp" />
+	</definition>
+	
+	<definition name="preloginSeasonView" extends="preloginlayout" >
+		<put-attribute name="body" type="template" value="/WEB-INF/views/tiles/prelogin/season.jsp" />
+	</definition>
+
+	<definition name="preloginBlogView" extends="preloginlayout" >
+		<put-attribute name="body" type="template" value="/WEB-INF/views/tiles/prelogin/blog.jsp" />
+	</definition>
+	
+	<definition name="preloginErrorPage" extends="preloginlayout" >
+	</definition>
+	
+	
+	<definition name="annoymouslayout" template="/WEB-INF/views/annoymouslayout.jsp">
+		<put-attribute name="title" type="string" value="Oxfam e-agric System" />
+		<put-attribute name="header" type="template" value="/WEB-INF/views/tiles/header.jsp" />
+		<put-attribute name="body" type="template" value="/WEB-INF/views/tiles/body.jsp" />
+		<put-attribute name="footer" type="template" value="/WEB-INF/views/tiles/footer.jsp" />
+	</definition>
+	
+	<definition name="createUser" extends="annoymouslayout">
+	    <put-attribute name="title" type="string" value="e-agric System" />
+	    <put-attribute name="pageTitle" type="string" value="Create Free Account" />
+		<put-attribute name="body" type="template" value="/WEB-INF/views/tiles/users/annoymoususerform.jsp" />	
+	</definition>
+		
+	<definition name="sucessfullogin" extends="annoymouslayout">
+	    <put-attribute name="title" type="string" value="e-agric System" />
+	    <put-attribute name="pageTitle" type="string" value="Information" />
+		<put-attribute name="body" type="template" value="/WEB-INF/views/success.jsp" />
+	</definition>
+	
+</tiles-definitions>

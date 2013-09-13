@@ -1,29 +1,134 @@
+
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-  <modelVersion>4.0.0</modelVersion>
-  
-    <parent>
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
 		<groupId>org.agric.oxm</groupId>
 		<artifactId>oxm-parent</artifactId>
 		<version>1.0-SNAPSHOT</version>
 	</parent>
-	
-  <artifactId>oxm-web</artifactId>
-  <packaging>jar</packaging>
-  <name>oxm-web</name>
-  
-  <dependencies>
-    <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <version>3.8.1</version>
-      <scope>test</scope>
-    </dependency>
-	
-	<dependency>
-      <groupId>org.agric.oxm</groupId>
-      <artifactId>oxm-server</artifactId>
-	  <version>${project.version}</version>
-    </dependency>
-  </dependencies>
+
+
+	<groupId>org.agric.oxm</groupId>
+	<artifactId>oxm-web</artifactId>
+	<packaging>war</packaging>
+	<name>Oxfarm GB Web Application</name>
+
+	<dependencies>
+		<!--===== Model and server ===== -->
+		<dependency>
+			<groupId>org.agric.oxm</groupId>
+			<artifactId>oxm-model</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.agric.oxm</groupId>
+			<artifactId>oxm-server</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+
+		<!-- ======= Spring =========== -->
+		<dependency>
+			<groupId> org.springframework </groupId>
+			<artifactId> spring-webmvc </artifactId>
+			<version>3.0.5.RELEASE</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId> spring-security-web</artifactId>
+			<version>3.0.3.RELEASE</version>
+			<type>jar</type>
+		</dependency>
+
+		<!-- ====== Tiles ========= -->
+		<dependency>
+			<groupId>org.apache.tiles</groupId>
+			<artifactId>tiles-jsp</artifactId>
+			<version>2.2.2</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.tiles</groupId>
+			<artifactId>tiles-extras</artifactId>
+			<version>2.2.2</version>
+		</dependency>
+
+		<!-- ======== File Upload ======== -->
+		<dependency>
+			<groupId>commons-io</groupId>
+			<artifactId>commons-io</artifactId>
+			<version>1.4</version>
+		</dependency>
+
+		<dependency>
+			<groupId>commons-fileupload</groupId>
+			<artifactId>commons-fileupload</artifactId>
+			<version>1.2.2</version>
+		</dependency>
+
+		<!-- ======== Others ========== -->
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>servlet-api</artifactId>
+			<version>2.5</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>jstl</artifactId>
+			<version>1.2</version>
+			<scope>runtime</scope>
+		</dependency>
+		<dependency>
+			<groupId>javax.servlet.jsp</groupId>
+			<artifactId>jsp-api</artifactId>
+			<version>2.1</version>
+			<scope>provided</scope>
+		</dependency>
+
+		<!-- ===== JSON ====== -->
+		<dependency>
+			<groupId>org.codehaus.jackson</groupId>
+			<artifactId>jackson-mapper-asl</artifactId>
+			<version>1.8.5</version>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<finalName>oxm</finalName>
+		<!-- ======== Plugins ======= -->
+		<plugins>
+			<plugin>
+				<groupId>org.mortbay.jetty</groupId>
+				<artifactId>jetty-maven-plugin</artifactId>
+				<version>8.1.8.v20121106</version>
+				<configuration>
+					<webDefaultXml>src/main/resources/webdefault.xml</webDefaultXml>
+					<webAppConfig>
+						<defaultsDescriptor>
+							src/main/resources/webdefault.xml</defaultsDescriptor>
+					</webAppConfig>
+					<contextPath>/</contextPath>
+					<connectors>
+
+						<connector implementation="org.eclipse.jetty.server.nio.SelectChannelConnector">
+							<port>9090</port>
+							<maxIdleTime>60000</maxIdleTime>
+						</connector>
+					</connectors>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>tomcat-maven-plugin</artifactId>
+				<version>1.1</version>
+				<configuration>
+					<url>http://localhost:8686/manager</url>
+					<server>mytomcat</server>
+					<warDirectory>/target</warDirectory>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
 </project>

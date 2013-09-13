@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN" "http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
+<tiles-definitions>
+
+<!-- ======= FORM for district ========== -->
+	<definition name="viewDistrict" extends="layout">
+		<put-attribute name="scripts" type="template" value="/WEB-INF/views/tiles/district/scripts.jsp" />
+		<put-attribute name="pageTitle" type="template" value="/WEB-INF/views/tiles/contentheader.jsp" />
+		<put-attribute name="body" type="template" value="/WEB-INF/views/tiles/district/districtView.jsp" />
+	</definition>
+
+	<definition name="formDistrict" extends="viewDistrict">
+		<put-attribute name="body" type="template" value="/WEB-INF/views/tiles/district/districtform.jsp" />
+	</definition>
+	
+	<!-- ======= FORM for county ========== -->
+	<definition name="countyView" extends="viewDistrict">
+		<put-attribute name="body" type="template" value="/WEB-INF/views/tiles/district/countyview.jsp" />
+	</definition>
+
+	<definition name="countyForm" extends="viewDistrict">
+		<put-attribute name="body" type="template" value="/WEB-INF/views/tiles/district/countyform.jsp" />
+	</definition>
+	
+	
+	<!-- ======= FORM for subcounty ========== -->
+	<definition name="viewSubCounty" extends="viewDistrict">
+		<put-attribute name="body" type="template" value="/WEB-INF/views/tiles/district/subcountyView.jsp" />
+	</definition>
+
+	<definition name="formSubCounty" extends="viewDistrict">
+		<put-attribute name="body" type="template" value="/WEB-INF/views/tiles/district/subcountyform.jsp" />
+	</definition>
+	
+	<!-- ======= FORM for parish ========== -->
+	<definition name="viewParish" extends="viewDistrict">
+		<put-attribute name="body" type="template" value="/WEB-INF/views/tiles/district/parishView.jsp" />
+	</definition>
+
+	<definition name="formParish" extends="viewDistrict">
+		<put-attribute name="body" type="template" value="/WEB-INF/views/tiles/district/parishform.jsp" />
+	</definition>
+	
+	<!-- ======= FORM for village ========== -->
+	<definition name="viewVillage" extends="viewDistrict">
+		<put-attribute name="body" type="template" value="/WEB-INF/views/tiles/district/villageView.jsp" />
+	</definition>
+
+	<definition name="formVillage" extends="viewDistrict">
+		<put-attribute name="body" type="template" value="/WEB-INF/views/tiles/district/villageform.jsp" />
+	</definition>
+	
+</tiles-definitions>
