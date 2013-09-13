@@ -16,11 +16,8 @@ import javax.persistence.TemporalType;
 public class Comment extends BaseData implements Comparable<Comment> {
 
 	private User owner;
-
 	private String text;
-
 	private Date datePosted;
-
 	private Post post;
 
 	public Comment() {

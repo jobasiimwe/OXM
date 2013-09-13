@@ -245,6 +245,38 @@ public class ProducerOrg extends BaseData implements Comparable<ProducerOrg> {
 		return this.documents;
 	}
 
+	public void addDocument(Document doc) {
+		if (doc == null) {
+			return;
+		}
+
+		if (this.getDocuments() == null) {
+			this.setDocuments(new ArrayList<Document>());
+		}
+
+		this.getDocuments().add(doc);
+	}
+
+	public void removeDocument(Document doc) {
+		if (doc == null || this.getDocuments() == null) {
+			return;
+		}
+
+		this.getDocuments().remove(doc);
+	}
+
+	public void removeDocumentsByIds(String[] idzToDelete) {
+		for (String id : idzToDelete) {
+			Document d = new Document(id);
+
+			if (this.getDocuments().contains(d)) {
+				getDocuments().remove(d);
+			}
+		}
+	}
+
+	// ================================================
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;

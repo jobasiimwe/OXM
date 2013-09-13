@@ -7,18 +7,17 @@
 <%@ taglib prefix="oxmBreadcrambs" tagdir="/WEB-INF/tags/breadcramblinks"%>
 
 <div style="margin: 5px; width: 100%;">
-	<oxmBreadcrambs:cpanel startingBreadcramb="true" />
-	<oxmBreadcrambs:financialinstitutions />
+	<oxmBreadcrambs:cpanel name="finstitutions" />
 </div>
+
+<sysTags:name-of-item-on-page name="Financial-Institution" />
 
 <div id="buttonStrip">
 	<div class="contextual" style="float: left;">
-		<a id="lnkAddfInstitution" class="uiButton" href="${baseUrl }/finstitution/add/">Add</a>
-		<a id="lnkEditfInstitution" class="uiButton" href="${baseUrl }/finstitution/edit/">Edit</a>
-		<a id="lnkDeletefInstitution" class="uiButton" href="${baseUrl }/finstitution/delete/">Delete</a>
-		<a id="lnkfInstitutionDocuments" style="margin-left: 20px" class="uiButton"
-			href="${baseUrl }/finstitution/docs/view/"
-		>Documents</a>
+		<sysTags:addeditdeletebuttons url="finstitution" name="${nameOfItemOnPage}" child1="Documents"
+			child1Url="finstitution/docs"
+		/>
+
 	</div>
 	<div style="float: right;">
 		<%@ include file="/WEB-INF/views/navigation.jsp"%>
@@ -27,14 +26,13 @@
 </div>
 <div>
 
-	<sysTags:name-of-item-on-page name="Financial-Institution" />
-
 	<table class="recordTable">
 		<thead>
 			<tr>
 				<th><input type="checkbox" name="cbxSelectAllItems" id="cbxSelectAllItems" /></th>
 				<th>No.</th>
 				<th>Name</th>
+				<th>Description</th>
 				<th>Address</th>
 				<th>Available-Documents</th>
 			</tr>

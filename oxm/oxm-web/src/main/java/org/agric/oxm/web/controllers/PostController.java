@@ -125,29 +125,13 @@ public class PostController {
 
 		GenericCommand searchCommand = new GenericCommand();
 
-		if (params.getCrop() != null) {
-			searchCommand.getPropertiesMap().put(CROP,
-					new GenericCommandValue(params.getCrop().getId()));
-		}
+		searchCommand.checkAndPut(CROP, params.getCrop());
 
-		if (params.getPostType() != null) {
-			searchCommand.getPropertiesMap().put(POST_TYPE,
-					new GenericCommandValue(params.getPostType().getId()));
-		}
+		searchCommand.checkAndPut(POST_TYPE, params.getPostType());
 
-		if (params.getFromDate() != null) {
-			searchCommand.getPropertiesMap().put(
-					FROM_DATE,
-					new GenericCommandValue(GenericCommandValue.dateFormat
-							.format(params.getFromDate())));
-		}
-
-		if (params.getToDate() != null) {
-			searchCommand.getPropertiesMap().put(
-					TO_DATE,
-					new GenericCommandValue(GenericCommandValue.dateFormat
-							.format(params.getToDate())));
-		}
+		searchCommand.checkAndPut(FROM_DATE, params.getFromDate());
+		searchCommand.checkAndPut(TO_DATE,params.getToDate());
+		
 
 		if (params.getFromDate() != null && params.getToDate() != null) {
 			if (params.getToDate().before(params.getFromDate()))

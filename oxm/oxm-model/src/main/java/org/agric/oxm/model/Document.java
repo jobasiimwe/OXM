@@ -57,6 +57,10 @@ public class Document extends BaseData implements Comparable<Document> {
 		this.setfInstitutionDocumentOwner(financialInstitution);
 	}
 
+	public Document(ProducerOrg producerOrg) {
+		this.setpOrgDocumentOwner(producerOrg);
+	}
+
 	public Document(String docName, Concept docType, String docUrl, String other) {
 		super();
 		this.name = docName;

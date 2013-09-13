@@ -7,8 +7,7 @@
 <%@ taglib prefix="oxmBreadcrambs" tagdir="/WEB-INF/tags/breadcramblinks"%>
 
 <div style="margin: 5px; width: 100%;">
-	<oxmBreadcrambs:cpanel startingBreadcramb="true" />
-	<oxmBreadcrambs:products />
+	<oxmBreadcrambs:cpanel name="products" />
 </div>
 
 <sysTags:name-of-item-on-page name="Product" />

@@ -31,7 +31,9 @@ public enum Condition {
 	/**
 	 * Equal 4
 	 */
-	EQUAL_TO("=");
+	EQUAL_TO("="),
+
+	NOT_EQUAL_TO("!=");
 
 	/**
 	 * constructor with initial specified value

@@ -77,6 +77,12 @@ public class ProductServiceImpl implements ProductService {
 
 	// =================================================================================
 
+	@Override
+	public Product searchUniqueWithParams(ProductSearchParameters params)
+			throws Exception {
+		throw new Exception("Un-implemented");
+	}
+
 	@Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
 	@Override
 	public List<Product> searchWithParams(ProductSearchParameters params) {

@@ -12,11 +12,11 @@
 			<c:forEach var="fInstitution" items="${fInstitutions }" varStatus="status">
 				<tr id="${fInstitution.id }">
 					<c:if test="${not empty nameOfItemOnPage}">
-						<td><sysTags:rowcheckbox nameOfItemOnPage="${nameOfItemOnPage}" id="${fInstitution.id }" />
-						</td>
+						<td><sysTags:rowcheckbox nameOfItemOnPage="${nameOfItemOnPage}" id="${fInstitution.id }" /></td>
 					</c:if>
 					<td>${status.count }</td>
 					<td>${fInstitution.name }</td>
+					<td class="longtext-td">${fInstitution.description }</td>
 					<td>${fInstitution.address }</td>
 					<td>${fn:length(fInstitution.documents) } documents: <c:if
 							test="${not empty fInstitution.documents  && fn:length(fInstitution.documents) > 0}"

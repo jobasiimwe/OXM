@@ -7,26 +7,23 @@
 
 
 <div style="margin: 5px; width: 100%;">
-	<oxmBreadcrambs:cpanel startingBreadcramb="true" />
-	<oxmDistrictBreadcrambs:districts />
-	<oxmDistrictBreadcrambs:counties district="${subCounty.county.district }" />
-	<oxmDistrictBreadcrambs:subcounties county="${subCounty.county }" />
-	<oxmDistrictBreadcrambs:parishes subCounty="${subCounty }" />
-	form
+	<oxmBreadcrambs:district name="parishes" district="${subCounty.county.district }" county="${subCounty.county }"
+		subCounty="${subCounty }"
+	/>
 </div>
 
 <div id="buttonStrip">
 	<div class="contextual">
-		<a id="lnkAddParish" class="uiButton" href="${baseUrl }/parish/add/${subCounty.id }">Add</a>
-		<a id="lnkEditParish" class="uiButton" href="${baseUrl }/parish/edit/">Edit</a>
-		<a id="lnkDeleteParish" class="uiButton" href="${baseUrl }/parish/add/${subCounty.id }/">Delete</a>
-		<a id="lnkParishVillages" class="uiButton" href="${baseUrl }/village/view/">Villages</a>
+		<sysTags:addeditdeletebuttons url="parish" name="Parish" parentId="${subCounty.id }" child1="Villages"
+			child1Url="village"
+		/>
+
 	</div>
 	<div style="clear: both"></div>
 </div>
 <div>
 	<sysTags:name-of-item-on-page name="Parish" />
-	<table class="recordTable list" width="100%" cellpadding="0" cellspacing="0">
+	<table class="recordTable list">
 		<thead>
 			<tr>
 				<th><input type="checkbox" name="cbxSelectAllItems" id="cbxSelectAllItems" /></th>

@@ -3,22 +3,11 @@
 
 <%@ taglib prefix="oxmBreadcrambs" tagdir="/WEB-INF/tags/breadcramblinks"%>
 
-<style>
-form#concept input[type="text"] {
-	width: 70%;
-}
+<div style="margin: 5px; width: 100%;">
+	<oxmBreadcrambs:cpanel name="products" isForm="true" />
+</div>
 
-#conceptcategorylist span {
-	display: inline-block;
-	width: 50%;
-}
-</style>
 <div>
-	<div style="margin: 5px; width: 100%;">
-		<oxmBreadcrambs:cpanel startingBreadcramb="true" />
-		<oxmBreadcrambs:products />
-		form
-	</div>
 
 	<form:form action="${baseUrl }/product/save/" commandName="product">
 
@@ -26,7 +15,9 @@ form#concept input[type="text"] {
 		<div class="splitcontentleft">
 			<div class="box tabular">
 				<p>
-					<label>Name <span class="required">*</span>
+					<label>
+						Name
+						<span class="required">*</span>
 					</label>
 					<form:input path="name" cssClass="uiTextbox" />
 				</p>
@@ -42,11 +33,13 @@ form#concept input[type="text"] {
 					</form:select>
 				</p>
 				<p>
-					<label>Units of Measure <span class="required">*</span>
+					<label>
+						Units of Measure
+						<span class="required">*</span>
 					</label>
 
-					<form:checkboxes id="unitsOfMeasure" items="${unitsOfMeasure }" path="unitsOfMeasure"
-						itemValue="id" itemLabel="name"
+					<form:checkboxes id="unitsOfMeasure" items="${unitsOfMeasure }" path="unitsOfMeasure" itemValue="id"
+						itemLabel="name"
 					/>
 				</p>
 			</div>

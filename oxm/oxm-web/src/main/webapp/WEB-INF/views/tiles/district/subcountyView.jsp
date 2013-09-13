@@ -7,19 +7,14 @@
 <%@ taglib prefix="oxmDistrictBreadcrambs" tagdir="/WEB-INF/tags/breadcramblinks/districts"%>
 
 <div style="margin: 5px; width: 100%;">
-	<oxmBreadcrambs:cpanel startingBreadcramb="true" />
-	<oxmDistrictBreadcrambs:districts />
-	<oxmDistrictBreadcrambs:counties district="${county.district }" />
-	<oxmDistrictBreadcrambs:subcounties county="${county }" />
-	Sub Counties
+	<oxmBreadcrambs:district name="subcounties" district="${county.district }" county="${county }" />
 </div>
 
 <div id="buttonStrip">
 	<div class="contextual">
-		<a id="lnkAddSubCounty" class="uiButton" href="${baseUrl }/subcounty/add/${county.id }">Add</a>
-		<a id="lnkEditSubCounty" class="uiButton" href="${baseUrl }/subcounty/edit/">Edit</a>
-		<a id="lnkDeleteSubCounty" class="uiButton" href="${baseUrl }/subcounty/delete/${county.id }/">Delete</a>
-		<a id="lnkSubCountyParishes" class="uiButton" href="${baseUrl }/parish/view/">Parishes</a>
+		<sysTags:addeditdeletebuttons url="subcounty" name="Sub-County" parentId="${county.id }" child1="Parishes"
+			child1Url="parish"
+		/>
 	</div>
 	<div style="clear: both"></div>
 </div>
@@ -28,7 +23,7 @@
 
 	<sysTags:name-of-item-on-page name="SubCounty" />
 
-	<table class="recordTable list" width="100%" cellpadding="0" cellspacing="0">
+	<table class="recordTable list">
 		<thead>
 			<tr>
 				<th><input type="checkbox" name="cbxSelectAllItems" id="cbxSelectAllItems" /></th>
@@ -41,8 +36,7 @@
 			<c:if test="${not empty subcounties  && fn:length(subcounties) > 0}">
 				<c:forEach var="subcounty" items="${subcounties }" varStatus="status">
 					<tr id="${subcounty.id }">
-						<td><sysTags:rowcheckbox nameOfItemOnPage="${nameOfItemOnPage}" id="${subcounty.id }" />
-						</td>
+						<td><sysTags:rowcheckbox nameOfItemOnPage="${nameOfItemOnPage}" id="${subcounty.id }" /></td>
 						<td>${status.count }</td>
 						<td>${subcounty.name }</td>
 						<td>${subcounty.parishesString }</td>

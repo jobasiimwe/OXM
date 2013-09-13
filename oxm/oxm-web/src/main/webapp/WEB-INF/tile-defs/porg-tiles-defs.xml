@@ -39,12 +39,12 @@
 		<put-attribute name="body" type="template" value="/WEB-INF/views/tiles/producerorg/committee/member/form.jsp" />
 	</definition>
 	
-	<definition name="pOrgDocumentView" extends="viewProducerOrg">
-		<put-attribute name="body" type="template" value="/WEB-INF/views/tiles/producerorg/document/view.jsp" />
+	<definition name="pOrgDocView" extends="viewProducerOrg">
+		<put-attribute name="body" type="template" value="/WEB-INF/views/tiles/producerorg/docs/view.jsp" />
 	</definition>
 	
-	<definition name="pOrgDocumentForm" extends="viewProducerOrg">
-		<put-attribute name="body" type="template" value="/WEB-INF/views/tiles/producerorg/document/form.jsp" />
+	<definition name="pOrgDocForm" extends="viewProducerOrg">
+		<put-attribute name="body" type="template" value="/WEB-INF/views/tiles/producerorg/docs/form.jsp" />
 	</definition>
 	
 	<definition name="pOrgStaffView" extends="viewProducerOrg">

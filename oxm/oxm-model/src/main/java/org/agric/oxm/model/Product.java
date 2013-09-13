@@ -39,7 +39,7 @@ public class Product extends BaseData implements Comparable<Product> {
 	public void generateDefaultProduct(Crop crop) {
 		this.setCrop(crop);
 		this.setName(crop.getName());
-		this.setDescription(crop.getName() + " default product");
+		this.setDescription(crop.getName() + " (default product)");
 		this.setUnitsOfMeasure(new ArrayList<Concept>());
 
 		for (Concept c : crop.getUnitsOfMeasure())

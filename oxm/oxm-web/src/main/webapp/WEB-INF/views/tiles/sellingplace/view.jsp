@@ -6,15 +6,12 @@
 <%@ taglib prefix="oxmBreadcrambs" tagdir="/WEB-INF/tags/breadcramblinks"%>
 
 <div style="margin: 5px; width: 100%;">
-	<oxmBreadcrambs:cpanel startingBreadcramb="true" />
-	<oxmBreadcrambs:sellingplaces />
+	<oxmBreadcrambs:cpanel name="sellingplaces" />
 </div>
 
 <div id="buttonStrip">
 	<div class="contextual" style="float: left;">
-		<a id="lnkAddSellingPlace" class="uiButton" href="${baseUrl }/sellingplace/add/">Add</a>
-		<a id="lnkEditSellingPlace" class="uiButton" href="${baseUrl }/sellingplace/edit/">Edit</a>
-		<a id="lnkDeleteSellingPlace" class="uiButton" href="${baseUrl }/sellingplace/delete/">Delete</a>
+		<sysTags:addeditdeletebuttons url="sellingplace" name="${nameOfItemOnPage }" />
 	</div>
 	<div style="float: right;">
 		<%@ include file="/WEB-INF/views/navigation.jsp"%>
@@ -40,9 +37,7 @@
 				<c:when test="${not empty sellingplaces  && fn:length(sellingplaces) > 0}">
 					<c:forEach var="sellingplace" items="${sellingplaces }" varStatus="status">
 						<tr id="${sellingplace.id }">
-							<td><sysTags:rowcheckbox nameOfItemOnPage="${nameOfItemOnPage }"
-									id="${sellingplace.id }"
-								/></td>
+							<td><sysTags:rowcheckbox nameOfItemOnPage="${nameOfItemOnPage }" id="${sellingplace.id }" /></td>
 							<td>${status.count }</td>
 							<td>${sellingplace.name }</td>
 							<td>${sellingplace.district.name }</td>

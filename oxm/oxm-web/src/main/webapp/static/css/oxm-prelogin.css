@@ -25,7 +25,7 @@
 .login-body-dv .big-dv {
 	border: 1px solid #E5E5E5;
 	float: left;
-	height: 360px;
+	min-height: 360px;
 	margin-bottom: 10px;
 	width: 74%;
 }
@@ -35,7 +35,7 @@
 	width: 25%;
 	margin-right: 5px !important;
 	margin-bottom: 10px;
-	height: 360px;
+	min-height: 360px;
 	min-height: 10px;
 	float: left;
 	display: inline;

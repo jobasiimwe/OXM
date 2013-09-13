@@ -5,12 +5,9 @@
 <%@ taglib prefix='fn' uri='http://java.sun.com/jsp/jstl/functions'%>
 
 <%@ taglib prefix="oxmBreadcrambs" tagdir="/WEB-INF/tags/breadcramblinks"%>
-<%@ taglib prefix="oxmDistrictBreadcrambs" tagdir="/WEB-INF/tags/breadcramblinks/districts"%>
 
 <div style="margin: 5px; width: 100%;">
-	<oxmBreadcrambs:cpanel startingBreadcramb="true" />
-	<oxmDistrictBreadcrambs:districts />
-	form
+	<oxmBreadcrambs:district name="districts" isForm="true" />
 </div>
 
 <div>

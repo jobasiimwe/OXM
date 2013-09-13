@@ -5,8 +5,7 @@
 <%@ taglib prefix="oxmProducerOrgBreadcrambs" tagdir="/WEB-INF/tags/breadcramblinks/producerorg"%>
 
 <div style="margin: 5px; width: 100%;">
-	<oxmBreadcrambs:cpanel startingBreadcramb="true" />
-	<oxmProducerOrgBreadcrambs:producerorgs />
+	<oxmBreadcrambs:cpanel name="porgs" isForm="true" />
 </div>
 
 <div>

@@ -6,17 +6,25 @@
 <div>
 	<div class="left_menu">
 
-		<a title="Prices" href="${baseUrl }/price/view/admin/false/page/1">
-			<span class="left_menu_lnk"><span class="smallicon price-icon"></span><span
-				style="padding-left: 10px;"
-			>Prices</span></span>
+		<a title="Prices" href="${baseUrl }/price/view/admin/false">
+			<span class="left_menu_lnk">
+				<span class="smallicon price-icon"></span>
+				<span style="padding-left: 10px;">Prices</span>
+			</span>
 		</a>
-		<a title="Buyers and Sellers forum to advertise and order for produce or farm inputs"
+		<a href="${baseUrl }/blog/view/false">
+			<span class="left_menu_lnk">
+				<span class="smallicon blog-icon"></span>
+				<span style="padding-left: 10px;">Blog</span>
+			</span>
+		</a>
+		<a style="display: none;" title="Buyers and Sellers forum to advertise and order for produce or farm inputs"
 			href="${baseUrl }/post/view"
 		>
-			<span class="left_menu_lnk"><span class="smallicon forum-icon"></span><span
-				style="padding-left: 10px;"
-			>Forum (Buy/Sell)</span> </span>
+			<span class="left_menu_lnk">
+				<span class="smallicon forum-icon"></span>
+				<span style="padding-left: 10px;">Forum (Buy/Sell)</span>
+			</span>
 		</a>
 
 	</div>

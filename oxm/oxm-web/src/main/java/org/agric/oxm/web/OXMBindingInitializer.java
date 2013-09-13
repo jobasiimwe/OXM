@@ -3,6 +3,8 @@ package org.agric.oxm.web;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import org.agric.oxm.model.Blog;
+import org.agric.oxm.model.BlogComment;
 import org.agric.oxm.model.Committee;
 import org.agric.oxm.model.CommitteeMember;
 import org.agric.oxm.model.Concept;
@@ -19,11 +21,14 @@ import org.agric.oxm.model.ProducerOrg;
 import org.agric.oxm.model.Product;
 import org.agric.oxm.model.Publication;
 import org.agric.oxm.model.Role;
+import org.agric.oxm.model.Season;
 import org.agric.oxm.model.SellingPlace;
 import org.agric.oxm.model.StaffMember;
 import org.agric.oxm.model.SubCounty;
 import org.agric.oxm.model.User;
 import org.agric.oxm.model.Village;
+import org.agric.oxm.web.propertyeditors.BlogCommentPropertyEditor;
+import org.agric.oxm.web.propertyeditors.BlogPropertyEditor;
 import org.agric.oxm.web.propertyeditors.CommitteeMemberPropertyEditor;
 import org.agric.oxm.web.propertyeditors.CommitteePropertyEditor;
 import org.agric.oxm.web.propertyeditors.ConceptCategoryPropertyEditor;
@@ -41,6 +46,7 @@ import org.agric.oxm.web.propertyeditors.ProducerOrgPropertyEditor;
 import org.agric.oxm.web.propertyeditors.ProductPropertyEditor;
 import org.agric.oxm.web.propertyeditors.PublicationPropertyEditor;
 import org.agric.oxm.web.propertyeditors.RolePropertyEditor;
+import org.agric.oxm.web.propertyeditors.SeasonPropertyEditor;
 import org.agric.oxm.web.propertyeditors.SellingPlacePropertyEditor;
 import org.agric.oxm.web.propertyeditors.StaffMemberpropertyEditor;
 import org.agric.oxm.web.propertyeditors.SubCountyPropertyEditor;
@@ -97,8 +103,10 @@ public class OXMBindingInitializer implements WebBindingInitializer {
 
 	@Autowired
 	private PositionPropertyEditor positionPropertyEditor;
+
 	@Autowired
 	private CommitteePropertyEditor committeePropertyEditor;
+
 	@Autowired
 	private CommitteeMemberPropertyEditor committeeMemberPropertyEditor;
 
@@ -113,6 +121,15 @@ public class OXMBindingInitializer implements WebBindingInitializer {
 
 	@Autowired
 	private ProductPropertyEditor productPropertyEditor;
+
+	@Autowired
+	private SeasonPropertyEditor seasonPropertyEditor;
+
+	@Autowired
+	private BlogPropertyEditor blogPropertyEditor;
+
+	@Autowired
+	private BlogCommentPropertyEditor blogCommentPropertyEditor;
 
 	@Override
 	public void initBinder(WebDataBinder binder, WebRequest request) {
@@ -138,6 +155,7 @@ public class OXMBindingInitializer implements WebBindingInitializer {
 				producerOrgPropertyEditor);
 		binder.registerCustomEditor(Position.class, positionPropertyEditor);
 		binder.registerCustomEditor(Committee.class, committeePropertyEditor);
+
 		binder.registerCustomEditor(CommitteeMember.class,
 				committeeMemberPropertyEditor);
 		binder.registerCustomEditor(StaffMember.class,
@@ -146,5 +164,12 @@ public class OXMBindingInitializer implements WebBindingInitializer {
 				financialInstitutionPropertyEditor);
 		binder.registerCustomEditor(County.class, countyPropertyEditor);
 		binder.registerCustomEditor(Product.class, productPropertyEditor);
+
+		binder.registerCustomEditor(Season.class, seasonPropertyEditor);
+
+		binder.registerCustomEditor(Blog.class, blogPropertyEditor);
+		binder.registerCustomEditor(BlogComment.class,
+				blogCommentPropertyEditor);
 	}
+
 }

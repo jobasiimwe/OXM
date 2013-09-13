@@ -5,14 +5,9 @@
 
 
 <%@ taglib prefix="oxmBreadcrambs" tagdir="/WEB-INF/tags/breadcramblinks"%>
-<%@ taglib prefix="oxmDistrictBreadcrambs" tagdir="/WEB-INF/tags/breadcramblinks/districts"%>
 
 <div style="margin: 5px; width: 100%;">
-	<oxmBreadcrambs:cpanel startingBreadcramb="true" />
-	<oxmDistrictBreadcrambs:districts />
-	<oxmDistrictBreadcrambs:counties district="${county.district }" />
-	<oxmDistrictBreadcrambs:subcounties county="${county }" />
-	form
+	<oxmBreadcrambs:district name="subcounties" district="${county.district }" county="${county }" isForm="true" />
 </div>
 
 <div>

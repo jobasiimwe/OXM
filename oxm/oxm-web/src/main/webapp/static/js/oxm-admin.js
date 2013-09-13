@@ -8,22 +8,7 @@ $(document)
 					/**
 					 * single item functions
 					 */
-					$(
-							"#lnkEditPOrg, #lnkPOrgDetails, #lnkPOrgMembers, #lnkPOrgDocs, "// pOrg
-									+ " #lnkPOrgStaff, #lnkPOrgCommittee, "
-									+ " #lnkEditPOrgCommittee, #lnkEditPOrgMember, "
-									+ " #lnkEditDistrict, #lnkDistrictCounties,"// district
-									+ " #lnkEditCounty,#lnkCountySubCounties,#lnkEditSubCounty,#lnkSubCountyParishes,"// county-subCounty
-									+ "  #lnkEditParish, #lnkParishVillages, #lnkEditVillage,"// parish-village
-									+ " #lnkEditPosition, #lnkPositionHolders,"
-									+ " #lnkEditfInstitution, #lnkfInstitutionDocuments, "
-									+ " #lnkEditFInstitutionDoc, "
-									+ " #lnkEditSeason,  #lnkEditSellingPlace,  "
-									+ " #lnkEditCrop, #lnkCropDetails, #lnkEditPrice, "
-									+ " #lnkEditProduct,"
-									+ " #lnkEditRole, #lnkEditUser, #lnkEditConcept, "
-									+ " #lnkEditPOrgCommittee, #lnkPOrgCommittees, #lnkEditPOrgCommitteeMember, "
-									+ " #lnkEditPOrgStaff, ").click(
+					$("a[id^='lnkEdit']," + "a[id^='lnkChild']").click(
 							function() {
 								return singleItemAction($(this).attr('id'), $(
 										"#nameOfItemOnPage").attr("value"));
@@ -32,22 +17,36 @@ $(document)
 					/**
 					 * multiple item functions
 					 */
-					$(
-							"#lnkDeletePOrg, #lnkDeletePOrgMember, #lnkDeletePOrgDocs, "
-									+ " #lnkDeletePOrgStaff, #lnkDeletePOrgCommittee, "
-									+ " #lnkDeleteDistrict, #lnkDeleteSubCounty," // district
-									+ " #lnkDeleteParish, #lnkDeleteVillage, "
-									+ " #lnkDeletePOrg, #lnkDeletePosition, "
-									+ " #lnkDeletefInstitution, #lnkDeleteFInstitutionDoc, "
-									+ " #lnkDeleteSeason, #lnkDeleteCrop, #lnkDeleteProduct,"
-									+ " #lnkDeletePrice, "
-									+ " #lnkDeleteSellingPlace, #lnkDeleteRole, #lnkDeleteUser, "
-									+ " #lnkDeleteConcept,"
-									+ " #lnkDeletePOrgCommittee, #lnkDeletePOrgCommitteeMember,"
-									+ " #lnkDeletePOrgStaff, ").click(
+					$("a[id^='lnkDelete'],").click(
 							function() {
 								return multipleItemAction($(this).attr('id'),
 										$("#nameOfItemOnPage").attr("value"));
+							});
+
+					/**
+					 * multiple item functions
+					 */
+					$("a[id^='deleteBtn'],").click(
+							function() {
+								return multipleItemAction($(this).attr('id'),
+										$("#nameOfItemOnPage").attr("value"));
+							});
+
+					/**
+					 * single item functions
+					 */
+					$(
+							" #lnkPOrgDetails, #lnkPOrgMembers, #lnkPOrgDocs, "// pOrg
+									+ " #lnkPOrgStaff, #lnkPOrgCommittee, "
+									+ " #lnkDistrictCounties,"// district
+									+ " #lnkCountySubCounties,#lnkSubCountyParishes,"// county-subCounty
+									+ "  #lnkParishVillages,"// parish-village
+									+ " #lnkPositionHolders,"
+									+ " #lnkCropDetails, "
+									+ " #lnkPOrgCommittees, ").click(
+							function() {
+								return singleItemAction($(this).attr('id'), $(
+										"#nameOfItemOnPage").attr("value"));
 							});
 
 					/**
@@ -252,4 +251,21 @@ $(document)
 						var id = $(this).attr('id');
 						checkLimitedLengthField(id)
 					});
+
+					showLongResponseText();
+
+					function showLongResponseText() {
+						if ($('#longResponseText').length) {
+							// var text1 = $('#longResponseText').text();
+							// if (!isSystemBlank(text1))
+							// alert(text1);
+
+							var text = $('#longResponseText').text().trim();
+
+							if (!isSystemBlank(text))
+								alert(text);
+
+							// $(".blog-text").html(text);
+						}
+					}
 				});

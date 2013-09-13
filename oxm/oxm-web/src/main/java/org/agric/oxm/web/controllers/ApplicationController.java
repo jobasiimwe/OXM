@@ -5,7 +5,6 @@ import java.io.IOException;
 import javax.servlet.http.HttpServletResponse;
 
 import org.agric.oxm.model.Document;
-import org.agric.oxm.model.exception.SessionExpiredException;
 import org.agric.oxm.server.ConceptCategoryAnnotation;
 import org.agric.oxm.server.DefaultConceptCategories;
 import org.agric.oxm.server.security.PermissionConstants;
@@ -39,37 +38,51 @@ public class ApplicationController {
 	@Autowired
 	private DocumentService documentService;
 
+	@Autowired
+	private PreLoginController preLoginController;
+
 	private Logger log = LoggerFactory.getLogger(this.getClass());
 
 	@RequestMapping(value = { "/", "index.jsp" })
-	public ModelAndView welcomeHandler(ModelMap modelMap)
-			throws SessionExpiredException {
-		WebConstants.loadLoggedInUserProfile(OXMSecurityUtil.getLoggedInUser(),
-				modelMap);
+	public ModelAndView welcomeHandler(ModelMap modelMap) {
+		try {
 
-		return priceController.view(modelMap, OXMSecurityUtil.getLoggedInUser()
-				.hasAdministrativePrivileges());
-		// return new ModelAndView("dashboard", model);
+			WebConstants.loadLoggedInUserProfile(
+					OXMSecurityUtil.getLoggedInUser(), modelMap);
+
+			return priceController.view(modelMap, OXMSecurityUtil
+					.getLoggedInUser().hasAdministrativePrivileges());
+		} catch (Exception e) {
+			log.error("Error", e);
+			return loginHandler(modelMap);
+		}
 	}
 
 	@RequestMapping("/ServiceLogin")
 	public ModelAndView loginHandler(ModelMap modelMap) {
-		return new ModelAndView("login");
+		return preLoginController.viewBlogHandler(modelMap);
+		// return new ModelAndView("login");
 	}
 
 	@RequestMapping("/ServiceLoginFailure")
-	public ModelAndView loginFailureHander(ModelMap model) {
-		model.put("loginErrorMessage", "username OR password is incorrect");
-		return new ModelAndView("login", model);
+	public ModelAndView loginFailureHander(ModelMap modelMap) {
+		modelMap.put("loginErrorMessage", "username OR password is incorrect");
+
+		return preLoginController.viewBlogHandler(modelMap);
+		// return new ModelAndView("login", model);
 	}
 
 	@Secured({ PermissionConstants.PERM_ADMIN })
 	@RequestMapping("/cpanel")
-	public ModelAndView controlpanelHander(ModelMap model)
-			throws SessionExpiredException {
-		WebConstants.loadLoggedInUserProfile(OXMSecurityUtil.getLoggedInUser(),
-				model);
-		return new ModelAndView("cpanel", model);
+	public ModelAndView controlpanelHander(ModelMap modelMap) {
+		try {
+			WebConstants.loadLoggedInUserProfile(
+					OXMSecurityUtil.getLoggedInUser(), modelMap);
+			return new ModelAndView("cpanel", modelMap);
+		} catch (Exception e) {
+			log.error("Error", e);
+			return welcomeHandler(modelMap);
+		}
 	}
 
 	public void addConceptsToModelMap(ModelMap modelMap,

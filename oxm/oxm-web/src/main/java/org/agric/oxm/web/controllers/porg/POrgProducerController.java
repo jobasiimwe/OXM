@@ -25,7 +25,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
-@RequestMapping("")
+@RequestMapping("porgproducers")
 public class POrgProducerController {
 
 	@Autowired
@@ -43,9 +43,9 @@ public class POrgProducerController {
 	private Logger log = LoggerFactory.getLogger(this.getClass());
 
 	@Secured({ PermissionConstants.VIEW_PROD_ORG })
-	@RequestMapping(value = "/producers/{pOrgId}", method = RequestMethod.GET)
-	public ModelAndView viewProducerOrgMembersHandler(
-			@PathVariable("pOrgId") String pOrgId, ModelMap modelMap) {
+	@RequestMapping(value = "{pOrgId}", method = RequestMethod.GET)
+	public ModelAndView view(@PathVariable("pOrgId") String pOrgId,
+			ModelMap modelMap) {
 
 		ProducerOrg pOrg = producerOrgService
 				.getProducerOrganisationById(pOrgId);
@@ -58,7 +58,7 @@ public class POrgProducerController {
 	}
 
 	@Secured({ PermissionConstants.ADD_PRODUCER })
-	@RequestMapping(value = "/producers/add/{pOrgId}", method = RequestMethod.GET)
+	@RequestMapping(value = "add/{pOrgId}", method = RequestMethod.GET)
 	public ModelAndView addProducerOrgProducersHandler(
 			@PathVariable("pOrgId") String pOrgId, ModelMap modelMap) {
 
@@ -79,20 +79,19 @@ public class POrgProducerController {
 			modelMap.put(WebConstants.MODEL_ATTRIBUTE_ERROR_MESSAGE,
 					e.getMessage());
 		}
-		return porgController.viewProducerOrgHandler(modelMap);
+		return porgController.view(modelMap);
 	}
 
 	@Secured({ PermissionConstants.ADD_PRODUCER })
-	@RequestMapping(value = "/producers/edit/{pOrgId}/{producerId}", method = RequestMethod.GET)
-	public ModelAndView editProducerOrgProducersHandler(
-			@PathVariable("pOrgId") String pOrgId,
-			@PathVariable("producerId") String producerId, ModelMap modelMap) {
+	@RequestMapping(value = "edit/{producerId}", method = RequestMethod.GET)
+	public ModelAndView edit(@PathVariable("producerId") String producerId,
+			ModelMap modelMap) {
 
-		ProducerOrg pOrg = producerOrgService
-				.getProducerOrganisationById(pOrgId);
-		modelMap.put("pOrg", pOrg);
 		User producer = userService.getUserById(producerId);
 		modelMap.put("producer", producer);
+
+		ProducerOrg pOrg = producer.getProducerOrg();
+		modelMap.put("pOrg", pOrg);
 
 		modelMap.put(WebConstants.CONTENT_HEADER,
 				"Edit Producer " + producer.getName() + " in Producer org. "
@@ -103,8 +102,8 @@ public class POrgProducerController {
 		return new ModelAndView("formPOrgProducer", modelMap);
 	}
 
-	@RequestMapping(method = RequestMethod.POST, value = "producers/save")
-	public ModelAndView saveProducerOrgProducersHandler(
+	@RequestMapping(method = RequestMethod.POST, value = "save")
+	public ModelAndView save(
 			@ModelAttribute("producer") User producer,
 			@RequestParam(value = "userPic", required = false) MultipartFile userPic,
 			ModelMap modelMap) throws SessionExpiredException {
@@ -151,10 +150,9 @@ public class POrgProducerController {
 		}
 
 		if (producer.getProducerOrg() != null)
-			return viewProducerOrgMembersHandler(producer.getProducerOrg()
-					.getId(), modelMap);
+			return view(producer.getProducerOrg().getId(), modelMap);
 		else
-			return porgController.viewProducerOrgHandler(modelMap);
+			return porgController.view(modelMap);
 	}
 
 }

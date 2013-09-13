@@ -6,6 +6,7 @@ import org.agric.oxm.model.Role;
 import org.agric.oxm.model.User;
 import org.agric.oxm.model.enums.RecordStatus;
 import org.agric.oxm.model.exception.OperationFailedException;
+import org.agric.oxm.model.exception.SessionExpiredException;
 import org.agric.oxm.model.exception.ValidationException;
 import org.agric.oxm.model.search.UserSearchParameters;
 import org.agric.oxm.server.OXMConstants;
@@ -285,4 +286,7 @@ public class UserServiceImpl implements UserService {
 		return search;
 	}
 
+	public static User getLoggedInUser() throws SessionExpiredException  {
+		return OXMSecurityUtil.getLoggedInUser();
+	}
 }

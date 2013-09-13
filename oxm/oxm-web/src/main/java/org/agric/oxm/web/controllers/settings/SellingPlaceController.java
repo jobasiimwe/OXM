@@ -29,6 +29,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
+@RequestMapping("sellingplace")
 public class SellingPlaceController {
 
 	@Autowired
@@ -43,8 +44,8 @@ public class SellingPlaceController {
 	private Logger log = LoggerFactory.getLogger(this.getClass());
 
 	@Secured({ PermissionConstants.VIEW_SELLING_PLACE })
-	@RequestMapping(value = "/sellingplace/view/", method = RequestMethod.GET)
-	public ModelAndView viewSellingPlaceHandler(ModelMap model) {
+	@RequestMapping(value = "view", method = RequestMethod.GET)
+	public ModelAndView view(ModelMap model) {
 		List<SellingPlace> sellingPrices = sellingPlaceService
 				.getSellingPlaces();
 		try {
@@ -60,8 +61,8 @@ public class SellingPlaceController {
 	}
 
 	@Secured({ PermissionConstants.ADD_SELLING_PLACE })
-	@RequestMapping(value = "/sellingplace/add/", method = RequestMethod.GET)
-	public ModelAndView addSellingPlaceHandler(ModelMap model)
+	@RequestMapping(value = "add", method = RequestMethod.GET)
+	public ModelAndView add(ModelMap model)
 			throws SessionExpiredException {
 		WebConstants.loadLoggedInUserProfile(OXMSecurityUtil.getLoggedInUser(),
 				model);
@@ -72,8 +73,8 @@ public class SellingPlaceController {
 	}
 
 	@Secured({ PermissionConstants.EDIT_SELLING_PLACE })
-	@RequestMapping(value = "/sellingplace/edit/{id}", method = RequestMethod.GET)
-	public ModelAndView editSellingPlaceHandler(ModelMap model,
+	@RequestMapping(value = "edit/{id}", method = RequestMethod.GET)
+	public ModelAndView edit(ModelMap model,
 			@PathVariable("id") String sPlaceId) throws SessionExpiredException {
 		WebConstants.loadLoggedInUserProfile(OXMSecurityUtil.getLoggedInUser(),
 				model);
@@ -88,13 +89,13 @@ public class SellingPlaceController {
 
 		model.put(WebConstants.MODEL_ATTRIBUTE_ERROR_MESSAGE,
 				"Invalid selling price id submitted");
-		return viewSellingPlaceHandler(model);
+		return view(model);
 
 	}
 
 	@Secured({ PermissionConstants.DELETE_SELLING_PLACE })
-	@RequestMapping(method = RequestMethod.GET, value = "/sellingplace/delete/{ids}")
-	public ModelAndView deleteSellingPlaceHandler(
+	@RequestMapping(method = RequestMethod.GET, value = "delete/{ids}")
+	public ModelAndView delete(
 			@PathVariable("ids") String ids, ModelMap modelMap) {
 
 		String[] sellingPlaceIdzToDelete = ids.split(",");
@@ -109,7 +110,7 @@ public class SellingPlaceController {
 					+ e.getMessage());
 		}
 
-		return viewSellingPlaceHandler(modelMap);
+		return view(modelMap);
 	}
 
 	private void prepareSellingPlaceModel(ModelMap model) {
@@ -136,8 +137,8 @@ public class SellingPlaceController {
 
 	@Secured({ PermissionConstants.ADD_SELLING_PLACE,
 			PermissionConstants.EDIT_SELLING_PLACE })
-	@RequestMapping(method = RequestMethod.POST, value = "/sellingplace/save/")
-	public ModelAndView saveSellingPlaceHandler(
+	@RequestMapping(method = RequestMethod.POST, value = "save")
+	public ModelAndView save(
 			@ModelAttribute("sellingplace") SellingPlace sellingPlace,
 			ModelMap model) throws SessionExpiredException {
 
@@ -166,6 +167,6 @@ public class SellingPlaceController {
 			prepareSellingPlaceModel(model);
 			return new ModelAndView("formSellingPlace", model);
 		}
-		return viewSellingPlaceHandler(model);
+		return view(model);
 	}
 }

@@ -157,25 +157,13 @@ public class PriceController {
 					new GenericCommandValue(params.getSellType().getId()));
 		}
 
-		if (params.getFromDate() != null) {
-			searchCommand.getPropertiesMap().put(
-					FROM_DATE,
-					new GenericCommandValue(GenericCommandValue.dateFormat
-							.format(params.getFromDate())));
-		}
+		searchCommand.checkAndPut(FROM_DATE, params.getFromDate());
+		searchCommand.checkAndPut(TO_DATE, params.getToDate());
 
-		if (params.getToDate() != null) {
-			searchCommand.getPropertiesMap().put(
-					TO_DATE,
-					new GenericCommandValue(GenericCommandValue.dateFormat
-							.format(params.getToDate())));
-		}
-
-		if (params.getFromDate() != null && params.getToDate() != null) {
+		if (params.getFromDate() != null && params.getToDate() != null)
 			if (params.getToDate().before(params.getFromDate()))
 				modelMap.put(WebConstants.MODEL_ATTRIBUTE_ERROR_MESSAGE,
 						"Error, 'to' date is before 'from' date");
-		}
 
 		searchCommand.getPropertiesMap().put(ADMIN_VIEW,
 				new GenericCommandValue(params.getAdminView().toString()));

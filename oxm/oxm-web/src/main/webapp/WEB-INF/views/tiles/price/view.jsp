@@ -6,20 +6,14 @@
 <%@ taglib prefix="sysTags" tagdir="/WEB-INF/tags"%>
 <%@ taglib prefix="oxmBreadcrambs" tagdir="/WEB-INF/tags/breadcramblinks"%>
 
-<c:if test="${not empty adminview and adminview }">
-	<div style="margin: 5px; width: 100%;">
-		<oxmBreadcrambs:cpanel startingBreadcramb="true" />
-		<oxmBreadcrambs:prices />
-	</div>
-</c:if>
+<oxmBreadcrambs:cpanel name="prices" />
+
 <jsp:include page="/WEB-INF/views/tiles/price/searchfields.jsp"></jsp:include>
 
 <div id="buttonStrip">
 	<c:if test="${not empty adminview and adminview }">
 		<div class="contextual" style="float: left;">
-			<a id="lnkAddPrice1" class="uiButton" href="${baseUrl }/price/add/">Add</a>
-			<a id="lnkEditPrice" class="uiButton" href="${baseUrl }/price/edit/">Edit</a>
-			<a id="lnkDeletePrice" class="uiButton" href="${baseUrl }/price/delete/">Delete</a>
+			<sysTags:addeditdeletebuttons url="price" name="Price" />
 		</div>
 	</c:if>
 	<div style="float: right;">

@@ -69,6 +69,8 @@ public class User extends BaseData implements Comparable<User> {
 	private User createdBy;
 	private Date dateCreated;
 
+	private List<Blog> blogs;
+
 	public User() {
 		super();
 	}
@@ -487,6 +489,15 @@ public class User extends BaseData implements Comparable<User> {
 			return producerOrg.getDistrictString();
 
 		return "";
+	}
+
+	@OneToMany(mappedBy = "createdBy", cascade = { CascadeType.ALL }, orphanRemoval = true)
+	public List<Blog> getBlogs() {
+		return blogs;
+	}
+
+	public void setBlogs(List<Blog> blogs) {
+		this.blogs = blogs;
 	}
 
 	// ===================================================================

@@ -13,6 +13,12 @@
 <%@ attribute type="java.lang.String" name="child2" required="false"%>
 <%@ attribute type="java.lang.String" name="child2Url" required="false"%>
 
+<%@ attribute type="java.lang.String" name="child3" required="false"%>
+<%@ attribute type="java.lang.String" name="child3Url" required="false"%>
+
+<%@ attribute type="java.lang.String" name="child4" required="false"%>
+<%@ attribute type="java.lang.String" name="child4Url" required="false"%>
+
 <c:choose>
 
 	<c:when test="${not empty parentId }">
@@ -28,10 +34,18 @@
 </c:choose>
 
 <c:if test="${not empty child1 && not empty child1Url }">
-	<a id="lnkChildren1Of${name }" href="${baseUrl}/${child1Url}/view/" class="uiButton">${child1 }</a>
+	<a id="lnkChild1Of${name }" href="${baseUrl}/${child1Url}/view/" class="uiButton">${child1 }</a>
 </c:if>
 
 <c:if test="${not empty child2 && not empty child2Url }">
-	<a id="lnkChildren2Of${name }" href="${baseUrl}/${child2Url}/view/" class="uiButton">${child2 }</a>
+	<a id="lnkChild2Of${name }" href="${baseUrl}/${child2Url}/view/" class="uiButton">${child2 }</a>
+</c:if>
+
+<c:if test="${not empty child3 && not empty child3Url }">
+	<a id="lnkChild3Of${name }" href="${baseUrl}/${child3Url}/view/" class="uiButton">${child3 }</a>
+</c:if>
+
+<c:if test="${not empty child4 && not empty child4Url }">
+	<a id="lnkChild4Of${name }" href="${baseUrl}/${child4Url}/view/" class="uiButton">${child4 }</a>
 </c:if>
 

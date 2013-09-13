@@ -11,6 +11,8 @@
 		<provider>org.hibernate.ejb.HibernatePersistence</provider>
 		<mapping-file>META-INF/orm.xml</mapping-file>
 
+		<class>org.agric.oxm.model.Blog</class>
+		<class>org.agric.oxm.model.BlogComment</class>
 		<class>org.agric.oxm.model.Comment</class>
 		<class>org.agric.oxm.model.Committee</class>
 		<class>org.agric.oxm.model.CommitteeMember</class>

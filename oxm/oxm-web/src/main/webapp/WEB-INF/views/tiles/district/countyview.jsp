@@ -7,19 +7,14 @@
 <%@ taglib prefix="oxmDistrictBreadcrambs" tagdir="/WEB-INF/tags/breadcramblinks/districts"%>
 
 <div style="margin: 5px; width: 100%;">
-	<oxmBreadcrambs:cpanel startingBreadcramb="true" />
-	<oxmDistrictBreadcrambs:districts />
-	<oxmDistrictBreadcrambs:counties district="${district }" />
-	Sub Counties
+	<oxmBreadcrambs:district name="counties" district="${district }" />
 </div>
 
 <div id="buttonStrip">
 	<div class="contextual">
-		<a id="lnkAddCounty" class="uiButton" href="${baseUrl }/county/add/${district.id }">Add</a>
-		<a id="lnkEditCounty" class="uiButton" href="${baseUrl }/county/edit/">Edit</a>
-		<a id="lnkDeleteCounty" class="uiButton" href="${baseUrl }/county/delete/${district.id }/">Delete</a>
-		<a id="lnkCountySubCounties" class="uiButton" href="${baseUrl }/subcounty/view/">Sub-Counties</a>
-	</div>
+
+		<sysTags:addeditdeletebuttons url="county" name="County" parentId="${district.id }" child1="Sub-County" child1Url="subcounty"/>
+			</div>
 	<div style="clear: both"></div>
 </div>
 

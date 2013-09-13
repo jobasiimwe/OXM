@@ -47,6 +47,11 @@ public final class WebConstants {
 	public static final String CONTENT_HEADER = "contentHeader";
 
 	/**
+	 * model attribute name for long-response-text
+	 */
+	public static final String LONG_RESPONSE_TEXT = "longResponseText";
+
+	/**
 	 * Request parameter name for the search query
 	 */
 	public static final String SEARCH_QUERY_REQUEST_PARAMETER_NAME = "query";

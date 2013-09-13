@@ -33,13 +33,13 @@ import org.agric.oxm.model.exception.OperationFailedException;
 import org.agric.oxm.model.exception.SessionExpiredException;
 import org.agric.oxm.model.exception.ValidationException;
 import org.agric.oxm.model.util.DistrictProducerImportData;
+import org.agric.oxm.model.util.MyDateUtil;
 import org.agric.oxm.server.security.PermissionConstants;
 import org.agric.oxm.server.security.util.OXMSecurityUtil;
 import org.agric.oxm.server.service.Adminservice;
 import org.agric.oxm.server.service.ProducerOrgService;
 import org.agric.oxm.server.service.RoleService;
 import org.agric.oxm.server.service.UserService;
-import org.agric.oxm.utils.MyDateUtil;
 import org.agric.oxm.utils.StringUtil;
 import org.agric.oxm.web.WebConstants;
 import org.agric.oxm.web.controllers.porg.POrgController;
@@ -273,7 +273,7 @@ public class ImportsController {
 				return districtController.viewDistrictHandler(modelMap);
 			if (districtProducerImportData.getImportItem().equals(
 					ImportItem.PRODUCER_ORGz))
-				return pOrgController.viewProducerOrgHandler(modelMap);
+				return pOrgController.view(modelMap);
 			if (districtProducerImportData.getImportItem().equals(
 					ImportItem.PRODUCERS))
 				return userController.viewUsersHandler(modelMap);

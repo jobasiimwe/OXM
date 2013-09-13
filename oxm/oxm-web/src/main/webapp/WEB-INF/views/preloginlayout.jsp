@@ -17,6 +17,8 @@
 
 <link type="text/css" rel="stylesheet" href="${baseUrl}/static/css/custom-theme/jquery-ui-1.8.15.custom.css" />
 <link type="text/css" rel="stylesheet" href="${baseUrl}/static/css/oxm.css" />
+<link type="text/css" rel="stylesheet" href="${baseUrl }/static/css/oxm-images.css" />
+
 <link type="text/css" rel="stylesheet" href="${baseUrl}/static/css/oxm-prelogin.css" />
 
 <link type="text/css" rel="stylesheet" href="${baseUrl}/static/css/bjqs.css">
@@ -52,16 +54,22 @@
 					<img src="${baseUrl}/static/images/img/banner03.jpg" title="Automatically generated caption">
 				</li> -->
 				<li>
-					<img src="${baseUrl}/static/images/img/pics/kinengere.jpg" title="Drying simsim">
+					<img src="${baseUrl}/static/images/img/banners/learning.png" title="Learning together">
 				</li>
 				<li>
-					<img src="${baseUrl}/static/images/img/pics/oxen-training.jpg" title="Oxen Training">
+					<img src="${baseUrl}/static/images/img/banners/planting.png" title="Planting">
 				</li>
 				<li>
-					<img src="${baseUrl}/static/images/img/pics/simsim.jpg" title="Simsim">
+					<img src="${baseUrl}/static/images/img/banners/weeding.png" title="Weeding">
 				</li>
 				<li>
-					<img src="${baseUrl}/static/images/img/pics/ugandamap.png" title="UGANDA">
+					<img src="${baseUrl}/static/images/img/banners/produce.png" title="Produce">
+				</li>
+				<li>
+					<img src="${baseUrl}/static/images/img/banners/produce2.png" title="Produce">
+				</li>
+				<li>
+					<img src="${baseUrl}/static/images/img/banners/produce2.png" title="Produce">
 				</li>
 			</ul>
 		</div>
@@ -81,43 +89,7 @@
 
 		<div class="small-big-container">
 			<div class="small-dv">
-				<div class="left_menu">
-
-					<a href="${baseUrl }/">
-						<span class="left_menu_lnk">
-							<span class="smallicon home-icon"></span>
-							<span style="padding-left: 10px;">Home</span>
-						</span>
-					</a>
-					<a href="${baseUrl }/prelogin/prices">
-						<span class="left_menu_lnk">
-							<span class="smallicon price-icon"></span>
-							<span style="padding-left: 10px;">Latest Prices</span>
-						</span>
-					</a>
-
-					<a href="${baseUrl }/prelogin/sellingplaces">
-						<span class="left_menu_lnk">
-							<span class="smallicon sellingplace-icon"></span>
-							<span style="padding-left: 10px;">Market</span>
-						</span>
-					</a>
-					<a title="" href="${baseUrl }/prelogin/finstitutions">
-						<span class="left_menu_lnk">
-							<span class="smallicon fInstitution-icon"></span>
-							<span style="padding-left: 10px;">Financial Services</span>
-						</span>
-					</a>
-					<a title="" href="${baseUrl }/prelogin/crops">
-						<span class="left_menu_lnk">
-							<span class="smallicon crop-icon"></span>
-							<span style="padding-left: 10px;">Crops</span>
-						</span>
-					</a>
-
-				</div>
-
-
+				<jsp:include page="/WEB-INF/views/tiles/prelogin/menu.jsp"></jsp:include>
 			</div>
 			<div class="big-dv">
 				<tiles:insertAttribute name="body" />

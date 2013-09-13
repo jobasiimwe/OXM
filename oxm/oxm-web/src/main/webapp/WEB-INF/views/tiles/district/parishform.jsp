@@ -3,18 +3,12 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix='fn' uri='http://java.sun.com/jsp/jstl/functions'%>
 
-
-
 <%@ taglib prefix="oxmBreadcrambs" tagdir="/WEB-INF/tags/breadcramblinks"%>
-<%@ taglib prefix="oxmDistrictBreadcrambs" tagdir="/WEB-INF/tags/breadcramblinks/districts"%>
 
 <div style="margin: 5px; width: 100%;">
-	<oxmBreadcrambs:cpanel startingBreadcramb="true" />
-	<oxmDistrictBreadcrambs:districts />
-	<oxmDistrictBreadcrambs:counties district="${subCounty.county.district }" />
-	<oxmDistrictBreadcrambs:subcounties county="${subCounty.county }" />
-	<oxmDistrictBreadcrambs:parishes subCounty="${subCounty }" />
-	form
+	<oxmBreadcrambs:district name="parishes" district="${subCounty.county.district }" county="${subCounty.county }"
+		subCounty="${subCounty }" isForm="true"
+	/>
 </div>
 
 
@@ -25,7 +19,9 @@
 		<div>
 			<div class="box tabular">
 				<p>
-					<label>Parish Name <span class="required">*</span>
+					<label>
+						Parish Name
+						<span class="required">*</span>
 					</label>
 					<form:input id="txtName" path="name" cssClass="uiTextbox" />
 				</p>

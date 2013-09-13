@@ -242,15 +242,13 @@ public class UserController {
 	public UserSearchParameters extractParams(GenericCommand searchCommand) {
 		UserSearchParameters params = new UserSearchParameters();
 
-		if (StringUtils.isNotBlank(searchCommand.getValue(NAME_OR_USERNAME))) {
+		if (StringUtils.isNotBlank(searchCommand.getValue(NAME_OR_USERNAME)))
 			params.setNameOrUserName(searchCommand.getValue(NAME_OR_USERNAME));
-		}
 
-		if (StringUtils.isNotBlank(searchCommand.getValue(PRODUCER_ORG))) {
+		if (StringUtils.isNotBlank(searchCommand.getValue(PRODUCER_ORG)))
 			params.setProducerOrg(producerOrgService
 					.getProducerOrganisationById(searchCommand
 							.getValue(PRODUCER_ORG)));
-		}
 
 		if (StringUtils.isNotBlank(searchCommand.getValue(COMMITTEE))) {
 			params.setCommitteeId(searchCommand.getValue(COMMITTEE));
@@ -261,62 +259,57 @@ public class UserController {
 					.getValue(COMMITTEE_MEMBER));
 		}
 
-		if (StringUtils.isNotBlank(searchCommand.getValue(ROLE))) {
+		if (StringUtils.isNotBlank(searchCommand.getValue(ROLE)))
 			params.setRole(roleService.getRoleById(searchCommand.getValue(ROLE)));
-		}
 
-		if (StringUtils.isNotBlank(searchCommand.getValue(GENDER))) {
+		if (StringUtils.isNotBlank(searchCommand.getValue(GENDER)))
 			params.setGender(Gender.valueOf(searchCommand.getValue(GENDER)));
-		}
-		if (StringUtils.isNotBlank(searchCommand.getValue(HOUSE_HOLD_CATEGORY))) {
+
+		if (StringUtils.isNotBlank(searchCommand.getValue(HOUSE_HOLD_CATEGORY)))
 			params.setHouseHoldCategory(HouseHoldCategory.valueOf(searchCommand
 					.getValue(HOUSE_HOLD_CATEGORY)));
-		}
 
-		if (StringUtils.isNotBlank(searchCommand.getValue(LAND_SIZE1))) {
+		if (StringUtils.isNotBlank(searchCommand.getValue(LAND_SIZE1)))
 			params.setLandSize1(Double.parseDouble(searchCommand
 					.getValue(LAND_SIZE1)));
-		}
-		if (StringUtils.isNotBlank(searchCommand.getValue(LAND_SIZE2))) {
+
+		if (StringUtils.isNotBlank(searchCommand.getValue(LAND_SIZE2)))
 			params.setLandSize2(Double.parseDouble(searchCommand
 					.getValue(LAND_SIZE2)));
-		}
 
 		if (StringUtils
-				.isNotBlank(searchCommand.getValue(LAND_SIZE_CONDITION1))) {
+				.isNotBlank(searchCommand.getValue(LAND_SIZE_CONDITION1)))
 			params.setLandSizeCondition1(Condition.valueOf(searchCommand
 					.getValue(LAND_SIZE_CONDITION1)));
-		}
+
 		if (StringUtils
-				.isNotBlank(searchCommand.getValue(LAND_SIZE_CONDITION2))) {
+				.isNotBlank(searchCommand.getValue(LAND_SIZE_CONDITION2)))
 			params.setLandSizeCondition2(Condition.valueOf(searchCommand
 					.getValue(LAND_SIZE_CONDITION2)));
-		}
 
-		if (StringUtils.isNotBlank(searchCommand.getValue(DISTRICT))) {
+		if (StringUtils.isNotBlank(searchCommand.getValue(DISTRICT)))
 			params.setDistrict(adminService.getDistrictById(searchCommand
 					.getValue(DISTRICT)));
-		}
-		if (StringUtils.isNotBlank(searchCommand.getValue(COUNTY))) {
+
+		if (StringUtils.isNotBlank(searchCommand.getValue(COUNTY)))
 			params.setCounty(adminService.getCountyById(searchCommand
 					.getValue(COUNTY)));
-		}
-		if (StringUtils.isNotBlank(searchCommand.getValue(SUBCOUNTY))) {
+
+		if (StringUtils.isNotBlank(searchCommand.getValue(SUBCOUNTY)))
 			params.setSubCounty(adminService.getSubCountyById(searchCommand
 					.getValue(SUBCOUNTY)));
-		}
-		if (StringUtils.isNotBlank(searchCommand.getValue(PARISH))) {
+
+		if (StringUtils.isNotBlank(searchCommand.getValue(PARISH)))
 			params.setParish(adminService.getParishById(searchCommand
 					.getValue(PARISH)));
-		}
-		if (StringUtils.isNotBlank(searchCommand.getValue(VILLAGE))) {
+
+		if (StringUtils.isNotBlank(searchCommand.getValue(VILLAGE)))
 			params.setVillage(adminService.getVillageById(searchCommand
 					.getValue(VILLAGE)));
-		}
 
-		if (StringUtils.isNotBlank(searchCommand.getValue(SMS_TEXT))) {
+		if (StringUtils.isNotBlank(searchCommand.getValue(SMS_TEXT)))
 			params.setSmsText(searchCommand.getValue(SMS_TEXT));
-		}
+
 		return params;
 	}
 

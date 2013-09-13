@@ -4,24 +4,16 @@
 
 <%@ taglib prefix="sysTags" tagdir="/WEB-INF/tags"%>
 <%@ taglib prefix="oxmBreadcrambs" tagdir="/WEB-INF/tags/breadcramblinks"%>
-<%@ taglib prefix="oxmDistrictBreadcrambs" tagdir="/WEB-INF/tags/breadcramblinks/districts"%>
-
 
 <div style="margin: 5px; width: 100%;">
-	<oxmBreadcrambs:cpanel startingBreadcramb="true" />
-	<oxmDistrictBreadcrambs:districts />
-	<oxmDistrictBreadcrambs:counties district="${parish.subCounty.county.district }" />
-	<oxmDistrictBreadcrambs:subcounties county="${parish.subCounty.county }" />
-	<oxmDistrictBreadcrambs:parishes subCounty="${parish.subCounty }" />
-	<oxmDistrictBreadcrambs:villages parish="${parish }" />
-	Villages
+	<oxmBreadcrambs:district name="villages" district="${parish.subCounty.county.district }"
+		county="${parish.subCounty.county }" subCounty="${parish.subCounty }" parish="${parish }"
+	/>
 </div>
 
 <div id="buttonStrip">
 	<div class="contextual">
-		<a id="lnkAddVillage" class="uiButton" href="${baseUrl }/village/add/${parish.id }">Add</a>
-		<a id="lnkEditVillage" class="uiButton" href="${baseUrl }/village/edit/">Edit</a>
-		<a id="lnkDeleteVillage" class="uiButton" href="${baseUrl }/village/delete/${parish.id }/">Delete</a>
+		<sysTags:addeditdeletebuttons url="village" name="Village" parentId="${parish.id }" />
 	</div>
 
 	<div style="clear: both"></div>

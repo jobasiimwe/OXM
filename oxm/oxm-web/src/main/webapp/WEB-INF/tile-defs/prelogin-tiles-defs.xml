@@ -5,6 +5,14 @@
 	<definition name="preloginlayout" template="/WEB-INF/views/preloginlayout.jsp">
 		<put-attribute name="pageTitle" type="template" value="/WEB-INF/views/tiles/contentheader.jsp" />
 		<put-attribute name="title" type="string" value="Acholi Farmers Portal" />
+		<put-attribute name="body" type="template" value="/WEB-INF/views/tiles/prelogin/blog.jsp" />
+		<put-attribute name="footer" type="template" value="/WEB-INF/views/tiles/footer.jsp" />
+	</definition>
+	
+		
+	<definition name="preloginlayout2" template="/WEB-INF/views/preloginlayout.jsp">
+		<put-attribute name="pageTitle" type="template" value="/WEB-INF/views/tiles/contentheader.jsp" />
+		<put-attribute name="title" type="string" value="Acholi Farmers Portal" />
 		<put-attribute name="body" type="template" value="/WEB-INF/views/tiles/prelogin/body.jsp" />
 		<put-attribute name="footer" type="template" value="/WEB-INF/views/tiles/footer.jsp" />
 	</definition>
@@ -27,10 +35,16 @@
 		<put-attribute name="body" type="template" value="/WEB-INF/views/tiles/prelogin/finstitution.jsp" />
 	</definition>
 	
-	<definition name="preloginErrorPage" extends="preloginlayout" >
+	<definition name="preloginSeasonView" extends="preloginlayout" >
+		<put-attribute name="body" type="template" value="/WEB-INF/views/tiles/prelogin/season.jsp" />
 	</definition>
 
+	<definition name="preloginBlogView" extends="preloginlayout" >
+		<put-attribute name="body" type="template" value="/WEB-INF/views/tiles/prelogin/blog.jsp" />
+	</definition>
 	
+	<definition name="preloginErrorPage" extends="preloginlayout" >
+	</definition>
 	
 	
 	<definition name="annoymouslayout" template="/WEB-INF/views/annoymouslayout.jsp">

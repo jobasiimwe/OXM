@@ -5,7 +5,6 @@ import java.util.List;
 
 import org.agric.oxm.model.User;
 import org.agric.oxm.model.enums.Gender;
-import org.agric.oxm.model.enums.MaritalStatus;
 import org.agric.oxm.model.search.UserSearchParameters;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

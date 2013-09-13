@@ -100,7 +100,7 @@ public class POrgController {
 
 	@Secured({ PermissionConstants.VIEW_PROD_ORG })
 	@RequestMapping(value = "/view", method = RequestMethod.GET)
-	public ModelAndView viewProducerOrgHandler(ModelMap modelMap) {
+	public ModelAndView view(ModelMap modelMap) {
 		try {
 			WebConstants.loadLoggedInUserProfile(
 					OXMSecurityUtil.getLoggedInUser(), modelMap);
@@ -260,8 +260,7 @@ public class POrgController {
 
 	@Secured({ PermissionConstants.ADD_PROD_ORG })
 	@RequestMapping(value = "add", method = RequestMethod.GET)
-	public ModelAndView addProducerOrgHandler(ModelMap modelMap)
-			throws SessionExpiredException {
+	public ModelAndView add(ModelMap modelMap) throws SessionExpiredException {
 		WebConstants.loadLoggedInUserProfile(OXMSecurityUtil.getLoggedInUser(),
 				modelMap);
 		try {
@@ -274,7 +273,7 @@ public class POrgController {
 			log.error("Error", e);
 			modelMap.put(WebConstants.MODEL_ATTRIBUTE_ERROR_MESSAGE,
 					e.getMessage());
-			return viewProducerOrgHandler(modelMap);
+			return view(modelMap);
 		}
 
 	}
@@ -306,7 +305,7 @@ public class POrgController {
 
 	@Secured({ PermissionConstants.EDIT_PROD_ORG })
 	@RequestMapping(value = "edit/{id}", method = RequestMethod.GET)
-	public ModelAndView editProducerOrgHandler(ModelMap modelMap,
+	public ModelAndView edit(ModelMap modelMap,
 			@PathVariable("id") String pOrgId) throws SessionExpiredException {
 		WebConstants.loadLoggedInUserProfile(OXMSecurityUtil.getLoggedInUser(),
 				modelMap);
@@ -321,7 +320,7 @@ public class POrgController {
 		} else {
 			modelMap.put(WebConstants.MODEL_ATTRIBUTE_ERROR_MESSAGE,
 					"Invalid production organization id submitted");
-			return viewProducerOrgHandler(modelMap);
+			return view(modelMap);
 		}
 
 		prepareProducerOrgFormModel(pOrg, modelMap);
@@ -331,9 +330,8 @@ public class POrgController {
 
 	@Secured({ PermissionConstants.DELETE_PROD_ORG })
 	@RequestMapping(method = RequestMethod.GET, value = "delete/{idz}")
-	public ModelAndView deleteProducerOrgHandler(
-			@PathVariable("idz") String idz, ModelMap modelMap)
-			throws SessionExpiredException {
+	public ModelAndView delete(@PathVariable("idz") String idz,
+			ModelMap modelMap) throws SessionExpiredException {
 
 		String[] ids = idz.split(",");
 		try {
@@ -344,15 +342,14 @@ public class POrgController {
 					"no producer organisation(s) supplied for deleting");
 		}
 
-		return viewProducerOrgHandler(modelMap);
+		return view(modelMap);
 	}
 
 	@Secured({ PermissionConstants.ADD_PROD_ORG,
 			PermissionConstants.EDIT_PROD_ORG })
 	@RequestMapping(method = RequestMethod.POST, value = "save")
-	public ModelAndView saveProducerOrgHandler(
-			@ModelAttribute("pOrganization") ProducerOrg pOrg, ModelMap modelMap)
-			throws SessionExpiredException {
+	public ModelAndView save(@ModelAttribute("pOrganization") ProducerOrg pOrg,
+			ModelMap modelMap) throws SessionExpiredException {
 
 		ProducerOrg existingPOrg = pOrg;
 
@@ -389,7 +386,7 @@ public class POrgController {
 			return new ModelAndView("formProducerOrg", modelMap);
 
 		}
-		return viewProducerOrgHandler(modelMap);
+		return view(modelMap);
 	}
 
 	// ==============================================================
@@ -426,14 +423,6 @@ public class POrgController {
 			@PathVariable("pOrgId") String pOrgId, ModelMap modelMap) {
 		prepareProducerOrgViewsModel(pOrgId, "Staff of - ", modelMap);
 		return new ModelAndView("pOrgStaffView", modelMap);
-	}
-
-	@Secured({ PermissionConstants.VIEW_COMMITTEE__DETAILS })
-	@RequestMapping(value = "/docs/{pOrgId}", method = RequestMethod.GET)
-	public ModelAndView viewProducerOrgDocumentHandler(
-			@PathVariable("pOrgId") String pOrgId, ModelMap modelMap) {
-		prepareProducerOrgViewsModel(pOrgId, "Documents of - ", modelMap);
-		return new ModelAndView("pOrgDocumentsView", modelMap);
 	}
 
 }

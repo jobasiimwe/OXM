@@ -5,6 +5,7 @@ import java.util.List;
 import org.agric.oxm.model.Season;
 import org.agric.oxm.model.exception.SessionExpiredException;
 import org.agric.oxm.model.exception.ValidationException;
+import org.agric.oxm.model.util.MyDateUtil;
 import org.agric.oxm.server.security.PermissionConstants;
 import org.agric.oxm.server.service.SeasonService;
 import org.agric.oxm.web.WebConstants;
@@ -22,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
+@RequestMapping("season")
 public class SeasonController {
 
 	@Autowired
@@ -30,9 +32,9 @@ public class SeasonController {
 	private Logger log = LoggerFactory.getLogger(this.getClass());
 
 	@Secured({ PermissionConstants.VIEW_SEASONS })
-	@RequestMapping(value = "/season/view/", method = RequestMethod.GET)
-	public ModelAndView viewSeasonHandler(ModelMap modelMap) {
-		List<Season> seasons = seasonService.getSeasons();
+	@RequestMapping(value = "view", method = RequestMethod.GET)
+	public ModelAndView view(ModelMap modelMap) {
+		List<Season> seasons = seasonService.getAll();
 		modelMap.put("seasons", seasons);
 		return new ModelAndView("viewSeason", modelMap);
 
@@ -40,42 +42,44 @@ public class SeasonController {
 
 	@Secured({ PermissionConstants.VIEW_SEASONS,
 			PermissionConstants.MANAGE_SEASONS })
-	@RequestMapping(value = "/season/add/", method = RequestMethod.GET)
-	public ModelAndView addSeasonHandler(ModelMap modelMap)
-			throws SessionExpiredException {
+	@RequestMapping(value = "add", method = RequestMethod.GET)
+	public ModelAndView add(ModelMap modelMap) throws SessionExpiredException {
 		modelMap.put("season", new Season());
-		return new ModelAndView("formSeason", modelMap);
 
+		modelMap.put("weathers", Season.Weather.values());
+		return new ModelAndView("formSeason", modelMap);
 	}
 
 	@Secured({ PermissionConstants.VIEW_SEASONS,
 			PermissionConstants.MANAGE_SEASONS })
-	@RequestMapping(value = "/season/edit/{id}", method = RequestMethod.GET)
-	public ModelAndView editSeasonHandler(ModelMap modelMap,
+	@RequestMapping(value = "edit/{id}", method = RequestMethod.GET)
+	public ModelAndView edit(ModelMap modelMap,
 			@PathVariable("id") String seasonId) {
 
-		Season season = seasonService.getSeasonById(seasonId);
+		Season season = seasonService.getById(seasonId);
 
 		if (season != null) {
 			modelMap.put("season", season);
 			return new ModelAndView("formSeason", modelMap);
 		}
 
+		modelMap.put("weathers", Season.Weather.values());
+
 		modelMap.put(WebConstants.MODEL_ATTRIBUTE_ERROR_MESSAGE,
 				"Invalid Season id submitted");
-		return viewSeasonHandler(modelMap);
+		return view(modelMap);
 
 	}
 
 	@Secured({ PermissionConstants.VIEW_SEASONS,
 			PermissionConstants.MANAGE_SEASONS })
-	@RequestMapping(method = RequestMethod.GET, value = "/season/delete/{ids}")
-	public ModelAndView deleteSeasonHandler(@PathVariable("ids") String ids,
+	@RequestMapping(method = RequestMethod.GET, value = "delete/{ids}")
+	public ModelAndView delete(@PathVariable("ids") String ids,
 			ModelMap modelMap) {
 
 		String[] seasonIdzToDelete = ids.split(",");
 		try {
-			seasonService.deleteSeasonByIds(seasonIdzToDelete);
+			seasonService.deleteByIds(seasonIdzToDelete);
 			modelMap.put(WebConstants.MODEL_ATTRIBUTE_SYSTEM_MESSAGE,
 					"Season(s)  deleted successfully");
 		} catch (Exception e) {
@@ -84,29 +88,37 @@ public class SeasonController {
 					+ e.getMessage());
 		}
 
-		return viewSeasonHandler(modelMap);
+		return view(modelMap);
 	}
 
 	@Secured({ PermissionConstants.VIEW_SEASONS,
 			PermissionConstants.MANAGE_SEASONS })
-	@RequestMapping(method = RequestMethod.POST, value = "/season/save/")
-	public ModelAndView saveSeasonHandler(
-			@ModelAttribute("season") Season season, ModelMap modelMap)
-			throws SessionExpiredException {
-
-		Season existingSeason = season;
-
-		if (StringUtils.isNotEmpty(season.getId())) {
-			existingSeason = seasonService.getSeasonById(season.getId());
-			existingSeason.setEndDate(season.getEndDate());
-			existingSeason.setStartDate(season.getStartDate());
-		} else {
-			existingSeason.setId(null);
-		}
+	@RequestMapping(method = RequestMethod.POST, value = "save")
+	public ModelAndView save(@ModelAttribute("season") Season season,
+			ModelMap modelMap) throws SessionExpiredException {
 
 		try {
-			seasonService.validate(existingSeason);
-			seasonService.save(existingSeason);
+			seasonService.validate(season);
+
+			season.setName(MyDateUtil.getDateRangeString(season.getStartDate(),
+					season.getEndDate()));
+
+			Season existing = season;
+
+			if (StringUtils.isNotEmpty(season.getId())) {
+
+				existing = seasonService.getById(season.getId());
+
+				existing.setEndDate(season.getEndDate());
+				existing.setStartDate(season.getStartDate());
+				existing.setName(season.getName());
+				existing.setWeather(season.getWeather());
+				existing.setWeatherDescription(season.getWeatherDescription());
+			} else {
+				existing.setId(null);
+			}
+
+			seasonService.save(existing);
 			modelMap.put(WebConstants.MODEL_ATTRIBUTE_SYSTEM_MESSAGE,
 					"Season saved sucessfully.");
 		} catch (ValidationException e) {
@@ -115,6 +127,6 @@ public class SeasonController {
 			modelMap.put("season", season);
 			return new ModelAndView("formSeason", modelMap);
 		}
-		return viewSeasonHandler(modelMap);
+		return view(modelMap);
 	}
 }

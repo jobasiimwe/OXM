@@ -17,6 +17,8 @@
 </title>
 <link type="text/css" rel="stylesheet" href="${baseUrl }/static/css/custom-theme/jquery-ui-1.8.15.custom.css" />
 <link type="text/css" rel="stylesheet" href="${baseUrl }/static/css/oxm.css" />
+<link type="text/css" rel="stylesheet" href="${baseUrl }/static/css/oxm-images.css" />
+
 <link rel="icon" type="image/png" href="${baseUrl }//static/images/oxm-footer-lg.png" />
 
 <script type="text/javascript" src="${baseUrl }/static/js/jquery-1.6.2.min.js"></script>

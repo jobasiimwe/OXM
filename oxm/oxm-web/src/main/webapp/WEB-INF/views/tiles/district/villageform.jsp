@@ -8,16 +8,11 @@ form#district input[type="text"] {
 </style>
 
 <%@ taglib prefix="oxmBreadcrambs" tagdir="/WEB-INF/tags/breadcramblinks"%>
-<%@ taglib prefix="oxmDistrictBreadcrambs" tagdir="/WEB-INF/tags/breadcramblinks/districts"%>
 
 <div style="margin: 5px; width: 100%;">
-	<oxmBreadcrambs:cpanel startingBreadcramb="true" />
-	<oxmDistrictBreadcrambs:districts />
-	<oxmDistrictBreadcrambs:counties district="${parish.subCounty.county.district }" />
-	<oxmDistrictBreadcrambs:subcounties county="${parish.subCounty.county }" />
-	<oxmDistrictBreadcrambs:parishes subCounty="${parish.subCounty }" />
-	<oxmDistrictBreadcrambs:villages parish="${parish }" />
-	form
+	<oxmBreadcrambs:district name="villages" district="${parish.subCounty.county.district }"
+		county="${parish.subCounty.county }" subCounty="${parish.subCounty }" parish="${parish }" isForm="true"
+	/>
 </div>
 
 
@@ -28,7 +23,9 @@ form#district input[type="text"] {
 		<div>
 			<div class="box tabular">
 				<p>
-					<label>Village Name <span class="required">*</span>
+					<label>
+						Village Name
+						<span class="required">*</span>
 					</label>
 					<form:input id="txtName" path="name" cssClass="uiTextbox" />
 				</p>

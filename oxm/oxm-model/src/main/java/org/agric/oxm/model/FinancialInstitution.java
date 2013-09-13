@@ -17,8 +17,8 @@ public class FinancialInstitution extends BaseData implements
 		Comparable<FinancialInstitution> {
 
 	private String name;
-
 	private String address;
+	private String description;
 
 	private List<Document> documents = Collections.emptyList();
 
@@ -35,6 +35,15 @@ public class FinancialInstitution extends BaseData implements
 		this.name = name;
 	}
 
+	@Column(name = "description", nullable = true, length = 32768)
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
 	@Column(name = "address", nullable = false)
 	public String getAddress() {
 		return address;
@@ -48,8 +57,8 @@ public class FinancialInstitution extends BaseData implements
 		this.documents = documents;
 	}
 
-	public void addDocument(Document member) {
-		if (member == null) {
+	public void addDocument(Document doc) {
+		if (doc == null) {
 			return;
 		}
 
@@ -57,31 +66,32 @@ public class FinancialInstitution extends BaseData implements
 			this.setDocuments(new ArrayList<Document>());
 		}
 
-		this.getDocuments().add(member);
+		this.getDocuments().add(doc);
 	}
 
-	public void removemDocument(Document member) {
-		if (member == null || this.getDocuments() == null) {
+	public void removeDocument(Document doc) {
+		if (doc == null || this.getDocuments() == null) {
 			return;
 		}
 
-		this.getDocuments().remove(member);
+		this.getDocuments().remove(doc);
 	}
 
 	public void removeDocumentsByIds(String[] idzToDelete) {
 		for (String id : idzToDelete) {
-			Document member = new Document(id);
+			Document d = new Document(id);
 
-			if (this.getDocuments().contains(member)) {
-				getDocuments().remove(member);
+			if (this.getDocuments().contains(d)) {
+				getDocuments().remove(d);
 			}
 		}
 	}
+
 	@OneToMany
 	@JoinTable(name = "finstitution_documents", joinColumns = @JoinColumn(name = "finstitution_id"), inverseJoinColumns = @JoinColumn(name = "document_id"))
 	public List<Document> getDocuments() {
-		//if (this.documents == null)
-		//	return new ArrayList<Document>();
+		// if (this.documents == null)
+		// return new ArrayList<Document>();
 
 		return this.documents;
 	}

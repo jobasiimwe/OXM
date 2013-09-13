@@ -8,10 +8,7 @@
 <%@ taglib prefix="oxmDistrictBreadcrambs" tagdir="/WEB-INF/tags/breadcramblinks/districts"%>
 
 <div style="margin: 5px; width: 100%;">
-	<oxmBreadcrambs:cpanel startingBreadcramb="true" />
-	<oxmDistrictBreadcrambs:districts />
-	<oxmDistrictBreadcrambs:counties district="${district }" />
-	form
+	<oxmBreadcrambs:district name="counties" district="${district }" isForm="true" />
 </div>
 
 <div>
@@ -20,7 +17,9 @@
 		<form:hidden path="district" />
 		<div class="box tabular">
 			<p>
-				<label>County Name <span class="required">*</span>
+				<label>
+					County Name
+					<span class="required">*</span>
 				</label>
 				<form:input id="txtName" path="name" cssClass="uiTextbox" />
 			</p>

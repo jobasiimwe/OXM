@@ -7,27 +7,22 @@
 
 
 <div style="margin: 5px; width: 100%;">
-	<oxmBreadcrambs:cpanel startingBreadcramb="true" />
-	<oxmProducerOrgBreadcrambs:producerorgs />
+	<oxmBreadcrambs:cpanel name="porgs" />
 </div>
 
 <jsp:include page="/WEB-INF/views/tiles/producerorg/searchfields.jsp"></jsp:include>
 
 <div id="buttonStrip">
 	<div class="contextual" style="float: left;">
-		<a id="lnkAddPOrg" class="uiButton" href="${baseUrl }/porg/add/">Add</a>
-		<a id="lnkEditPOrg" class="uiButton" href="${baseUrl }/porg/edit/">Edit</a>
-		<a id="lnkDeletePOrg" class="uiButton" href="${baseUrl }/porg/delete/">Delete</a>
-		<a id="lnkPOrgDetails" class="uiButton" href="${baseUrl }/porg/details/">Details</a>
+		<sysTags:addeditdeletebuttons url="porg" name="POrg" child1="Members" child1Url="porgproducers" child2="Documents"
+			child2Url="porgdocs" child3="Committees" child3Url="porg-committee" child4="Staff" child4Url="porg-staff"
+		/>
+
+		<a id="lnkPOrgDetails" style="display: none;" class="uiButton" href="${baseUrl }/porg/details/">Details</a>
 		&emsp;&emsp;&emsp;
-		<a id="lnkPOrgMembers" class="uiButton" href="${baseUrl }/porg/producers/">Members</a>
-		<a id="lnkPOrgDocs" class="uiButton" href="${baseUrl }/porg/docs/">Documents</a>
-		<a id="lnkPOrgStaff" class="uiButton" href="${baseUrl }/porg-staff/">Staff</a>
-		<a id="lnkPOrgCommittees" class="uiButton" href="${baseUrl }/porg-committee/">Committees</a>
-		<a id="lnkImportDistricts" class="uiButton spacedElement" href="${baseUrl }/import/producerorgs">Import
-			Producer Orgs.</a>
-		<a id="lnkImportDistricts" class="uiButton" href="${baseUrl }/import/producers">Import
-			Producers</a>
+		<a id="lnkImportDistricts" class="uiButton spacedElement" href="${baseUrl }/import/producerorgs">Import Producer
+			Orgs.</a>
+		<a id="lnkImportDistricts" class="uiButton" href="${baseUrl }/import/producers">Import Producers</a>
 	</div>
 	<div style="float: right;">
 		<%@ include file="/WEB-INF/views/navigation.jsp"%>

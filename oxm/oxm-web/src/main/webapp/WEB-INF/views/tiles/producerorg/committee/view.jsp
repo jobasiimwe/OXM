@@ -1,31 +1,21 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix='fn' uri='http://java.sun.com/jsp/jstl/functions'%>
 
 <%@ taglib prefix="sysTags" tagdir="/WEB-INF/tags"%>
-<%@ taglib prefix="oxmBreadcrambs"
-	tagdir="/WEB-INF/tags/breadcramblinks"%>
-<%@ taglib prefix="oxmProducerOrgBreadcrambs"
-	tagdir="/WEB-INF/tags/breadcramblinks/producerorg"%>
+<%@ taglib prefix="oxmBreadcrambs" tagdir="/WEB-INF/tags/breadcramblinks"%>
 
 <div style="margin: 5px; width: 100%;">
-	<oxmBreadcrambs:cpanel startingBreadcramb="true" />
-	<oxmProducerOrgBreadcrambs:producerorgs />
-	<oxmProducerOrgBreadcrambs:details producerOrg="${pOrg }" />
-	<oxmProducerOrgBreadcrambs:committees producerOrg="${pOrg }" />
+	<oxmBreadcrambs:cpanel name="porgcommittees" producerOrg="${pOrg }" />
 </div>
 
 <div id="buttonStrip">
 	<div class="contextual" style="float: left;">
-		<a id="lnkAddPOrgCommitte" class="uiButton"
-			href="${baseUrl }/porg/committee/add/${pOrg.id }">Add</a> <a
-			id="lnkEditPOrgCommittee" class="uiButton"
-			href="${baseUrl }/porg/committee/edit/">Edit</a> <a
-			id="lnkDeletePOrgCommittee" class="uiButton"
-			href="${baseUrl }/porg/committee/delete/${pOrg.id }/">Delete</a>
-		&emsp;&emsp;<a id="lnkPOrgCommitteeMembers" class="uiButton"
-			href="${baseUrl }/porg-committee/member/">Members</a>
+		<a id="lnkAddPOrgCommitte" class="uiButton" href="${baseUrl }/porg/committee/add/${pOrg.id }">Add</a>
+		<a id="lnkEditPOrgCommittee" class="uiButton" href="${baseUrl }/porg/committee/edit/">Edit</a>
+		<a id="lnkDeletePOrgCommittee" class="uiButton" href="${baseUrl }/porg/committee/delete/${pOrg.id }/">Delete</a>
+		&emsp;&emsp;
+		<a id="lnkPOrgCommitteeMembers" class="uiButton" href="${baseUrl }/porg-committee/member/">Members</a>
 
 	</div>
 	<div style="float: right;">
@@ -40,8 +30,7 @@
 	<table class="recordTable">
 		<thead>
 			<tr>
-				<th><input type="checkbox" name="cbxSelectAllItems"
-					id="cbxSelectAllItems" /></th>
+				<th><input type="checkbox" name="cbxSelectAllItems" id="cbxSelectAllItems" /></th>
 				<th>No</th>
 				<th>Committee</th>
 				<th>No. of Members</th>
@@ -50,14 +39,10 @@
 		</thead>
 		<tbody>
 			<c:choose>
-				<c:when
-					test="${not empty pOrg.committees  && fn:length(pOrg.committees) > 0}">
-					<c:forEach var="committee" items="${pOrg.committees }"
-						varStatus="status">
+				<c:when test="${not empty pOrg.committees  && fn:length(pOrg.committees) > 0}">
+					<c:forEach var="committee" items="${pOrg.committees }" varStatus="status">
 						<tr id="${committee.id }">
-							<td><sysTags:rowcheckbox
-									nameOfItemOnPage="${nameOfItemOnPage}" id="${committee.id }" />
-							</td>
+							<td><sysTags:rowcheckbox nameOfItemOnPage="${nameOfItemOnPage}" id="${committee.id }" /></td>
 							<td>${status.count }</td>
 							<td>${committee.name }</td>
 							<td>${fn:length(committee.members) }</td>

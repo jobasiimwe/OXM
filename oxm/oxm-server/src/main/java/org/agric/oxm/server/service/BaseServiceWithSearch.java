@@ -15,6 +15,8 @@ public interface BaseServiceWithSearch<ModelObject, SearchParams> extends BaseSe
 
 	List<ModelObject> getAll();
 
+	ModelObject searchUniqueWithParams(SearchParams params) throws Exception;
+
 	List<ModelObject> searchWithParams(SearchParams params);
 
 	List<ModelObject> searchWithParams(SearchParams params, Integer pageNo);

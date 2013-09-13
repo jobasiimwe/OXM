@@ -6,11 +6,10 @@
 <%@ taglib prefix="oxmBreadcrambs" tagdir="/WEB-INF/tags/breadcramblinks"%>
 
 <%@ taglib prefix="sysTags" tagdir="/WEB-INF/tags"%>
-<%@ taglib prefix="oxmPreloginBreadcrambs" tagdir="/WEB-INF/tags/breadcramblinks/prelogin"%>
+<%@ taglib prefix="breadcrambs" tagdir="/WEB-INF/tags/breadcramblinks"%>
 
 <div style="margin: 5px; width: 100%; display: none;">
-	<oxmPreloginBreadcrambs:loginpage startingBreadcramb="true" />
-	<oxmPreloginBreadcrambs:sellingplaces />
+	<breadcrambs:prelogin name="sellingplaces" />
 </div>
 
 <h3>We track prices in the following markets:-</h3>

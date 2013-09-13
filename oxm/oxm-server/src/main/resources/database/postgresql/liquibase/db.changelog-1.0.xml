@@ -1201,4 +1201,83 @@
 			deferrable="false" initiallyDeferred="false" referencedColumnNames="id"
 			referencedTableName="parish" />
 	</changeSet>
+
+	<changeSet author="Job (generated)" id="1378782552113-1">
+        <addColumn tableName="financial_institution">
+            <column name="description" type="varchar(32768)"/>
+        </addColumn>
+    </changeSet>
+    
+    <!-- ===================Blog and Blog Comment -->
+    <changeSet author="Job (generated)" id="1378992039296-1">
+        <createTable tableName="blog">
+            <column name="id" type="varchar(255)">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="blogPK"/>
+            </column>
+            <column name="record_status" type="int4">
+                <constraints nullable="false"/>
+            </column>
+            <column name="date_created" type="datetime">
+                <constraints nullable="false"/>
+            </column>
+            <column name="draft" type="bool"/>
+            <column name="text" type="varchar(32768)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="title" type="varchar(255)"/>
+            <column name="created_by_id" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="Job (generated)" id="1378992039296-2">
+        <createTable tableName="blog_comment">
+            <column name="id" type="varchar(255)">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="blog_commentPK"/>
+            </column>
+            <column name="record_status" type="int4">
+                <constraints nullable="false"/>
+            </column>
+            <column name="date_created" type="datetime">
+                <constraints nullable="false"/>
+            </column>
+            <column name="moderated" type="bool"/>
+            <column name="moderation_comment" type="varchar(255)"/>
+            <column name="name" type="varchar(255)"/>
+            <column name="show" type="bool"/>
+            <column name="text" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="blog_id" type="varchar(255)"/>
+            <column name="created_by_id" type="varchar(255)"/>
+            <column name="parent_blogcomment_id" type="varchar(255)"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet author="Job (generated)" id="1378992039296-25">
+        <addForeignKeyConstraint baseColumnNames="created_by_id" baseTableName="blog" constraintName="FK2E2FA2E8C64E98" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="users"/>
+    </changeSet>
+    <changeSet author="Job (generated)" id="1378992039296-26">
+        <addForeignKeyConstraint baseColumnNames="blog_id" baseTableName="blog_comment" constraintName="FK1B1302C27320935B" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="blog"/>
+    </changeSet>
+    <changeSet author="Job (generated)" id="1378992039296-27">
+        <addForeignKeyConstraint baseColumnNames="created_by_id" baseTableName="blog_comment" constraintName="FK1B1302C2E8C64E98" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="users"/>
+    </changeSet>
+    <changeSet author="Job (generated)" id="1378992039296-28">
+        <addForeignKeyConstraint baseColumnNames="parent_blogcomment_id" baseTableName="blog_comment" constraintName="FK1B1302C26B0B2CAE" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="blog_comment"/>
+    </changeSet>
+
+	<!-- season weather changesets -->
+	
+	<changeSet author="Job (generated)" id="1379063850764-1">
+        <addColumn tableName="season">
+            <column name="weather" type="int4"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="Job (generated)" id="1379063850764-2">
+        <addColumn tableName="season">
+            <column name="weather_description" type="varchar(32768)"/>
+        </addColumn>
+    </changeSet>
+	
 </databaseChangeLog>

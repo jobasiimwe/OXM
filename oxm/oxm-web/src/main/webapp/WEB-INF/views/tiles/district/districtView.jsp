@@ -4,23 +4,17 @@
 
 <%@ taglib prefix="sysTags" tagdir="/WEB-INF/tags"%>
 <%@ taglib prefix="oxmBreadcrambs" tagdir="/WEB-INF/tags/breadcramblinks"%>
-<%@ taglib prefix="oxmDistrictBreadcrambs" tagdir="/WEB-INF/tags/breadcramblinks/districts"%>
 
 <div style="margin: 5px; width: 100%;">
-	<oxmBreadcrambs:cpanel startingBreadcramb="true" />
-	<oxmDistrictBreadcrambs:districts />
+	<oxmBreadcrambs:district name="districts" />
 </div>
 
 <div id="buttonStrip">
 	<div class="contextual">
-		<a id="lnkAddDistrict" class="uiButton" href="${baseUrl }/district/add/">Add</a>
-		<a id="lnkEditDistrict" class="uiButton" href="${baseUrl }/district/edit/">Edit</a>
-		<a id="lnkDeleteDistrict" class="redText uiButton" href="${baseUrl }/district/delete/">Delete</a>
-		<a id="lnkDistrictCounties" class="uiButton" href="${baseUrl }/county/view/">Counties</a>
-		<a id="lnkImportDistricts" class="uiButton spacedElement" href="${baseUrl }/import/districts">Import
-			Districts</a>
-		<a id="lnkImportDistricts" class="uiButton" href="${baseUrl }/import/producerorgs">Import
-			Producer Orgs.</a>
+		<sysTags:addeditdeletebuttons url="district" name="District" child1="Counties" child1Url="county" />
+
+		<a id="lnkImportDistricts" class="uiButton spacedElement" href="${baseUrl }/import/districts">Import Districts</a>
+		<a id="lnkImportDistricts" class="uiButton" href="${baseUrl }/import/producerorgs">Import Producer Orgs.</a>
 	</div>
 	<div style="float: right; display: none;">
 		<form method="post" action="${baseUrl }/district/search/" style="display: inline-block">
@@ -46,8 +40,7 @@
 				<c:when test="${not empty districts  && fn:length(districts) > 0}">
 					<c:forEach var="district" items="${districts }" varStatus="status">
 						<tr id="${district.id }">
-							<td><sysTags:rowcheckbox nameOfItemOnPage="${nameOfItemOnPage}" id="${district.id }" />
-							</td>
+							<td><sysTags:rowcheckbox nameOfItemOnPage="${nameOfItemOnPage}" id="${district.id }" /></td>
 							<td>${status.count }</td>
 							<td>${district.name }</td>
 							<td>${district.countiesString }</td>

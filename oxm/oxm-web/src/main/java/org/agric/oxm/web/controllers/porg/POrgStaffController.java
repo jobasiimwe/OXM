@@ -43,7 +43,7 @@ public class POrgStaffController {
 	private Logger log = LoggerFactory.getLogger(this.getClass());
 
 	@Secured({ PermissionConstants.VIEW_COMMITTEE__DETAILS })
-	@RequestMapping(value = "/{pOrgId}", method = RequestMethod.GET)
+	@RequestMapping(value = "view/{pOrgId}", method = RequestMethod.GET)
 	public ModelAndView viewPOrgStaffHandler(
 			@PathVariable("pOrgId") String pOrgId, ModelMap modelMap) {
 		producerOrgController.prepareProducerOrgViewsModel(pOrgId,
@@ -52,7 +52,7 @@ public class POrgStaffController {
 	}
 
 	@Secured({ PermissionConstants.VIEW_COMMITTEE__DETAILS })
-	@RequestMapping(value = "/add/{pOrgId}", method = RequestMethod.GET)
+	@RequestMapping(value = "add/{pOrgId}", method = RequestMethod.GET)
 	public ModelAndView addPOrgStaffMembers(
 			@PathVariable("pOrgId") String pOrgId, UserSearchParameters params,
 			ModelMap modelMap) {
@@ -86,7 +86,7 @@ public class POrgStaffController {
 	}
 
 	@Secured({ PermissionConstants.VIEW_COMMITTEE__DETAILS })
-	@RequestMapping(value = "/edit/{staffMemberId}", method = RequestMethod.GET)
+	@RequestMapping(value = "edit/{staffMemberId}", method = RequestMethod.GET)
 	public ModelAndView editPOrgStaffMembers(
 			@PathVariable("staffMemberId") String staffMemberId,
 			UserSearchParameters params, ModelMap modelMap) {
@@ -112,7 +112,7 @@ public class POrgStaffController {
 	}
 
 	@Secured({ PermissionConstants.VIEW_COMMITTEE__DETAILS })
-	@RequestMapping(value = "/member/search", method = RequestMethod.POST)
+	@RequestMapping(value = "member/search", method = RequestMethod.POST)
 	public ModelAndView searchPossibleStaffMembers(
 			@ModelAttribute("usersearch") GenericCommand searchCommand,
 			@RequestParam(value = "pageNo", required = false) Integer pageNo,
@@ -134,7 +134,7 @@ public class POrgStaffController {
 
 	@Secured({ PermissionConstants.ADD_PROD_ORG,
 			PermissionConstants.EDIT_PROD_ORG })
-	@RequestMapping(method = RequestMethod.POST, value = "/save")
+	@RequestMapping(method = RequestMethod.POST, value = "save")
 	public ModelAndView savePOrgStaffMemberHandler(
 			@ModelAttribute("staffMember") StaffMember staffMember,
 			ModelMap modelMap) throws SessionExpiredException {
@@ -183,7 +183,7 @@ public class POrgStaffController {
 	}
 
 	@Secured({ PermissionConstants.VIEW_COMMITTEE__DETAILS })
-	@RequestMapping(value = "/delete/{pOrgId}/{memberIds}", method = RequestMethod.GET)
+	@RequestMapping(value = "delete/{pOrgId}/{memberIds}", method = RequestMethod.GET)
 	public ModelAndView deletePOrgStaffMembers(
 			@PathVariable("pOrgId") String pOrgId,
 			@PathVariable("memberIds") String ids, ModelMap modelMap) {

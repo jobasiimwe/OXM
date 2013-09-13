@@ -2,34 +2,35 @@
 
 
 <div class="cpanel">
+
 	<div class="menu">
-		<a id="lnkUsers" title="Users" href="${baseUrl }/user/view">
-			<span class="panellink user-icon"></span>
-			<span class="linktext">Users</span>
+		<a class="menu-lnk" id="lnkPrice" href="${baseUrl }/blog/view/true">
+			<span class="panellink blog-icon"></span>
+			<label class="linktext">Blog</label>
 		</a>
 	</div>
 	<div class="menu">
-		<a class="menu-lnk" id="lnkCrops" title="Crops" href="${baseUrl }/crop/view">
+		<a class="menu-lnk" href="${baseUrl }/crop/view">
 			<span class="panellink crop-icon"></span>
 			<label class="linktext">Crops</label>
 		</a>
 	</div>
 
 	<div class="menu">
-		<a class="menu-lnk" id="lnkProducts" title="Products" href="${baseUrl }/product/view">
+		<a class="menu-lnk" href="${baseUrl }/product/view">
 			<span class="panellink product-icon"></span>
 			<label class="linktext">Product</label>
 		</a>
 	</div>
 
 	<div class="menu">
-		<a class="menu-lnk" id="lnkSellingPlace" title="Selling Place" href="${baseUrl }/sellingplace/view/">
+		<a class="menu-lnk" href="${baseUrl }/sellingplace/view/">
 			<span class="panellink sellingplace-icon"></span>
 			<label class="linktext">Selling Place</label>
 		</a>
 	</div>
 	<div class="menu">
-		<a class="menu-lnk" id="lnkProductionOrg" title="Production Organization" href="${baseUrl }/porg/view">
+		<a class="menu-lnk" href="${baseUrl }/porg/view">
 			<span class="panellink porganization-icon"></span>
 			<label class="linktext">Producer Organisation</label>
 		</a>
@@ -40,25 +41,25 @@
 <br>
 <div class="cpanel">
 	<div class="menu">
-		<a class="menu-lnk" id="lnkPrice" title="Price" href="${baseUrl }/price/view/admin/true">
+		<a class="menu-lnk" href="${baseUrl }/price/view/admin/true">
 			<span class="panellink price-icon"></span>
 			<label class="linktext">Prices</label>
 		</a>
 	</div>
 	<div class="menu">
-		<a class="menu-lnk" id="lnkSeason" title="Season" href="${baseUrl }/season/view/">
+		<a class="menu-lnk" href="${baseUrl }/season/view/">
 			<span class="panellink season-icon"></span>
 			<label class="linktext">Season</label>
 		</a>
 	</div>
 	<div class="menu">
-		<a class="menu-lnk" id="lnkfInstition" title="Financial Institution" href="${baseUrl }/finstitution/view/">
+		<a class="menu-lnk" href="${baseUrl }/finstitution/view/">
 			<span class="panellink fInstitution-icon"></span>
 			<label class="linktext">Financial Institution</label>
 		</a>
 	</div>
 	<div class="menu">
-		<a class="menu-lnk" id="lnkPosition" title="Positions" href="${baseUrl }/position/view/page/1">
+		<a class="menu-lnk" href="${baseUrl }/position/view/page/1">
 			<span class="panellink position-icon"></span>
 			<label class="linktext">Positions</label>
 		</a>
@@ -76,6 +77,12 @@
 <br>
 
 <div class="cpanel">
+	<div class="menu">
+		<a href="${baseUrl }/user/view">
+			<span class="panellink user-icon"></span>
+			<span class="linktext">Users</span>
+		</a>
+	</div>
 	<div class="menu">
 		<a class="menu-lnk" id="lnkRoles" title="Roles & Permissions" href="${baseUrl }/role/view">
 			<span class="panellink role-icon"></span>
@@ -107,3 +114,8 @@
 		</a>
 	</div>
 </div>
+
+<div style="clear: both;"></div>
+<br>
+<br>
+<div class="cpanel"></div>

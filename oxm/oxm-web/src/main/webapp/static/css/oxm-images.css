@@ -1,0 +1,130 @@
+.icon {
+	background-position: 0 50%;
+	background-repeat: no-repeat;
+	padding-bottom: 3px;
+	padding-left: 20px;
+	padding-top: 2px;
+}
+
+.icon-tick {
+	background-image: url('../images/tick_16.png');
+	width: 16px;
+	height: 16px;
+}
+
+.icon-delete {
+	background-image: url('../images/trash_16.png');
+	width: 16px;
+	height: 16px;
+}
+
+.icon-edit {
+	background: url('../images/pencil_16.png') no-repeat;
+	width: 16px;
+	height: 16px;
+}
+
+/*=====================================================================================*/
+span.user-icon {
+	background-image: url("../images/user-ico.png");
+}
+
+span.home-icon {
+	background-image: url("../images/home-ico.png");
+}
+
+span.controlpanel-icon {
+	background-image: url("../images/controlpanel-ico.png");
+}
+
+span.role-icon {
+	background-image: url("../images/role-ico.png");
+}
+
+span.concept-icon {
+	background-image: url("../images/concept-ico.png");
+}
+
+span.conceptCategory-icon {
+	background-image: url("../images/concept_category-ico.png");
+}
+
+span.country-icon {
+	background-image: url("../images/country-ico.png");
+}
+
+span.crop-icon {
+	background-image: url("../images/plant-ico.png");
+}
+
+span.sellingplace-icon {
+	background-image: url("../images/sellingplace-ico.png");
+}
+
+span.porganization-icon {
+	background-image: url("../images/production-ico.png");
+}
+
+span.price-icon {
+	background-image: url("../images/price-ico.png");
+}
+
+span.position-icon {
+	background-image: url("../images/position-ico.png");
+}
+
+span.season-icon {
+	background-image: url("../images/season-ico.png");
+}
+
+span.fInstitution-icon {
+	background-image: url("../images/fInstitution-ico.png");
+}
+
+span.forum-icon {
+	background-image: url("../images/forum-ico.png");
+}
+
+span.oxfam-logo {
+	background-image: url("../images/oxfam-logo.png");
+}
+
+span.supportedby-icon {
+	background-image: url("../images/supportedby-ico.png");
+}
+
+span.import-icon {
+	background-image: url("../images/import-ico.png");
+}
+
+span.export-icon {
+	background-image: url("../images/export-ico.png");
+}
+
+span.product-icon {
+	background-image: url("../images/product-ico.png");
+}
+
+span.sms-icon {
+	background-image: url("../images/sms-ico.png");
+}
+
+span.blog-icon {
+	background-image: url("../images/blog.png");
+}
+
+span.Severe-Weather {
+	background-image: url("../images/weather/severe.png");
+}
+
+span.Rainy {
+	background-image: url("../images/weather/rain-blue.png");
+}
+
+span.Sunny {
+	background-image: url("../images/weather/sun-yellow.png");
+}
+
+span.Windy {
+	background-image: url("../images/weather/wind-flag.png");
+}
