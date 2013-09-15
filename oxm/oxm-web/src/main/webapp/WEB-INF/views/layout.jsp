@@ -65,8 +65,10 @@
 				</div>
 			</div>
 		</div>
+
+		<div class="push"></div>
+
 	</div>
-	<div style="clear: both;"></div>
 	<div class="footer">
 		<tiles:insertAttribute name="footer" />
 	</div>

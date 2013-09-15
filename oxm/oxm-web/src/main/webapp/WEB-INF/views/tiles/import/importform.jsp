@@ -5,11 +5,9 @@
 <%@ taglib prefix="rmsTags" tagdir="/WEB-INF/tags"%>
 
 <%@ taglib prefix="oxmBreadcrambs" tagdir="/WEB-INF/tags/breadcramblinks"%>
-<%@ taglib prefix="oxmDistrictBreadcrambs" tagdir="/WEB-INF/tags/breadcramblinks/districts"%>
 
 <div style="margin: 5px; width: 100%;">
-	<oxmBreadcrambs:cpanel startingBreadcramb="true" />
-	<oxmDistrictBreadcrambs:districts />
+	<oxmBreadcrambs:district name="districts" />
 	import
 </div>
 
@@ -25,7 +23,8 @@
 		<p>Browse for a file containing Items to import!!</p>
 		<p>
 			<label>File:</label>
-			<input type="file" id="file" name="file" /> <input type="submit" id="upload" value="Import" />
+			<input type="file" id="file" name="file" />
+			<input type="submit" id="upload" value="Import" />
 		</p>
 
 	</form:form>

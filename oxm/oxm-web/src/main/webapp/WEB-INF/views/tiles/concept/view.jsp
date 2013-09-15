@@ -1,28 +1,20 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix='fn' uri='http://java.sun.com/jsp/jstl/functions'%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 
 <%@ taglib prefix="sysTags" tagdir="/WEB-INF/tags"%>
-<%@ taglib prefix="oxmConceptBreadcrambs"
-	tagdir="/WEB-INF/tags/breadcramblinks/concept"%>
-<%@ taglib prefix="oxmBreadcrambs"
-	tagdir="/WEB-INF/tags/breadcramblinks"%>
+<%@ taglib prefix="oxmBreadcrambs" tagdir="/WEB-INF/tags/breadcramblinks"%>
 
 <div style="margin: 5px; width: 100%;">
-	<oxmBreadcrambs:cpanel startingBreadcramb="true" />
-	<oxmConceptBreadcrambs:concepts />
+	<oxmBreadcrambs:cpanel name="concepts" />
 </div>
 
 <jsp:include page="/WEB-INF/views/tiles/concept/searchfields.jsp"></jsp:include>
 
 <div id="buttonStrip">
 	<div class="contextual" style="float: left;">
-		<a id="lnkAddConcept" class="uiButton" href="${baseUrl }/concept/add/">Add</a>
-		<a id="lnkEditConcept" class="uiButton"
-			href="${baseUrl }/concept/edit/">Edit</a> <a id="lnkDeleteConcept"
-			class="uiButton" href="${baseUrl }/concept/delete/">Delete</a>
+		<sysTags:addeditdeletebuttons name="Concept" url="concept" />
 	</div>
 	<div style="float: right;">
 		<%@ include file="/WEB-INF/views/navigation.jsp"%>
@@ -36,8 +28,7 @@
 	<table class="recordTable">
 		<thead>
 			<tr>
-				<th><input type="checkbox" name="cbxSelectAllItems"
-					id="cbxSelectAllItems" /></th>
+				<th><input type="checkbox" name="cbxSelectAllItems" id="cbxSelectAllItems" />No.</th>
 				<th>Name</th>
 				<th>Description</th>
 			</tr>
@@ -45,11 +36,9 @@
 		<tbody>
 			<c:choose>
 				<c:when test="${not empty concepts  && fn:length(concepts) > 0}">
-					<c:forEach var="concept" items="${concepts }">
+					<c:forEach var="concept" items="${concepts }" varStatus="status">
 						<tr id="${concept.id }">
-							<td><sysTags:rowcheckbox
-									nameOfItemOnPage="${nameOfItemOnPage}" id="${concept.id }" />
-							</td>
+							<td><sysTags:rowcheckbox nameOfItemOnPage="${nameOfItemOnPage}" id="${concept.id }" />${status.count }</td>
 							<td>${concept.name }</td>
 							<td>${concept.description }</td>
 						</tr>

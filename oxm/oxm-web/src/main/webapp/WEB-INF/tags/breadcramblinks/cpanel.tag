@@ -77,6 +77,15 @@
 	<span class="arrow-right"></span>
 </c:if>
 
+<c:if test="${name eq 'concepts' or name eq 'conceptcategories' }">
+
+	<a title="Categories of System Terms (Concepts)" href="${baseUrl }/category/view">Concept Categories</a>
+	<span class="arrow-right"></span>
+
+	<a title="List of System Terms (Concepts)" href="${baseUrl }/concept/view">System terms</a>
+	<span class="arrow-right"></span>
+</c:if>
+
 <c:if test="${isForm }">
 	<b>Form</b>
 </c:if>

@@ -1,12 +1,13 @@
 /**
 * The Application css file.
 */
-body {
+html, body {
 	background: none repeat scroll 0 0 white;
 	font-family: serif;
 	font-size: 10pt;
 	margin: 0;
 	width: 100%;
+	height: 100%;
 }
 
 .bg {
@@ -182,8 +183,12 @@ h4 {
 }
 
 .wrapper {
+	min-height: 100%;
+	height: auto !important;
+	height: 100%;
+	margin: 0 auto -155px; /* the bottom margin is the negative value of the footer's height */
+	
 	width: auto;
-	margin: 0px;
 }
 
 .container-header {
@@ -544,6 +549,10 @@ span.footericon {
 	padding-top: 5px;
 	text-align: center;
 	width: 100%;
+}
+
+.footer, .push {
+	height: 155px; /* '.push' must be the same height as 'footer' */
 }
 
 .footerlink a {

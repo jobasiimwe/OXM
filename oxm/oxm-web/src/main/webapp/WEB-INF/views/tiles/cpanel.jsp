@@ -96,13 +96,13 @@
 		</a>
 	</div>
 	<div class="menu">
-		<a class="menu-lnk" id="lnkConcepts" title="Concepts" href="${baseUrl }/concept/view/page/1">
+		<a class="menu-lnk" id="lnkConcepts" title="Concepts" href="${baseUrl }/concept/view">
 			<span class="panellink concept-icon"></span>
 			<label class="linktext">Concept</label>
 		</a>
 	</div>
 	<div class="menu">
-		<a class="menu-lnk" id="lnkConceptCategories" title="Concept Categories" href="${baseUrl }/category/view/">
+		<a class="menu-lnk" id="lnkConceptCategories" title="Concept Categories" href="${baseUrl }/category/view">
 			<span class="panellink conceptCategory-icon"></span>
 			<label class="linktext">Concept Category</label>
 		</a>
