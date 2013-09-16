@@ -3,13 +3,13 @@
 	<c:if test="${navigationTotalPages > 0 }">
 		<div class="navSpan">
 			<c:if test="${navigationCurrentPage > 1 }">
-				<a href="${navigationUrl }&pageNo=${navigationCurrentPage -1 }" title=".ui-icon-triangle-1-w" class="ui-state-default ui-corner-all">
+				<a href="${baseUrl}/${navigationUrl }&pageNo=${navigationCurrentPage -1 }" title=".ui-icon-triangle-1-w" class="ui-state-default ui-corner-all">
 					<span class="ui-icon ui-icon-triangle-1-w"></span>
 				</a>				
 			</c:if>
 			
 			<c:if test="${navigationCurrentPage < navigationTotalPages }">
-				<a href="${navigationUrl }&pageNo=${navigationCurrentPage + 1 }" title=".ui-icon-triangle-1-e" class="ui-state-default ui-corner-all">
+				<a href="${baseUrl}/${navigationUrl }&pageNo=${navigationCurrentPage + 1 }" title=".ui-icon-triangle-1-e" class="ui-state-default ui-corner-all">
 					<span class="ui-icon ui-icon-triangle-1-e"></span>
 				</a>
 			</c:if>
@@ -27,7 +27,7 @@
 						 ${recordCount + 1 } - ${ recordCount + navigationNumberOfItemsOnPage }
 					</c:otherwise>
 				</c:choose>
-				of ${navigationTotalNumberOfItems }
+				of ${navigationTotalNumberOfItems } ${navigationItem }
 			</span>
 		</div>
 		
