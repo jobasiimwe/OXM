@@ -1279,5 +1279,21 @@
             <column name="weather_description" type="varchar(32768)"/>
         </addColumn>
     </changeSet>
-	
+        
+    <changeSet author="Job (generated)" id="1379283198254-1">
+        <addColumn tableName="documents">
+            <column name="season_doc_owner" type="varchar(255)"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="Job (generated)" id="1379283198254-51">
+        <addForeignKeyConstraint baseColumnNames="season_doc_owner" baseTableName="documents" constraintName="FK383D52B89C0F0A14" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="season"/>
+    </changeSet>
+
+    <changeSet author="Job (generated)" id="1379287448152-115">
+        <dropTable schemaName="public" tableName="finstitution_documents"/>
+    </changeSet>
+    <changeSet author="Job (generated)" id="1379287448152-116">
+        <dropTable schemaName="public" tableName="porg_documents"/>
+    </changeSet>
+
 </databaseChangeLog>

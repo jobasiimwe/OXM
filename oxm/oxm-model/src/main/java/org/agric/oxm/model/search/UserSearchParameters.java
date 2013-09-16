@@ -42,7 +42,7 @@ public class UserSearchParameters {
 	private Parish parish;
 	private Village village;
 
-	private String smsText;
+	private String smsText, smsRecipientsText;
 
 	public UserSearchParameters() {
 
@@ -212,6 +212,14 @@ public class UserSearchParameters {
 
 	public void setSmsText(String smsText) {
 		this.smsText = smsText;
+	}
+
+	public String getSmsRecipientsText() {
+		return smsRecipientsText;
+	}
+
+	public void setSmsRecipientsText(String smsRecipientsText) {
+		this.smsRecipientsText = smsRecipientsText;
 	}
 
 }

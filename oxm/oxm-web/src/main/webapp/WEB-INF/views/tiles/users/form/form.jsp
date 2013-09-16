@@ -6,30 +6,22 @@
 <%@ taglib prefix="oxmBreadcrambs" tagdir="/WEB-INF/tags/breadcramblinks"%>
 
 <div style="margin: 5px; width: 100%;">
-	<oxmBreadcrambs:cpanel startingBreadcramb="true" />
-	<oxmBreadcrambs:users />
-	form
+	<oxmBreadcrambs:cpanel name="users" isForm="true" />
 </div>
 
 
-<form:form action="${baseUrl}/user/save/${qUserPage}" commandName="user" id="userForm"
-	enctype="multipart/form-data"
->
+<form:form action="${baseUrl}/user/save/${qUserPage}" commandName="user" id="userForm" enctype="multipart/form-data">
 	<div class="box">
 		<form:hidden id="id" path="id" />
-		<input type="hidden" id="qUserPage" name="user" value="${qUserPage}" /> <input type="hidden"
-			id="baseUrl" name="baseUrl" value="${baseUrl}"
-		/>
+		<input type="hidden" id="qUserPage" name="user" value="${qUserPage}" /> <input type="hidden" id="baseUrl" name="baseUrl"
+			value="${baseUrl}" />
 
 		<jsp:include page="/WEB-INF/views/tiles/users/form/formfields.jsp"></jsp:include>
 	</div>
 
 	<div style="clear: both">
-		<span style="display: inline-block;">
-			<input id="btnSave" type="submit" value="Save" class="uiButton" />
-		</span>
-		<span style="display: inline-block;">
-			<input id="btnCancelUserEdit" type="button" value="Cancel" class="uiButton" />
+		<span style="display: inline-block;"> <input id="btnSave" type="submit" value="Save" class="uiButton" />
+		</span> <span style="display: inline-block;"> <input id="btnCancelUserEdit" type="button" value="Cancel" class="uiButton" />
 		</span>
 	</div>
 </form:form>

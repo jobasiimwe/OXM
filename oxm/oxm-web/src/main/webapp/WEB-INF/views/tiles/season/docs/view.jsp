@@ -11,13 +11,12 @@
 <%@ taglib prefix="oxmBreadcrambs" tagdir="/WEB-INF/tags/breadcramblinks"%>
 
 <div style="margin: 5px; width: 100%;">
-	<oxmBreadcrambs:cpanel name="finstitutiondocs" finstParam="${fInstitution }" />
+	<oxmBreadcrambs:cpanel name="seasondocs" seasonParam="${season }" />
 </div>
 
 <div id="buttonStrip">
 	<div class="contextual" style="float: left;">
-		<sysTags:addeditdeletebuttons name="FInstitutionDoc" url="finstitutiondocs" parentId="${fInstitution.id }" />
-
+		<sysTags:addeditdeletebuttons url="seasondocs" name="SeasonDocs" parentId="${season.id }" />
 	</div>
 	<div style="float: right;">
 		<%@ include file="/WEB-INF/views/navigation.jsp"%>

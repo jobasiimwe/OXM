@@ -117,14 +117,23 @@
 	</definition>
 	
 	<!-- ======= FORM for SEASON ========== -->
-	<definition name="viewSeason" extends="layout">
+	<definition name="seasonView" extends="layout">
 		<put-attribute name="body" type="template" value="/WEB-INF/views/tiles/season/view.jsp" />
 	</definition>
 	
-	<definition name="formSeason" extends="layout">
+	<definition name="seasonForm" extends="layout">
 		<put-attribute name="body" type="template" value="/WEB-INF/views/tiles/season/form.jsp" />
 	</definition>
 	
+	<!--===== Season Documents ====== -->
+	<definition name="seasonDocView" extends="layout">
+		<put-attribute name="body" type="template" value="/WEB-INF/views/tiles/season/docs/view.jsp" />
+	</definition>
+	
+	<definition name="seasonDocForm" extends="layout">
+		<put-attribute name="body" type="template" value="/WEB-INF/views/tiles/season/docs/form.jsp" />
+	</definition>
+
 	<!-- ======= FORM for Financial Institution ========== -->
 	<definition name="viewFinancialInstitution" extends="layout">
 		<put-attribute name="body" type="template" value="/WEB-INF/views/tiles/finstitution/view.jsp" />

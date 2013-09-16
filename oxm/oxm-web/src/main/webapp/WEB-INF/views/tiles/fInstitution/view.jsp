@@ -15,7 +15,7 @@
 <div id="buttonStrip">
 	<div class="contextual" style="float: left;">
 		<sysTags:addeditdeletebuttons url="finstitution" name="${nameOfItemOnPage}" child1="Documents"
-			child1Url="finstitution/docs"
+			child1Url="finstitutiondocs"
 		/>
 
 	</div>

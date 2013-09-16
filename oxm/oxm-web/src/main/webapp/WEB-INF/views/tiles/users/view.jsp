@@ -8,8 +8,9 @@
 <%@ taglib prefix="oxmBreadcrambs" tagdir="/WEB-INF/tags/breadcramblinks"%>
 
 <div style="margin: 5px; width: 100%;">
-	<oxmBreadcrambs:cpanel startingBreadcramb="true" />
-	<oxmBreadcrambs:users />
+	<div style="margin: 5px; width: 100%;">
+		<oxmBreadcrambs:cpanel name="users" />
+	</div>
 </div>
 
 <div id="buttonStrip"></div>
@@ -27,8 +28,7 @@
 		<a id="lnkAddUser" class="uiButton" href="${baseUrl }/user/add/:">Add</a>
 		<a id="lnkEditUser" class="uiButton" href="${baseUrl }/user/edit/:/">Edit</a>
 		<a id="lnkDeleteUser" class="uiButton" href="${baseUrl }/user/delete/">Delete</a>
-		<a id="lnkImportProducers" class="uiButton spacedElement" href="${baseUrl }/import/producers">Import
-			Producers</a>
+		<a id="lnkImportProducers" class="uiButton spacedElement" href="${baseUrl }/import/producers">Import Producers</a>
 	</div>
 	<div style="float: right;">
 		<%@ include file="/WEB-INF/views/navigation.jsp"%>

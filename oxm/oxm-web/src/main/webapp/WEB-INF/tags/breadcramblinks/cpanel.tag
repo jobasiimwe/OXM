@@ -10,7 +10,10 @@
 <%@ attribute type="org.agric.oxm.model.Blog" name="blogParam" rtexprvalue="true" required="false"%>
 <%@ attribute type="java.lang.Boolean" name="adminView" required="false"%>
 
-<%@ attribute type="org.agric.oxm.model.ProducerOrg" name="producerOrg" rtexprvalue="true" required="false"%>
+<%@ attribute type="org.agric.oxm.model.ProducerOrg" name="porgParam" rtexprvalue="true" required="false"%>
+<%@ attribute type="org.agric.oxm.model.Committee" name="committeeParam" rtexprvalue="true" required="false"%>
+<%@ attribute type="org.agric.oxm.model.FinancialInstitution" name="finstParam" rtexprvalue="true" required="false"%>
+<%@ attribute type="org.agric.oxm.model.Season" name="seasonParam" rtexprvalue="true" required="false"%>
 
 <span class="arrow-right"></span>
 <span class="arrow-right"></span>
@@ -29,9 +32,14 @@
 	<span class="arrow-right"></span>
 </c:if>
 
-<c:if test="${name eq 'finstitutions' }">
+<c:if test="${name eq 'finstitutions' or name eq 'finstitutiondocs'}">
 	<a href="${baseUrl }/finstitution/view">Financial Institutions</a>
 	<span class="arrow-right"></span>
+
+	<c:if test="${name eq 'finstitutiondocs'  }">
+		<a href="${baseUrl }/finstitutiondocs/view/${finstParam.id}">Documents of - ${finstParam.name }</a>
+		<span class="arrow-right"></span>
+	</c:if>
 </c:if>
 
 <c:if test="${name eq 'prices' }">
@@ -49,32 +57,15 @@
 	</c:if>
 </c:if>
 
-<c:if
-	test="${name eq 'porgs' or name eq 'porgproducers' or name eq 'porgdetails' or name eq 'porgcommittees' or name eq 'porgdocs'}"
->
-
-	<a href="${baseUrl }/porg/view">Producer Groups</a>
-	<span class="arrow-right"></span>
-
-	<c:if test="${name eq 'porgproducers' or name eq 'porgdetails' }">
-		<a style="display: none;" href="${baseUrl }/porg/details/${producerOrg.id}">Details of - ${producerOrg.name }</a>
-	</c:if>
-
-	<c:if test="${name eq 'porgproducers'  }">
-		<a href="${baseUrl }/porgproducers/${producerOrg.id}">Members of - ${producerOrg.name }</a>
-		<span class="arrow-right"></span>
-	</c:if>
-
-	<c:if test="${name eq 'porgdocs'  }">
-		<a href="${baseUrl }/porgdocs/view/${producerOrg.id}">Documents of - ${producerOrg.name }</a>
-		<span class="arrow-right"></span>
-	</c:if>
-
-</c:if>
-
-<c:if test="${name eq 'seasons' }">
+<c:if test="${name eq 'seasons' or name eq 'seasondocs' }">
 	<a href="${baseUrl }/season/view">Seasons</a>
 	<span class="arrow-right"></span>
+
+	<c:if test="${name eq 'seasondocs'  }">
+		<a href="${baseUrl }/seasondocs/view/${seasonParam.id}">Documents of - ${seasonParam.name }</a>
+		<span class="arrow-right"></span>
+	</c:if>
+
 </c:if>
 
 <c:if test="${name eq 'concepts' or name eq 'conceptcategories' }">
@@ -84,6 +75,23 @@
 
 	<a title="List of System Terms (Concepts)" href="${baseUrl }/concept/view">System terms</a>
 	<span class="arrow-right"></span>
+</c:if>
+
+
+<c:if test="${name eq 'positions' }">
+	<a href="${baseUrl }/position/view">Positions</a>
+	<span class="arrow-right"></span>
+</c:if>
+
+
+<c:if test="${name eq 'users' or name eq 'sms'}">
+	<a href="${baseUrl }/user/view">Users</a>
+	<span class="arrow-right"></span>
+
+	<c:if test="${name eq 'sms'  }">
+		<a href="${baseUrl }/user/sms">SEND SMS</a>
+		<span class="arrow-right"></span>
+	</c:if>
 </c:if>
 
 <c:if test="${isForm }">

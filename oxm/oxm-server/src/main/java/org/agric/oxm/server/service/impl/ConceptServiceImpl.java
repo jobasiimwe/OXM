@@ -236,11 +236,11 @@ public class ConceptServiceImpl implements ConceptService {
 
 		search.addSort("name", false, true);
 		search.addFilterEqual("recordStatus", RecordStatus.ACTIVE);
-		if (!StringUtils.isNotEmpty(params.getName())) {
+		if (!StringUtils.isNotEmpty(params.getQuery())) {
 			Filter nameFilter = new Filter("name",
-					"%" + params.getName() + "%", Filter.OP_ILIKE);
+					"%" + params.getQuery() + "%", Filter.OP_ILIKE);
 			Filter descFilter = new Filter("description", "%"
-					+ params.getName() + "%", Filter.OP_ILIKE);
+					+ params.getQuery() + "%", Filter.OP_ILIKE);
 			search.addFilterOr(nameFilter, descFilter);
 
 		}

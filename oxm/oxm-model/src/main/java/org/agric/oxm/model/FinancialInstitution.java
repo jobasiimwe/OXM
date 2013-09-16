@@ -4,12 +4,15 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
+import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 @Entity
 @Table(name = "financial_institution")
@@ -87,12 +90,9 @@ public class FinancialInstitution extends BaseData implements
 		}
 	}
 
-	@OneToMany
-	@JoinTable(name = "finstitution_documents", joinColumns = @JoinColumn(name = "finstitution_id"), inverseJoinColumns = @JoinColumn(name = "document_id"))
+	@OneToMany(mappedBy = "fInstitution", cascade = { CascadeType.ALL }, orphanRemoval = false, fetch = FetchType.LAZY)
+	@Fetch(FetchMode.SUBSELECT)
 	public List<Document> getDocuments() {
-		// if (this.documents == null)
-		// return new ArrayList<Document>();
-
 		return this.documents;
 	}
 

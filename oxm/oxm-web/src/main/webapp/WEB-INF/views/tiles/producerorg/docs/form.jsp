@@ -6,7 +6,7 @@
 <%@ taglib prefix="oxmBreadcrambs" tagdir="/WEB-INF/tags/breadcramblinks"%>
 
 <div style="margin: 5px; width: 100%;">
-	<oxmBreadcrambs:cpanel name="porgdocs" producerOrg="${pOrg }" isForm="true" />
+	<oxmBreadcrambs:cpanel-porg name="porgdocs" porgParam="${pOrg }" isForm="true" />
 </div>
 
 
@@ -14,7 +14,7 @@
 	<form:form action="${baseUrl }/porgdocs/save" enctype="multipart/form-data" commandName="document">
 
 		<form:hidden path="id" />
-		<form:hidden path="pOrgDocumentOwner" />
+		<form:hidden path="pOrg" />
 		<div class="splitcontentleft tabular box">
 			<jsp:include page="/WEB-INF/views/tiles/docs/formfields.jsp"></jsp:include>
 		</div>

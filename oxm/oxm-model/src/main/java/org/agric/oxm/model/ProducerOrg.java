@@ -9,7 +9,6 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -239,8 +238,8 @@ public class ProducerOrg extends BaseData implements Comparable<ProducerOrg> {
 		this.documents = documents;
 	}
 
-	@OneToMany
-	@JoinTable(name = "porg_documents", joinColumns = @JoinColumn(name = "porg_id"), inverseJoinColumns = @JoinColumn(name = "document_id"))
+	@OneToMany(mappedBy = "pOrg", cascade = { CascadeType.ALL }, orphanRemoval = false, fetch = FetchType.LAZY)
+	@Fetch(FetchMode.SUBSELECT)
 	public List<Document> getDocuments() {
 		return this.documents;
 	}

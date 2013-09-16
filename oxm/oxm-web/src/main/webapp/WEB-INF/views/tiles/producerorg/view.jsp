@@ -7,7 +7,7 @@
 
 
 <div style="margin: 5px; width: 100%;">
-	<oxmBreadcrambs:cpanel name="porgs" />
+	<oxmBreadcrambs:cpanel-porg name="porgs" />
 </div>
 
 <jsp:include page="/WEB-INF/views/tiles/producerorg/searchfields.jsp"></jsp:include>

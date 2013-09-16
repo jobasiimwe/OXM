@@ -4,7 +4,7 @@
 <%@ taglib prefix="oxmBreadcrambs" tagdir="/WEB-INF/tags/breadcramblinks"%>
 
 <div style="margin: 5px; width: 100%;">
-	<oxmBreadcrambs:cpanel name="porgproducers" producerOrg="${pOrg }" isForm="true" />
+	<oxmBreadcrambs:cpanel-porg name="porgproducers" porgParam="${pOrg }" isForm="true" />
 </div>
 
 <div>
@@ -14,8 +14,6 @@
 		<form:hidden path="producerOrg" />
 		<div class="box">
 			<jsp:include page="/WEB-INF/views/tiles/users/form/formfields.jsp"></jsp:include>
-			<div style="clear: both;"></div>
-			<jsp:include page="/WEB-INF/views/tiles/users/form/districtfields.jsp"></jsp:include>
 			<div style="clear: both;"></div>
 		</div>
 		<div>

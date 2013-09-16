@@ -21,12 +21,12 @@
 
 <p>
 	<label>Name:</label>
-	<form:input type="text" class="uiTextbox" id="txtName" path="name" />
+	<form:input type="text" class="uiTextbox long" id="txtName" path="name" />
 </p>
 <p>
 	<label>Attach File: </label> <input type="file" name="file">
 </p>
 <p>
 	<label>Other Info</label>
-	<form:textarea rows="3" cols="60" path="otherInfo" style="width: 380px; height: 50px;" />
+	<form:textarea rows="3" cols="50" path="otherInfo" style="width: 380px; height: 50px;" />
 </p>

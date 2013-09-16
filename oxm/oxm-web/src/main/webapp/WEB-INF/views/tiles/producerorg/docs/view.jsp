@@ -11,7 +11,7 @@
 <%@ taglib prefix="oxmBreadcrambs" tagdir="/WEB-INF/tags/breadcramblinks"%>
 
 <div style="margin: 5px; width: 100%;">
-	<oxmBreadcrambs:cpanel name="porgdocs" producerOrg="${pOrg }" />
+	<oxmBreadcrambs:cpanel-porg name="porgdocs" porgParam="${pOrg }" />
 </div>
 
 <div id="buttonStrip">

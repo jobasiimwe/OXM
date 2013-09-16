@@ -9,6 +9,7 @@ import org.agric.oxm.model.search.SingleStringSearchParameters;
 import org.agric.oxm.server.dao.PositionDAO;
 import org.agric.oxm.server.security.PermissionConstants;
 import org.agric.oxm.server.service.PositionService;
+import org.agric.oxm.utils.BuildSearchUtil;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
@@ -16,7 +17,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.googlecode.genericdao.search.Filter;
 import com.googlecode.genericdao.search.Search;
 
 /**
@@ -89,7 +89,7 @@ public class PositionServiceImpl implements PositionService {
 	@Transactional(propagation = Propagation.REQUIRED)
 	public List<Position> searchWithParams(SingleStringSearchParameters params,
 			Integer pageNo) {
-		Search search = preparePositionSearch(params);
+		Search search = prepareSearch(params);
 		/*
 		 * if the page number is less than or equal to zero, no need for paging
 		 */
@@ -102,13 +102,10 @@ public class PositionServiceImpl implements PositionService {
 		return positions;
 	}
 
-	private Search preparePositionSearch(SingleStringSearchParameters params) {
+	private Search prepareSearch(SingleStringSearchParameters params) {
 		Search search = new Search();
 
-		if (StringUtils.isNotEmpty(params.getName())) {
-			search.addFilter(new Filter("name", "%" + params.getName() + "%",
-					Filter.OP_ILIKE));
-		}
+		BuildSearchUtil.addStringLike(search, "name", params.getQuery());
 
 		search.addSort("index", false, true);
 
@@ -118,7 +115,7 @@ public class PositionServiceImpl implements PositionService {
 	@Override
 	public int numberOfPositionsWithSearchParams(
 			SingleStringSearchParameters params) {
-		Search search = preparePositionSearch(params);
+		Search search = prepareSearch(params);
 		return positionDAO.count(search);
 	}
 

@@ -7,7 +7,7 @@
 <%@ taglib prefix="oxmBreadcrambs" tagdir="/WEB-INF/tags/breadcramblinks"%>
 
 <div style="margin: 5px; width: 100%;">
-	<oxmBreadcrambs:cpanel name="porgproducers" producerOrg="${pOrg }" />
+	<oxmBreadcrambs:cpanel-porg name="porgproducers" porgParam="${pOrg }" />
 </div>
 
 
@@ -27,7 +27,7 @@
 	<table class="recordTable">
 		<thead>
 			<tr>
-				<th><input type="checkbox" name="cbxSelectAllItems" id="cbxSelectAllItems" /></th>
+				<th><input type="checkbox" name="cbxSelectAllItems" id="cbxSelectAllItems" />No.</th>
 				<th>Name</th>
 				<th>Gender</th>
 				<th>DateOfBirth</th>
@@ -39,9 +39,9 @@
 		<tbody>
 			<c:choose>
 				<c:when test="${not empty pOrg.producers  && fn:length(pOrg.producers) > 0}">
-					<c:forEach var="producer" items="${pOrg.producers }">
+					<c:forEach var="producer" items="${pOrg.producers }" varStatus="status">
 						<tr id="${producer.id }">
-							<td><sysTags:rowcheckbox nameOfItemOnPage="${nameOfItemOnPage }" id="${producer.id }" /></td>
+							<td><sysTags:rowcheckbox nameOfItemOnPage="${nameOfItemOnPage }" id="${producer.id }" />${status.count }</td>
 							<td>${producer.name }</td>
 							<td>${producer.gender.name }</td>
 							<td><fmt:formatDate value="${producer.dateOfBirth}" pattern="dd/MM/yyyy" /></td>

@@ -22,23 +22,16 @@ import javax.persistence.Transient;
 @Table(name = "documents")
 public class Document extends BaseData implements Comparable<Document> {
 
-	private String name;
+	private String name, contentType, documentExtension, documentUrl,
+			otherInfo;
 
 	private Concept documentType;
 
-	private String contentType;
+	private User user;
 
-	private String documentExtension;
-
-	private String documentUrl;
-
-	private String otherInfo;
-
-	private User userDocumentOwner;
-
-	private FinancialInstitution fInstitutionDocumentOwner;
-
-	private ProducerOrg pOrgDocumentOwner;
+	private FinancialInstitution fInstitution;
+	private ProducerOrg pOrg;
+	private Season season;
 
 	private InputStream documentStream;
 
@@ -54,11 +47,15 @@ public class Document extends BaseData implements Comparable<Document> {
 	}
 
 	public Document(FinancialInstitution financialInstitution) {
-		this.setfInstitutionDocumentOwner(financialInstitution);
+		this.setfInstitution(financialInstitution);
 	}
 
 	public Document(ProducerOrg producerOrg) {
-		this.setpOrgDocumentOwner(producerOrg);
+		this.setpOrg(producerOrg);
+	}
+
+	public Document(Season season) {
+		this.setSeason(season);
 	}
 
 	public Document(String docName, Concept docType, String docUrl, String other) {
@@ -126,33 +123,42 @@ public class Document extends BaseData implements Comparable<Document> {
 
 	@ManyToOne
 	@JoinColumn(name = "user_document_owner", nullable = true)
-	public User getUserDocumentOwner() {
-		return userDocumentOwner;
+	public User getUser() {
+		return user;
 	}
 
-	public void setUserDocumentOwner(User userDocumentOwner) {
-		this.userDocumentOwner = userDocumentOwner;
+	public void setUser(User user) {
+		this.user = user;
 	}
 
 	@ManyToOne
 	@JoinColumn(name = "finstitution_doc_owner", nullable = true)
-	public FinancialInstitution getfInstitutionDocumentOwner() {
-		return fInstitutionDocumentOwner;
+	public FinancialInstitution getfInstitution() {
+		return fInstitution;
 	}
 
-	public void setfInstitutionDocumentOwner(
-			FinancialInstitution fInstitutionDocumentOwner) {
-		this.fInstitutionDocumentOwner = fInstitutionDocumentOwner;
+	public void setfInstitution(FinancialInstitution fInstitution) {
+		this.fInstitution = fInstitution;
 	}
 
 	@ManyToOne
 	@JoinColumn(name = "porg_doc_owner", nullable = true)
-	public ProducerOrg getpOrgDocumentOwner() {
-		return pOrgDocumentOwner;
+	public ProducerOrg getpOrg() {
+		return pOrg;
 	}
 
-	public void setpOrgDocumentOwner(ProducerOrg pOrgDocumentOwner) {
-		this.pOrgDocumentOwner = pOrgDocumentOwner;
+	public void setpOrg(ProducerOrg pOrg) {
+		this.pOrg = pOrg;
+	}
+
+	@ManyToOne
+	@JoinColumn(name = "season_doc_owner", nullable = true)
+	public Season getSeason() {
+		return season;
+	}
+
+	public void setSeason(Season season) {
+		this.season = season;
 	}
 
 	@Transient

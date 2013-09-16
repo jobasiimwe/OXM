@@ -1,17 +1,25 @@
 package org.agric.oxm.model;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 import org.agric.oxm.model.util.MyDateUtil;
 import org.apache.commons.lang.StringUtils;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 @Entity
 @Table(name = "season")
@@ -24,6 +32,8 @@ public class Season extends BaseData implements Comparable<Season> {
 	private Date endDate;
 
 	private Weather weather;
+
+	private List<Document> documents = Collections.emptyList();
 
 	public Season() {
 
@@ -83,6 +93,48 @@ public class Season extends BaseData implements Comparable<Season> {
 	}
 
 	// ========================================================================
+
+	public void setDocuments(List<Document> documents) {
+		this.documents = documents;
+	}
+
+	@OneToMany(mappedBy = "season", cascade = { CascadeType.ALL }, orphanRemoval = false, fetch = FetchType.LAZY)
+	@Fetch(FetchMode.SUBSELECT)
+	public List<Document> getDocuments() {
+		return this.documents;
+	}
+
+	public void addDocument(Document doc) {
+		if (doc == null) {
+			return;
+		}
+
+		if (this.getDocuments() == null) {
+			this.setDocuments(new ArrayList<Document>());
+		}
+
+		this.getDocuments().add(doc);
+	}
+
+	public void removeDocument(Document doc) {
+		if (doc == null || this.getDocuments() == null) {
+			return;
+		}
+
+		this.getDocuments().remove(doc);
+	}
+
+	public void removeDocumentsByIds(String[] idzToDelete) {
+		for (String id : idzToDelete) {
+			Document d = new Document(id);
+
+			if (this.getDocuments().contains(d)) {
+				getDocuments().remove(d);
+			}
+		}
+	}
+
+	// ================================================
 
 	@Override
 	public int hashCode() {

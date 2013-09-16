@@ -48,6 +48,10 @@ public class POrgDocsController {
 		ProducerOrg pOrg = porgService.getProducerOrganisationById(id);
 		modelMap.put("pOrg", pOrg);
 		modelMap.put("documents", pOrg.getDocuments());
+
+		modelMap.put(WebConstants.CONTENT_HEADER,
+				"Documents of " + pOrg.getName());
+
 		return new ModelAndView("pOrgDocView", modelMap);
 	}
 
@@ -59,6 +63,9 @@ public class POrgDocsController {
 		Document document = new Document(pOrg);
 		modelMap.put("document", document);
 		modelMap.put("pOrg", pOrg);
+
+		modelMap.put(WebConstants.CONTENT_HEADER,
+				"Add Document of " + pOrg.getName());
 		return new ModelAndView("pOrgDocForm", modelMap);
 	}
 
@@ -69,7 +76,11 @@ public class POrgDocsController {
 
 		Document document = documentService.getDocumentById(docId);
 		modelMap.put("document", document);
-		modelMap.put("pOrg", document.getpOrgDocumentOwner());
+		modelMap.put("pOrg", document.getpOrg());
+
+		modelMap.put(WebConstants.CONTENT_HEADER, "Edit Document of "
+				+ document.getpOrg().getName());
+
 		return new ModelAndView("pOrgDocForm", modelMap);
 	}
 
@@ -82,18 +93,17 @@ public class POrgDocsController {
 	 * @return
 	 */
 	@RequestMapping(value = "save", method = RequestMethod.POST)
-	public ModelAndView save(
-			@ModelAttribute("document") Document document,
+	public ModelAndView save(@ModelAttribute("document") Document document,
 			@RequestParam(value = "file", required = false) MultipartFile file,
 			ModelMap modelMap) {
 
 		try {
 
-			if (document.getpOrgDocumentOwner() == null)
+			if (document.getpOrg() == null)
 				throw new ValidationException(
 						"The Finantial Institution can not be null");
 
-			ProducerOrg pOrg = document.getpOrgDocumentOwner();
+			ProducerOrg pOrg = document.getpOrg();
 
 			documentService.validate(document);
 
@@ -130,8 +140,8 @@ public class POrgDocsController {
 						.getDocumentExtension());
 				existingDocument.setDocumentUrl(document.getDocumentUrl());
 				existingDocument.setOtherInfo(document.getOtherInfo());
-				existingDocument.setpOrgDocumentOwner(document
-						.getpOrgDocumentOwner());
+				existingDocument.setpOrg(document
+						.getpOrg());
 			} else {
 
 				if (file == null || file.getSize() == 0)
@@ -162,7 +172,12 @@ public class POrgDocsController {
 			modelMap.put(WebConstants.MODEL_ATTRIBUTE_ERROR_MESSAGE,
 					" - " + ex.getMessage());
 			modelMap.put("document", document);
-			modelMap.put("pOrg", document.getpOrgDocumentOwner());
+			modelMap.put("pOrg", document.getpOrg());
+
+			modelMap.put(WebConstants.CONTENT_HEADER,
+					"Retry Add/Edit Document of "
+							+ document.getpOrg().getName());
+
 			return new ModelAndView("pOrgDocForm", modelMap);
 		}
 
@@ -170,8 +185,7 @@ public class POrgDocsController {
 
 	@Secured({ PermissionConstants.PERM_VIEW_ADMINISTRATION })
 	@RequestMapping(method = RequestMethod.GET, value = "delete/{porgid}/{ids}")
-	public ModelAndView delete(
-			@PathVariable("porgid") String porgid,
+	public ModelAndView delete(@PathVariable("porgid") String porgid,
 			@PathVariable("ids") String ids, ModelMap modelMap) {
 
 		String[] arrayidzToDelete = ids.split(",");

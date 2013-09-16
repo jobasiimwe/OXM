@@ -5,12 +5,12 @@ import java.util.Calendar;
 import java.util.List;
 
 import org.agric.oxm.model.Document;
-import org.agric.oxm.model.FinancialInstitution;
+import org.agric.oxm.model.Season;
 import org.agric.oxm.model.exception.ValidationException;
 import org.agric.oxm.server.security.PermissionConstants;
 import org.agric.oxm.server.security.util.OXMSecurityUtil;
 import org.agric.oxm.server.service.DocumentService;
-import org.agric.oxm.server.service.FinancialInstitutionService;
+import org.agric.oxm.server.service.SeasonService;
 import org.agric.oxm.server.service.impl.DocumentServiceImpl;
 import org.agric.oxm.web.WebConstants;
 import org.apache.commons.lang.StringUtils;
@@ -29,11 +29,11 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
-@RequestMapping("finstitutiondocs")
-public class FInstitutionDocController {
+@RequestMapping("seasondocs")
+public class SeasonDocController {
 
 	@Autowired
-	private FinancialInstitutionService financialService;
+	private SeasonService seasonService;
 
 	@Autowired
 	private DocumentService documentService;
@@ -42,47 +42,45 @@ public class FInstitutionDocController {
 
 	// =================================================
 
-	@Secured({ PermissionConstants.VIEW_FINANCIAL_INSTITUTION })
+	@Secured({ PermissionConstants.VIEW_SEASONS })
 	@RequestMapping(value = "view/{id}", method = RequestMethod.GET)
 	public ModelAndView view(@PathVariable("id") String id, ModelMap modelMap) {
-		FinancialInstitution fInstitution = financialService
-				.getFinancialInstitutionById(id);
-		modelMap.put("fInstitution", fInstitution);
-		modelMap.put("documents", fInstitution.getDocuments());
+		Season season = seasonService.getById(id);
+		modelMap.put("season", season);
+		modelMap.put("documents", season.getDocuments());
 
-		modelMap.put(WebConstants.CONTENT_HEADER, "Documents of "
-				+ fInstitution.getName());
-		return new ModelAndView("fInstitutionDocView", modelMap);
+		modelMap.put(WebConstants.CONTENT_HEADER,
+				"Documents for - " + season.getName());
+		return new ModelAndView("seasonDocView", modelMap);
 	}
 
-	@Secured({ PermissionConstants.VIEW_FINANCIAL_INSTITUTION })
+	@Secured({ PermissionConstants.MANAGE_SEASONS })
 	@RequestMapping(value = "add/{id}", method = RequestMethod.GET)
 	public ModelAndView add(@PathVariable("id") String id, ModelMap modelMap) {
 
-		FinancialInstitution fInstitution = financialService
-				.getFinancialInstitutionById(id);
-		Document document = new Document(fInstitution);
+		Season season = seasonService.getById(id);
+		Document document = new Document(season);
 		modelMap.put("document", document);
-		modelMap.put("fInstitution", fInstitution);
+		modelMap.put("season", season);
 
-		modelMap.put(WebConstants.CONTENT_HEADER, "Add Document of "
-				+ fInstitution.getName());
-		return new ModelAndView("fInstitutionDocForm", modelMap);
+		modelMap.put(WebConstants.CONTENT_HEADER,
+				"Add Document for - " + season.getName());
+		return new ModelAndView("seasonDocForm", modelMap);
 	}
 
-	@Secured({ PermissionConstants.VIEW_FINANCIAL_INSTITUTION })
+	@Secured({ PermissionConstants.MANAGE_SEASONS })
 	@RequestMapping(value = "edit/{docId}", method = RequestMethod.GET)
 	public ModelAndView edit(@PathVariable("docId") String docId,
 			ModelMap modelMap) {
 
 		Document document = documentService.getDocumentById(docId);
 		modelMap.put("document", document);
-		modelMap.put("fInstitution", document.getfInstitution());
+		modelMap.put("season", document.getSeason());
 
-		modelMap.put(WebConstants.CONTENT_HEADER, "Edit Document of "
-				+ document.getfInstitution().getName());
+		modelMap.put(WebConstants.CONTENT_HEADER, "Edit Document for - "
+				+ document.getSeason().getName());
 
-		return new ModelAndView("fInstitutionDocForm", modelMap);
+		return new ModelAndView("seasonDocForm", modelMap);
 	}
 
 	/**
@@ -93,8 +91,6 @@ public class FInstitutionDocController {
 	 * @param modelMap
 	 * @return
 	 */
-	@Secured({ PermissionConstants.ADD_FINANCIAL_INSTITUTION,
-			PermissionConstants.EDIT_FINANCIAL_INSTITUTION })
 	@RequestMapping(value = "save", method = RequestMethod.POST)
 	public ModelAndView save(@ModelAttribute("document") Document document,
 			@RequestParam(value = "file", required = false) MultipartFile file,
@@ -102,11 +98,10 @@ public class FInstitutionDocController {
 
 		try {
 
-			if (document.getfInstitution() == null)
-				throw new ValidationException(
-						"The Finantial Institution can not be null");
+			if (document.getSeason() == null)
+				throw new ValidationException("The Season can not be null");
 
-			FinancialInstitution fInstitution = document.getfInstitution();
+			Season season = document.getSeason();
 
 			documentService.validate(document);
 
@@ -143,7 +138,7 @@ public class FInstitutionDocController {
 						.getDocumentExtension());
 				existingDocument.setDocumentUrl(document.getDocumentUrl());
 				existingDocument.setOtherInfo(document.getOtherInfo());
-				existingDocument.setfInstitution(document.getfInstitution());
+				existingDocument.setSeason(document.getSeason());
 			} else {
 
 				if (file == null || file.getSize() == 0)
@@ -154,37 +149,37 @@ public class FInstitutionDocController {
 				existingDocument
 						.setCreatedBy(OXMSecurityUtil.getLoggedInUser());
 				existingDocument.setId(null);
-				fInstitution.addDocument(existingDocument);
+				season.addDocument(existingDocument);
 			}
 
 			if (file != null && file.getSize() > 0) {
 				documentService.saveDocument(existingDocument,
 						file.getInputStream());
-				financialService.save(fInstitution);
+				seasonService.save(season);
 			} else
 				documentService.saveDocument(existingDocument, null);
 
 			modelMap.put(WebConstants.MODEL_ATTRIBUTE_SYSTEM_MESSAGE,
-					"Financial Document Saved sucessfully.");
+					"Season Document Saved sucessfully.");
 
-			return view(fInstitution.getId(), modelMap);
+			return view(season.getId(), modelMap);
 
 		} catch (Exception ex) {
 			log.error(null, ex);
 			modelMap.put(WebConstants.MODEL_ATTRIBUTE_ERROR_MESSAGE,
 					" - " + ex.getMessage());
 			modelMap.put("document", document);
-			modelMap.put("fInstitution", document.getfInstitution());
+			modelMap.put("season", document.getSeason());
 
 			modelMap.put(WebConstants.CONTENT_HEADER,
 					"Retry Add/Edit Document of "
-							+ document.getfInstitution().getName());
-			return new ModelAndView("fInstitutionDocForm", modelMap);
+							+ document.getSeason().getName());
+			return new ModelAndView("seasonDocForm", modelMap);
 		}
 
 	}
 
-	@Secured({ PermissionConstants.DELETE_FINANCIAL_INSTITUTION })
+	@Secured({ PermissionConstants.MANAGE_SEASONS })
 	@RequestMapping(method = RequestMethod.GET, value = "delete/{finstid}/{ids}")
 	public ModelAndView delete(@PathVariable("finstid") String finstid,
 			@PathVariable("ids") String ids, ModelMap modelMap) {
@@ -203,7 +198,7 @@ public class FInstitutionDocController {
 				documentService.deleteDocument(document);
 
 			modelMap.put(WebConstants.MODEL_ATTRIBUTE_SYSTEM_MESSAGE,
-					"Documents(s)  deleted successfully");
+					"Documents(s) deleted successfully");
 		} catch (Exception e) {
 			log.error("Error", e);
 			modelMap.put(WebConstants.MODEL_ATTRIBUTE_ERROR_MESSAGE, "Error "

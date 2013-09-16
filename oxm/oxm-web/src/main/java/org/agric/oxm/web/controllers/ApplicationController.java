@@ -5,6 +5,7 @@ import java.io.IOException;
 import javax.servlet.http.HttpServletResponse;
 
 import org.agric.oxm.model.Document;
+import org.agric.oxm.model.search.SingleStringSearchParameters;
 import org.agric.oxm.server.ConceptCategoryAnnotation;
 import org.agric.oxm.server.DefaultConceptCategories;
 import org.agric.oxm.server.security.PermissionConstants;
@@ -13,6 +14,8 @@ import org.agric.oxm.server.service.ConceptService;
 import org.agric.oxm.server.service.DocumentService;
 import org.agric.oxm.web.OXMUtil;
 import org.agric.oxm.web.WebConstants;
+import org.agric.oxm.web.forms.GenericCommand;
+import org.agric.oxm.web.forms.GenericCommandValue;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
@@ -209,6 +212,52 @@ public class ApplicationController {
 				response.getOutputStream().close();
 			}
 		}
+	}
+
+	// ======================================================================================
+	// ======================================================================================
+	// ======================================================================================
+
+	public static final String SINGLE_STRING_NAME = "query";
+	public static final String SINGLE_STRING_COMAND_NAME = "singlestringsearch";
+
+	public SingleStringSearchParameters extractParams(
+			GenericCommand searchCommand) {
+		SingleStringSearchParameters params = new SingleStringSearchParameters();
+		if (StringUtils.isNotBlank(searchCommand.getValue(SINGLE_STRING_NAME))) {
+			params.setQuery(searchCommand.getValue(SINGLE_STRING_NAME));
+		}
+
+		return params;
+	}
+
+	public void prepareSingleStringSearchCommand(
+			SingleStringSearchParameters params, ModelMap modelMap) {
+
+		GenericCommand searchCommand = new GenericCommand();
+		searchCommand.getPropertiesMap().put(SINGLE_STRING_NAME,
+				new GenericCommandValue(params.getQuery()));
+
+		modelMap.put(SINGLE_STRING_COMAND_NAME, searchCommand);
+	}
+
+	/**
+	 * 
+	 * @param params
+	 * @param urlItem
+	 * @return
+	 */
+	public String buildSingleStringSearchNavigationUrl(
+			SingleStringSearchParameters params, String urlItem) {
+		StringBuffer buffer = new StringBuffer();
+		buffer.append("/" + urlItem + "?action=search");
+
+		if (StringUtils.isNotBlank(params.getQuery())) {
+			buffer.append("&").append(SINGLE_STRING_NAME).append("=")
+					.append(params.getQuery());
+		}
+
+		return buffer.toString();
 	}
 
 }

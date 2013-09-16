@@ -43,7 +43,7 @@ public class POrgProducerController {
 	private Logger log = LoggerFactory.getLogger(this.getClass());
 
 	@Secured({ PermissionConstants.VIEW_PROD_ORG })
-	@RequestMapping(value = "{pOrgId}", method = RequestMethod.GET)
+	@RequestMapping(value = "view/{pOrgId}", method = RequestMethod.GET)
 	public ModelAndView view(@PathVariable("pOrgId") String pOrgId,
 			ModelMap modelMap) {
 

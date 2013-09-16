@@ -9,7 +9,7 @@
 
 
 	<div style="margin: 5px; width: 100%;">
-		<oxmBreadcrambs:cpanel name="porgdetails" producerOrg="${pOrg}" />
+		<oxmBreadcrambs:cpanel-porg name="porgdetails" producerOrg="${pOrg}" />
 	</div>
 
 	<div>

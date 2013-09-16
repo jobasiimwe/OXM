@@ -2,21 +2,21 @@ package org.agric.oxm.model.search;
 
 public class SingleStringSearchParameters {
 
-	private String name;
+	private String guery;
 
 	public SingleStringSearchParameters() {
 	}
 
-	public SingleStringSearchParameters(String name) {
-		this.setName(name);
+	public SingleStringSearchParameters(String query) {
+		this.setQuery(query);
 	}
 
-	public String getName() {
-		return name;
+	public String getQuery() {
+		return guery;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setQuery(String query) {
+		this.guery = query;
 	}
 
 }

@@ -36,8 +36,9 @@ public class SeasonController {
 	public ModelAndView view(ModelMap modelMap) {
 		List<Season> seasons = seasonService.getAll();
 		modelMap.put("seasons", seasons);
-		return new ModelAndView("viewSeason", modelMap);
 
+		modelMap.put(WebConstants.CONTENT_HEADER, "Seasons/Weather");
+		return new ModelAndView("seasonView", modelMap);
 	}
 
 	@Secured({ PermissionConstants.VIEW_SEASONS,
@@ -47,7 +48,11 @@ public class SeasonController {
 		modelMap.put("season", new Season());
 
 		modelMap.put("weathers", Season.Weather.values());
-		return new ModelAndView("formSeason", modelMap);
+
+		modelMap.put(WebConstants.CONTENT_HEADER,
+				"Add Season/Weather Information");
+
+		return new ModelAndView("seasonForm", modelMap);
 	}
 
 	@Secured({ PermissionConstants.VIEW_SEASONS,
@@ -60,10 +65,12 @@ public class SeasonController {
 
 		if (season != null) {
 			modelMap.put("season", season);
-			return new ModelAndView("formSeason", modelMap);
-		}
+			modelMap.put(WebConstants.CONTENT_HEADER, "Edit Season, - "
+					+ season.getName());
+			modelMap.put("weathers", Season.Weather.values());
 
-		modelMap.put("weathers", Season.Weather.values());
+			return new ModelAndView("seasonForm", modelMap);
+		}
 
 		modelMap.put(WebConstants.MODEL_ATTRIBUTE_ERROR_MESSAGE,
 				"Invalid Season id submitted");
@@ -125,7 +132,9 @@ public class SeasonController {
 			modelMap.put(WebConstants.MODEL_ATTRIBUTE_ERROR_MESSAGE,
 					e.getMessage());
 			modelMap.put("season", season);
-			return new ModelAndView("formSeason", modelMap);
+
+			modelMap.put(WebConstants.CONTENT_HEADER, "Retry Add/Edit Season");
+			return new ModelAndView("seasonForm", modelMap);
 		}
 		return view(modelMap);
 	}

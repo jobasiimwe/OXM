@@ -103,6 +103,7 @@ public class UserController {
 	public static final String COMMITTEE_MEMBER = "committeemember";
 
 	public static final String SMS_TEXT = "smstext";
+	public static final String SMS_RECIPIENTS_TEXT = "smsrecipientstext";
 
 	private static final String COMMAND_NAME = "usersearch";
 
@@ -193,10 +194,9 @@ public class UserController {
 			modelMap.put("pVillage", params.getVillage().getId());
 		}
 
-		if (StringUtils.isNotBlank(params.getSmsText())) {
-			searchCommand.getPropertiesMap().put(SMS_TEXT,
-					new GenericCommandValue(params.getSmsText()));
-		}
+		searchCommand.checkAndPut(SMS_TEXT, params.getSmsText());
+		searchCommand.checkAndPut(SMS_RECIPIENTS_TEXT,
+				params.getSmsRecipientsText());
 
 		modelMap.put(COMMAND_NAME, searchCommand);
 
@@ -209,8 +209,7 @@ public class UserController {
 
 	@Secured({ PermissionConstants.VIEW_USER })
 	@RequestMapping(value = "view", method = RequestMethod.GET)
-	public ModelAndView viewUsersHandler(ModelMap modelMap)
-			throws SessionExpiredException {
+	public ModelAndView view(ModelMap modelMap) throws SessionExpiredException {
 		WebConstants.loadLoggedInUserProfile(OXMSecurityUtil.getLoggedInUser(),
 				modelMap);
 		prepareSearchModel(new UserSearchParameters(), false, false, 1,
@@ -309,6 +308,10 @@ public class UserController {
 
 		if (StringUtils.isNotBlank(searchCommand.getValue(SMS_TEXT)))
 			params.setSmsText(searchCommand.getValue(SMS_TEXT));
+
+		if (StringUtils.isNotBlank(searchCommand.getValue(SMS_RECIPIENTS_TEXT)))
+			params.setSmsRecipientsText(searchCommand
+					.getValue(SMS_RECIPIENTS_TEXT));
 
 		return params;
 	}
@@ -459,10 +462,14 @@ public class UserController {
 			buffer.append("&").append(LAND_SIZE_CONDITION2).append("=")
 					.append(params.getLandSize2().toString());
 		}
+
 		if (StringUtils.isNotBlank(params.getSmsText())) {
 			buffer.append("&").append(SMS_TEXT).append("=")
 					.append(params.getSmsText());
 		}
+
+		GenericCommand.checkAndAppend(SMS_RECIPIENTS_TEXT,
+				params.getSmsRecipientsText(), buffer);
 
 		return buffer.toString();
 	}
@@ -485,6 +492,7 @@ public class UserController {
 			@RequestParam(value = PARISH, required = false) String parishId,
 			@RequestParam(value = VILLAGE, required = false) String villageId,
 			@RequestParam(value = SMS_TEXT, required = false) String smsText,
+			@RequestParam(value = SMS_RECIPIENTS_TEXT, required = false) String smsRecipientText,
 			@RequestParam(value = "pageNo", required = false) Integer pageNo,
 			ModelMap model) {
 
@@ -521,6 +529,9 @@ public class UserController {
 				new GenericCommandValue(villageId));
 		command.getPropertiesMap().put(SMS_TEXT,
 				new GenericCommandValue(smsText));
+
+		command.getPropertiesMap().put(SMS_RECIPIENTS_TEXT,
+				new GenericCommandValue(smsRecipientText));
 
 		prepareSearchModel(extractParams(command), true, false, pageNo, model,
 				false);
@@ -718,7 +729,7 @@ public class UserController {
 			try {
 				User loginedUser = OXMSecurityUtil.getLoggedInUser();
 				if (loginedUser.hasAdministrativePrivileges()) {
-					return viewUsersHandler(new ModelMap());
+					return view(new ModelMap());
 				} else {
 					modelMap.put(WebConstants.MODEL_ATTRIBUTE_ERROR_MESSAGE,
 							"Invalid path");
@@ -826,7 +837,7 @@ public class UserController {
 			modelMapMap.put(WebConstants.MODEL_ATTRIBUTE_ERROR_MESSAGE,
 					"Error " + e.getMessage());
 		}
-		return viewUsersHandler(modelMapMap);
+		return view(modelMapMap);
 	}
 
 	// =========================================================================================
@@ -984,6 +995,10 @@ public class UserController {
 
 		List<User> users = userService.searchWithParams(params);
 
+		String recievers = "";
+		if (StringUtils.isNotBlank(params.getSmsRecipientsText()))
+			recievers = generateReciepientString(params.getSmsRecipientsText());
+
 		try {
 
 			if (users == null || users.size() == 0)
@@ -991,7 +1006,10 @@ public class UserController {
 			if (StringUtils.isBlank(params.getSmsText()))
 				throw new ValidationException("SMS Text can not be blank");
 
-			String recievers = generateReciepientString(users);
+			recievers += StringUtils.isNotBlank(recievers) ? ","
+					+ generateReciepientString(users)
+					: generateReciepientString(users);
+
 			if (StringUtils.isBlank(recievers))
 				throw new ValidationException(
 						"No reciepient had a valid telephone number");
@@ -1025,6 +1043,25 @@ public class UserController {
 			if (StringUtils.isNotBlank(user.getPhone2()))
 				recievers = appendReciepientNumbers(recievers, user.getPhone2());
 
+		}
+		return recievers;
+	}
+
+	/**
+	 * pick numbers from text supplied by user
+	 * 
+	 * @param recieversText
+	 * @return
+	 */
+	private String generateReciepientString(String recieversText) {
+
+		String[] numbers = recieversText.trim().split(",");
+		String recievers = "";
+
+		for (String num : numbers) {
+
+			if (StringUtils.isNotBlank(num))
+				recievers = appendReciepientNumbers(recievers, num);
 		}
 		return recievers;
 	}

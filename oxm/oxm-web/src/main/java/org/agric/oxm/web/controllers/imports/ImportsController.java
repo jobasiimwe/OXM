@@ -276,7 +276,7 @@ public class ImportsController {
 				return pOrgController.view(modelMap);
 			if (districtProducerImportData.getImportItem().equals(
 					ImportItem.PRODUCERS))
-				return userController.viewUsersHandler(modelMap);
+				return userController.view(modelMap);
 
 			if (districtProducerImportData.getImportItem().equals(
 					ImportItem.ALL)) {

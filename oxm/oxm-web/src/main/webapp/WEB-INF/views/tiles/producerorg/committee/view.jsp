@@ -6,16 +6,13 @@
 <%@ taglib prefix="oxmBreadcrambs" tagdir="/WEB-INF/tags/breadcramblinks"%>
 
 <div style="margin: 5px; width: 100%;">
-	<oxmBreadcrambs:cpanel name="porgcommittees" producerOrg="${pOrg }" />
+	<oxmBreadcrambs:cpanel-porg name="porgcommittees" porgParam="${pOrg }" />
 </div>
 
 <div id="buttonStrip">
 	<div class="contextual" style="float: left;">
-		<a id="lnkAddPOrgCommitte" class="uiButton" href="${baseUrl }/porg/committee/add/${pOrg.id }">Add</a>
-		<a id="lnkEditPOrgCommittee" class="uiButton" href="${baseUrl }/porg/committee/edit/">Edit</a>
-		<a id="lnkDeletePOrgCommittee" class="uiButton" href="${baseUrl }/porg/committee/delete/${pOrg.id }/">Delete</a>
-		&emsp;&emsp;
-		<a id="lnkPOrgCommitteeMembers" class="uiButton" href="${baseUrl }/porg-committee/member/">Members</a>
+		<sysTags:addeditdeletebuttons name="POrgCommittee" url="porg-committee" child1="Members" child1Url="porg-committee-member"
+			parentId="${pOrg.id }" />
 
 	</div>
 	<div style="float: right;">
@@ -34,7 +31,7 @@
 				<th>No</th>
 				<th>Committee</th>
 				<th>No. of Members</th>
-				<th>Producer organisation</th>
+				<th>Producer Organisation</th>
 			</tr>
 		</thead>
 		<tbody>

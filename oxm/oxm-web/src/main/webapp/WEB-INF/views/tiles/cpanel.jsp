@@ -59,7 +59,7 @@
 		</a>
 	</div>
 	<div class="menu">
-		<a class="menu-lnk" href="${baseUrl }/position/view/page/1">
+		<a class="menu-lnk" href="${baseUrl }/position/view">
 			<span class="panellink position-icon"></span>
 			<label class="linktext">Positions</label>
 		</a>

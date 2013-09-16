@@ -4,29 +4,29 @@
 <%@ taglib prefix='fn' uri='http://java.sun.com/jsp/jstl/functions'%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 
+
 <%@ taglib prefix="sysTags" tagdir="/WEB-INF/tags"%>
 <%@ taglib prefix="oxmBreadcrambs" tagdir="/WEB-INF/tags/breadcramblinks"%>
 
 <div style="margin: 5px; width: 100%;">
-	<oxmBreadcrambs:cpanel-porg name="porgstaff" producerOrg="${pOrg }" isForm="true" />
+	<oxmBreadcrambs:cpanel-porg name="porgcommittee-members" porgParam="${pOrg }" committeeParam="${committee }" isForm="true" />
 </div>
 
 <div>
 	<div class="searchform group">
-		<form:form action="${baseUrl}/porg-committee/member/search" commandName="usersearch">
+		<form:form action="${baseUrl}/porg-committee-member/search" commandName="usersearch">
 			<jsp:include page="/WEB-INF/views/tiles/users/searchfields.jsp"></jsp:include>
 		</form:form>
 	</div>
 	<div style="clear: both"></div>
-
 </div>
 
 <div>
 
-	<form:form action="${baseUrl }/porg-staff/save/" commandName="staffMember">
+	<form:form action="${baseUrl }/porg-committee-member/save/" commandName="committeeMember">
 
 		<form:hidden path="id" />
-		<form:hidden path="producerOrg" />
+		<form:hidden path="committee" />
 		<div class="splitcontentleft">
 			<div class="box tabular">
 				<table>
@@ -38,12 +38,12 @@
 							</form:select></td>
 					</tr>
 					<tr>
-						<td><label>Appointment Date<span class="required">*</span>
+						<td><label>From(Date)<span class="required">*</span>
 						</label></td>
-						<td><form:input path="appointmentDate" cssStyle="width: 100px;" cssClass="uiTextbox uiDateTextbox" /></td>
-						<td><label>Departure Date<span class="required">*</span>
+						<td><form:input path="fromDate" cssStyle="width: 100px;" cssClass="uiTextbox uiDateTextbox" /></td>
+						<td><label>To (Date) <span class="required">*</span>
 						</label></td>
-						<td><form:input path="dateLeft" cssStyle="width: 100px;" cssClass="uiTextbox uiDateTextbox" /></td>
+						<td><form:input path="toDate" cssStyle="width: 100px;" cssClass="uiTextbox uiDateTextbox" /></td>
 					</tr>
 					<tr>
 						<td><label>Position Holder<span class="required">*</span>
