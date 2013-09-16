@@ -57,9 +57,7 @@ public class POrgController {
 			ProducerOrgSearchParameters params) {
 		GenericCommand searchCommand = new GenericCommand();
 
-		if (StringUtils.isNotEmpty(params.getName()))
-			searchCommand.getPropertiesMap().put(NAME,
-					new GenericCommandValue(params.getName()));
+		searchCommand.checkAndPut(NAME, params.getName());
 
 		if (null != params.getDistrict()) {
 			searchCommand.getPropertiesMap().put(DISTRICT,
@@ -183,22 +181,20 @@ public class POrgController {
 		StringBuffer buffer = new StringBuffer();
 		buffer.append("/porg?action=search");
 
-		if (StringUtils.isNotBlank(params.getName())) {
-			buffer.append("&").append(NAME).append("=")
-					.append(params.getName());
-		}
+		GenericCommand.checkAndAppend(NAME, params.getName(), buffer);
+		GenericCommand.checkAndAppend(DISTRICT, params.getDistrict(), buffer);
+		GenericCommand.checkAndAppend(COUNTY, params.getCounty(), buffer);
+		GenericCommand.checkAndAppend(SUBCOUNTY, params.getSubCounty(), buffer);
 
-		if (params.getDistrict() != null) {
-			buffer.append("&").append(DISTRICT).append("=")
-					.append(params.getDistrict().getId());
-		}
+		GenericCommand.checkAndAppend(PARISH, params.getParish(), buffer);
+		GenericCommand.checkAndAppend(VILLAGE, params.getVillage(), buffer);
 
 		return buffer.toString();
 	}
 
 	@Secured({ PermissionConstants.VIEW_PROD_ORG })
 	@RequestMapping(method = RequestMethod.GET, params = { "action=search" })
-	public ModelAndView searchNavigationHandler(
+	public ModelAndView navigate(
 			@RequestParam(value = NAME, required = false) String name,
 			@RequestParam(value = DISTRICT, required = false) String districtId,
 			@RequestParam(value = COUNTY, required = false) String countyid,
@@ -206,7 +202,7 @@ public class POrgController {
 			@RequestParam(value = PARISH, required = false) String parishId,
 			@RequestParam(value = VILLAGE, required = false) String villageId,
 			@RequestParam(value = "pageNo", required = false) Integer pageNo,
-			ModelMap model) {
+			ModelMap modelMap) {
 
 		GenericCommand command = new GenericCommand();
 
@@ -222,7 +218,7 @@ public class POrgController {
 		command.getPropertiesMap().put(VILLAGE,
 				new GenericCommandValue(villageId));
 
-		return searchHandler(command, null, model);
+		return searchHandler(command, pageNo, modelMap);
 	}
 
 	public ProducerOrgSearchParameters extractSearchParams(

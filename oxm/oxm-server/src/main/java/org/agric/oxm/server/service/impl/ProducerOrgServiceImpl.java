@@ -12,6 +12,7 @@ import org.agric.oxm.server.dao.ProducerOrgDAO;
 import org.agric.oxm.server.dao.StaffMemberDAO;
 import org.agric.oxm.server.security.PermissionConstants;
 import org.agric.oxm.server.service.ProducerOrgService;
+import org.agric.oxm.utils.BuildSearchUtil;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
@@ -144,28 +145,15 @@ public class ProducerOrgServiceImpl implements ProducerOrgService {
 		Search search = new Search();
 
 		search.addSort("name", false, true);
-		if (StringUtils.isNotBlank(params.getName())) {
-			search.addFilterILike("name", "%" + params.getName() + "%");
-		}
+		BuildSearchUtil.addStringLike(search, "name", params.getName());
 
-		if (params.getDistrict() != null) {
-			search.addFilterEqual("district", params.getDistrict());
-		}
-		if (params.getCounty() != null) {
-			search.addFilterEqual("county", params.getCounty());
-		}
-		if (params.getSubCounty() != null) {
-			search.addFilterEqual("subCounty", params.getSubCounty());
-		}
-		if (params.getParish() != null) {
-			search.addFilterEqual("parish", params.getParish());
-		}
-		if (params.getVillage() != null) {
-			search.addFilterEqual("village", params.getVillage());
-		}
-		if (params.getVillage() != null) {
-			search.addFilterEqual("village", params.getVillage());
-		}
+		BuildSearchUtil.addEqual(search, "district", params.getDistrict());
+		BuildSearchUtil.addEqual(search, "county", params.getCounty());
+		BuildSearchUtil.addEqual(search, "subCounty", params.getSubCounty());
+		BuildSearchUtil.addEqual(search, "parish", params.getParish());
+		BuildSearchUtil.addEqual(search, "village", params.getVillage());
+		BuildSearchUtil.addEqual(search, "village", params.getVillage());
+
 		return search;
 	}
 
