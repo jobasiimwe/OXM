@@ -1,7 +1,10 @@
 package org.agric.oxm.web.controllers.porg;
 
+import java.util.List;
+
 import org.agric.oxm.model.Committee;
 import org.agric.oxm.model.CommitteeMember;
+import org.agric.oxm.model.Position;
 import org.agric.oxm.model.exception.SessionExpiredException;
 import org.agric.oxm.model.exception.ValidationException;
 import org.agric.oxm.model.search.UserSearchParameters;
@@ -73,7 +76,14 @@ public class POrgCommitteeMemberController {
 		modelMap.put(WebConstants.CONTENT_HEADER, committee.getName()
 				+ " - Add Member");
 
-		modelMap.put("positions", positionService.getPositions());
+		List<Position> positions = positionService.getPositions();
+		if (positions != null && positions.size() > 0)
+			modelMap.put("positions", positions);
+		else {
+			modelMap.put(WebConstants.MODEL_ATTRIBUTE_ERROR_MESSAGE,
+					"First create some Positions in order to Add Committee-Members");
+			return view(committeeId, modelMap);
+		}
 
 		return new ModelAndView("pOrgCommitteeMemberForm", modelMap);
 	}

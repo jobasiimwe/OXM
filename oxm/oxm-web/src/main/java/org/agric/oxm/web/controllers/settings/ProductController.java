@@ -202,10 +202,25 @@ public class ProductController {
 		return params;
 	}
 
+	// ======================================================================================
+	// ======================================================================================
+
+	@Secured({ PermissionConstants.ADD_PRODUCT })
+	@RequestMapping(value = "add", method = RequestMethod.GET)
+	public ModelAndView add(ModelMap model) {
+
+		Product product = new Product();
+		model.put("product", product);
+		model.put(WebConstants.CONTENT_HEADER, "Add new Product");
+		prepareProductModel(model);
+
+		return new ModelAndView("productForm", model);
+	}
+
 	@Secured({ PermissionConstants.EDIT_PRODUCT })
-	@RequestMapping(value = "/edit/{productid}", method = RequestMethod.GET)
-	public ModelAndView editProductHandler(
-			@PathVariable("productid") String productid, ModelMap model) {
+	@RequestMapping(value = "edit/{productid}", method = RequestMethod.GET)
+	public ModelAndView edit(@PathVariable("productid") String productid,
+			ModelMap model) {
 
 		if (!model.containsAttribute("product")) {
 			Product product = productService.getById(productid);
@@ -220,9 +235,9 @@ public class ProductController {
 
 	@Secured({ PermissionConstants.EDIT_PRODUCT,
 			PermissionConstants.ADD_PRODUCT })
-	@RequestMapping(method = RequestMethod.POST, value = "/save")
-	public ModelAndView saveProductHandler(
-			@ModelAttribute("product") Product product, ModelMap model) {
+	@RequestMapping(method = RequestMethod.POST, value = "save")
+	public ModelAndView save(@ModelAttribute("product") Product product,
+			ModelMap model) {
 
 		try {
 
@@ -254,22 +269,10 @@ public class ProductController {
 					"Error " + e.getMessage());
 			model.put("product", product);
 			model.put(WebConstants.CONTENT_HEADER, "Edit " + product.getName());
-			return editProductHandler(product.getId(), model);
+			return edit(product.getId(), model);
 
 		}
 
-	}
-
-	@Secured({ PermissionConstants.ADD_PRODUCT })
-	@RequestMapping(value = "/add", method = RequestMethod.GET)
-	public ModelAndView addProductHandler(ModelMap model) {
-
-		Product product = new Product();
-		model.put("product", product);
-		model.put(WebConstants.CONTENT_HEADER, "Add new Product");
-		prepareProductModel(model);
-
-		return new ModelAndView("productForm", model);
 	}
 
 	/**
@@ -281,8 +284,8 @@ public class ProductController {
 	 */
 	@Secured({ PermissionConstants.DELETE_PRODUCT })
 	@RequestMapping(method = RequestMethod.GET, value = "/delete/{productIds}")
-	public ModelAndView deleteProductHandler(
-			@PathVariable("productIds") String productIds, ModelMap model) {
+	public ModelAndView delete(@PathVariable("productIds") String productIds,
+			ModelMap model) {
 		String[] productIdzToDelete = productIds.split(",");
 
 		try {
