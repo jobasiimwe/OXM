@@ -14,7 +14,7 @@
 <div id="buttonStrip"></div>
 <div>
 	<div class="searchform group">
-		<form:form id="multiBtnForm" action="${baseUrl}/user/sms/" commandName="usersearch">
+		<form:form id="multiBtnForm" action="${baseUrl}/user/sms/" firstAction="${baseUrl}/user/sms/" commandName="usersearch">
 
 			<fieldset>
 				<legend>
@@ -124,17 +124,19 @@
 								firstElementBlank="true"></form:select>
 						</li>
 						<li class="button-li">
-							<input id="btnLoadRecipients" task="load" class="uiButton" type="submit" title="Preview Recipients" value="Preview"
+							<input id="multiBtnFormBtnLoadRecipients" task="load" class="uiButton" type="submit" title="Preview Recipients" value="Preview"
 								name="btnFilter" />
 						</li>
 					</ul>
 					<ul>
 						<li>
-							<label>Phone Numbers (Comma Separated)</label>
+							<label>Phone Numbers (Comma Separated) [e.g 256782xxxxxx,256755xxxxxx]</label>
 							<form:textarea cols="50" rows="3" cssClass="" path="propertiesMap['smsrecipientstext'].value" placeholder="Phone Numbers here"
 								itemName="SMS" id="txtSmsRecipientsText" />
-							e.g 256782xxxxxx,256755xxxxxx
+
 						</li>
+					</ul>
+					<ul>
 						<li>
 							<label>Message</label>
 							<label id="counter">(160)</label>
@@ -144,7 +146,7 @@
 						</li>
 
 						<li class="button-li">
-							<input id="btnSendSms" task="send" class="uiButton" type="submit" value="Send SMS" name="btnFilter" />
+							<input id="multiBtnFormBtnSendSms" task="send" class="uiButton" type="submit" value="Send SMS" name="btnFilter" />
 						</li>
 					</ul>
 				</div>
