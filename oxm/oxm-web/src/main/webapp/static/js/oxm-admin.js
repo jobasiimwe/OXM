@@ -62,9 +62,9 @@ $(document)
 					/**
 					 * Price monitor functions
 					 */
-					$('#lnkAddPrice').click(
+					$('#AddPriceForProduct').click(
 							function() {
-								return singleDropDownItemAction('lnkAddPrice',
+								return singleDropDownItemAction('AddPriceForProduct',
 										'ddProducts', 'Product');
 							});
 

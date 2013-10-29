@@ -22,7 +22,7 @@
 <span class="arrow-right"></span>
 
 
-<c:if test="${name eq 'crop' }">
+<c:if test="${name eq 'crops' }">
 	<a href="${baseUrl }/crop/view">Crops</a>
 	<span class="arrow-right"></span>
 </c:if>

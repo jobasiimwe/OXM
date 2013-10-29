@@ -24,7 +24,7 @@
 		</c:if>
 
 	</select>
-	<a id="lnkAddPrice" class="uiButton" href="${baseUrl }/price/add/">Add</a>
+	<a id="AddPriceForProduct" class="uiButton" href="${baseUrl }/price/add/">Add</a>
 </p>
 
 <div>
