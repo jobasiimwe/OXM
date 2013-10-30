@@ -4,7 +4,7 @@ body{
 	font-family: "Open Sans", helvetica, arial;
 }
 
-pre{
+.pref{
 	font-family: "Source Code Pro", monospace;
 	display: block;
 	padding: 9.5px;

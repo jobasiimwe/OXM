@@ -32,6 +32,7 @@
 	<c:choose>
 		<c:when test="${not empty blogs  && fn:length(blogs) > 0}">
 			<c:forEach var="blog" items="${blogs }">
+			
 				<sysTags:blog blogParam="${blog }" showPreview="true" adminView="${adminview }" />
 			</c:forEach>
 		</c:when>

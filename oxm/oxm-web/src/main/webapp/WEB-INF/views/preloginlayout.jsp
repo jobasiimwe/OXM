@@ -44,32 +44,23 @@
 
 		<div id="slider">
 			<ul class="bjqs">
-				<!-- <li>
-					<img src="${baseUrl}/static/images/img/banner01.jpg" title="Automatically generated caption">
+				<li>
+					<img src="${baseUrl}/static/images/img/banners/learning.jpg" title="Learning together">
 				</li>
 				<li>
-					<img src="${baseUrl}/static/images/img/banner02.jpg" title="Automatically generated caption">
+					<img src="${baseUrl}/static/images/img/banners/planting.jpg" title="Planting">
 				</li>
 				<li>
-					<img src="${baseUrl}/static/images/img/banner03.jpg" title="Automatically generated caption">
-				</li> -->
-				<li>
-					<img src="${baseUrl}/static/images/img/banners/learning.png" title="Learning together">
+					<img src="${baseUrl}/static/images/img/banners/weeding.jpg" title="Weeding">
 				</li>
 				<li>
-					<img src="${baseUrl}/static/images/img/banners/planting.png" title="Planting">
+					<img src="${baseUrl}/static/images/img/banners/produce.jpg" title="Produce">
 				</li>
 				<li>
-					<img src="${baseUrl}/static/images/img/banners/weeding.png" title="Weeding">
+					<img src="${baseUrl}/static/images/img/banners/produce2.jpg" title="Produce">
 				</li>
 				<li>
-					<img src="${baseUrl}/static/images/img/banners/produce.png" title="Produce">
-				</li>
-				<li>
-					<img src="${baseUrl}/static/images/img/banners/produce2.png" title="Produce">
-				</li>
-				<li>
-					<img src="${baseUrl}/static/images/img/banners/produce2.png" title="Produce">
+					<img src="${baseUrl}/static/images/img/banners/produce3.jpg" title="Produce">
 				</li>
 			</ul>
 		</div>
@@ -79,7 +70,7 @@
 			jQuery(document).ready(function($) {
 
 				$('#slider').bjqs({
-					height : 300,
+					height : 400,
 					responsive : true
 				});
 

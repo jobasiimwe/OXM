@@ -153,8 +153,7 @@
 
 #slider {
 	width: 100% !important;
-	height: 300px !important;
-	border: 1px solid #ccc !important;
+	height: 400px !important;
 	margin-bottom: 5px !important;
 }
 
@@ -202,3 +201,7 @@
 .menu_div ul li#active {
 	background: #E5E5E5;
 }
+
+
+
+

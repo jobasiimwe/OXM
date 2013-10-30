@@ -14,7 +14,7 @@
 </div>
 
 <div>
-	<p>Acholi Farmers Portal is an Information System for farmers especially in Acholi sub-region. Here, you can find
+	<p style="padding: 5px">Acholi Farmers Portal is an Information System for farmers especially in Acholi sub-region. Here, you can find
 		latest prices, weather fore-casts and advice on several other agricultural topics...</p>
 	<c:choose>
 		<c:when test="${not empty blogs  && fn:length(blogs) > 0}">
