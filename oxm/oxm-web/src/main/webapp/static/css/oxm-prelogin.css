@@ -23,11 +23,12 @@
 }
 
 .login-body-dv .big-dv {
-	border: 1px solid #E5E5E5;
-	float: left;
-	min-height: 360px;
-	margin-bottom: 10px;
-	width: 74%;
+  border: 1px solid #E5E5E5;
+  float: right;
+  margin-bottom: 10px;
+  min-height: 360px;
+  width: 72%;
+ 
 }
 
 .login-body-dv .small-dv {
