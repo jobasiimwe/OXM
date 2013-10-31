@@ -7,13 +7,18 @@
 <%@ attribute type="java.lang.String" name="name" required="true"%>
 <%@ attribute type="java.lang.Boolean" name="isForm" required="false"%>
 
-<%@ attribute type="org.agric.oxm.model.Blog" name="blogParam" rtexprvalue="true" required="false"%>
+<%@ attribute type="org.agric.oxm.model.Blog" name="blogParam"
+	rtexprvalue="true" required="false"%>
 <%@ attribute type="java.lang.Boolean" name="adminView" required="false"%>
 
-<%@ attribute type="org.agric.oxm.model.ProducerOrg" name="porgParam" rtexprvalue="true" required="false"%>
-<%@ attribute type="org.agric.oxm.model.Committee" name="committeeParam" rtexprvalue="true" required="false"%>
-<%@ attribute type="org.agric.oxm.model.FinancialInstitution" name="finstParam" rtexprvalue="true" required="false"%>
-<%@ attribute type="org.agric.oxm.model.Season" name="seasonParam" rtexprvalue="true" required="false"%>
+<%@ attribute type="org.agric.oxm.model.ProducerOrg" name="porgParam"
+	rtexprvalue="true" required="false"%>
+<%@ attribute type="org.agric.oxm.model.Committee" name="committeeParam"
+	rtexprvalue="true" required="false"%>
+<%@ attribute type="org.agric.oxm.model.FinancialInstitution"
+	name="finstParam" rtexprvalue="true" required="false"%>
+<%@ attribute type="org.agric.oxm.model.Season" name="seasonParam"
+	rtexprvalue="true" required="false"%>
 
 <span class="arrow-right"></span>
 <span class="arrow-right"></span>
@@ -37,7 +42,8 @@
 	<span class="arrow-right"></span>
 
 	<c:if test="${name eq 'finstitutiondocs'  }">
-		<a href="${baseUrl }/finstitutiondocs/view/${finstParam.id}">Documents of - ${finstParam.name }</a>
+		<a href="${baseUrl }/finstitutiondocs/view/${finstParam.id}">Documents
+			of - ${finstParam.name }</a>
 		<span class="arrow-right"></span>
 	</c:if>
 </c:if>
@@ -52,7 +58,8 @@
 	<span class="arrow-right"></span>
 
 	<c:if test="${not empty blogParam }">
-		<a href="${baseUrl }/blog/view/${adminView}/${blogParam.id}">Current Blog</a>
+		<a href="${baseUrl }/blog/view/${adminView}/${blogParam.id}">Current
+			Blog</a>
 		<span class="arrow-right"></span>
 	</c:if>
 </c:if>
@@ -62,7 +69,8 @@
 	<span class="arrow-right"></span>
 
 	<c:if test="${name eq 'seasondocs'  }">
-		<a href="${baseUrl }/seasondocs/view/${seasonParam.id}">Documents of - ${seasonParam.name }</a>
+		<a href="${baseUrl }/seasondocs/view/${seasonParam.id}">Documents
+			of - ${seasonParam.name }</a>
 		<span class="arrow-right"></span>
 	</c:if>
 
@@ -70,10 +78,12 @@
 
 <c:if test="${name eq 'concepts' or name eq 'conceptcategories' }">
 
-	<a title="Categories of System Terms (Concepts)" href="${baseUrl }/category/view">Concept Categories</a>
+	<a title="Categories of System Terms (Concepts)"
+		href="${baseUrl }/category/view">Concept Categories</a>
 	<span class="arrow-right"></span>
 
-	<a title="List of System Terms (Concepts)" href="${baseUrl }/concept/view">System terms</a>
+	<a title="List of System Terms (Concepts)"
+		href="${baseUrl }/concept/view">System terms</a>
 	<span class="arrow-right"></span>
 </c:if>
 
@@ -92,6 +102,11 @@
 		<a href="${baseUrl }/user/sms">SEND SMS</a>
 		<span class="arrow-right"></span>
 	</c:if>
+</c:if>
+
+<c:if test="${name eq 'roles' }">
+	<a href="${baseUrl }/role/view">Roles</a>
+	<span class="arrow-right"></span>
 </c:if>
 
 <c:if test="${isForm }">

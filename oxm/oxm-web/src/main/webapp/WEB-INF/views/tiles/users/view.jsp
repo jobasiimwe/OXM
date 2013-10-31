@@ -1,22 +1,21 @@
 <%@page import="org.agric.oxm.model.User"%>
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix='fn' uri='http://java.sun.com/jsp/jstl/functions'%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 
 <%@ taglib prefix="sysTags" tagdir="/WEB-INF/tags"%>
-<%@ taglib prefix="oxmBreadcrambs" tagdir="/WEB-INF/tags/breadcramblinks"%>
+<%@ taglib prefix="oxmBreadcrambs"
+	tagdir="/WEB-INF/tags/breadcramblinks"%>
 
-<div style="margin: 5px; width: 100%;">
-	<div style="margin: 5px; width: 100%;">
-		<oxmBreadcrambs:cpanel name="users" />
-	</div>
-</div>
+<oxmBreadcrambs:cpanel name="users" />
 
 <div id="buttonStrip"></div>
 <div>
 	<div class="searchform group">
-		<form:form id="multiBtnForm" action="${baseUrl}/user/search/" firstAction="${baseUrl}/user/search/" commandName="usersearch">
+		<form:form id="multiBtnForm" action="${baseUrl}/user/search/"
+			firstAction="${baseUrl}/user/search/" commandName="usersearch">
 			<jsp:include page="/WEB-INF/views/tiles/users/searchfields.jsp"></jsp:include>
 		</form:form>
 	</div>
@@ -28,7 +27,8 @@
 		<a id="lnkAddUser" class="uiButton" href="${baseUrl }/user/add/:">Add</a>
 		<a id="lnkEditUser" class="uiButton" href="${baseUrl }/user/edit/:/">Edit</a>
 		<a id="lnkDeleteUser" class="uiButton" href="${baseUrl }/user/delete/">Delete</a>
-		<a id="lnkImportProducers" class="uiButton spacedElement" href="${baseUrl }/import/producers">Import Producers</a>
+		<a id="lnkImportProducers" class="uiButton spacedElement"
+			href="${baseUrl }/import/producers">Import Producers</a>
 	</div>
 	<div style="float: right;">
 		<%@ include file="/WEB-INF/views/navigation.jsp"%>
