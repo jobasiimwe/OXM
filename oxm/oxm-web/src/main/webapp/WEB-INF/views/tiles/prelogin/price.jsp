@@ -12,12 +12,15 @@
 
 <jsp:include page="/WEB-INF/views/tiles/prelogin/pricesearchfields.jsp"></jsp:include>
 <div id="buttonStrip">
+	<div  id="content-header" style="float: left;">
+		<h3>Market Prices!!!</h3>
+	</div>
 	<div style="float: right;">
 		<%@ include file="/WEB-INF/views/navigation.jsp"%>
 	</div>
 	<div style="clear: both"></div>
 </div>
-<h3>Market Prices!!!</h3>
+
 <table class="recordTable">
 	<thead>
 		<tr>

@@ -6,25 +6,21 @@ pw: j0b2013
 
 
 
-paths
-/opt/tomcat7/webapps/
-
-rm oxm.war
-rm -rf oxm.war
+war	/opt/tomcat7/webapps/
+	rm oxm.war
+	rm -rf oxm.war
 
 /etc/init.d/tomcat7 start[stop][restart]
 
-logs
-/var/log/tomcat7
+logs 	/var/log/tomcat7
+	rm -rf *.*
 
+
+copy
+	cp /root/oxm.war  /opt/tomcat7/webapps/
 
 POSTGRE-SQL
 
 /var/lib/postgres/data/pg_hba.conf
 /var/lib/pgsql
 /var/lib/pgsql/data
-
-
-copy
-
-cp /root/oxm.war  /opt/tomcat7/webapps/

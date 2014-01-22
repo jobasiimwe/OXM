@@ -20,7 +20,7 @@
 <link type="text/css" rel="stylesheet" href="${baseUrl }/static/css/oxm-images.css" />
 
 <link type="text/css" rel="stylesheet" href="${baseUrl}/static/css/oxm-prelogin.css" />
-<link type="text/css" rel="stylesheet" href="${baseUrl}/static/css/oxm-search.css" />
+<link type="text/css" rel="stylesheet" href="${baseUrl}/static/css/oxm-search2.css" />
 
 <link type="text/css" rel="stylesheet" href="${baseUrl}/static/css/bjqs.css">
 <link type="text/css" rel="stylesheet" href="${baseUrl}/static/css/demo.css">

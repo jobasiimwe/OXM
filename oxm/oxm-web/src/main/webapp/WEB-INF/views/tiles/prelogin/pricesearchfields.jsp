@@ -5,10 +5,10 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 
 <form:form action="${baseUrl}/prelogin/prices/search" commandName="pricesearch">
-	<fieldset>
+	<!-- <fieldset>
 		<legend>
 			<span title="Search Prices">Search Prices</span>
-		</legend>
+		</legend> -->
 
 		<form:hidden path="propertiesMap['adminview'].booleanValue" />
 		<div class="searchDiv">
@@ -48,5 +48,5 @@
 				</li>
 		</div>
 
-	</fieldset>
+	<!-- </fieldset> -->
 </form:form>
