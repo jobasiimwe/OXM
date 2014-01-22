@@ -32,16 +32,6 @@
 					</form:select>
 				</li>
 				<li>
-					<label>Sell-Type</label>
-					<form:select id="ddSellType" cssStyle="width: 100px;" cssClass="uiDropdown"
-						path="propertiesMap['selltypeid'].value"
-					>
-						<form:option value=""></form:option>
-						<form:options items="${selltypes }" itemLabel="name" itemValue="id" />
-					</form:select>
-				</li>
-
-				<li>
 					<label>From</label>
 					<form:input id="fromdate" cssStyle="width: 100px;" cssClass="uiTextbox uiDateTextbox"
 						path="propertiesMap['fromdate'].value"

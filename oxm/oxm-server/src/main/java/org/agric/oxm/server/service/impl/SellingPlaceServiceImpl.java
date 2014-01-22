@@ -30,7 +30,6 @@ public class SellingPlaceServiceImpl implements SellingPlaceService {
 	@Autowired
 	private SellingPlaceDAO sellingPlaceDAO;
 
-	
 	@Transactional(propagation = Propagation.REQUIRED)
 	@Override
 	public void save(SellingPlace sellingPlace) {
@@ -43,13 +42,13 @@ public class SellingPlaceServiceImpl implements SellingPlaceService {
 		if (StringUtils.isEmpty(sellingPlace.getName()))
 			throw new ValidationException("Name is required");
 
-		if (sellingPlace.getSellingTypes() == null)
-			throw new ValidationException("Selling types required");
+		// if (sellingPlace.getall == null)
+		//	throw new ValidationException("Selling types required");
 	}
 
 	@Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
 	@Override
-	public List<SellingPlace> getSellingPlaces() {
+	public List<SellingPlace> getAll() {
 		return sellingPlaceDAO.searchByRecordStatus(RecordStatus.ACTIVE);
 	}
 

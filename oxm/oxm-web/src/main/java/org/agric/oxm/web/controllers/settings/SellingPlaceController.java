@@ -13,7 +13,7 @@ import org.agric.oxm.server.security.util.OXMSecurityUtil;
 import org.agric.oxm.server.service.Adminservice;
 import org.agric.oxm.server.service.ConceptService;
 import org.agric.oxm.server.service.SellingPlaceService;
-import org.agric.oxm.web.OXMUtil;
+import org.agric.oxm.utils.OXMUtil;
 import org.agric.oxm.web.WebConstants;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
@@ -47,7 +47,7 @@ public class SellingPlaceController {
 	@RequestMapping(value = "view", method = RequestMethod.GET)
 	public ModelAndView view(ModelMap model) {
 		List<SellingPlace> sellingPrices = sellingPlaceService
-				.getSellingPlaces();
+				.getAll();
 		try {
 			WebConstants.loadLoggedInUserProfile(
 					OXMSecurityUtil.getLoggedInUser(), model);
@@ -151,8 +151,8 @@ public class SellingPlaceController {
 				existingSellingPlace = sellingPlaceService
 						.getSellingPlaceById(sellingPlace.getId());
 				existingSellingPlace.setName(sellingPlace.getName());
-				existingSellingPlace.setSellingTypes(sellingPlace
-						.getSellingTypes());
+				// existingSellingPlace.setSellingTypes(sellingPlace
+				// .getSellingTypes());
 			} else {
 				existingSellingPlace.setId(null);
 			}

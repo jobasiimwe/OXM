@@ -15,21 +15,25 @@ import javax.persistence.Table;
 public class Price extends BaseData implements Comparable<Price> {
 
 	private Product product;
-
 	private SellingPlace sellingPlace;
-
-	private Concept sellType;
-
 	private Concept unitOfMeasure;
-
-	private Double price;
-
+	private Double qty, retail, wholeSale;
 	private Date date;
-
-	private Double quantity;
 
 	public Price() {
 		super();
+	}
+
+	public Price(Product product, SellingPlace sellingPlace,
+			Concept unitOfMeasure, Double qty, Double retailPrice,
+			Double wholeSalePrice, Date date) {
+		this.setProduct(product);
+		this.setSellingPlace(sellingPlace);
+		this.setUnitOfMeasure(unitOfMeasure);
+		this.setQty(qty);
+		this.setRetail(retailPrice);
+		this.setWholeSale(wholeSalePrice);
+		this.setDate(date);
 	}
 
 	public Price(Product product) {
@@ -57,15 +61,17 @@ public class Price extends BaseData implements Comparable<Price> {
 		this.sellingPlace = sellingPlace;
 	}
 
-	@ManyToOne(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
-	@JoinColumn(name = "selling_type", nullable = true)
-	public Concept getSellType() {
-		return sellType;
-	}
-
-	public void setSellType(Concept sellType) {
-		this.sellType = sellType;
-	}
+	// private Concept sellType;
+	//
+	// @ManyToOne(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
+	// @JoinColumn(name = "selling_type", nullable = true)
+	// public Concept getSellType() {
+	// return sellType;
+	// }
+	//
+	// public void setSellType(Concept sellType) {
+	// this.sellType = sellType;
+	// }
 
 	@ManyToOne(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
 	@JoinColumn(name = "unit_of_measure", nullable = true)
@@ -77,16 +83,7 @@ public class Price extends BaseData implements Comparable<Price> {
 		this.unitOfMeasure = unitOfMeasure;
 	}
 
-	@Column(name = "price", nullable = true)
-	public Double getPrice() {
-		return price;
-	}
-
-	public void setPrice(Double price) {
-		this.price = price;
-	}
-
-	@Column(name = "date", nullable = false)
+	@Column(name = "price_date", nullable = false)
 	public Date getDate() {
 		return date;
 	}
@@ -96,37 +93,30 @@ public class Price extends BaseData implements Comparable<Price> {
 	}
 
 	@Column(name = "quantity", nullable = false)
-	public Double getQuantity() {
-		return quantity;
+	public Double getQty() {
+		return qty;
 	}
 
-	public void setQuantity(Double quantity) {
-		this.quantity = quantity;
+	public void setQty(Double quantity) {
+		this.qty = quantity;
 	}
 
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((getId() == null) ? 0 : getId().hashCode());
-		return result;
+	@Column(name = "retail", nullable = true)
+	public Double getRetail() {
+		return retail;
 	}
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Price other = (Price) obj;
-		if (super.getId() == null) {
-			if (other.getId() != null)
-				return false;
-		} else if (!super.getId().equals(other.getId()))
-			return false;
-		return true;
+	public void setRetail(Double retail) {
+		this.retail = retail;
+	}
+
+	@Column(name = "whole_sale", nullable = true)
+	public Double getWholeSale() {
+		return wholeSale;
+	}
+
+	public void setWholeSale(Double wholeSale) {
+		this.wholeSale = wholeSale;
 	}
 
 	@Override
@@ -134,4 +124,15 @@ public class Price extends BaseData implements Comparable<Price> {
 		return this.getDate().compareTo(o.getDate());
 	}
 
+	public static void copy(Price dest, Price source) {
+		// product sellingPlace unitOfMeasure;
+		// qty, retail, wholeSale date;
+		dest.setProduct(source.getProduct());
+		dest.setSellingPlace(source.getSellingPlace());
+		dest.setUnitOfMeasure(source.getUnitOfMeasure());
+		dest.setQty(source.getQty());
+		dest.setRetail(source.getRetail());
+		dest.setWholeSale(source.getWholeSale());
+		dest.setDate(source.getDate());
+	}
 }

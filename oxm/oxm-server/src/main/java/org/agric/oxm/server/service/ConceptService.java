@@ -61,4 +61,6 @@ public interface ConceptService {
 	int getNumberOfConceptsCategoriesInSearch(
 			SingleStringSearchParameters params);
 
+	ConceptCategory getConceptCategoryByName(String conceptCategoryName);
+
 }

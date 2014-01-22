@@ -8,15 +8,23 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * @author Job
  * 
  */
 public class MyDateUtil {
 
+	private static Logger log = LoggerFactory.getLogger(MyDateUtil.class);
+
 	/**
 	 * The date formats used to parse a String into a Date
 	 */
+	public static SimpleDateFormat dateFormat_sql_short_date_yyyy_MM_dd = new SimpleDateFormat(
+			"yyyy-MM-dd");
+
 	public final static String[] DEFAULT_INPUT_FORMATS = { "dd/MM/yyyy",
 			"dd-MM-yyyy", "dd/MM/yy", "dd-MM-yy", "dd/MMM/yyyy", "dd-MMM-yyyy" };
 
@@ -86,7 +94,7 @@ public class MyDateUtil {
 
 	public static String getDisplayDate(Date date) {
 
-		SimpleDateFormat fmtToUse = new SimpleDateFormat("dd/MMM/yyyy");
+		SimpleDateFormat fmtToUse = new SimpleDateFormat("dd-MMM-yyyy");
 		String displayDate = "";
 
 		Calendar caNow = Calendar.getInstance();
@@ -156,37 +164,54 @@ public class MyDateUtil {
 							- then.get(Calendar.HOUR_OF_DAY) - 1) * 60);
 
 	}
-	
-	//=======================================================================================
-	
-		public static String getDateRangeString(Date startDate, Date endDate) {
 
-			if (MyDateUtil.dateFormat_MMM.format(startDate).equalsIgnoreCase(
-					MyDateUtil.dateFormat_MMM.format(endDate))) {
+	// =======================================================================================
 
-				if (MyDateUtil.dateFormat_yyyy.format(startDate).equalsIgnoreCase(
-						MyDateUtil.dateFormat_yyyy.format(endDate)))
-					return MyDateUtil.dateFormat_dd.format(startDate) + " - "
-							+ MyDateUtil.dateFormat_dd.format(endDate) + " "
-							+ MyDateUtil.dateFormat_MMM.format(startDate) + " "
-							+ MyDateUtil.dateFormat_yyyy.format(startDate);
-				else
-					return MyDateUtil.dateFormat_space_dd_MMM.format(startDate)
-							+ " - "
-							+ MyDateUtil.dateFormat_space_dd_MMM.format(endDate)
-							+ " " + MyDateUtil.dateFormat_yyyy.format(startDate);
-			} else {
-				if (MyDateUtil.dateFormat_yyyy.format(startDate).equalsIgnoreCase(
-						MyDateUtil.dateFormat_yyyy.format(endDate)))
-					return MyDateUtil.dateFormat_space_dd_MMM.format(startDate)
-							+ " - "
-							+ MyDateUtil.dateFormat_space_dd_MMM.format(endDate)
-							+ " " + MyDateUtil.dateFormat_yyyy.format(startDate);
-				else
-					return MyDateUtil.dateFormat_dash_dd_MMM_yyyy.format(startDate)
-							+ " - "
-							+ MyDateUtil.dateFormat_dash_dd_MMM_yyyy
-									.format(endDate);
-			}
+	public static String getDateRangeString(Date startDate, Date endDate) {
+
+		if (MyDateUtil.dateFormat_MMM.format(startDate).equalsIgnoreCase(
+				MyDateUtil.dateFormat_MMM.format(endDate))) {
+
+			if (MyDateUtil.dateFormat_yyyy.format(startDate).equalsIgnoreCase(
+					MyDateUtil.dateFormat_yyyy.format(endDate)))
+				return MyDateUtil.dateFormat_dd.format(startDate) + " - "
+						+ MyDateUtil.dateFormat_dd.format(endDate) + " "
+						+ MyDateUtil.dateFormat_MMM.format(startDate) + " "
+						+ MyDateUtil.dateFormat_yyyy.format(startDate);
+			else
+				return MyDateUtil.dateFormat_space_dd_MMM.format(startDate)
+						+ " - "
+						+ MyDateUtil.dateFormat_space_dd_MMM.format(endDate)
+						+ " " + MyDateUtil.dateFormat_yyyy.format(startDate);
+		} else {
+			if (MyDateUtil.dateFormat_yyyy.format(startDate).equalsIgnoreCase(
+					MyDateUtil.dateFormat_yyyy.format(endDate)))
+				return MyDateUtil.dateFormat_space_dd_MMM.format(startDate)
+						+ " - "
+						+ MyDateUtil.dateFormat_space_dd_MMM.format(endDate)
+						+ " " + MyDateUtil.dateFormat_yyyy.format(startDate);
+			else
+				return MyDateUtil.dateFormat_dash_dd_MMM_yyyy.format(startDate)
+						+ " - "
+						+ MyDateUtil.dateFormat_dash_dd_MMM_yyyy
+								.format(endDate);
 		}
+	}
+
+	public static Date parseDate(String dateStr, DateFormat dateFormat)
+			throws Exception {
+		Date date = null;
+		try {
+			date = dateFormat.parse(dateStr);
+		} catch (Exception ex) {
+			log.error("date Purse error", ex);
+		}
+
+		return date;
+	}
+
+	public static Date parseSqlShortDate(String dateStr) throws Exception {
+
+		return parseDate(dateStr, dateFormat_sql_short_date_yyyy_MM_dd);
+	}
 }

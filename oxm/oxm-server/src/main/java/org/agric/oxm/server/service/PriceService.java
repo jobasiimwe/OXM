@@ -21,6 +21,8 @@ public interface PriceService {
 
 	List<Price> getPrices();
 
+	Price searchUniqueWithParams(PriceSearchParams params) throws Exception;
+
 	List<Price> searchWithParams(PriceSearchParams params, Integer pageNo);
 
 	long numberInSearch(PriceSearchParams params);

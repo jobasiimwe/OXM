@@ -22,13 +22,6 @@
 					<form:input id="txtName" path="name" cssClass="uiTextbox" />
 				</p>
 				<p>
-					<label>
-						Selling Types
-						<span class="required">*</span>
-					</label>
-					<form:checkboxes id="cbxSellingTypes" path="sellingTypes" items="${sellingTypes }" itemLabel="name" itemValue="id" />
-				</p>
-				<p>
 					<label>District</label>
 					<form:select path="district">
 						<form:option value="none">--</form:option>

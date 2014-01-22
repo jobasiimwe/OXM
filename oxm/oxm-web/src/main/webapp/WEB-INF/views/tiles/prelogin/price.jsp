@@ -15,13 +15,12 @@
 	<thead>
 		<tr>
 			<th>No.</th>
-			<th>Crop</th>
+			<th>Item</th>
 			<th>Selling Place</th>
-			<th>Type</th>
-			<th>Quantity/Unit</th>
-			<th>Price</th>
 			<th>Date</th>
-
+			<th>Quantity/Unit</th>
+			<th>Retail Price (UGX)</th>
+			<th>Wholesale Price (UGX)</th>
 		</tr>
 	</thead>
 	<tbody>
@@ -32,10 +31,10 @@
 						<td>${status.count }</td>
 						<td>${price.product.name }</td>
 						<td>${price.sellingPlace.name }</td>
-						<td>${price.sellType.name }</td>
-						<td>${price.quantity }(${price.unitOfMeasure.name })</td>
-						<td><fmt:formatNumber value="${price.price }" pattern="#0" /></td>
-						<td><fmt:formatDate value="${price.date}" pattern="dd/MM/yyyy" /></td>
+						<td><fmt:formatDate value="${price.date}" pattern="dd-MMM-yyyy" /></td>
+						<td><fmt:formatNumber value="${price.qty }" pattern="#0" />${price.unitOfMeasure.name }</td>
+						<td><fmt:formatNumber value="${price.retail }" pattern="#0" /></td>
+						<td><fmt:formatNumber value="${price.wholeSale }" pattern="#0" /></td>
 					</tr>
 				</c:forEach>
 			</c:when>

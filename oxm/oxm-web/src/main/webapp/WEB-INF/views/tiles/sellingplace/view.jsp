@@ -29,7 +29,6 @@
 				<th>No.</th>
 				<th>Name</th>
 				<th>District/Place</th>
-				<th>Selling Types</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -40,8 +39,9 @@
 							<td><sysTags:rowcheckbox nameOfItemOnPage="${nameOfItemOnPage }" id="${sellingplace.id }" /></td>
 							<td>${status.count }</td>
 							<td>${sellingplace.name }</td>
-							<td>${sellingplace.district.name }</td>
-							<td>${sellingplace.sellingTypesString }</td>
+							<td><c:if test="${not empty sellingplace.district}"> 
+								${sellingplace.district.name }
+							</c:if></td>
 						</tr>
 					</c:forEach>
 				</c:when>

@@ -219,7 +219,7 @@ public class CropController {
 
 	@Secured({ PermissionConstants.VIEW_CROP })
 	@RequestMapping(method = RequestMethod.GET, params = { "action=search" })
-	public ModelAndView userSearchNavigationHandler(
+	public ModelAndView navigate(
 			@RequestParam(value = NAME, required = false) String name,
 			@RequestParam(value = INPUT, required = false) String inputId,
 			@RequestParam(value = SEED_VARIATION, required = false) String seedVariationId,

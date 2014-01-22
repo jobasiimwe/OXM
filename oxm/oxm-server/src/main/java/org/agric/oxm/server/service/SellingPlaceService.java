@@ -18,7 +18,7 @@ public interface SellingPlaceService {
 
 	void validate(SellingPlace sellingPlace) throws ValidationException;
 
-	List<SellingPlace> getSellingPlaces();
+	List<SellingPlace> getAll();
 
 	SellingPlace getSellingPlaceById(String id);
 

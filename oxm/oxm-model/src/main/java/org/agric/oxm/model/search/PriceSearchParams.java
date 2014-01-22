@@ -2,7 +2,6 @@ package org.agric.oxm.model.search;
 
 import java.util.Date;
 
-import org.agric.oxm.model.Concept;
 import org.agric.oxm.model.Product;
 import org.agric.oxm.model.SellingPlace;
 
@@ -10,13 +9,20 @@ public class PriceSearchParams {
 
 	private Product product;
 	private SellingPlace sellingPlace;
-	private Concept sellType;
-	private Date fromDate;
-	private Date toDate;
+	// private Concept sellType;
+	private Date fromDate, toDate;
 	private Boolean adminView;
 
 	public PriceSearchParams() {
 
+	}
+
+	public PriceSearchParams(Product product, SellingPlace sellingPlace,
+			Date date) {
+		this.setProduct(product);
+		this.setSellingPlace(sellingPlace);
+		this.setFromDate(date);
+		this.setToDate(date);
 	}
 
 	public PriceSearchParams(Boolean adminView) {
@@ -39,13 +45,13 @@ public class PriceSearchParams {
 		this.sellingPlace = sellingPlace;
 	}
 
-	public Concept getSellType() {
-		return sellType;
-	}
-
-	public void setSellType(Concept sellType) {
-		this.sellType = sellType;
-	}
+	// public Concept getSellType() {
+	// return sellType;
+	// }
+	//
+	// public void setSellType(Concept sellType) {
+	// this.sellType = sellType;
+	// }
 
 	public Date getFromDate() {
 		return fromDate;

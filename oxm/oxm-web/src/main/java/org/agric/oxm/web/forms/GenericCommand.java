@@ -181,4 +181,10 @@ public class GenericCommand {
 
 	// =======================================================================
 
+		public Boolean isNotBlank(String key) {
+			if (StringUtils.isNotBlank(this.getValue(key)))
+				return true;
+
+			return false;
+		}
 }

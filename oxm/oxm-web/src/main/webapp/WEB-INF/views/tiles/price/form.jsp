@@ -12,19 +12,15 @@
 </div>
 
 <p>
-	<label>
-		Product
-		<span class="required">*</span>
-	</label>
-	<select id="ddProducts">
+	<label> Product <span class="required">*</span>
+	</label> <select id="ddProducts">
 		<c:if test="${not empty products  && fn:length(products) > 0}">
 			<c:forEach var="product" items="${products }">
 				<option value="${product.id }">${product.name }</option>
 			</c:forEach>
 		</c:if>
 
-	</select>
-	<a id="AddPriceForProduct" class="uiButton" href="${baseUrl }/price/add/">Add</a>
+	</select> <a id="AddPriceForProduct" class="uiButton" href="${baseUrl }/price/add/">Add</a>
 </p>
 
 <div>
@@ -38,33 +34,18 @@
 					<form:hidden path="product" />
 					<table>
 						<tr>
-							<td><label>
-									Selling Place
-									<span class="required">*</span>
-								</label></td>
+							<td><label> Selling Place <span class="required">*</span>
+							</label></td>
 							<td><form:select path="sellingPlace" cssStyle="width: 100px;" items="${sellingPlaces }" itemLabel="name"
-									itemValue="id"
-								/></td>
-							<td><label>Date</label> <form:input path="date" cssStyle="width: 100px;" cssClass="uiTextbox uiDateTextbox" />
-							</td>
+									itemValue="id" /></td>
+							<td><label>Date</label> <form:input path="date" cssStyle="width: 100px;" cssClass="uiTextbox uiDateTextbox" /></td>
 						</tr>
 						<tr>
-							<td><label>Selling Type</label></td>
-							<td><form:select path="sellType" cssStyle="width: 100px;" items="${selltypes }" itemLabel="name"
-									itemValue="id"
-								/></td>
+							<td><label>Retail Price</label></td>
+							<td><form:input path="retail" cssStyle="width: 100px;" cssClass="uiTextbox" /></td>
+							<td><label>Wholesale Price</label> <form:input path="wholeSale" cssStyle="width: 100px;" cssClass="uiTextbox" />
 						</tr>
-						<tr>
-							<td><label>Quantity</label></td>
-							<td><form:input path="quantity" cssStyle="width: 100px;" cssClass="uiTextbox" /></td>
-							<td><label>Units</label> <form:select path="unitOfMeasure" items="${unitOfMeasures }" itemLabel="name"
-									itemValue="id"
-								/></td>
-						</tr>
-						<tr>
-							<td><label>Price</label></td>
-							<td><form:input path="price" cssStyle="width: 100px;" cssClass="uiTextbox" />(UGX)</td>
-						</tr>
+
 					</table>
 				</div>
 			</div>

@@ -12,7 +12,7 @@ import org.agric.oxm.server.security.PermissionConstants;
 import org.agric.oxm.server.security.util.OXMSecurityUtil;
 import org.agric.oxm.server.service.ConceptService;
 import org.agric.oxm.server.service.DocumentService;
-import org.agric.oxm.web.OXMUtil;
+import org.agric.oxm.utils.OXMUtil;
 import org.agric.oxm.web.WebConstants;
 import org.agric.oxm.web.forms.GenericCommand;
 import org.agric.oxm.web.forms.GenericCommandValue;
@@ -91,15 +91,15 @@ public class ApplicationController {
 	public void addConceptsToModelMap(ModelMap modelMap,
 			String conceptCategoryName, String key) {
 		try {
-			ConceptCategoryAnnotation sellTypeRoleAnnotation = OXMUtil
+			ConceptCategoryAnnotation conceptCategoryAnnotation = OXMUtil
 					.getConceptCategoryFieldAnnotation(
 							DefaultConceptCategories.class, conceptCategoryName);
 
-			if (sellTypeRoleAnnotation != null) {
+			if (conceptCategoryAnnotation != null) {
 				modelMap.put(
 						key,
 						conceptService
-								.getConceptsByCategoryAnnotation(sellTypeRoleAnnotation));
+								.getConceptsByCategoryAnnotation(conceptCategoryAnnotation));
 			}
 
 		} catch (Exception e) {
@@ -108,7 +108,7 @@ public class ApplicationController {
 					e.getMessage());
 		}
 	}
-
+	
 	/**
 	 * handles request to download a document with the given id
 	 * 
@@ -260,4 +260,5 @@ public class ApplicationController {
 		return buffer.toString();
 	}
 
+	
 }

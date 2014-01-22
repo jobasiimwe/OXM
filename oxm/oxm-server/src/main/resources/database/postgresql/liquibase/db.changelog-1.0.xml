@@ -1296,4 +1296,17 @@
         <dropTable schemaName="public" tableName="porg_documents"/>
     </changeSet>
 
+    <changeSet author="jasiimwe (generated)" id="1390252871788-1">
+        <renameColumn tableName="price" oldColumnName="date" newColumnName="price_date"/>
+        <renameColumn tableName="price" oldColumnName="price" newColumnName="retail"/>
+        <addColumn tableName="price">
+            <column name="whole_sale" type="float8(19)"/>
+        </addColumn>
+
+        <dropColumn columnName="selling_type" schemaName="public" tableName="price"/>
+    </changeSet>
+    
+    <changeSet author="jasiimwe (generated)" id="1390307292437-108">
+        <dropTable schemaName="public" tableName="place_selling_types"/>
+    </changeSet>
 </databaseChangeLog>

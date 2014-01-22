@@ -1,4 +1,4 @@
-package org.agric.oxm.web;
+package org.agric.oxm.utils;
 
 import java.lang.reflect.Field;
 

@@ -2,15 +2,14 @@ package org.agric.oxm.web.controllers;
 
 import java.util.List;
 
-import org.agric.oxm.model.Product;
 import org.agric.oxm.model.Price;
+import org.agric.oxm.model.Product;
 import org.agric.oxm.model.exception.ValidationException;
 import org.agric.oxm.model.search.PriceSearchParams;
 import org.agric.oxm.server.DefaultConceptCategories;
 import org.agric.oxm.server.security.PermissionConstants;
-import org.agric.oxm.server.service.ConceptService;
-import org.agric.oxm.server.service.ProductService;
 import org.agric.oxm.server.service.PriceService;
+import org.agric.oxm.server.service.ProductService;
 import org.agric.oxm.server.service.SellingPlaceService;
 import org.agric.oxm.web.WebConstants;
 import org.agric.oxm.web.WebUtils;
@@ -41,9 +40,6 @@ public class PriceController {
 	private ProductService productService;
 
 	@Autowired
-	private ConceptService conceptService;
-
-	@Autowired
 	private SellingPlaceService sellingPlaceService;
 
 	@Autowired
@@ -51,9 +47,9 @@ public class PriceController {
 
 	public static final String PRODUCT = "product";
 	public static final String SELLING_PLACE = "sellingplaceid";
-	public static final String SELL_TYPE = "selltypeid";
 	public static final String FROM_DATE = "fromdate";
 	public static final String TO_DATE = "todate";
+
 	public static final String ADMIN_VIEW = "adminview";
 
 	private static final String COMMAND_NAME = "pricesearch";
@@ -62,39 +58,31 @@ public class PriceController {
 
 	private PriceSearchParams extractParams(GenericCommand searchCommand) {
 		PriceSearchParams params = new PriceSearchParams();
-		if (StringUtils.isNotBlank(searchCommand.getValue(PRODUCT))) {
+		if (searchCommand.isNotBlank(PRODUCT))
 			params.setProduct(productService.getById(searchCommand
 					.getValue(PRODUCT)));
-		}
 
-		if (StringUtils.isNotBlank(searchCommand.getValue(SELLING_PLACE))) {
+		if (searchCommand.isNotBlank(SELLING_PLACE))
 			params.setSellingPlace(sellingPlaceService
 					.getSellingPlaceById(searchCommand.getValue(SELLING_PLACE)));
-		}
 
-		if (StringUtils.isNotBlank(searchCommand.getValue(SELL_TYPE))) {
-			params.setSellType(conceptService.getConceptById(searchCommand
-					.getValue(SELL_TYPE)));
-		}
-
-		if (StringUtils.isNotBlank(searchCommand.getValue(FROM_DATE)))
+		if (searchCommand.isNotBlank(FROM_DATE))
 			params.setFromDate(searchCommand.getAsDate(FROM_DATE));
 
-		if (StringUtils.isNotBlank(searchCommand.getValue(TO_DATE)))
+		if (searchCommand.isNotBlank(TO_DATE))
 			params.setToDate(searchCommand.getAsDate(TO_DATE));
 
-		if (StringUtils.isNotBlank(searchCommand.getValue(ADMIN_VIEW)))
+		if (searchCommand.isNotBlank(ADMIN_VIEW))
 			params.setAdminView(searchCommand.getBooleanValue(ADMIN_VIEW));
 
 		return params;
 	}
 
 	@Secured({ PermissionConstants.VIEW_PRICE })
-	@RequestMapping(method = RequestMethod.GET, value = "price", params = { "action=search" })
+	@RequestMapping(method = RequestMethod.GET, params = { "action=search" })
 	public ModelAndView navigate(
 			@RequestParam(value = PRODUCT, required = false) String productId,
 			@RequestParam(value = SELLING_PLACE, required = false) String sellingPlaceId,
-			@RequestParam(value = SELL_TYPE, required = false) String selltypeid,
 			@RequestParam(value = FROM_DATE, required = false) String fromDate,
 			@RequestParam(value = TO_DATE, required = false) String toDate,
 			@RequestParam(value = ADMIN_VIEW, required = false) String adminview,
@@ -107,9 +95,6 @@ public class PriceController {
 				new GenericCommandValue(productId));
 		command.getPropertiesMap().put(SELLING_PLACE,
 				new GenericCommandValue(sellingPlaceId));
-		command.getPropertiesMap().put(SELL_TYPE,
-				new GenericCommandValue(selltypeid));
-
 		command.getPropertiesMap().put(FROM_DATE,
 				new GenericCommandValue(fromDate));
 		command.getPropertiesMap()
@@ -150,11 +135,6 @@ public class PriceController {
 		if (params.getSellingPlace() != null) {
 			searchCommand.getPropertiesMap().put(SELLING_PLACE,
 					new GenericCommandValue(params.getSellingPlace().getId()));
-		}
-
-		if (params.getSellType() != null) {
-			searchCommand.getPropertiesMap().put(SELL_TYPE,
-					new GenericCommandValue(params.getSellType().getId()));
 		}
 
 		searchCommand.checkAndPut(FROM_DATE, params.getFromDate());
@@ -203,7 +183,7 @@ public class PriceController {
 
 	private String buildSearchNavigationUrl(PriceSearchParams params) {
 		StringBuffer buffer = new StringBuffer();
-		buffer.append("/price?action=search");
+		buffer.append("price?action=search");
 
 		if (params.getProduct() != null) {
 			buffer.append("&").append(PRODUCT).append("=")
@@ -299,7 +279,7 @@ public class PriceController {
 					"Ooops No Products found");
 		modelMap.put("products", products);
 
-		modelMap.put("sellingPlaces", sellingPlaceService.getSellingPlaces());
+		modelMap.put("sellingPlaces", sellingPlaceService.getAll());
 
 		applicationController.addConceptsToModelMap(modelMap,
 				DefaultConceptCategories.SELLING_TYPE, "selltypes");
@@ -363,12 +343,8 @@ public class PriceController {
 
 		if (StringUtils.isNotEmpty(price.getId())) {
 			existingPrice = priceService.getPriceById(price.getId());
-			existingPrice.setProduct(price.getProduct());
-			existingPrice.setSellingPlace(price.getSellingPlace());
-			existingPrice.setSellType(price.getSellType());
-			existingPrice.setPrice(price.getPrice());
-			existingPrice.setUnitOfMeasure(price.getUnitOfMeasure());
-			existingPrice.setDate(price.getDate());
+
+			Price.copy(existingPrice, price);
 		} else {
 			existingPrice.setId(null);
 		}

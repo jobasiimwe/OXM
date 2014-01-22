@@ -113,6 +113,12 @@
 			<label class="linktext">Import</label>
 		</a>
 	</div>
+	<div class="menu">
+		<a class="menu-lnk" title="Pull the latest prices from fit-uganda" href="${baseUrl }/rss/pull-fit-prices">
+			<span class="panellink import-icon"></span>
+			<label class="linktext">Update Prices (RSS)</label>
+		</a>
+	</div>
 </div>
 
 <div style="clear: both;"></div>

@@ -20,7 +20,6 @@
 			<th>No.</th>
 			<th>Name</th>
 			<th>District/Place</th>
-			<th>Selling Types</th>
 		</tr>
 	</thead>
 	<tbody>
@@ -30,8 +29,9 @@
 					<tr id="${sellingplace.id }">
 						<td>${status.count }</td>
 						<td>${sellingplace.name }</td>
-						<td>${sellingplace.district.name }</td>
-						<td>${sellingplace.sellingTypesString }</td>
+						<td><c:if test="${not empty sellingplace.district}"> 
+								${sellingplace.district.name }
+							</c:if></td>
 					</tr>
 				</c:forEach>
 			</c:when>

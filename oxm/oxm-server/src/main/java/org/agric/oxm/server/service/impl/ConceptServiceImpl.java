@@ -11,12 +11,16 @@ import org.agric.oxm.model.exception.ValidationException;
 import org.agric.oxm.model.search.SingleStringSearchParameters;
 import org.agric.oxm.model.search.ConceptSearchParameters;
 import org.agric.oxm.server.ConceptCategoryAnnotation;
+import org.agric.oxm.server.DefaultConceptCategories;
 import org.agric.oxm.server.OXMConstants;
 import org.agric.oxm.server.dao.ConceptCategoryDAO;
 import org.agric.oxm.server.dao.ConceptDAO;
 import org.agric.oxm.server.security.PermissionConstants;
 import org.agric.oxm.server.service.ConceptService;
+import org.agric.oxm.utils.OXMUtil;
 import org.apache.commons.lang.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Service;
@@ -35,6 +39,8 @@ import com.googlecode.genericdao.search.Search;
 @Service("conceptService")
 @Transactional
 public class ConceptServiceImpl implements ConceptService {
+
+	private Logger log = LoggerFactory.getLogger(this.getClass());
 
 	@Autowired
 	private ConceptDAO conceptDAO;
@@ -206,6 +212,30 @@ public class ConceptServiceImpl implements ConceptService {
 	}
 
 	@Override
+	@Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
+	public ConceptCategory getConceptCategoryByName(String conceptCategoryName) {
+	
+		try {
+			ConceptCategoryAnnotation conceptCategoryAnnotation = OXMUtil
+					.getConceptCategoryFieldAnnotation(
+							DefaultConceptCategories.class, conceptCategoryName);
+
+			if (conceptCategoryAnnotation != null) {
+				ConceptCategory conceptCategory = getConceptCategoryById(conceptCategoryAnnotation
+						.id());
+				return conceptCategory;
+			} else
+				throw new Exception(
+						"Oooops no concept Category Annotation found for ConceptCategoryName "
+								+ conceptCategoryName);
+		} catch (Exception e) {
+			log.error("Error", e);
+		}
+		
+		return null;
+	}
+
+	@Override
 	@Secured({ PermissionConstants.VIEW_CONCEPT_DETAILS })
 	@Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
 	public List<ConceptCategory> getConceptCategories() {
@@ -237,8 +267,8 @@ public class ConceptServiceImpl implements ConceptService {
 		search.addSort("name", false, true);
 		search.addFilterEqual("recordStatus", RecordStatus.ACTIVE);
 		if (!StringUtils.isNotEmpty(params.getQuery())) {
-			Filter nameFilter = new Filter("name",
-					"%" + params.getQuery() + "%", Filter.OP_ILIKE);
+			Filter nameFilter = new Filter("name", "%" + params.getQuery()
+					+ "%", Filter.OP_ILIKE);
 			Filter descFilter = new Filter("description", "%"
 					+ params.getQuery() + "%", Filter.OP_ILIKE);
 			search.addFilterOr(nameFilter, descFilter);
