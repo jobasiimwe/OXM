@@ -52,11 +52,11 @@ public class PriceController {
 
 	public static final String ADMIN_VIEW = "adminview";
 
-	private static final String COMMAND_NAME = "pricesearch";
+	public static final String COMMAND_NAME = "pricesearch";
 
 	private Logger log = LoggerFactory.getLogger(this.getClass());
 
-	private PriceSearchParams extractParams(GenericCommand searchCommand) {
+	public PriceSearchParams extractParams(GenericCommand searchCommand) {
 		PriceSearchParams params = new PriceSearchParams();
 		if (searchCommand.isNotBlank(PRODUCT))
 			params.setProduct(productService.getById(searchCommand
@@ -117,26 +117,19 @@ public class PriceController {
 			pageNo = 1;
 		}
 
-		prepareSearchModel(params, pageNo, model);
+		prepareSearchModel(params, pageNo, model, "price");
 
 		return new ModelAndView("priceView", model);
 	}
 
-	private void prepareSearchCommand(ModelMap modelMap,
+	public void prepareSearchCommand(ModelMap modelMap,
 			PriceSearchParams params) {
 
 		GenericCommand searchCommand = new GenericCommand();
 
-		if (params.getProduct() != null) {
-			searchCommand.getPropertiesMap().put(PRODUCT,
-					new GenericCommandValue(params.getProduct().getId()));
-		}
-
-		if (params.getSellingPlace() != null) {
-			searchCommand.getPropertiesMap().put(SELLING_PLACE,
-					new GenericCommandValue(params.getSellingPlace().getId()));
-		}
-
+		searchCommand.checkAndPut(PRODUCT, params.getProduct());
+		searchCommand.checkAndPut(SELLING_PLACE, params.getSellingPlace());
+		
 		searchCommand.checkAndPut(FROM_DATE, params.getFromDate());
 		searchCommand.checkAndPut(TO_DATE, params.getToDate());
 
@@ -147,6 +140,7 @@ public class PriceController {
 
 		searchCommand.getPropertiesMap().put(ADMIN_VIEW,
 				new GenericCommandValue(params.getAdminView().toString()));
+		
 		modelMap.put(ADMIN_VIEW, params.getAdminView());
 
 		modelMap.put(COMMAND_NAME, searchCommand);
@@ -154,8 +148,8 @@ public class PriceController {
 		preparePriceModel(modelMap);
 	}
 
-	private void prepareSearchModel(PriceSearchParams params, Integer pageNo,
-			ModelMap modelMap) {
+	public void prepareSearchModel(PriceSearchParams params, Integer pageNo,
+			ModelMap modelMap, String url) {
 
 		if (pageNo == null || (pageNo != null && pageNo <= 0)) {
 			pageNo = 1;
@@ -170,7 +164,7 @@ public class PriceController {
 
 		WebUtils.prepareNavigation("Prices",
 				priceService.numberInSearch(params), prices.size(), pageNo,
-				buildSearchNavigationUrl(params), modelMap);
+				buildSearchNavigationUrl(params, url), modelMap);
 
 		prepareSearchCommand(modelMap, params);
 
@@ -181,29 +175,15 @@ public class PriceController {
 		modelMap.put("searching", true);
 	}
 
-	private String buildSearchNavigationUrl(PriceSearchParams params) {
+	public String buildSearchNavigationUrl(PriceSearchParams params, String url) {
 		StringBuffer buffer = new StringBuffer();
-		buffer.append("price?action=search");
+		buffer.append(url+"?action=search");
 
-		if (params.getProduct() != null) {
-			buffer.append("&").append(PRODUCT).append("=")
-					.append(params.getProduct().getId());
-		}
-
-		if (params.getSellingPlace() != null) {
-			buffer.append("&").append(SELLING_PLACE).append("=")
-					.append(params.getSellingPlace().getId());
-		}
-
-		if (params.getFromDate() != null) {
-			buffer.append("&").append(FROM_DATE).append("=")
-					.append(params.getFromDate().toString());
-		}
-
-		if (params.getToDate() != null) {
-			buffer.append("&").append(TO_DATE).append("=")
-					.append(params.getToDate().toString());
-		}
+		GenericCommand.checkAndAppend(PRODUCT, params.getProduct(), buffer);
+		GenericCommand.checkAndAppend(SELLING_PLACE, params.getSellingPlace(), buffer);
+		GenericCommand.checkAndAppend(FROM_DATE, params.getFromDate(), buffer);
+		GenericCommand.checkAndAppend(TO_DATE, params.getToDate(), buffer);
+		GenericCommand.checkAndAppend(ADMIN_VIEW, params.getAdminView(), buffer);
 
 		return buffer.toString();
 	}
@@ -214,7 +194,7 @@ public class PriceController {
 			@PathVariable(value = "adminview") Boolean adminView) {
 
 		PriceSearchParams params = new PriceSearchParams(adminView);
-		prepareSearchModel(params, 1, modelMap);
+		prepareSearchModel(params, 1, modelMap, "price");
 
 		return new ModelAndView("priceView", modelMap);
 	}

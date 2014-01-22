@@ -26,6 +26,8 @@ public class WebUtils {
 			numPages += 1;
 		}
 
+		model.put("max_num_per_page", OXMConstants.MAX_NUM_PAGE_RECORD);
+
 		model.put("navigationItem", itemName);
 		model.put("navigationCurrentPage", currentPage);
 		model.put("navigationTotalPages", numPages);

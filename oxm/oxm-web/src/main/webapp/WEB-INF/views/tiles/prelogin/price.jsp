@@ -10,8 +10,15 @@
 	<breadcrambs:prelogin name="prices" />
 </div>
 
-<h3>Latest Prices:-</h3>
-<table class="sysTable">
+<jsp:include page="/WEB-INF/views/tiles/prelogin/pricesearchfields.jsp"></jsp:include>
+<div id="buttonStrip">
+	<div style="float: right;">
+		<%@ include file="/WEB-INF/views/navigation.jsp"%>
+	</div>
+	<div style="clear: both"></div>
+</div>
+<h3>Market Prices!!!</h3>
+<table class="recordTable">
 	<thead>
 		<tr>
 			<th>No.</th>
@@ -27,7 +34,7 @@
 		<c:choose>
 			<c:when test="${not empty prices  && fn:length(prices) > 0}">
 				<c:forEach var="price" items="${prices }" varStatus="status">
-					<tr id="${price.id }">
+					<tr id="${price.id }" style="height: 25px;">
 						<td>${status.count }</td>
 						<td>${price.product.name }</td>
 						<td>${price.sellingPlace.name }</td>

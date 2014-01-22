@@ -78,6 +78,8 @@ public class RssImportController {
 
 		for (FeedPrice t : feed.getPrices()) {
 
+			processed++;
+
 			try {
 
 				// unitOfMeasure product sellingPlace ;
@@ -179,6 +181,7 @@ public class RssImportController {
 				log.error("Error generating price Object ", e);
 				System.out.println("FAILED TO SAVE " + t);
 			}
+			
 		}
 		
 		longResponseText += "\nProcessed " + processed;

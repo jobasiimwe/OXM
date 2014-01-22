@@ -23,7 +23,7 @@
 						1 - ${navigationNumberOfItemsOnPage } 
 					</c:when>
 					<c:otherwise>
-						<c:set var="recordCount" value="${((navigationCurrentPage - 1) * 25) }"></c:set>
+						<c:set var="recordCount" value="${((navigationCurrentPage - 1) * max_num_per_page) }"></c:set>
 						 ${recordCount + 1 } - ${ recordCount + navigationNumberOfItemsOnPage }
 					</c:otherwise>
 				</c:choose>
