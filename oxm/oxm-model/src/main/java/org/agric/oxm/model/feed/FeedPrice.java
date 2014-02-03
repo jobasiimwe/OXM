@@ -61,6 +61,11 @@ public class FeedPrice {
 	// dateStr retailStr wholeSaleStr;
 	@Override
 	public String toString() {
+		return " [" + dateStr + " => " + market + ", " + product
+				+ ", retail=" + retailStr + ", wholeSale=" + wholeSaleStr + "]";
+	}
+
+	public String toString2() {
 		return "FeedPrice [market=" + market + ", product=" + product
 				+ ", unit=" + unit + ", retailStr=" + retailStr
 				+ ", wholeSaleStr=" + wholeSaleStr + " dateStr=" + dateStr

@@ -57,133 +57,144 @@ public class RssImportController {
 	@RequestMapping(value = { "pull-fit-prices" }, method = RequestMethod.GET)
 	public ModelAndView pullFitPrices(ModelMap modelMap) {
 
-		RSSFeedParser parser = new RSSFeedParser(
-				"http://mis.infotradeuganda.com/feed/Oxfam");
-		// http://infotradeuganda.com/feed/oxfam
-
-		Feed feed = parser.readFeed();
-		System.out.println(feed);
-
-		ConceptCategory conceptCategoryUnitsOfMeasure = conceptService
-				.getConceptCategoryByName(DefaultConceptCategories.UNITS_OF_MEASURE);
-
-		List<Concept> unitsOfMeasure = conceptService
-				.getConceptsByCategory(conceptCategoryUnitsOfMeasure);
-
-		List<Product> products = productService.getAll();
-		List<SellingPlace> sellingPlaces = sellingPlaceService.getAll();
-
 		String longResponseText = "", addedStr = "", updatedStr = "", skippedStr = "";
 		int processed = 0, added = 0, updated = 0, skipped = 0;
 
-		for (FeedPrice t : feed.getPrices()) {
+		try {
+			RSSFeedParser parser = new RSSFeedParser(
+					"http://mis.infotradeuganda.com/feed/Oxfam");
+			// http://infotradeuganda.com/feed/oxfam
 
-			processed++;
+			Feed feed = parser.readFeed();
+			//System.out.println(feed);
 
-			try {
+			ConceptCategory conceptCategoryUnitsOfMeasure = conceptService
+					.getConceptCategoryByName(DefaultConceptCategories.UNITS_OF_MEASURE);
 
-				// unitOfMeasure product sellingPlace ;
-				// qty, retail, wholeSale date;
+			List<Concept> unitsOfMeasure = conceptService
+					.getConceptsByCategory(conceptCategoryUnitsOfMeasure);
 
-				Concept unit = getUnitOfMeasureByName(t.getUnit(),
-						unitsOfMeasure, conceptCategoryUnitsOfMeasure);
+			List<Product> products = productService.getAll();
+			List<SellingPlace> sellingPlaces = sellingPlaceService.getAll();
 
-				if (unit == null) {
-					addMissingUnitOfMeasure(t.getUnit(),
-							conceptCategoryUnitsOfMeasure);
+			for (FeedPrice t : feed.getPrices()) {
 
-					unitsOfMeasure = conceptService
-							.getConceptsByCategory(conceptCategoryUnitsOfMeasure);
+				processed++;
 
-					unit = getUnitOfMeasureByName(t.getUnit(), unitsOfMeasure,
-							conceptCategoryUnitsOfMeasure);
+				try {
 
-					if (unit == null)
+					// unitOfMeasure product sellingPlace ;
+					// qty, retail, wholeSale date;
+
+					Concept unit = getUnitOfMeasureByName(t.getUnit(),
+							unitsOfMeasure, conceptCategoryUnitsOfMeasure);
+
+					if (unit == null) {
+						addMissingUnitOfMeasure(t.getUnit(),
+								conceptCategoryUnitsOfMeasure);
+
+						unitsOfMeasure = conceptService
+								.getConceptsByCategory(conceptCategoryUnitsOfMeasure);
+
+						unit = getUnitOfMeasureByName(t.getUnit(),
+								unitsOfMeasure, conceptCategoryUnitsOfMeasure);
+
+						if (unit == null)
+							throw new Exception(
+									"Failed to find/create unit of measure "
+											+ t.getUnit());
+					}
+
+					Product product = getProductByName(t.getProduct(),
+							products, unit);
+
+					if (product == null) {
+						addMissingProduct(t.getProduct(), unit);
+
+						products = productService.getAll();
+
+						product = getProductByName(t.getProduct(), products,
+								unit);
+
+						if (product == null)
+							throw new Exception(
+									"Failed to find/create product "
+											+ t.getProduct());
+					}
+
+					SellingPlace market = getSellingPlaceByName(t.getMarket(),
+							sellingPlaces);
+					if (market == null) {
+						addMissingSellingPlace(t.getMarket());
+
+						sellingPlaces = sellingPlaceService.getAll();
+
+						market = getSellingPlaceByName(t.getMarket(),
+								sellingPlaces);
+
+						if (market == null)
+							throw new Exception(
+									"Failed to find/create selling place (market) "
+											+ t.getUnit());
+					}
+
+					Double qty = 1.0;
+					Double retail = parseDouble("Retail Price",
+							t.getRetailStr());
+					if (retail == null)
 						throw new Exception(
-								"Failed to find/create unit of measure "
-										+ t.getUnit());
-				}
+								"Failed to parse double  retail price "
+										+ t.getRetailStr());
 
-				Product product = getProductByName(t.getProduct(), products,
-						unit);
-
-				if (product == null) {
-					addMissingProduct(t.getProduct(), unit);
-
-					products = productService.getAll();
-
-					product = getProductByName(t.getProduct(), products, unit);
-
-					if (product == null)
-						throw new Exception("Failed to find/create product "
-								+ t.getProduct());
-				}
-
-				SellingPlace market = getSellingPlaceByName(t.getMarket(),
-						sellingPlaces);
-				if (market == null) {
-					addMissingSellingPlace(t.getMarket());
-
-					sellingPlaces = sellingPlaceService.getAll();
-
-					market = getSellingPlaceByName(t.getMarket(), sellingPlaces);
-
-					if (market == null)
+					Double wholeSale = parseDouble("wholesale Price",
+							t.getWholeSaleStr());
+					if (wholeSale == null)
 						throw new Exception(
-								"Failed to find/create selling place (market) "
-										+ t.getUnit());
+								"Failed to parse double whole sale price "
+										+ t.getWholeSaleStr());
+
+					Date date = parseDate("Price Date", t.getDateStr());
+
+					Price newPrice = new Price(product, market, unit, qty,
+							retail, wholeSale, date);
+
+					PriceSearchParams priceSearchParams = new PriceSearchParams(
+							newPrice.getProduct(), newPrice.getSellingPlace(),
+							newPrice.getDate());
+
+					Price existing = priceService
+							.searchUniqueWithParams(priceSearchParams);
+
+					if (existing != null) {
+						Price.copy(existing, newPrice);
+
+						updated++;
+						updatedStr += t + "\n";
+					} else {
+						existing = newPrice;
+						existing.setId(null);
+
+						added++;
+						addedStr += t + "\n";
+					}
+
+					priceService.save(existing);
+
+				} catch (Exception e) {
+					skipped++;
+					skippedStr += t + "\n";
+
+					log.error("Error generating price Object ", e);
+					System.out.println("FAILED TO SAVE " + t);
 				}
 
-				Double qty = 1.0;
-				Double retail = parseDouble("Retail Price", t.getRetailStr());
-				if (retail == null)
-					throw new Exception("Failed to parse double  retail price "
-							+ t.getRetailStr());
-
-				Double wholeSale = parseDouble("wholesale Price",
-						t.getWholeSaleStr());
-				if (wholeSale == null)
-					throw new Exception(
-							"Failed to parse double whole sale price "
-									+ t.getWholeSaleStr());
-
-				Date date = parseDate("Price Date", t.getDateStr());
-
-				Price newPrice = new Price(product, market, unit, qty, retail,
-						wholeSale, date);
-
-				PriceSearchParams priceSearchParams = new PriceSearchParams(
-						newPrice.getProduct(), newPrice.getSellingPlace(),
-						newPrice.getDate());
-
-				Price existing = priceService
-						.searchUniqueWithParams(priceSearchParams);
-
-				if (existing != null) {
-					Price.copy(existing, newPrice);
-					
-					updated++;
-					updatedStr += t;
-				} else {
-					existing = newPrice;
-					existing.setId(null);
-					
-					added++;
-					addedStr += t;
-				}
-
-				priceService.save(existing);
-
-			} catch (Exception e) {
-				skipped++;
-				skippedStr += t;
-
-				log.error("Error generating price Object ", e);
-				System.out.println("FAILED TO SAVE " + t);
 			}
-			
+
+		} catch (Exception e) {
+			log.error("Error ", e);
+			longResponseText += "\n" + e.getMessage() + "\n\n";
 		}
-		
+
 		longResponseText += "\nProcessed " + processed;
 		longResponseText += "\nNew Added " + added;
 		longResponseText += "\nUpdated " + updated;
@@ -199,7 +210,7 @@ public class RssImportController {
 		log.info(longResponseText);
 
 		modelMap.put(WebConstants.LONG_RESPONSE_TEXT, longResponseText);
-		
+
 		return priceController.view(modelMap, true);
 	}
 
